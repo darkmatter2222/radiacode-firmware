@@ -82,7 +82,7 @@ their vendor container plus regenerated decode, disassembly and Ghidra artifacts
 | application base / vectors | `0x08010000`, 98 entries, `InitialSP = 0x20000800`, `Reset = 0x0803BA71` | step 5 (`analysis/vectors.json`) |
 | disassembly | reachability-based Thumb candidates; unknown bytes remain explicit | step 5 (`analysis/stats.json`) |
 | decompilation | 999 exported reference blocks, 0 explicit failures, 43 blocks with warnings (Ghidra 12.2); incomplete coverage | `analysis/recovery_delta.json` |
-| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 1,360 compiled leaf comparisons | §4 and `reconstruction/validation.json` |
+| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 3,152 compiled leaf/ring comparisons | §4 and `reconstruction/validation.json` |
 | device parameters | VS `0x002` = 3256 B, byte-identical to the in-image text at `0x0802F9F0` | step 11 (`analysis/verification.json`) |
 | sensors | CsI(Tl) 10x10x10 `c10_CsI_C30035` + MCA, AS6212-AWLT temperature, MCU ADC (battery), 3-axis accelerometer, optical channel | `[DataStructure]`, VSFR map |
 | real-time cadence | `MinFrmPeriod_ms = 500` (2 Hz), `FrameTimeStep_us = 10000`, `DBLag_ms = 180000` | VS `0x002` |
@@ -259,6 +259,12 @@ by `--only 3`; the containers themselves are committed inside the target directo
 
 ## 4. Confidence in the decompilation
 
+For named functions, meaningful local variables and code-level notes, start with
+the [readable reference index](reconstruction/annotated/README.md). The raw exports
+remain intact; the [naming records](reconstruction/annotations/README.md) distinguish
+reviewed meanings from unresolved interpretations. Compilable reconstructions use
+named structures and checked field offsets.
+
 The project tests each layer separately. Extraction accuracy, readable C,
 compiled behavior and physical-device equivalence answer different questions.
 The current per-build record is `analysis/confidence.json`.
@@ -268,7 +274,7 @@ The current per-build record is `analysis/confidence.json`.
 | Container and flash | Six reproduced images; 51/51 payload CRCs; real carried-stream re-encryption | Reproducible extraction of the supplied application containers |
 | Decompiler recovery | Ghidra 12.2, explicit Thumb context; repeated C exports identical for all six builds | Reproducible analysis, with warnings and unresolved coverage still tracked |
 | Instruction comparison | Conditions, flags, operand order, widths and shifts retained | Conservative agreement where established; unknown renderings remain unresolved |
-| Compiled leaves | Five small candidates, one limited dispatcher path; 1,360 comparisons pass | Tested return, memory and integer ABI behavior in a bounded emulator |
+| Compiled leaves | Seven small candidates, one limited dispatcher path; 3,152 comparisons pass | Tested return, memory and integer ABI behavior in a bounded emulator |
 | Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/integer ABI and full FPSCR agreement in the tested cases |
 | Replacement bridge | 1,424 direct-entry/caller cases for one complete leaf | Emulator-only branch replacement; [details](reconstruction/HYBRID.md) |
 | Formal checks | Ten auxiliary model properties pass | Properties of format/model operations, not original-versus-rebuilt firmware equivalence |
@@ -449,7 +455,7 @@ in 18-byte chunks (measured MTU-limited behaviour, matching the community client
  0x08035A64 |  numbered item table, 91 x {u32 id, u32 getter, u32 setter}, ids 0x00-0x5A
  0x08036C10 |  44-entry {id, handler} object/property registry (ids 0x400-0x40A, 0x800-0x80A, 0xC01-0xC18)
  0x0803CA00 +---------------------------+  end of image
-            Harness SRAM: 0x20000000-0x20007FFF (32 KiB); test stack 0x20007F00.
+            Harness SRAM: 0x20000000-0x2000FFFF (64 KiB logical test map); test stack 0x20007F00.
             Vector initial SP is 0x20000800; actual board RAM capacity remains unconfirmed.
             parameter areas (outside the code image, read with 0x081C, Borland-LCG XOR):
               area 0 -> 72 B  : magic 0x19601217 + size, then mostly 0xFF (unwritten tail)

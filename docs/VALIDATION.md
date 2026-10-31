@@ -18,9 +18,10 @@ case stops at a substituted call and is labeled partial execution. MMIO is plain
 RAM in this harness, so passing MMIO cases cannot certify peripheral behavior.
 
 Compiled candidates: pinned original image, 32-bit ARM target, recorded compiler
-flags, original and compiled runs on the same initial state. The five current
-candidates cover three constants, transfer-state comparison and only the 0x502
-accessor branch. Cases are deterministic (seed 0x5243). This is not a complete
+flags, original and compiled runs on the same initial state. The seven current
+candidates cover three constants, transfer-state comparison, only the 0x502
+accessor branch, and event-ring push/pending operations. The ring tests cover all
+valid index pairs, full/empty states, wraparound and halfword truncation. Cases are deterministic (seed 0x5243). This is not a complete
 source rebuild. The first expanded run found 131 accessor mismatches caused by a
 word load where original instructions read a byte; that defect was fixed and
 high-byte regression inputs remain in the suite.
@@ -66,3 +67,11 @@ Read observers are restricted to MMIO because a global RAM-read hook in Unicorn
 2.1.4 changed execution of a conditional VFP load. A pinned original-image
 regression covers the failing case. The additional predicate experiment and
 the ARM-specific quiet-comparison adapter that resolves the observed FPSCR differences are documented in `reconstruction/CALIBRATION.md`.
+
+## Readable source
+
+Reviewed names and comments live in `reconstruction/annotations/rc102.json`; the
+renderer preserves raw operators/control flow and verifies reversible identifier
+substitution. Compilable sources use layout assertions and address aliases. The
+harness maps a 64 KiB logical SRAM window to exercise globals such as the event
+ring at 0x2000f424; that does not establish physical MCU capacity.

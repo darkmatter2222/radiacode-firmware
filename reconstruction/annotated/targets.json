@@ -1,0 +1,44 @@
+[
+  {
+    "target": "rc-101/fw4.14",
+    "raw_source_sha256": "7147ca53ffb0f5cd342a5136d9ad66c23e170ef0095565fcc7f0436f6bc7b845",
+    "functions": 922,
+    "warning_occurrences": 75,
+    "reviewed_function_names": 0
+  },
+  {
+    "target": "rc-102/hw1-fw4.14",
+    "raw_source_sha256": "0dcefbc5e7aba5643b87e4cb80e2e52a35b8f2348c5d1da8a1125cc206c5c520",
+    "functions": 999,
+    "warning_occurrences": 79,
+    "reviewed_function_names": 59
+  },
+  {
+    "target": "rc-103/fw4.14",
+    "raw_source_sha256": "25ede93f560b3f840c70db3dfa468c316eed516b8b4ca7c307b04aacedd9bbce",
+    "functions": 999,
+    "warning_occurrences": 79,
+    "reviewed_function_names": 0
+  },
+  {
+    "target": "rc-103g/fw4.14",
+    "raw_source_sha256": "993bfa0e367be6ed61ae2ca3e6c38df5e8ef87fcbfa4af11c80955938aec89fa",
+    "functions": 999,
+    "warning_occurrences": 79,
+    "reviewed_function_names": 0
+  },
+  {
+    "target": "rc-110/fw4.14",
+    "raw_source_sha256": "dfda2256ba8013ff5dc7eb9ef4df8f6bc0a81f78fc14d69e0bfa69a74615d88a",
+    "functions": 1011,
+    "warning_occurrences": 80,
+    "reviewed_function_names": 0
+  },
+  {
+    "target": "rc-410/fw4.16",
+    "raw_source_sha256": "d117e4ec6cab5879a7f2923558927881347765146e33561f310bf263889dbacc",
+    "functions": 1046,
+    "warning_occurrences": 83,
+    "reviewed_function_names": 0
+  }
+]

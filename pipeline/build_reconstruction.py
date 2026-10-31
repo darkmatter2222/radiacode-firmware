@@ -97,6 +97,14 @@ def main():
     for value in corners + [rng.getrandbits(32) for _ in range(128)]:
         cases.append((0x080275c4,'recovered_item_502',(0x20000400,0x502,0,0),
                       [(0x20000408,struct.pack('<I',0x20000600)),(0x20000cc0,struct.pack('<I',value))]))
+    # All valid ring-index pairs, including empty/full and wraparound, with
+    # high-halfword inputs that must be truncated by the original STRH.
+    for write_index in range(16):
+        for read_index in range(16):
+            ring = struct.pack('<16HII', *range(0x9000,0x9010), write_index, read_index)
+            for event_code in (0,1,0x7fff,0xffff,0x10000,0xdeadbeef):
+                cases.append((0x08016862,'recovered_08016862',(event_code,0,0,0),[(0x2000f424,ring)]))
+            cases.append((0x080168a0,'recovered_080168a0',(0,0,0,0),[(0x2000f424,ring)]))
     failures, addresses = [], set()
     for index,(original,name,args,presets) in enumerate(cases):
         left,lmem = execute(flash,original,args,presets)
@@ -110,7 +118,7 @@ def main():
                              'presets':[(a,b.hex()) for a,b in presets],
                              'original':left,'compiled':right})
     report = {'status':'FAIL' if failures or any(b['status']!='PASS' for b in baselines) else 'PASS',
-              'scope':'five compiled candidates, including one partial dispatcher path; not complete firmware',
+              'scope':'seven compiled candidates, including one partial dispatcher path and two event-ring routines; not complete firmware',
               'source_sha256':digest(SOURCE.read_bytes()),'image_sha256':digest(flash),
               'compiler':subprocess.check_output([gcc,'--version'],text=True).splitlines()[0],
               'flags':flags,'compiled_binary_sha256':digest(binary.read_bytes()),

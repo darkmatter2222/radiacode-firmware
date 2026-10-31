@@ -15,8 +15,8 @@ address-preserving padding. Preserve the vendor containers as immutable inputs.
   the key and payload blocks. It does not compile recovered application source.
 - Fresh Ghidra analysis sets Thumb context before analysis, maps SRAM/MMIO, and
   disassembles seeded entries. Warnings and unresolved control flow remain tracked.
-- Five ARM-compiled reference-build candidates (one is a single dispatcher path)
-  are tested on 1,360 deterministic cases. See `reconstruction/validation.json`.
+- Seven ARM-compiled reference-build candidates (one is a single dispatcher path)
+  are tested on 3,152 deterministic cases. See `reconstruction/validation.json`.
 - A separate floating-point predicate experiment passes 10,947 return/memory/ABI
   comparisons including full FPSCR. See
   [reconstruction/CALIBRATION.md](../reconstruction/CALIBRATION.md).
