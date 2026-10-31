@@ -40,8 +40,8 @@ def execute(image, address, data, fpscr):
     uc.mem_write(0x20000400,data)
     uc.reg_write(UC_ARM_REG_FPSCR,fpscr)
     result=emulate.run_function(uc,trace,address,(0x20000400,0,0,0))
-    # Predicate output/memory/ABI contract. FPSCR exception flags recorded but
-    # not claimed equivalent: VCMP operand ordering can change signaling effects.
+    # Include all FPSCR bits in the candidate contract, including cumulative
+    # exception flags and final comparison flags.
     return result, uc.reg_read(UC_ARM_REG_FPSCR), sorted(set(trace.reads))
 
 
@@ -73,13 +73,13 @@ def main():
             ok=(left['stopped']==right['stopped']=='RETURN' and left['r0']==right['r0']
                 and left['writes']==right['writes']==[] and left['mmio']==right['mmio']==[]
                 and left['sp']==right['sp']==emulate.STACK_TOP
-                and left['callee_saved_preserved'] and right['callee_saved_preserved'])
+                and left['callee_saved_preserved'] and right['callee_saved_preserved'] and lf == rf)
             fp_flag_differences += (lf & 0x9f)!=(rf & 0x9f)
             if not ok and len(failures)<30: failures.append({'words':list(map(hex,words)),'fpscr':mode,'original':left,'compiled':right})
             if case%97==0 and len(counterexamples)<8:
                 wrong,_,_=execute(compiled,symbols['ordered_transcription'],data,mode)
                 if wrong['r0']!=left['r0']:counterexamples.append({'words':list(map(hex,words)),'fpscr':mode,'original':left['r0'],'ordered_transcription':wrong['r0']})
-    report={'status':'FAIL' if failures or not counterexamples else 'PASS','scope':'0x0802abf8 predicate return, writes, stack and callee-saved ABI; not FPSCR equivalence or firmware certification',
+    report={'status':'FAIL' if failures or not counterexamples else 'PASS','scope':'0x0802abf8 predicate return, writes, stack, integer callee-saved ABI and full FPSCR; bounded tests, not firmware certification',
             'image_sha256':build.digest(flash),'source_sha256':build.digest(source.read_bytes()),
             'harness_sha256':build.digest(Path(__file__).read_bytes()),'flags':flags,
             'compiler':subprocess.check_output([gcc,'--version'],text=True).splitlines()[0],

@@ -269,7 +269,7 @@ The current per-build record is `analysis/confidence.json`.
 | Decompiler recovery | Ghidra 12.2, explicit Thumb context; repeated C exports identical for all six builds | Reproducible analysis, with warnings and unresolved coverage still tracked |
 | Instruction comparison | Conditions, flags, operand order, widths and shifts retained | Conservative agreement where established; unknown renderings remain unresolved |
 | Compiled leaves | Five small candidates, one limited dispatcher path; 1,360 comparisons pass | Tested return, memory and integer ABI behavior in a bounded emulator |
-| Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/ABI agreement; FPSCR exception flags still differ |
+| Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/integer ABI and full FPSCR agreement in the tested cases |
 | Replacement bridge | 1,424 direct-entry/caller cases for one complete leaf | Emulator-only branch replacement; [details](reconstruction/HYBRID.md) |
 | Formal checks | Ten auxiliary model properties pass | Properties of format/model operations, not original-versus-rebuilt firmware equivalence |
 | Hardware behavior | Historical BLE captures only | No physical original-versus-rebuilt comparison yet |
@@ -810,7 +810,7 @@ $env:RC_TARGET='rc-410/fw4.16'; python pipeline/tools/lookup.py 0x08010188   # a
 * Reachability discovery does not yet resolve every indirect call or classify every application byte.
 * Ghidra warnings, changed function boundaries and removed candidates require review.
 * The bootloader is absent; zero padding preserves addresses without recovering its code.
-* The floating-point predicate has tested NaN-sensitive return behavior but unresolved FPSCR effects.
+* The floating-point predicate has tested NaN-sensitive return and FPSCR behavior; exhaustive equivalence remains open.
 * Exact board/MCU mapping, peripheral timing, interrupts/DMA and update recovery need validation.
 * Historical protocol and sensor interpretations above remain hypotheses where the captures do not settle them.
 * LZSS recompression decodes to the same payload but need not reproduce the vendor's token choices.
