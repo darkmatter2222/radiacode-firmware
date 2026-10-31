@@ -14,482 +14,482 @@
     },
     {
       "index": 2,
-      "name": "NMI",
+      "name": "Vector2",
       "address": "0x080363FD"
     },
     {
       "index": 3,
-      "name": "HardFault",
+      "name": "Vector3",
       "address": "0x080363FF"
     },
     {
       "index": 4,
-      "name": "MemManage",
+      "name": "Vector4",
       "address": "0x08036401"
     },
     {
       "index": 5,
-      "name": "BusFault",
+      "name": "Vector5",
       "address": "0x08036403"
     },
     {
       "index": 6,
-      "name": "UsageFault",
+      "name": "Vector6",
       "address": "0x08036405"
     },
     {
       "index": 7,
-      "name": "Reserved7",
+      "name": "Vector7",
       "address": "0x00000000"
     },
     {
       "index": 8,
-      "name": "Reserved8",
+      "name": "Vector8",
       "address": "0x00000000"
     },
     {
       "index": 9,
-      "name": "Reserved9",
+      "name": "Vector9",
       "address": "0x00000000"
     },
     {
       "index": 10,
-      "name": "Reserved10",
+      "name": "Vector10",
       "address": "0x00000000"
     },
     {
       "index": 11,
-      "name": "SVCall",
+      "name": "Vector11",
       "address": "0x08036407"
     },
     {
       "index": 12,
-      "name": "DebugMon",
+      "name": "Vector12",
       "address": "0x08036409"
     },
     {
       "index": 13,
-      "name": "Reserved13",
+      "name": "Vector13",
       "address": "0x00000000"
     },
     {
       "index": 14,
-      "name": "PendSV",
+      "name": "Vector14",
       "address": "0x0803640B"
     },
     {
       "index": 15,
-      "name": "SysTick",
+      "name": "Vector15",
       "address": "0x0803640D"
     },
     {
       "index": 16,
-      "name": "IRQ0_WWDG",
+      "name": "Vector16",
       "address": "0x0803C4D9"
     },
     {
       "index": 17,
-      "name": "IRQ1_PVD",
+      "name": "Vector17",
       "address": "0x0803C4D9"
     },
     {
       "index": 18,
-      "name": "IRQ2_TAMP_STAMP",
+      "name": "Vector18",
       "address": "0x0803C4D9"
     },
     {
       "index": 19,
-      "name": "IRQ3_RTC_WKUP",
+      "name": "Vector19",
       "address": "0x0803C4D9"
     },
     {
       "index": 20,
-      "name": "IRQ4_FLASH",
+      "name": "Vector20",
       "address": "0x0803C4D9"
     },
     {
       "index": 21,
-      "name": "IRQ5_RCC",
+      "name": "Vector21",
       "address": "0x0803C4D9"
     },
     {
       "index": 22,
-      "name": "IRQ6_EXTI0",
+      "name": "Vector22",
       "address": "0x0803C4D9"
     },
     {
       "index": 23,
-      "name": "IRQ7_EXTI1",
+      "name": "Vector23",
       "address": "0x0803640F"
     },
     {
       "index": 24,
-      "name": "IRQ8_EXTI2",
+      "name": "Vector24",
       "address": "0x08036423"
     },
     {
       "index": 25,
-      "name": "IRQ9_EXTI3",
+      "name": "Vector25",
       "address": "0x0803654B"
     },
     {
       "index": 26,
-      "name": "IRQ10_EXTI4",
+      "name": "Vector26",
       "address": "0x08036437"
     },
     {
       "index": 27,
-      "name": "IRQ11_DMA1_CH0",
+      "name": "Vector27",
       "address": "0x08036455"
     },
     {
       "index": 28,
-      "name": "IRQ12_DMA1_CH1",
+      "name": "Vector28",
       "address": "0x08036475"
     },
     {
       "index": 29,
-      "name": "IRQ13_DMA1_CH2",
+      "name": "Vector29",
       "address": "0x0803C4D9"
     },
     {
       "index": 30,
-      "name": "IRQ14_DMA1_CH3",
+      "name": "Vector30",
       "address": "0x0803C4D9"
     },
     {
       "index": 31,
-      "name": "IRQ15_DMA1_CH4",
+      "name": "Vector31",
       "address": "0x0803C4D9"
     },
     {
       "index": 32,
-      "name": "IRQ16_DMA1_CH5",
+      "name": "Vector32",
       "address": "0x0803C4D9"
     },
     {
       "index": 33,
-      "name": "IRQ17_DMA1_CH6",
+      "name": "Vector33",
       "address": "0x0803C4D9"
     },
     {
       "index": 34,
-      "name": "IRQ18_ADC1_2",
+      "name": "Vector34",
       "address": "0x080364A1"
     },
     {
       "index": 35,
-      "name": "IRQ19_USB_HP",
+      "name": "Vector35",
       "address": "0x0803C4D9"
     },
     {
       "index": 36,
-      "name": "IRQ20_USB_LP",
+      "name": "Vector36",
       "address": "0x0803C4D9"
     },
     {
       "index": 37,
-      "name": "IRQ21_DAC",
+      "name": "Vector37",
       "address": "0x0803C4D9"
     },
     {
       "index": 38,
-      "name": "IRQ22_SPI1",
+      "name": "Vector38",
       "address": "0x0803C4D9"
     },
     {
       "index": 39,
-      "name": "IRQ23_USART1",
+      "name": "Vector39",
       "address": "0x080364BF"
     },
     {
       "index": 40,
-      "name": "IRQ24_USART2",
+      "name": "Vector40",
       "address": "0x0803C4D9"
     },
     {
       "index": 41,
-      "name": "IRQ25_USART3",
+      "name": "Vector41",
       "address": "0x0803C4D9"
     },
     {
       "index": 42,
-      "name": "IRQ26_EXTI9_5",
+      "name": "Vector42",
       "address": "0x0803C4D9"
     },
     {
       "index": 43,
-      "name": "IRQ27_TIM1",
+      "name": "Vector43",
       "address": "0x0803C4D9"
     },
     {
       "index": 44,
-      "name": "IRQ28_TIM2",
+      "name": "Vector44",
       "address": "0x0803C4D9"
     },
     {
       "index": 45,
-      "name": "IRQ29_TIM3",
+      "name": "Vector45",
       "address": "0x0803C4D9"
     },
     {
       "index": 46,
-      "name": "IRQ30_TIM4",
+      "name": "Vector46",
       "address": "0x0803C4D9"
     },
     {
       "index": 47,
-      "name": "IRQ31_TIM5",
+      "name": "Vector47",
       "address": "0x0803C4D9"
     },
     {
       "index": 48,
-      "name": "IRQ32_SPI2",
+      "name": "Vector48",
       "address": "0x0803C4D9"
     },
     {
       "index": 49,
-      "name": "IRQ33_TIM8",
+      "name": "Vector49",
       "address": "0x0803C4D9"
     },
     {
       "index": 50,
-      "name": "IRQ34_TIM7",
+      "name": "Vector50",
       "address": "0x0803C4D9"
     },
     {
       "index": 51,
-      "name": "IRQ35_LCD",
+      "name": "Vector51",
       "address": "0x0803C4D9"
     },
     {
       "index": 52,
-      "name": "IRQ36_TIM9",
+      "name": "Vector52",
       "address": "0x0803C4D9"
     },
     {
       "index": 53,
-      "name": "IRQ37_TIM10",
+      "name": "Vector53",
       "address": "0x0803C4D9"
     },
     {
       "index": 54,
-      "name": "IRQ38_TIM11",
+      "name": "Vector54",
       "address": "0x0803C4D9"
     },
     {
       "index": 55,
-      "name": "IRQ39_USB_OTG_FS",
+      "name": "Vector55",
       "address": "0x0803C4D9"
     },
     {
       "index": 56,
-      "name": "IRQ40_DMA2_CH0",
+      "name": "Vector56",
       "address": "0x080364F9"
     },
     {
       "index": 57,
-      "name": "IRQ41_DMA2_CH1",
+      "name": "Vector57",
       "address": "0x0803C4D9"
     },
     {
       "index": 58,
-      "name": "IRQ42_DMA2_CH2",
+      "name": "Vector58",
       "address": "0x0803C4D9"
     },
     {
       "index": 59,
-      "name": "IRQ43_DMA2_CH3",
+      "name": "Vector59",
       "address": "0x0803C4D9"
     },
     {
       "index": 60,
-      "name": "IRQ44_DMA2_CH4",
+      "name": "Vector60",
       "address": "0x0803C4D9"
     },
     {
       "index": 61,
-      "name": "IRQ45_DMA2_CH5",
+      "name": "Vector61",
       "address": "0x0803C4D9"
     },
     {
       "index": 62,
-      "name": "IRQ46_DMA2_CH6",
+      "name": "Vector62",
       "address": "0x0803C4D9"
     },
     {
       "index": 63,
-      "name": "IRQ47_USART6",
+      "name": "Vector63",
       "address": "0x0803C4D9"
     },
     {
       "index": 64,
-      "name": "IRQ48_JPEG",
+      "name": "Vector64",
       "address": "0x0803C4D9"
     },
     {
       "index": 65,
-      "name": "IRQ49_NSTC",
+      "name": "Vector65",
       "address": "0x0803C4D9"
     },
     {
       "index": 66,
-      "name": "IRQ50_AES",
+      "name": "Vector66",
       "address": "0x0803651B"
     },
     {
       "index": 67,
-      "name": "IRQ51_RNG",
+      "name": "Vector67",
       "address": "0x0803C4D9"
     },
     {
       "index": 68,
-      "name": "IRQ52_CAPTURE_COMPARE",
+      "name": "Vector68",
       "address": "0x0803C4D9"
     },
     {
       "index": 69,
-      "name": "IRQ53_LCD_TFT",
+      "name": "Vector69",
       "address": "0x0803C4D9"
     },
     {
       "index": 70,
-      "name": "IRQ54_TIM12",
+      "name": "Vector70",
       "address": "0x0803651F"
     },
     {
       "index": 71,
-      "name": "IRQ55_TIM13",
+      "name": "Vector71",
       "address": "0x0803C4D9"
     },
     {
       "index": 72,
-      "name": "IRQ56_TIM14",
+      "name": "Vector72",
       "address": "0x0803C4D9"
     },
     {
       "index": 73,
-      "name": "IRQ57_DMA2D",
+      "name": "Vector73",
       "address": "0x0803C4D9"
     },
     {
       "index": 74,
-      "name": "IRQ58_COMP",
+      "name": "Vector74",
       "address": "0x0803C4D9"
     },
     {
       "index": 75,
-      "name": "IRQ59_LPTIM1",
+      "name": "Vector75",
       "address": "0x0803C4D9"
     },
     {
       "index": 76,
-      "name": "IRQ60_LPUART1",
+      "name": "Vector76",
       "address": "0x0803C4D9"
     },
     {
       "index": 77,
-      "name": "IRQ61_QUADSPI",
+      "name": "Vector77",
       "address": "0x0803C4D9"
     },
     {
       "index": 78,
-      "name": "IRQ62_LPTIM2",
+      "name": "Vector78",
       "address": "0x0803C4D9"
     },
     {
       "index": 79,
-      "name": "IRQ63_USB_FS",
+      "name": "Vector79",
       "address": "0x0803C4D9"
     },
     {
       "index": 80,
-      "name": "IRQ64_DMAMUX",
+      "name": "Vector80",
       "address": "0x0803C4D9"
     },
     {
       "index": 81,
-      "name": "IRQ65_LPUART2",
+      "name": "Vector81",
       "address": "0x08036523"
     },
     {
       "index": 82,
-      "name": "IRQ66_LPTIM3",
+      "name": "Vector82",
       "address": "0x0803653B"
     },
     {
       "index": 83,
-      "name": "IRQ67_LPTIM4",
+      "name": "Vector83",
       "address": "0x0803655B"
     },
     {
       "index": 84,
-      "name": "IRQ68_LPTIM5",
+      "name": "Vector84",
       "address": "0x0803C4D9"
     },
     {
       "index": 85,
-      "name": "IRQ69_RTC",
+      "name": "Vector85",
       "address": "0x0803C4D9"
     },
     {
       "index": 86,
-      "name": "IRQ70",
+      "name": "Vector86",
       "address": "0x0803C4D9"
     },
     {
       "index": 87,
-      "name": "IRQ71",
+      "name": "Vector87",
       "address": "0x0803C4D9"
     },
     {
       "index": 88,
-      "name": "IRQ72",
+      "name": "Vector88",
       "address": "0x0803C4D9"
     },
     {
       "index": 89,
-      "name": "IRQ73",
+      "name": "Vector89",
       "address": "0x0803C4D9"
     },
     {
       "index": 90,
-      "name": "IRQ74",
+      "name": "Vector90",
       "address": "0x0803C4D9"
     },
     {
       "index": 91,
-      "name": "IRQ75",
+      "name": "Vector91",
       "address": "0x0803C4D9"
     },
     {
       "index": 92,
-      "name": "IRQ76",
+      "name": "Vector92",
       "address": "0x0803C4D9"
     },
     {
       "index": 93,
-      "name": "IRQ77",
+      "name": "Vector93",
       "address": "0x0803C4D9"
     },
     {
       "index": 94,
-      "name": "IRQ78",
+      "name": "Vector94",
       "address": "0x00000000"
     },
     {
       "index": 95,
-      "name": "IRQ79",
+      "name": "Vector95",
       "address": "0x00000000"
     },
     {
       "index": 96,
-      "name": "IRQ80",
+      "name": "Vector96",
       "address": "0x0803C4D9"
     },
     {
       "index": 97,
-      "name": "IRQ81",
+      "name": "Vector97",
       "address": "0x0803C4D9"
     }
   ]

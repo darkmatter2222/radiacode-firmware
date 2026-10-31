@@ -2,14 +2,80 @@
   "image_bytes": 248576,
   "base": "0x08000000",
   "end": "0x0803CB00",
-  "instructions": 66570,
-  "functions": 1865,
+  "instructions": 9511,
+  "functions": 336,
   "strings": 1911,
   "vectors": 98,
-  "listing_lines": 69040,
+  "listing_lines": 19485,
   "covered_bytes": 248576,
-  "data_word_items": 290,
-  "ascii_items": 740,
-  "fill_items": 1190,
-  "byte_items": 246
+  "data_word_items": 0,
+  "ascii_items": 0,
+  "fill_items": 1,
+  "byte_items": 9972,
+  "unclassified_bytes": 158212,
+  "instruction_bytes": 24828,
+  "image_sha256": "828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5",
+  "scope": "candidate CFG discovery; coverage is byte accounting, not C equivalence",
+  "unresolved_transfers": [
+    {
+      "address": "0x801712c",
+      "kind": "indirect_branch",
+      "instruction": "bx r1"
+    },
+    {
+      "address": "0x802076a",
+      "kind": "indirect_call",
+      "instruction": "blx r3"
+    },
+    {
+      "address": "0x8036560",
+      "kind": "indirect_call",
+      "instruction": "blx r1"
+    },
+    {
+      "address": "0x8015598",
+      "kind": "indirect_branch",
+      "instruction": "tbh [pc, r1, lsl #1]"
+    },
+    {
+      "address": "0x8025542",
+      "kind": "indirect_call",
+      "instruction": "blx r3"
+    },
+    {
+      "address": "0x80167de",
+      "kind": "indirect_call",
+      "instruction": "blx r0"
+    },
+    {
+      "address": "0x8034ff0",
+      "kind": "indirect_branch",
+      "instruction": "bx r3"
+    },
+    {
+      "address": "0x8018efa",
+      "kind": "indirect_call",
+      "instruction": "blx ip"
+    },
+    {
+      "address": "0x8025834",
+      "kind": "indirect_branch",
+      "instruction": "bx r1"
+    },
+    {
+      "address": "0x8018ab0",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r2]"
+    },
+    {
+      "address": "0x8027022",
+      "kind": "indirect_call",
+      "instruction": "blx r1"
+    },
+    {
+      "address": "0x802621a",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r0]"
+    }
+  ]
 }

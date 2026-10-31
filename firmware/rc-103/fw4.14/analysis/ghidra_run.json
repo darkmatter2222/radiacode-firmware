@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "analysis/export completed; not equivalence",
+  "ghidra": "12.2",
+  "processor": "ARM:LE:32:v7",
+  "scripts": {
+    "PrepareFirmware.java": "032f9f673618b99879ecc52f5e7ce3cb58581c2bc21ac48634fa3404249f1637",
+    "DumpC.java": "21e336edc854f77a4d922511ad8cdf666e61296b1331145f25f73b3a5507c2ac",
+    "DumpListing.java": "224af9b63623dd0a12ba631fc8b992f2dc045c503320a564c1f4895a322c96cc"
+  },
+  "output_sha256": "25ede93f560b3f840c70db3dfa468c316eed516b8b4ca7c307b04aacedd9bbce",
+  "provenance": {
+    "schema": 1,
+    "inputs": {
+      "container": "551b0d2d5290a017cda9395f0b5d8b339a5c8736e1b28cb95386d959d011a015",
+      "flash": "96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d"
+    },
+    "pipeline_source_sha256": "a06690d126e92611d53ae9f61214ac7815af3d59ffa26d5cde1624b7b874d04e",
+    "tools": {
+      "capstone": "5.0.9",
+      "unicorn": "2.1.4",
+      "z3-solver": "5.3.3.0"
+    }
+  }
+}

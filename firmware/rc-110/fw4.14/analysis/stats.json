@@ -2,14 +2,80 @@
   "image_bytes": 251904,
   "base": "0x08000000",
   "end": "0x0803D800",
-  "instructions": 67873,
-  "functions": 1908,
+  "instructions": 9467,
+  "functions": 333,
   "strings": 1980,
   "vectors": 98,
-  "listing_lines": 70404,
+  "listing_lines": 19655,
   "covered_bytes": 251904,
-  "data_word_items": 311,
-  "ascii_items": 772,
-  "fill_items": 1194,
-  "byte_items": 250
+  "data_word_items": 0,
+  "ascii_items": 0,
+  "fill_items": 1,
+  "byte_items": 10186,
+  "unclassified_bytes": 161678,
+  "instruction_bytes": 24690,
+  "image_sha256": "71045208580628e2f8e9c7c29bb25426ee074b00a69b93153e53db006a923502",
+  "scope": "candidate CFG discovery; coverage is byte accounting, not C equivalence",
+  "unresolved_transfers": [
+    {
+      "address": "0x8017270",
+      "kind": "indirect_branch",
+      "instruction": "bx r1"
+    },
+    {
+      "address": "0x80209e2",
+      "kind": "indirect_call",
+      "instruction": "blx r3"
+    },
+    {
+      "address": "0x80371ac",
+      "kind": "indirect_call",
+      "instruction": "blx r1"
+    },
+    {
+      "address": "0x80156c8",
+      "kind": "indirect_branch",
+      "instruction": "tbh [pc, r1, lsl #1]"
+    },
+    {
+      "address": "0x80259ca",
+      "kind": "indirect_call",
+      "instruction": "blx r3"
+    },
+    {
+      "address": "0x8016912",
+      "kind": "indirect_call",
+      "instruction": "blx r0"
+    },
+    {
+      "address": "0x8035c3c",
+      "kind": "indirect_branch",
+      "instruction": "bx r3"
+    },
+    {
+      "address": "0x8019186",
+      "kind": "indirect_call",
+      "instruction": "blx ip"
+    },
+    {
+      "address": "0x8025cbc",
+      "kind": "indirect_branch",
+      "instruction": "bx r1"
+    },
+    {
+      "address": "0x8018d3c",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r2]"
+    },
+    {
+      "address": "0x80274aa",
+      "kind": "indirect_call",
+      "instruction": "blx r1"
+    },
+    {
+      "address": "0x80266a2",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r0]"
+    }
+  ]
 }

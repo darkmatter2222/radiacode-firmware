@@ -1,201 +1,373 @@
 {
- "target": "rc-103/fw4.14",
- "cases": [
-  {
-   "name": "const_080166ce",
-   "addr": "0x080166CE",
-   "args": [
-    "0x0",
-    "0x0",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 2,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000001",
-   "model_r0": "0x00000001",
-   "r0_match": true,
-   "writes_native": 0,
-   "writes_model": 0,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "const_08017ef2",
-   "addr": "0x08017EF2",
-   "args": [
-    "0x0",
-    "0x0",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 2,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000002",
-   "model_r0": "0x00000002",
-   "r0_match": true,
-   "writes_native": 0,
-   "writes_model": 0,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "const_08017ef6",
-   "addr": "0x08017EF6",
-   "args": [
-    "0x0",
-    "0x0",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 2,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000003",
-   "model_r0": "0x00000003",
-   "r0_match": true,
-   "writes_native": 0,
-   "writes_model": 0,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "transfer_state_le",
-   "addr": "0x08017EB4",
-   "args": [
-    "0x0",
-    "0x0",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 11,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000001",
-   "model_r0": "0x00000001",
-   "r0_match": true,
-   "writes_native": 0,
-   "writes_model": 0,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "transfer_state_gt",
-   "addr": "0x08017EB4",
-   "args": [
-    "0x0",
-    "0x0",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 14,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000000",
-   "model_r0": "0x00000000",
-   "r0_match": true,
-   "writes_native": 0,
-   "writes_model": 0,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "transfer_state_other",
-   "addr": "0x08017EB4",
-   "args": [
-    "0x0",
-    "0x0",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 13,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000000",
-   "model_r0": "0x00000000",
-   "r0_match": true,
-   "writes_native": 0,
-   "writes_model": 0,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "item_502_push",
-   "addr": "0x080275C4",
-   "args": [
-    "0x20000400",
-    "0x502",
-    "0x0",
-    "0x0"
-   ],
-   "instructions": 20,
-   "stopped": "reached sentinel",
-   "native_r0": "0x00000001",
-   "model_r0": "0x00000001",
-   "r0_match": true,
-   "writes_native": 8,
-   "writes_model": 8,
-   "write_bytes_match": true,
-   "first_write_diff": null
-  },
-  {
-   "name": "frame_serialize",
-   "addr": "0x08028A4C",
-   "args": [
-    "0x20000500",
-    "0x0",
-    "0x0",
-    "0xA5A5A5A5"
-   ],
-   "instructions": 58,
-   "stopped": "reached sentinel",
-   "native_r0": "0x20000904",
-   "model_r0": "0x20000904",
-   "r0_match": true,
-   "writes_native": 28,
-   "writes_model": 28,
-   "write_bytes_match": true,
-   "first_write_diff": null
+  "target": "rc-103/fw4.14",
+  "cases": [
+    {
+      "name": "const_080166ce",
+      "addr": "0x080166CE",
+      "args": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 2,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134309582,
+        134309584
+      ],
+      "mmio": [],
+      "native_r0": "0x00000001",
+      "model_r0": "0x00000001",
+      "r0_match": true,
+      "writes_native": 0,
+      "writes_model": 0,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "const_08017ef2",
+      "addr": "0x08017EF2",
+      "args": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 2,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134315762,
+        134315764
+      ],
+      "mmio": [],
+      "native_r0": "0x00000002",
+      "model_r0": "0x00000002",
+      "r0_match": true,
+      "writes_native": 0,
+      "writes_model": 0,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "const_08017ef6",
+      "addr": "0x08017EF6",
+      "args": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 2,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134315766,
+        134315768
+      ],
+      "mmio": [],
+      "native_r0": "0x00000003",
+      "model_r0": "0x00000003",
+      "r0_match": true,
+      "writes_native": 0,
+      "writes_model": 0,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "transfer_state_le",
+      "addr": "0x08017EB4",
+      "args": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 11,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134315700,
+        134315702,
+        134315704,
+        134315706,
+        134315708,
+        134315710,
+        134315716,
+        134315718,
+        134315720,
+        134315728,
+        134315730
+      ],
+      "mmio": [],
+      "native_r0": "0x00000001",
+      "model_r0": "0x00000001",
+      "r0_match": true,
+      "writes_native": 0,
+      "writes_model": 0,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "transfer_state_gt",
+      "addr": "0x08017EB4",
+      "args": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 14,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134315700,
+        134315702,
+        134315704,
+        134315706,
+        134315708,
+        134315710,
+        134315712,
+        134315714,
+        134315716,
+        134315718,
+        134315720,
+        134315722,
+        134315732,
+        134315734
+      ],
+      "mmio": [],
+      "native_r0": "0x00000000",
+      "model_r0": "0x00000000",
+      "r0_match": true,
+      "writes_native": 0,
+      "writes_model": 0,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "transfer_state_other",
+      "addr": "0x08017EB4",
+      "args": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 13,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134315700,
+        134315702,
+        134315704,
+        134315706,
+        134315708,
+        134315710,
+        134315712,
+        134315714,
+        134315716,
+        134315724,
+        134315726,
+        134315732,
+        134315734
+      ],
+      "mmio": [],
+      "native_r0": "0x00000000",
+      "model_r0": "0x00000000",
+      "r0_match": true,
+      "writes_native": 0,
+      "writes_model": 0,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "item_502_push",
+      "addr": "0x080275C4",
+      "args": [
+        "0x20000400",
+        "0x502",
+        "0x0",
+        "0x0"
+      ],
+      "instructions": 20,
+      "stopped": "RETURN",
+      "scope": "function return",
+      "completion_match": true,
+      "unique_addresses": [
+        134378948,
+        134378952,
+        134378954,
+        134378956,
+        134378960,
+        134378962,
+        134378964,
+        134378968,
+        134378970,
+        134379464,
+        134379468,
+        134379470,
+        134380116,
+        134380118,
+        134380120,
+        134380122,
+        134380126,
+        134380764,
+        134380766,
+        134380768
+      ],
+      "mmio": [],
+      "native_r0": "0x00000001",
+      "model_r0": "0x00000001",
+      "r0_match": true,
+      "writes_native": 8,
+      "writes_model": 8,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    },
+    {
+      "name": "frame_serialize",
+      "addr": "0x08028A4C",
+      "args": [
+        "0x20000500",
+        "0x0",
+        "0x0",
+        "0xA5A5A5A5"
+      ],
+      "instructions": 58,
+      "stopped": "RETURN",
+      "scope": "partial execution to substituted call",
+      "completion_match": true,
+      "unique_addresses": [
+        134384204,
+        134384206,
+        134384208,
+        134384210,
+        134384212,
+        134384214,
+        134384218,
+        134384220,
+        134384222,
+        134384224,
+        134384226,
+        134384230,
+        134384232,
+        134384234,
+        134384236,
+        134384238,
+        134384240,
+        134384244,
+        134384246,
+        134384248,
+        134384252,
+        134384254,
+        134384256,
+        134384260,
+        134384262,
+        134384264,
+        134384266,
+        134384270,
+        134384272,
+        134384274,
+        134384276,
+        134384280,
+        134384282,
+        134384284,
+        134384288,
+        134384290,
+        134384292
+      ],
+      "mmio": [],
+      "native_r0": "0x20000904",
+      "model_r0": "0x20000904",
+      "r0_match": true,
+      "writes_native": 28,
+      "writes_model": 28,
+      "write_bytes_match": true,
+      "first_write_diff": null,
+      "status": "PASS"
+    }
+  ],
+  "format": [
+    {
+      "model": "crc32_mpeg2",
+      "vectors": 12,
+      "passed": 12,
+      "notes": "table-free bitwise model vs the table version",
+      "status": "PASS"
+    },
+    {
+      "model": "mangle_inverse",
+      "vectors": 128,
+      "passed": 128,
+      "notes": "48-round chain is a permutation, one round inverted",
+      "status": "PASS"
+    },
+    {
+      "model": "mangle_blocks",
+      "vectors": 16,
+      "passed": 16,
+      "notes": "encrypt(decrypt(x)) == x on this container's blocks",
+      "status": "PASS"
+    },
+    {
+      "model": "lzss_decode",
+      "vectors": 8,
+      "passed": 8,
+      "notes": "independent token walk over this container's streams",
+      "status": "PASS"
+    },
+    {
+      "model": "msdos_datetime",
+      "vectors": 13,
+      "passed": 13,
+      "notes": "field extraction, cross-checked in step 1",
+      "status": "PASS"
+    },
+    {
+      "model": "borland_lcg",
+      "vectors": 6,
+      "passed": 6,
+      "notes": "keystream bytes and final state",
+      "status": "PASS"
+    },
+    {
+      "model": "borland_lcg_device",
+      "vectors": 0,
+      "passed": 0,
+      "notes": "raw device ciphertext vs retained decoded fields; SKIP when raw bytes absent",
+      "status": "SKIP"
+    }
+  ],
+  "scope": "original machine code vs Python models, not rebuilt C",
+  "unique_instruction_addresses": 81,
+  "function_status": "PASS",
+  "provenance": {
+    "schema": 1,
+    "inputs": {
+      "container": "551b0d2d5290a017cda9395f0b5d8b339a5c8736e1b28cb95386d959d011a015",
+      "flash": "96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d"
+    },
+    "pipeline_source_sha256": "4a68bf053b121e77a7ccfb067fc8dd3dd4092bf7a83b638707ff97008ea4f508",
+    "tools": {
+      "capstone": "5.0.9",
+      "unicorn": "2.1.4",
+      "z3-solver": "5.3.3.0"
+    }
   }
- ],
- "format": [
-  {
-   "model": "crc32_mpeg2",
-   "vectors": 12,
-   "passed": 12,
-   "notes": "table-free bitwise model vs the table version"
-  },
-  {
-   "model": "mangle_inverse",
-   "vectors": 128,
-   "passed": 128,
-   "notes": "48-round chain is a permutation, one round inverted"
-  },
-  {
-   "model": "mangle_blocks",
-   "vectors": 16,
-   "passed": 16,
-   "notes": "encrypt(decrypt(x)) == x on this container's blocks"
-  },
-  {
-   "model": "lzss_decode",
-   "vectors": 8,
-   "passed": 8,
-   "notes": "independent token walk over this container's streams"
-  },
-  {
-   "model": "msdos_datetime",
-   "vectors": 13,
-   "passed": 13,
-   "notes": "field extraction, cross-checked in step 1"
-  },
-  {
-   "model": "borland_lcg",
-   "vectors": 6,
-   "passed": 6,
-   "notes": "keystream bytes and final state"
-  },
-  {
-   "model": "borland_lcg_device",
-   "vectors": 0,
-   "passed": 0,
-   "notes": "against the captured 0x081C replies: length word, payload round-trip, 7-bit mask excluded"
-  }
- ]
 }

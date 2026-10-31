@@ -1,7 +1,7 @@
 {
   "generated_from": "firmware/rc-410/fw4.16/flash.bin + firmware/rc-410/fw4.16/analysis/{strings,functions}.json",
   "literal_pool_string_count": 76,
-  "functions_with_strings": 18,
+  "functions_with_strings": 11,
   "string_refs": {
     "0x08039936": {
       "text": "pGpGpGbH",
@@ -47,7 +47,7 @@
       "referenced_by": [
         {
           "at": "0x08016568",
-          "in": "sub_08016558"
+          "in": "sub_0801651C"
         }
       ]
     },
@@ -56,7 +56,7 @@
       "referenced_by": [
         {
           "at": "0x08019710",
-          "in": "sub_080196DC"
+          "in": "sub_080195AA"
         }
       ]
     },
@@ -65,7 +65,7 @@
       "referenced_by": [
         {
           "at": "0x08019714",
-          "in": "sub_080196DC"
+          "in": "sub_080195AA"
         }
       ]
     },
@@ -74,7 +74,7 @@
       "referenced_by": [
         {
           "at": "0x08020160",
-          "in": "sub_08020158"
+          "in": "sub_0801FFD0"
         }
       ]
     },
@@ -83,7 +83,7 @@
       "referenced_by": [
         {
           "at": "0x08020164",
-          "in": "sub_08020158"
+          "in": "sub_0801FFD0"
         }
       ]
     },
@@ -92,15 +92,15 @@
       "referenced_by": [
         {
           "at": "0x08021004",
-          "in": "sub_08020FEC"
+          "in": "sub_08020FA8"
         },
         {
           "at": "0x08021014",
-          "in": "sub_08020FEC"
+          "in": "sub_08020FA8"
         },
         {
           "at": "0x08021034",
-          "in": "sub_08020FEC"
+          "in": "sub_08020FA8"
         }
       ]
     },
@@ -118,7 +118,7 @@
       "referenced_by": [
         {
           "at": "0x08026518",
-          "in": "sub_0802640E"
+          "in": "sub_080263EA"
         }
       ]
     },
@@ -127,7 +127,7 @@
       "referenced_by": [
         {
           "at": "0x0802651C",
-          "in": "sub_0802640E"
+          "in": "sub_080263EA"
         }
       ]
     },
@@ -136,7 +136,7 @@
       "referenced_by": [
         {
           "at": "0x08026520",
-          "in": "sub_0802640E"
+          "in": "sub_080263EA"
         }
       ]
     },
@@ -154,7 +154,7 @@
       "referenced_by": [
         {
           "at": "0x08027FB4",
-          "in": "sub_08027F7E"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -163,11 +163,11 @@
       "referenced_by": [
         {
           "at": "0x0802822C",
-          "in": "sub_0802821E"
+          "in": "sub_08027E98"
         },
         {
           "at": "0x0803B0B0",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -176,7 +176,7 @@
       "referenced_by": [
         {
           "at": "0x08028BF0",
-          "in": "sub_08028B8E"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -185,7 +185,7 @@
       "referenced_by": [
         {
           "at": "0x08028BFC",
-          "in": "sub_08028B8E"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -194,7 +194,7 @@
       "referenced_by": [
         {
           "at": "0x08028C00",
-          "in": "sub_08028B8E"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -203,7 +203,7 @@
       "referenced_by": [
         {
           "at": "0x08028C04",
-          "in": "sub_08028B8E"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -212,7 +212,7 @@
       "referenced_by": [
         {
           "at": "0x08028C08",
-          "in": "sub_08028B8E"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -221,7 +221,7 @@
       "referenced_by": [
         {
           "at": "0x08029DCC",
-          "in": "sub_08029DBA"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -230,7 +230,7 @@
       "referenced_by": [
         {
           "at": "0x08029DD0",
-          "in": "sub_08029DBA"
+          "in": "sub_08027E98"
         }
       ]
     },
@@ -239,11 +239,11 @@
       "referenced_by": [
         {
           "at": "0x08038DF8",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         },
         {
           "at": "0x08038E04",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -252,11 +252,11 @@
       "referenced_by": [
         {
           "at": "0x08038E1C",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         },
         {
           "at": "0x08038E28",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -265,7 +265,7 @@
       "referenced_by": [
         {
           "at": "0x08038EDC",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -274,7 +274,7 @@
       "referenced_by": [
         {
           "at": "0x08038EF4",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -283,7 +283,7 @@
       "referenced_by": [
         {
           "at": "0x08038F00",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -292,7 +292,7 @@
       "referenced_by": [
         {
           "at": "0x08038F0C",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -301,7 +301,7 @@
       "referenced_by": [
         {
           "at": "0x08038F18",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -310,7 +310,7 @@
       "referenced_by": [
         {
           "at": "0x08038F24",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -319,7 +319,7 @@
       "referenced_by": [
         {
           "at": "0x08038F30",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -328,7 +328,7 @@
       "referenced_by": [
         {
           "at": "0x08038F54",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -337,7 +337,7 @@
       "referenced_by": [
         {
           "at": "0x08038F60",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -346,7 +346,7 @@
       "referenced_by": [
         {
           "at": "0x08038F6C",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -355,7 +355,7 @@
       "referenced_by": [
         {
           "at": "0x08038F78",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -364,7 +364,7 @@
       "referenced_by": [
         {
           "at": "0x08038F84",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -373,7 +373,7 @@
       "referenced_by": [
         {
           "at": "0x08038F90",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -382,7 +382,7 @@
       "referenced_by": [
         {
           "at": "0x08038F9C",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -391,7 +391,7 @@
       "referenced_by": [
         {
           "at": "0x08038FA8",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -400,7 +400,7 @@
       "referenced_by": [
         {
           "at": "0x08038FB4",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -409,7 +409,7 @@
       "referenced_by": [
         {
           "at": "0x08038FC0",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -418,7 +418,7 @@
       "referenced_by": [
         {
           "at": "0x08038FCC",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -427,7 +427,7 @@
       "referenced_by": [
         {
           "at": "0x08038FD8",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -436,7 +436,7 @@
       "referenced_by": [
         {
           "at": "0x08038FE4",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -445,7 +445,7 @@
       "referenced_by": [
         {
           "at": "0x08038FF0",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -454,7 +454,7 @@
       "referenced_by": [
         {
           "at": "0x08038FFC",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -463,7 +463,7 @@
       "referenced_by": [
         {
           "at": "0x08039008",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -472,7 +472,7 @@
       "referenced_by": [
         {
           "at": "0x08039014",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -481,7 +481,7 @@
       "referenced_by": [
         {
           "at": "0x0803912C",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -490,7 +490,7 @@
       "referenced_by": [
         {
           "at": "0x08039144",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -499,7 +499,7 @@
       "referenced_by": [
         {
           "at": "0x08039174",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -508,7 +508,7 @@
       "referenced_by": [
         {
           "at": "0x08039180",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -517,7 +517,7 @@
       "referenced_by": [
         {
           "at": "0x080391A0",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -526,7 +526,7 @@
       "referenced_by": [
         {
           "at": "0x080391D4",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -535,7 +535,7 @@
       "referenced_by": [
         {
           "at": "0x080391EC",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -544,7 +544,7 @@
       "referenced_by": [
         {
           "at": "0x0803921C",
-          "in": "sub_080388E6"
+          "in": "sub_08038898"
         }
       ]
     },
@@ -553,43 +553,43 @@
       "referenced_by": [
         {
           "at": "0x0803A200",
-          "in": "sub_0803A15C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803A260",
-          "in": "sub_0803A15C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803A300",
-          "in": "sub_0803A15C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803ABA0",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803ABE0",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803AEA0",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803AEE0",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803B27C",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803B29C",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803B86C",
-          "in": "sub_0803A85C"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -598,11 +598,11 @@
       "referenced_by": [
         {
           "at": "0x0803D898",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803D89C",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -611,11 +611,11 @@
       "referenced_by": [
         {
           "at": "0x0803D8C4",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803D8C8",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -624,7 +624,7 @@
       "referenced_by": [
         {
           "at": "0x0803DBA8",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -633,7 +633,7 @@
       "referenced_by": [
         {
           "at": "0x0803DFB8",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -642,7 +642,7 @@
       "referenced_by": [
         {
           "at": "0x0803DFC0",
-          "in": "sub_0803D6C6"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -651,15 +651,15 @@
       "referenced_by": [
         {
           "at": "0x0803E458",
-          "in": "sub_0803E140"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803E480",
-          "in": "sub_0803E140"
+          "in": "sub_08039AB4"
         },
         {
           "at": "0x0803E4A4",
-          "in": "sub_0803E140"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -668,7 +668,7 @@
       "referenced_by": [
         {
           "at": "0x0803F050",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -677,7 +677,7 @@
       "referenced_by": [
         {
           "at": "0x0803F06C",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -686,7 +686,7 @@
       "referenced_by": [
         {
           "at": "0x0803F30C",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -695,7 +695,7 @@
       "referenced_by": [
         {
           "at": "0x0803F408",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -704,7 +704,7 @@
       "referenced_by": [
         {
           "at": "0x0803F440",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -713,7 +713,7 @@
       "referenced_by": [
         {
           "at": "0x0803F504",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -722,7 +722,7 @@
       "referenced_by": [
         {
           "at": "0x0803F53C",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -731,7 +731,7 @@
       "referenced_by": [
         {
           "at": "0x0803F574",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -740,7 +740,7 @@
       "referenced_by": [
         {
           "at": "0x0803F600",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -749,7 +749,7 @@
       "referenced_by": [
         {
           "at": "0x0803F638",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -758,7 +758,7 @@
       "referenced_by": [
         {
           "at": "0x0803F670",
-          "in": "sub_0803EBF8"
+          "in": "sub_08039AB4"
         }
       ]
     },
@@ -767,13 +767,13 @@
       "referenced_by": [
         {
           "at": "0x0803F9A8",
-          "in": "handler_reset"
+          "in": "sub_0803F724"
         }
       ]
     }
   },
   "function_strings": {
-    "sub_080388E6": [
+    "sub_08038898": [
       "xpG@xpG",
       "ypG@ypG",
       "pG@n",
@@ -792,44 +792,44 @@
       " pGA",
       " pGp"
     ],
-    "sub_08028B8E": [
+    "sub_08027E98": [
+      "BLE: error packet received => %0.2X; %0.2X; %0.2X; %0.2X!",
+      "BhJ`pG8",
       "gfffError: S%d Packet size corrupted! PacketSize = 0x%08X",
       "Error: S%d Command corrupted! Cmd = 0x%08X",
       "Error: S%d Valid sign corrupted! Sgn = 0x%08X",
       "Error: S%d Packet or String size corrupted! PacketSize = 0x%08X, StringSize = 0x%08X",
-      "Error: S%d Data frame corrupted!"
+      "Error: S%d Data frame corrupted!",
+      "[DeviceParams]\nCR_AlarmsNum=2\nCR_AlarmMin_cps=1e-1\nCR_AlarmMax_cps=50e6\nCR_AlarmDefL1_cps=20\nCR_AlarmDefL2_cps=60\nDR_AlarmsNum=2\nDR_AlarmMin_R_h=1e-6\nDR_AlarmMax_R_h=9e2\nDR_AlarmDefL1_R_h=40e-6\nDR_AlarmDefL2_R_h=120e-6\nDS_AlarmsNum=2\nDS_AlarmVsfrMul=10\nDS_AlarmMin_R=1e-5\nDS_AlarmMax_R=9999.99999\nDS_AlarmDefL1_R=9999.99999\nDS_AlarmDefL2_R=9999.99999\nMinFrmPeriod_ms=500\nVSFR_DISP_OFF_TIME=5 s|5 ",
+      "[VSFR_DEVICE_CTRL]\nAddr=0x00000500\nVirtual=1\nSize=1\n[VSFR_DEVICE_LANG]\nAddr=0x00000502\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DEVICE_ON]\nAddr=0x00000503\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DEVICE_TIME]\nAddr=0x00000504\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_BLE_TX_PWR]\nAddr=0x00000700\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CTRL]\nAddr=0x00000510\nVirtual=1\nSize=1\n[VSFR_DISP_BRT]\nAddr=0x00000511\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CONTR]\nAddr=0x00000512\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_OFF_TIME]\nAddr=0x00000513\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_DISP_ON]\nAddr=0x00000514\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DISP_DIR]\nAddr=0x00000515\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_BACKLT_ON]\nAddr=0x00000516\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_SOUND_CTRL]\nAddr=0x00000520\nVirtual=1\nSize=2\n[VSFR_SOUND_VOL]\nAddr=0x00000521\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_SOUND_ON]\nAddr=0x00000522\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_VIBRO_CTRL]\nAddr=0x00000530\nVirtual=1\nSize=1\n[VSFR_VIBRO_ON]\nAddr=0x00000531\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_ALARM_MODE]\nAddr=0x000005E0\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_MS_RUN]\nAddr=0x00000603\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_PLAY_SIGNAL]\nAddr=0x000005E1\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_CHARGER_STATE]\nAddr=0x0000C200\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=1\n[RC_VSFR_DR_LEV1_uR_h]\nAddr=0x00008000\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_LEV2_uR_h]\nAddr=0x00008001\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_100uR]\nAddr=0x00008002\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_100uR]\nAddr=0x00008003\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_uR]\nAddr=0x00008014\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_uR]\nAddr=0x00008015\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_UNITS]\nAddr=0x00008004\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_USE_nSv_h]\nAddr=0x0000800C\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CR_UNITS]\nAddr=0x00008013\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CPS_FILTER]\nAddr=0x00008005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_CR_LEV1_cp10s]\nAddr=0x00008008\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_CR_LEV2_cp10s]\nAddr=0x00008009\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_UNITS]\nAddr=0x00008016\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_DOSE_RESET]\nAddr=0x00008007\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CHN_TO_keV_A0]\nAddr=0x00008010\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A1]\nAddr=0x00008011\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A2]\nAddr=0x00008012\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CPS]\nAddr=0x00008020\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_uR_h]\nAddr=0x00008021\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_uR]\nAddr=0x00008022\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_degC]\nAddr=0x00008024\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_RAW_TEMP_degC]\nAddr=0x00008033\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_UP_degC]\nAddr=0x00008034\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_DN_degC]\nAddr=0x00008035\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_ACC_X]\nAddr=0x00008025\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Y]\nAddr=0x00008026\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Z]\nAddr=0x00008027\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_OPT]\nAddr=0x00008028\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_VBIAS_mV]\nAddr=0x0000C000\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_VBIAS_ADC_mV]\nAddr=0x0000C007\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_COMP_LEV]\nAddr=0x0000C001\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_CALIB_MODE]\nAddr=0x0000C002\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_MSTIME_100ms]\nAddr=0x0000C008\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_VSIPM_METHOD]\nAddr=0x0000C009\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_SPTIME_UNIT_ms]\nAddr=0x0000C00A\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_SYS_MCU_ID0]\nAddr=0xFFFF0000\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID1]\nAddr=0xFFFF0001\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID2]\nAddr=0xFFFF0002\nVirtual=1\nSize=4\n[VSFR_SYS_DEVICE_ID]\nAddr=0xFFFF0005\nVirtual=1\nSize=4\n[VSFR_SYS_SIGNATURE]\nAddr=0xFFFF0006\nVirtual=1\nSize=4\n[VSFR_SYS_RX_SIZE]\nAddr=0xFFFF0007\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_TX_SIZE]\nAddr=0xFFFF0008\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_BOOT_VERSION]\nAddr=0xFFFF0009\nVirtual=1\nSize=4\n[VSFR_SYS_TARGET_VERSION]\nAddr=0xFFFF000A\nVirtual=1\nSize=4\n[VSFR_SYS_STATUS]\nAddr=0xFFFF000B\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_VREF]\nAddr=0xFFFF000C\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[VSFR_SYS_MCU_TEMP]\nAddr=0xFFFF000D\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[RC_VSFR_DPOT_RDAC]\nAddr=0x0000C004\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_RDAC_EEPROM]\nAddr=0x0000C005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_TOLER]\nAddr=0x0000C006\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_COUNT]\nAddr=0x0000C103\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_CHRG_MON_TEMP_degC]\nAddr=0x0000C300\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n "
     ],
-    "sub_0803D6C6": [
+    "sub_08039AB4": [
+      " pG0",
+      "BhJ`pG8",
       "pGpG",
       "apG-",
       "pG}I",
-      "}I@ "
+      "}I@ ",
+      " pG; pG",
+      "apGp"
     ],
-    "sub_0802640E": [
+    "sub_080263EA": [
       "%d message(s) lost!",
       "%d, ",
       " pG\n"
     ],
-    "sub_080196DC": [
+    "sub_080195AA": [
       "BLE: disconnected by remote user",
       "BLE: disconnected by reason 0x%0.2X"
     ],
-    "sub_08020158": [
+    "sub_0801FFD0": [
       "%02d:%02d:%02d",
       "%dd %02d:%02d"
     ],
-    "sub_08029DBA": [
-      "[DeviceParams]\nCR_AlarmsNum=2\nCR_AlarmMin_cps=1e-1\nCR_AlarmMax_cps=50e6\nCR_AlarmDefL1_cps=20\nCR_AlarmDefL2_cps=60\nDR_AlarmsNum=2\nDR_AlarmMin_R_h=1e-6\nDR_AlarmMax_R_h=9e2\nDR_AlarmDefL1_R_h=40e-6\nDR_AlarmDefL2_R_h=120e-6\nDS_AlarmsNum=2\nDS_AlarmVsfrMul=10\nDS_AlarmMin_R=1e-5\nDS_AlarmMax_R=9999.99999\nDS_AlarmDefL1_R=9999.99999\nDS_AlarmDefL2_R=9999.99999\nMinFrmPeriod_ms=500\nVSFR_DISP_OFF_TIME=5 s|5 ",
-      "[VSFR_DEVICE_CTRL]\nAddr=0x00000500\nVirtual=1\nSize=1\n[VSFR_DEVICE_LANG]\nAddr=0x00000502\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DEVICE_ON]\nAddr=0x00000503\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DEVICE_TIME]\nAddr=0x00000504\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_BLE_TX_PWR]\nAddr=0x00000700\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CTRL]\nAddr=0x00000510\nVirtual=1\nSize=1\n[VSFR_DISP_BRT]\nAddr=0x00000511\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CONTR]\nAddr=0x00000512\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_OFF_TIME]\nAddr=0x00000513\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_DISP_ON]\nAddr=0x00000514\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DISP_DIR]\nAddr=0x00000515\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_BACKLT_ON]\nAddr=0x00000516\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_SOUND_CTRL]\nAddr=0x00000520\nVirtual=1\nSize=2\n[VSFR_SOUND_VOL]\nAddr=0x00000521\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_SOUND_ON]\nAddr=0x00000522\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_VIBRO_CTRL]\nAddr=0x00000530\nVirtual=1\nSize=1\n[VSFR_VIBRO_ON]\nAddr=0x00000531\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_ALARM_MODE]\nAddr=0x000005E0\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_MS_RUN]\nAddr=0x00000603\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_PLAY_SIGNAL]\nAddr=0x000005E1\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_CHARGER_STATE]\nAddr=0x0000C200\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=1\n[RC_VSFR_DR_LEV1_uR_h]\nAddr=0x00008000\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_LEV2_uR_h]\nAddr=0x00008001\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_100uR]\nAddr=0x00008002\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_100uR]\nAddr=0x00008003\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_uR]\nAddr=0x00008014\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_uR]\nAddr=0x00008015\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_UNITS]\nAddr=0x00008004\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_USE_nSv_h]\nAddr=0x0000800C\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CR_UNITS]\nAddr=0x00008013\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CPS_FILTER]\nAddr=0x00008005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_CR_LEV1_cp10s]\nAddr=0x00008008\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_CR_LEV2_cp10s]\nAddr=0x00008009\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_UNITS]\nAddr=0x00008016\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_DOSE_RESET]\nAddr=0x00008007\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CHN_TO_keV_A0]\nAddr=0x00008010\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A1]\nAddr=0x00008011\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A2]\nAddr=0x00008012\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CPS]\nAddr=0x00008020\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_uR_h]\nAddr=0x00008021\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_uR]\nAddr=0x00008022\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_degC]\nAddr=0x00008024\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_RAW_TEMP_degC]\nAddr=0x00008033\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_UP_degC]\nAddr=0x00008034\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_DN_degC]\nAddr=0x00008035\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_ACC_X]\nAddr=0x00008025\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Y]\nAddr=0x00008026\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Z]\nAddr=0x00008027\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_OPT]\nAddr=0x00008028\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_VBIAS_mV]\nAddr=0x0000C000\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_VBIAS_ADC_mV]\nAddr=0x0000C007\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_COMP_LEV]\nAddr=0x0000C001\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_CALIB_MODE]\nAddr=0x0000C002\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_MSTIME_100ms]\nAddr=0x0000C008\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_VSIPM_METHOD]\nAddr=0x0000C009\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_SPTIME_UNIT_ms]\nAddr=0x0000C00A\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_SYS_MCU_ID0]\nAddr=0xFFFF0000\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID1]\nAddr=0xFFFF0001\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID2]\nAddr=0xFFFF0002\nVirtual=1\nSize=4\n[VSFR_SYS_DEVICE_ID]\nAddr=0xFFFF0005\nVirtual=1\nSize=4\n[VSFR_SYS_SIGNATURE]\nAddr=0xFFFF0006\nVirtual=1\nSize=4\n[VSFR_SYS_RX_SIZE]\nAddr=0xFFFF0007\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_TX_SIZE]\nAddr=0xFFFF0008\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_BOOT_VERSION]\nAddr=0xFFFF0009\nVirtual=1\nSize=4\n[VSFR_SYS_TARGET_VERSION]\nAddr=0xFFFF000A\nVirtual=1\nSize=4\n[VSFR_SYS_STATUS]\nAddr=0xFFFF000B\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_VREF]\nAddr=0xFFFF000C\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[VSFR_SYS_MCU_TEMP]\nAddr=0xFFFF000D\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[RC_VSFR_DPOT_RDAC]\nAddr=0x0000C004\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_RDAC_EEPROM]\nAddr=0x0000C005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_TOLER]\nAddr=0x0000C006\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_COUNT]\nAddr=0x0000C103\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_CHRG_MON_TEMP_degC]\nAddr=0x0000C300\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n "
-    ],
-    "sub_0803A85C": [
-      " pG0",
-      "BhJ`pG8"
-    ],
-    "sub_08016558": [
+    "sub_0801651C": [
       "00  "
     ],
-    "sub_08020FEC": [
+    "sub_08020FA8": [
       "`pG1I/KO"
     ],
     "sub_08024ACC": [
@@ -838,22 +838,7 @@
     "sub_080274B0": [
       " 9h!"
     ],
-    "sub_08027F7E": [
-      "BLE: error packet received => %0.2X; %0.2X; %0.2X; %0.2X!"
-    ],
-    "sub_0802821E": [
-      "BhJ`pG8"
-    ],
-    "sub_0803A15C": [
-      " pG0"
-    ],
-    "sub_0803E140": [
-      " pG; pG"
-    ],
-    "sub_0803EBF8": [
-      "apGp"
-    ],
-    "handler_reset": [
+    "sub_0803F724": [
       "sB`pG8"
     ]
   }

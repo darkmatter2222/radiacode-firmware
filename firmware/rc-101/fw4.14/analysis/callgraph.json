@@ -1,1611 +1,1090 @@
 {
   "note": "reachability over direct call edges (bl targets) from each vector handler",
-  "total_functions": 1802,
+  "total_functions": 289,
   "handlers": [
     {
       "index": 1,
       "name": "Reset",
       "address": "0x0803BB55",
       "entry": "0x0803BB54",
-      "reachable": 33,
-      "max_depth": 7,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803BB54 (sub_0803BB54)"
       ]
     },
     {
       "index": 2,
-      "name": "NMI",
+      "name": "Vector2",
       "address": "0x08035B89",
       "entry": "0x08035B88",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035B88 (handler_nmi)"
+        "0x08035B88 (sub_08035B88)"
       ]
     },
     {
       "index": 3,
-      "name": "HardFault",
+      "name": "Vector3",
       "address": "0x08035B8B",
       "entry": "0x08035B8A",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035B8A (handler_hardfault)"
+        "0x08035B8A (sub_08035B8A)"
       ]
     },
     {
       "index": 4,
-      "name": "MemManage",
+      "name": "Vector4",
       "address": "0x08035B8D",
       "entry": "0x08035B8C",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035B8C (handler_memmanage)"
+        "0x08035B8C (sub_08035B8C)"
       ]
     },
     {
       "index": 5,
-      "name": "BusFault",
+      "name": "Vector5",
       "address": "0x08035B8F",
       "entry": "0x08035B8E",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035B8E (handler_busfault)"
+        "0x08035B8E (sub_08035B8E)"
       ]
     },
     {
       "index": 6,
-      "name": "UsageFault",
+      "name": "Vector6",
       "address": "0x08035B91",
       "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x08035B90 (sub_08035B90)"
       ]
     },
     {
       "index": 11,
-      "name": "SVCall",
+      "name": "Vector11",
       "address": "0x08035B93",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035B92",
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x08035B92 (sub_08035B92)"
       ]
     },
     {
       "index": 12,
-      "name": "DebugMon",
+      "name": "Vector12",
       "address": "0x08035B95",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035B94",
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x08035B94 (sub_08035B94)"
       ]
     },
     {
       "index": 14,
-      "name": "PendSV",
+      "name": "Vector14",
       "address": "0x08035B97",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035B96",
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x08035B96 (sub_08035B96)"
       ]
     },
     {
       "index": 15,
-      "name": "SysTick",
+      "name": "Vector15",
       "address": "0x08035B99",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035B98",
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x08035B98 (sub_08035B98)"
       ]
     },
     {
       "index": 16,
-      "name": "IRQ0_WWDG",
+      "name": "Vector16",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 17,
-      "name": "IRQ1_PVD",
+      "name": "Vector17",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 18,
-      "name": "IRQ2_TAMP_STAMP",
+      "name": "Vector18",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 19,
-      "name": "IRQ3_RTC_WKUP",
+      "name": "Vector19",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 20,
-      "name": "IRQ4_FLASH",
+      "name": "Vector20",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 21,
-      "name": "IRQ5_RCC",
+      "name": "Vector21",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 22,
-      "name": "IRQ6_EXTI0",
+      "name": "Vector22",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 23,
-      "name": "IRQ7_EXTI1",
+      "name": "Vector23",
       "address": "0x08035B9B",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035B9A",
+      "reachable": 2,
+      "max_depth": 1,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x0802200C (sub_0802200C)",
+        "0x08035B9A (sub_08035B9A)"
       ]
     },
     {
       "index": 24,
-      "name": "IRQ8_EXTI2",
+      "name": "Vector24",
       "address": "0x08035BAF",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035BAE",
+      "reachable": 2,
+      "max_depth": 1,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x0802200C (sub_0802200C)",
+        "0x08035BAE (sub_08035BAE)"
       ]
     },
     {
       "index": 25,
-      "name": "IRQ9_EXTI3",
+      "name": "Vector25",
       "address": "0x08035CBB",
       "entry": "0x08035CBA",
-      "reachable": 6,
-      "max_depth": 3,
+      "reachable": 17,
+      "max_depth": 5,
       "sample": [
+        "0x08015A98 (sub_08015A98)",
+        "0x08015AD4 (sub_08015AD4)",
+        "0x08015F7C (sub_08015F7C)",
         "0x080163BE (sub_080163BE)",
-        "0x0801FFF8 (sub_0801FFF8)",
-        "0x08020272 (sub_08020272)",
-        "0x08020AA0 (sub_08020AA0)",
-        "0x08023FB4 (sub_08023FB4)",
-        "0x08035CBA (handler_irq9_exti3)"
+        "0x08016718 (sub_08016718)",
+        "0x08016754 (sub_08016754)",
+        "0x080167EE (sub_080167EE)",
+        "0x0801FCB4 (sub_0801FCB4)"
       ]
     },
     {
       "index": 26,
-      "name": "IRQ10_EXTI4",
+      "name": "Vector26",
       "address": "0x08035BC3",
-      "entry": "0x08035B90",
-      "reachable": 14,
-      "max_depth": 6,
+      "entry": "0x08035BC2",
+      "reachable": 3,
+      "max_depth": 1,
       "sample": [
-        "0x08015FEC (sub_08015FEC)",
-        "0x080160FE (sub_080160FE)",
-        "0x080165C4 (sub_080165C4)",
-        "0x08016718 (sub_08016718)",
-        "0x08016754 (sub_08016754)",
-        "0x08018308 (sub_08018308)",
-        "0x0802095C (sub_0802095C)",
-        "0x08020B30 (sub_08020B30)"
+        "0x0802252C (sub_0802252C)",
+        "0x08035BC2 (sub_08035BC2)",
+        "0x08035CD2 (sub_08035CD2)"
       ]
     },
     {
       "index": 27,
-      "name": "IRQ11_DMA1_CH0",
+      "name": "Vector27",
       "address": "0x08035BE1",
       "entry": "0x08035BE0",
       "reachable": 2,
       "max_depth": 1,
       "sample": [
         "0x08017E40 (sub_08017E40)",
-        "0x08035BE0 (handler_irq11_dma1_ch0)"
+        "0x08035BE0 (sub_08035BE0)"
       ]
     },
     {
       "index": 28,
-      "name": "IRQ12_DMA1_CH1",
+      "name": "Vector28",
       "address": "0x08035C01",
       "entry": "0x08035C00",
-      "reachable": 45,
+      "reachable": 36,
       "max_depth": 5,
       "sample": [
+        "0x080182EC (sub_080182EC)",
         "0x08018DEC (sub_08018DEC)",
         "0x08019076 (sub_08019076)",
+        "0x0801AC68 (sub_0801AC68)",
         "0x08024940 (sub_08024940)",
         "0x0802497C (sub_0802497C)",
         "0x0802498C (sub_0802498C)",
-        "0x080249B0 (sub_080249B0)",
-        "0x08024A18 (sub_08024A18)",
-        "0x08024AA8 (sub_08024AA8)"
+        "0x080249B0 (sub_080249B0)"
       ]
     },
     {
       "index": 29,
-      "name": "IRQ13_DMA1_CH2",
+      "name": "Vector29",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 30,
-      "name": "IRQ14_DMA1_CH3",
+      "name": "Vector30",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 31,
-      "name": "IRQ15_DMA1_CH4",
+      "name": "Vector31",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 32,
-      "name": "IRQ16_DMA1_CH5",
+      "name": "Vector32",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 33,
-      "name": "IRQ17_DMA1_CH6",
+      "name": "Vector33",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 34,
-      "name": "IRQ18_ADC1_2",
+      "name": "Vector34",
       "address": "0x08035C2D",
       "entry": "0x08035C2C",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035C2C (handler_irq18_adc1_2)"
+        "0x08035C2C (sub_08035C2C)"
       ]
     },
     {
       "index": 35,
-      "name": "IRQ19_USB_HP",
+      "name": "Vector35",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 36,
-      "name": "IRQ20_USB_LP",
+      "name": "Vector36",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 37,
-      "name": "IRQ21_DAC",
+      "name": "Vector37",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 38,
-      "name": "IRQ22_SPI1",
+      "name": "Vector38",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 39,
-      "name": "IRQ23_USART1",
+      "name": "Vector39",
       "address": "0x08035C2F",
       "entry": "0x08035C2E",
-      "reachable": 3,
-      "max_depth": 2,
+      "reachable": 2,
+      "max_depth": 1,
       "sample": [
         "0x0802252C (sub_0802252C)",
-        "0x08022554 (sub_08022554)",
-        "0x08035C2E (handler_irq23_usart1)"
+        "0x08035C2E (sub_08035C2E)"
       ]
     },
     {
       "index": 40,
-      "name": "IRQ24_USART2",
+      "name": "Vector40",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 41,
-      "name": "IRQ25_USART3",
+      "name": "Vector41",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 42,
-      "name": "IRQ26_EXTI9_5",
+      "name": "Vector42",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 43,
-      "name": "IRQ27_TIM1",
+      "name": "Vector43",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 44,
-      "name": "IRQ28_TIM2",
+      "name": "Vector44",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 45,
-      "name": "IRQ29_TIM3",
+      "name": "Vector45",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 46,
-      "name": "IRQ30_TIM4",
+      "name": "Vector46",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 47,
-      "name": "IRQ31_TIM5",
+      "name": "Vector47",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 48,
-      "name": "IRQ32_SPI2",
+      "name": "Vector48",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 49,
-      "name": "IRQ33_TIM8",
+      "name": "Vector49",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 50,
-      "name": "IRQ34_TIM7",
+      "name": "Vector50",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 51,
-      "name": "IRQ35_LCD",
+      "name": "Vector51",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 52,
-      "name": "IRQ36_TIM9",
+      "name": "Vector52",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 53,
-      "name": "IRQ37_TIM10",
+      "name": "Vector53",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 54,
-      "name": "IRQ38_TIM11",
+      "name": "Vector54",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 55,
-      "name": "IRQ39_USB_OTG_FS",
+      "name": "Vector55",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 56,
-      "name": "IRQ40_DMA2_CH0",
+      "name": "Vector56",
       "address": "0x08035C69",
       "entry": "0x08035C68",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035C68 (handler_irq40_dma2_ch0)"
+        "0x08035C68 (sub_08035C68)"
       ]
     },
     {
       "index": 57,
-      "name": "IRQ41_DMA2_CH1",
+      "name": "Vector57",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 58,
-      "name": "IRQ42_DMA2_CH2",
+      "name": "Vector58",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 59,
-      "name": "IRQ43_DMA2_CH3",
+      "name": "Vector59",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 60,
-      "name": "IRQ44_DMA2_CH4",
+      "name": "Vector60",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 61,
-      "name": "IRQ45_DMA2_CH5",
+      "name": "Vector61",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 62,
-      "name": "IRQ46_DMA2_CH6",
+      "name": "Vector62",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 63,
-      "name": "IRQ47_USART6",
+      "name": "Vector63",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 64,
-      "name": "IRQ48_JPEG",
+      "name": "Vector64",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 65,
-      "name": "IRQ49_NSTC",
+      "name": "Vector65",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 66,
-      "name": "IRQ50_AES",
+      "name": "Vector66",
       "address": "0x08035C8B",
       "entry": "0x08035C8A",
-      "reachable": 3,
-      "max_depth": 2,
+      "reachable": 2,
+      "max_depth": 1,
       "sample": [
         "0x08020272 (sub_08020272)",
-        "0x08023FB4 (sub_08023FB4)",
-        "0x08035C8A (handler_irq50_aes)"
+        "0x08035C8A (sub_08035C8A)"
       ]
     },
     {
       "index": 67,
-      "name": "IRQ51_RNG",
+      "name": "Vector67",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 68,
-      "name": "IRQ52_CAPTURE_COMPARE",
+      "name": "Vector68",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 69,
-      "name": "IRQ53_LCD_TFT",
+      "name": "Vector69",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 70,
-      "name": "IRQ54_TIM12",
+      "name": "Vector70",
       "address": "0x08035C8F",
       "entry": "0x08035C8E",
       "reachable": 2,
       "max_depth": 1,
       "sample": [
-        "0x08020B00 (sub_08020B00)",
-        "0x08035C8E (handler_irq54_tim12)"
+        "0x08020AA0 (sub_08020AA0)",
+        "0x08035C8E (sub_08035C8E)"
       ]
     },
     {
       "index": 71,
-      "name": "IRQ55_TIM13",
+      "name": "Vector71",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 72,
-      "name": "IRQ56_TIM14",
+      "name": "Vector72",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 73,
-      "name": "IRQ57_DMA2D",
+      "name": "Vector73",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 74,
-      "name": "IRQ58_COMP",
+      "name": "Vector74",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 75,
-      "name": "IRQ59_LPTIM1",
+      "name": "Vector75",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 76,
-      "name": "IRQ60_LPUART1",
+      "name": "Vector76",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 77,
-      "name": "IRQ61_QUADSPI",
+      "name": "Vector77",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 78,
-      "name": "IRQ62_LPTIM2",
+      "name": "Vector78",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 79,
-      "name": "IRQ63_USB_FS",
+      "name": "Vector79",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 80,
-      "name": "IRQ64_DMAMUX",
+      "name": "Vector80",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 81,
-      "name": "IRQ65_LPUART2",
+      "name": "Vector81",
       "address": "0x08035C93",
       "entry": "0x08035C92",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035C92 (handler_irq65_lpuart2)"
+        "0x08035C92 (sub_08035C92)"
       ]
     },
     {
       "index": 82,
-      "name": "IRQ66_LPTIM3",
+      "name": "Vector82",
       "address": "0x08035CAB",
       "entry": "0x08035CAA",
-      "reachable": 45,
+      "reachable": 36,
       "max_depth": 5,
       "sample": [
+        "0x080182EC (sub_080182EC)",
         "0x08018DEC (sub_08018DEC)",
         "0x08019076 (sub_08019076)",
+        "0x0801AC68 (sub_0801AC68)",
         "0x08024940 (sub_08024940)",
         "0x0802497C (sub_0802497C)",
         "0x0802498C (sub_0802498C)",
-        "0x080249B0 (sub_080249B0)",
-        "0x08024A18 (sub_08024A18)",
-        "0x08024AA8 (sub_08024AA8)"
+        "0x080249B0 (sub_080249B0)"
       ]
     },
     {
       "index": 83,
-      "name": "IRQ67_LPTIM4",
+      "name": "Vector83",
       "address": "0x08035CD3",
       "entry": "0x08035CD2",
       "reachable": 1,
       "max_depth": 0,
       "sample": [
-        "0x08035CD2 (handler_irq67_lptim4)"
+        "0x08035CD2 (sub_08035CD2)"
       ]
     },
     {
       "index": 84,
-      "name": "IRQ68_LPTIM5",
+      "name": "Vector84",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 85,
-      "name": "IRQ69_RTC",
+      "name": "Vector85",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 86,
-      "name": "IRQ70",
+      "name": "Vector86",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 87,
-      "name": "IRQ71",
+      "name": "Vector87",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 88,
-      "name": "IRQ72",
+      "name": "Vector88",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 89,
-      "name": "IRQ73",
+      "name": "Vector89",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 90,
-      "name": "IRQ74",
+      "name": "Vector90",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 91,
-      "name": "IRQ75",
+      "name": "Vector91",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 92,
-      "name": "IRQ76",
+      "name": "Vector92",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 93,
-      "name": "IRQ77",
+      "name": "Vector93",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 96,
-      "name": "IRQ80",
+      "name": "Vector96",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     },
     {
       "index": 97,
-      "name": "IRQ81",
+      "name": "Vector97",
       "address": "0x0803C851",
       "entry": "0x0803C850",
-      "reachable": 34,
-      "max_depth": 8,
+      "reachable": 1,
+      "max_depth": 0,
       "sample": [
-        "0x080148F2 (sub_080148F2)",
-        "0x08014914 (sub_08014914)",
-        "0x08019310 (sub_08019310)",
-        "0x08019368 (sub_08019368)",
-        "0x080195A6 (sub_080195A6)",
-        "0x080198E6 (sub_080198E6)",
-        "0x080198F2 (sub_080198F2)",
-        "0x0801F4C8 (sub_0801F4C8)"
+        "0x0803C850 (sub_0803C850)"
       ]
     }
   ],
-  "reachable_total": 115,
+  "reachable_total": 79,
   "orphans": [
-    "0x08010190",
-    "0x080101D4",
-    "0x0801020C",
-    "0x0801022E",
-    "0x08010242",
-    "0x08010262",
-    "0x08010278",
-    "0x08010282",
-    "0x08010292",
-    "0x080102BC",
-    "0x080102C6",
-    "0x080102D6",
-    "0x080102DE",
-    "0x08010390",
-    "0x080103B2",
-    "0x080103F2",
-    "0x0801043E",
-    "0x08010490",
-    "0x0801049E",
-    "0x080104BA",
-    "0x080104CA",
-    "0x0801051A",
-    "0x08010554",
-    "0x080105A8",
-    "0x080105B2",
-    "0x080105D8",
-    "0x0801061A",
-    "0x08010674",
-    "0x0801067A",
-    "0x080106B6",
-    "0x080106EC",
-    "0x080106F4",
-    "0x08010708",
-    "0x0801074A",
-    "0x08010778",
-    "0x080107B4",
-    "0x080107EE",
-    "0x0801084A",
-    "0x0801085A",
-    "0x080108A4",
-    "0x080108BA",
-    "0x080108FC",
-    "0x08010938",
-    "0x08010972",
-    "0x080109AA",
-    "0x080109BA",
-    "0x080109CC",
-    "0x080109DE",
-    "0x080109EC",
-    "0x08010A2E",
-    "0x08010A46",
-    "0x08010A5E",
-    "0x08010B9C",
-    "0x08010BCE",
-    "0x08010C06",
-    "0x08010C16",
-    "0x08010C7E",
-    "0x08010DAA",
-    "0x08010DC4",
-    "0x08011072"
+    "0x080148C8",
+    "0x080148D8",
+    "0x08014966",
+    "0x08015554",
+    "0x08015852",
+    "0x08015892",
+    "0x08015A0C",
+    "0x08015A74",
+    "0x08015BD0",
+    "0x08015C00",
+    "0x08015DD4",
+    "0x08015F6C",
+    "0x0801665C",
+    "0x0801666E",
+    "0x0801669C",
+    "0x08016778",
+    "0x0801685A",
+    "0x08016D2C",
+    "0x08016D4C",
+    "0x08016D70",
+    "0x0801702E",
+    "0x0801709C",
+    "0x080170B2",
+    "0x080170CC",
+    "0x080170E4",
+    "0x08017104",
+    "0x0801714A",
+    "0x0801718E",
+    "0x080171CA",
+    "0x080171EC",
+    "0x080172D4",
+    "0x0801741A",
+    "0x08018034",
+    "0x08018050",
+    "0x0801818C",
+    "0x08018198",
+    "0x080182D8",
+    "0x080182E6",
+    "0x080182FE",
+    "0x08018308",
+    "0x080183CA",
+    "0x08018428",
+    "0x0801844C",
+    "0x08018494",
+    "0x0801856A",
+    "0x080185B8",
+    "0x08018602",
+    "0x08018610",
+    "0x08018616",
+    "0x08018664",
+    "0x08018730",
+    "0x08018770",
+    "0x080187C8",
+    "0x08018842",
+    "0x080189E4",
+    "0x08018D70",
+    "0x08018DA8",
+    "0x08018F10",
+    "0x080192B8",
+    "0x08019ABA"
   ],
-  "orphan_count": 1687,
+  "orphan_count": 210,
   "shared_core": []
 }
