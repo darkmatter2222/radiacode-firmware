@@ -19,6 +19,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi --no-install-recommends
       - run: python pipeline/build_reconstruction.py
       - run: python reconstruction/validate_calibration.py
+      - run: python reconstruction/validate_hybrid.py
       - name: Verify release remains blocked
         run: |
           python pipeline/release_gate.py > release-gate.json && exit 1 || code=$?
