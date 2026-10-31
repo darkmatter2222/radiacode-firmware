@@ -1,0 +1,206 @@
+{
+ "target": "rc-410/fw4.16",
+ "capstone_lines": 73447,
+ "ghidra_lines": 40453,
+ "compared": 38477,
+ "tiers": {
+  "identical": 7605,
+  "format_only": 29010,
+  "pc_relative": 1701,
+  "semantic": 161
+ },
+ "only_capstone": 34970,
+ "only_ghidra": 1976,
+ "agreement": 0.995816,
+ "strict_agreement": 0.197651,
+ "compared_inside_functions": 38477,
+ "examples": {
+  "identical": [],
+  "format_only": [
+   {
+    "addr": "0x0801019A",
+    "capstone": "ldr r2, [r1, #0x64]",
+    "ghidra": "ldr r2, r1 0x64"
+   },
+   {
+    "addr": "0x0801019C",
+    "capstone": "cbnz r0, #0x80101b2",
+    "ghidra": "cbnz r0, 080101b2"
+   },
+   {
+    "addr": "0x0801019E",
+    "capstone": "bic r2, r2, #0x100",
+    "ghidra": "bic r2, r2, 0x100"
+   },
+   {
+    "addr": "0x080101A2",
+    "capstone": "str r2, [r1, #0x64]",
+    "ghidra": "str r2, r1 0x64"
+   },
+   {
+    "addr": "0x080101A4",
+    "capstone": "bl #0x80157d4",
+    "ghidra": "bl 080157d4"
+   },
+   {
+    "addr": "0x080101AE",
+    "capstone": "b.w #0x801615a",
+    "ghidra": "b.w 0801615a"
+   },
+   {
+    "addr": "0x080101B2",
+    "capstone": "orr r2, r2, #0x100",
+    "ghidra": "orr r2, r2, 0x100"
+   },
+   {
+    "addr": "0x080101B6",
+    "capstone": "str r2, [r1, #0x64]",
+    "ghidra": "str r2, r1 0x64"
+   },
+   {
+    "addr": "0x080101B8",
+    "capstone": "movs r0, #1",
+    "ghidra": "movs r0, 0x1"
+   },
+   {
+    "addr": "0x080101BA",
+    "capstone": "bl #0x80157d4",
+    "ghidra": "bl 080157d4"
+   },
+   {
+    "addr": "0x080101C4",
+    "capstone": "movs r1, #1",
+    "ghidra": "movs r1, 0x1"
+   },
+   {
+    "addr": "0x080101C6",
+    "capstone": "b.w #0x80165a4",
+    "ghidra": "b.w 080165a4"
+   }
+  ],
+  "pc_relative": [
+   {
+    "addr": "0x08010192",
+    "capstone": "ldr.w r1, [pc, #0xb30]",
+    "ghidra": "ldr.w r1, 08010cc4"
+   },
+   {
+    "addr": "0x08010196",
+    "capstone": "ldr.w r4, [pc, #0xbdc]",
+    "ghidra": "ldr.w r4, 08010d74"
+   },
+   {
+    "addr": "0x080101CA",
+    "capstone": "ldr.w r1, [pc, #0xaf8]",
+    "ghidra": "ldr.w r1, 08010cc4"
+   },
+   {
+    "addr": "0x080101D6",
+    "capstone": "ldr.w r2, [pc, #0xb9c]",
+    "ghidra": "ldr.w r2, 08010d74"
+   },
+   {
+    "addr": "0x08010248",
+    "capstone": "ldreq.w r0, [pc, #0xae4]",
+    "ghidra": "ldr.eq.w r0, 08010d30"
+   },
+   {
+    "addr": "0x0801025E",
+    "capstone": "ldr.w r0, [pc, #0xad0]",
+    "ghidra": "ldr.w r0, 08010d30"
+   },
+   {
+    "addr": "0x08010272",
+    "capstone": "ldreq.w r0, [pc, #0xabc]",
+    "ghidra": "ldr.eq.w r0, 08010d30"
+   },
+   {
+    "addr": "0x0801028C",
+    "capstone": "ldreq.w r0, [pc, #0xbe0]",
+    "ghidra": "ldr.eq.w r0, 08010e70"
+   },
+   {
+    "addr": "0x080102AA",
+    "capstone": "ldr.w r0, [pc, #0xbc4]",
+    "ghidra": "ldr.w r0, 08010e70"
+   },
+   {
+    "addr": "0x080102B6",
+    "capstone": "ldr.w r0, [pc, #0xbb8]",
+    "ghidra": "ldr.w r0, 08010e70"
+   },
+   {
+    "addr": "0x080102CE",
+    "capstone": "addw r2, pc, #0x24",
+    "ghidra": "adr.w r2, 0x80102f4"
+   },
+   {
+    "addr": "0x0801033A",
+    "capstone": "ldr.w r4, [pc, #0xb34]",
+    "ghidra": "ldr.w r4, 08010e70"
+   }
+  ],
+  "semantic": [
+   {
+    "addr": "0x08019BBE",
+    "capstone": "eors.w ip, ip, r1, asr #32",
+    "ghidra": "eors.w r12, r12, r1"
+   },
+   {
+    "addr": "0x0801B52C",
+    "capstone": "movs r0, #9",
+    "ghidra": "mov.cs r0, 0x9"
+   },
+   {
+    "addr": "0x0801B5B0",
+    "capstone": "movs r0, #9",
+    "ghidra": "mov.cs r0, 0x9"
+   },
+   {
+    "addr": "0x0802BA14",
+    "capstone": "movs r3, #0x2f",
+    "ghidra": "mov.cs r3, 0x2f"
+   },
+   {
+    "addr": "0x0802F282",
+    "capstone": "stmhs r0!, {r2, r3}",
+    "ghidra": "stmia.cs r0, r2 r3"
+   },
+   {
+    "addr": "0x0803EC2E",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   },
+   {
+    "addr": "0x0803EC4A",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   },
+   {
+    "addr": "0x0803EC66",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   },
+   {
+    "addr": "0x0803EC82",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   },
+   {
+    "addr": "0x0803EC9E",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   },
+   {
+    "addr": "0x0803ECBA",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   },
+   {
+    "addr": "0x0803ECD6",
+    "capstone": "0x4 zero bytes",
+    "ghidra": "movs r0, r0"
+   }
+  ]
+ }
+}

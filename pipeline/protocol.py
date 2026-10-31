@@ -127,11 +127,12 @@ def borland_next(seed):
 
 
 def borland_xor(data, seed):
-    """XOR stream used by RD_FLASH_AREA: keystream = (seed >> 16) & 0x7FFF per byte."""
+    """XOR stream used by RD_FLASH_AREA: keystream = (seed >> 16) & 0xFF per byte (8 bits,
+    the form the unit's replies decode cleanly with - see `analysis/capture.json`)."""
     out = bytearray(len(data))
     for i, b in enumerate(data):
         seed = borland_next(seed)
-        out[i] = b ^ ((seed >> 16) & 0x7FFF) & 0xFF
+        out[i] = b ^ ((seed >> 16) & 0xFF)
     return bytes(out), seed
 
 

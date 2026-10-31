@@ -1,0 +1,340 @@
+{
+ "target": "rc-110/fw4.14",
+ "container": "firmware/rc-110/fw4.14/rc-110z.bin",
+ "carried": {
+  "bytes_total": 133312,
+  "bytes_rebuilt": 133312,
+  "bytes_matched": 133312,
+  "ratio": 1.0,
+  "byte_identical": true,
+  "first_difference": null,
+  "header_match": true,
+  "header_crc32_match": true,
+  "blocks": 9,
+  "blocks_exact": 9,
+  "blocks_key_match": 9,
+  "blocks_stream_match": 9,
+  "blocks_size_match": 9,
+  "block_detail": [
+   {
+    "addr": "0x08010000",
+    "size": 17223,
+    "rebuilt_size": 17223,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 27904
+   },
+   {
+    "addr": "0x08016D00",
+    "size": 15841,
+    "rebuilt_size": 15841,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 18432
+   },
+   {
+    "addr": "0x0801B500",
+    "size": 14421,
+    "rebuilt_size": 14421,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 19456
+   },
+   {
+    "addr": "0x08020100",
+    "size": 18187,
+    "rebuilt_size": 18187,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 21504
+   },
+   {
+    "addr": "0x08025500",
+    "size": 18804,
+    "rebuilt_size": 18804,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 22784
+   },
+   {
+    "addr": "0x0802AE00",
+    "size": 21476,
+    "rebuilt_size": 21476,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 27648
+   },
+   {
+    "addr": "0x08031A00",
+    "size": 12686,
+    "rebuilt_size": 12686,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 27904
+   },
+   {
+    "addr": "0x08038700",
+    "size": 8383,
+    "rebuilt_size": 8383,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 18432
+   },
+   {
+    "addr": "0x0803CF00",
+    "size": 1491,
+    "rebuilt_size": 1491,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": true,
+    "block_match": true,
+    "payload_len": 2304
+   }
+  ]
+ },
+ "reencoded": {
+  "bytes_total": 133312,
+  "bytes_rebuilt": 133208,
+  "bytes_matched": 3172,
+  "ratio": 0.023794,
+  "byte_identical": false,
+  "first_difference": "0x00000030",
+  "header_match": false,
+  "header_crc32_match": true,
+  "blocks": 9,
+  "blocks_exact": 0,
+  "blocks_key_match": 9,
+  "blocks_stream_match": 0,
+  "blocks_size_match": 1,
+  "block_detail": [
+   {
+    "addr": "0x08010000",
+    "size": 17223,
+    "rebuilt_size": 17190,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 27904
+   },
+   {
+    "addr": "0x08016D00",
+    "size": 15841,
+    "rebuilt_size": 15838,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 18432
+   },
+   {
+    "addr": "0x0801B500",
+    "size": 14421,
+    "rebuilt_size": 14421,
+    "size_match": true,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 19456
+   },
+   {
+    "addr": "0x08020100",
+    "size": 18187,
+    "rebuilt_size": 18175,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 21504
+   },
+   {
+    "addr": "0x08025500",
+    "size": 18804,
+    "rebuilt_size": 18800,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 22784
+   },
+   {
+    "addr": "0x0802AE00",
+    "size": 21476,
+    "rebuilt_size": 21472,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 27648
+   },
+   {
+    "addr": "0x08031A00",
+    "size": 12686,
+    "rebuilt_size": 12663,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 27904
+   },
+   {
+    "addr": "0x08038700",
+    "size": 8383,
+    "rebuilt_size": 8374,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 18432
+   },
+   {
+    "addr": "0x0803CF00",
+    "size": 1491,
+    "rebuilt_size": 1492,
+    "size_match": false,
+    "key_block_match": true,
+    "data_block_match": false,
+    "block_match": false,
+    "payload_len": 2304
+   }
+  ]
+ },
+ "lzss": {
+  "blocks": 9,
+  "decode_identical": 9,
+  "stream_identical": 0,
+  "payload_bytes": 186368,
+  "vendor_stream_bytes": 128512,
+  "own_stream_bytes": 128425,
+  "tokens_vendor": 32366,
+  "tokens_own": 32384,
+  "tokens_identical": 7297,
+  "detail": [
+   {
+    "addr": "0x08010000",
+    "payload": 27904,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 17223,
+    "own_bits": 17190,
+    "bit_prefix_identical": 2088,
+    "vendor_tokens": 4563,
+    "own_tokens": 4560,
+    "tokens_identical": 1236
+   },
+   {
+    "addr": "0x08016D00",
+    "payload": 18432,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 15841,
+    "own_bits": 15838,
+    "bit_prefix_identical": 1518,
+    "vendor_tokens": 3758,
+    "own_tokens": 3763,
+    "tokens_identical": 992
+   },
+   {
+    "addr": "0x0801B500",
+    "payload": 19456,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 14421,
+    "own_bits": 14421,
+    "bit_prefix_identical": 96,
+    "vendor_tokens": 3792,
+    "own_tokens": 3798,
+    "tokens_identical": 976
+   },
+   {
+    "addr": "0x08020100",
+    "payload": 21504,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 18187,
+    "own_bits": 18175,
+    "bit_prefix_identical": 561,
+    "vendor_tokens": 4186,
+    "own_tokens": 4195,
+    "tokens_identical": 1074
+   },
+   {
+    "addr": "0x08025500",
+    "payload": 22784,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 18804,
+    "own_bits": 18800,
+    "bit_prefix_identical": 2281,
+    "vendor_tokens": 4364,
+    "own_tokens": 4370,
+    "tokens_identical": 442
+   },
+   {
+    "addr": "0x0802AE00",
+    "payload": 27648,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 21476,
+    "own_bits": 21472,
+    "bit_prefix_identical": 2915,
+    "vendor_tokens": 4960,
+    "own_tokens": 4966,
+    "tokens_identical": 560
+   },
+   {
+    "addr": "0x08031A00",
+    "payload": 27904,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 12686,
+    "own_bits": 12663,
+    "bit_prefix_identical": 1868,
+    "vendor_tokens": 4075,
+    "own_tokens": 4066,
+    "tokens_identical": 722
+   },
+   {
+    "addr": "0x08038700",
+    "payload": 18432,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 8383,
+    "own_bits": 8374,
+    "bit_prefix_identical": 768,
+    "vendor_tokens": 2426,
+    "own_tokens": 2425,
+    "tokens_identical": 1184
+   },
+   {
+    "addr": "0x0803CF00",
+    "payload": 2304,
+    "decode_identical": true,
+    "stream_identical": false,
+    "vendor_bits": 1491,
+    "own_bits": 1492,
+    "bit_prefix_identical": 515,
+    "vendor_tokens": 242,
+    "own_tokens": 241,
+    "tokens_identical": 111
+   }
+  ]
+ },
+ "byte_exact": true
+}

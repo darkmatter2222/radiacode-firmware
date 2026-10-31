@@ -38,6 +38,13 @@ ANALYSIS_FILES = {
     "sweep_noarg": "sweep_noarg.json",
     "sweep_witharg": "sweep_witharg.json",
     "summary": "summary.md",
+    "ghidra_listing": "ghidra_listing.json",
+    "roundtrip": "roundtrip.json",
+    "crosscheck": "crosscheck.json",
+    "differential": "differential.json",
+    "formal": "formal.json",
+    "confidence": "confidence.json",
+    "confidence_md": "confidence.md",
 }
 
 

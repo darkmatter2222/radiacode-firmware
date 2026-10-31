@@ -44,8 +44,8 @@
     },
     "blocks": {
       "path": "firmware/rc-102/hw1-fw4.14/blocks.json",
-      "bytes": 2222,
-      "sha256": "928844eb95a405a6b6146d2df13219a81a2b64f8b5fdf3484ff390d9b0b38996"
+      "bytes": 2276,
+      "sha256": "902332ad0e8ea12bf57c7a970ac4bfc751c28127418f770e5f1ace2872683c38"
     },
     "listing": {
       "path": "firmware/rc-102/hw1-fw4.14/listing.s",

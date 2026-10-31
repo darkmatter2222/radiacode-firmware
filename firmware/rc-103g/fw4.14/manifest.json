@@ -38,8 +38,8 @@
     },
     "blocks": {
       "path": "firmware/rc-103g/fw4.14/blocks.json",
-      "bytes": 2222,
-      "sha256": "f8c511feab53c483399c36f6600b44db49b2885e882826aa03b2f755dcb27775"
+      "bytes": 2276,
+      "sha256": "3196d6514fa6cc20cb1a60a3c2b0a8f68a991080328ec3670e0be5eff5ce27f7"
     },
     "listing": {
       "path": "firmware/rc-103g/fw4.14/listing.s",

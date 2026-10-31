@@ -1,0 +1,108 @@
+{
+ "target": "rc-110/fw4.14",
+ "categories": {
+  "byte_matched": {
+   "container_bytes": "133312/133312",
+   "container_identical": true,
+   "header_fields_and_crc_field": true,
+   "key_blocks_reencrypted": "9/9",
+   "data_blocks_reencrypted": "9/9",
+   "whole_file_crc": true,
+   "key_block_crc_pair_equal": "9/9",
+   "note": "re-encoding from the model reproduces every byte of the vendor container; the recompress pass differs only in the LZSS tie-break order, so it is reported in `unresolved`, not here."
+  },
+  "formally_verified": {
+   "checks_proved": 10,
+   "checks_total": 10,
+   "names": [
+    "mangle_round_invertible",
+    "mangle_chain_48_rounds",
+    "crc32_register_deterministic",
+    "crc32_word_step_forms_agree",
+    "crc32_empty_is_init",
+    "borland_lcg_hull_dobell",
+    "msdos_datetime_roundtrip",
+    "lzss_token_layout",
+    "lzss_window_slot_step",
+    "align_size_least_multiple_of_8"
+   ],
+   "solver": "z3 5.3.3",
+   "note": "bit-vector proofs over the pure model: Mangle round and 48-round chain, CRC-32 register and word step, Borland LCG period, MS-DOS date packing, LZSS token and window-slot layout, 8-byte alignment."
+  },
+  "tested": {
+   "function_cases_passed": "0/0",
+   "function_cases_skipped": 8,
+   "instructions_executed": 0,
+   "format_vectors_passed": "186/186",
+   "format_models": [
+    "crc32_mpeg2",
+    "mangle_inverse",
+    "mangle_blocks",
+    "lzss_decode",
+    "msdos_datetime",
+    "borland_lcg",
+    "borland_lcg_device"
+   ],
+   "device_frames_checked": 0,
+   "block_decompressed_length_equals_address_delta": "9/9",
+   "decoder_agreement": "39619/41147 lines (0.9999)",
+   "note": "every function case compares the returned word and all byte-level memory effects of the native run with the Python transcription; the stack slots the ABI owns are excluded on both sides."
+  },
+  "preserved_unchanged": {
+   "image_bytes_covered": "251904/251904",
+   "instructions_decoded": 67873,
+   "listing_lines": 70404,
+   "functions_indexed": 1908,
+   "strings_indexed": 1980,
+   "c_blocks": 1934,
+   "data_and_ascii_items": 1083,
+   "key_block_tail_bytes_carried": 4374,
+   "note": "the mixed C + assembly listing keeps the original bytes of data, string and jump-table regions at their original addresses; nothing in that region is rewritten."
+  }
+ },
+ "unresolved": [
+  {
+   "item": "definition of the per-block CRC pair beyond crc1 == crc2",
+   "detail": "30 buffer/variant combinations checked, none matched; only equality is verified",
+   "count": 9
+  },
+  {
+   "item": "own LZSS encoder is not bit-identical with the vendor stream",
+   "detail": "0/9 blocks stream-identical, 7297/32384 tokens identical, 128512 vs 128425 bits",
+   "count": 9
+  },
+  {
+   "item": "capstone vs SLEIGH lines not identical after normalisation",
+   "detail": "of 39619 compared: format-only 30011, pc-relative 1967, semantic 4 (agreement 0.9999)",
+   "count": 4
+  },
+  {
+   "item": "lines only one decoder reaches",
+   "detail": "capstone sweeps the whole image, Ghidra stops at data: only-capstone 29448, only-ghidra 1528",
+   "count": 29448
+  },
+  {
+   "item": "on-device frame comparison not available offline",
+   "detail": "steps 2 and 11 need the unit powered",
+   "count": 2
+  }
+ ],
+ "sources": {
+  "stats": "firmware/rc-110/fw4.14/analysis/stats.json",
+  "functions": "firmware/rc-110/fw4.14/analysis/functions.json",
+  "roundtrip": "firmware/rc-110/fw4.14/analysis/roundtrip.json",
+  "crosscheck": "firmware/rc-110/fw4.14/analysis/crosscheck.json",
+  "differential": "firmware/rc-110/fw4.14/analysis/differential.json",
+  "formal": "firmware/rc-110/fw4.14/analysis/formal.json",
+  "container_check": "firmware/rc-110/fw4.14/analysis/container_check.json"
+ },
+ "inventory": {
+  "image_bytes": 251904,
+  "instructions": 67873,
+  "functions": 1908,
+  "strings": 1980,
+  "tables": 8,
+  "orphan_functions": 1807,
+  "handlers_recovered": 90
+ }
+}

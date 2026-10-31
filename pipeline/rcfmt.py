@@ -140,10 +140,13 @@ def borland_next(seed):
 
 
 def borland_xor(data, seed):
+    # keystream byte = (seed >> 16) & 0xFF - the 8-bit form the unit actually uses: decoding the
+    # live 0x081C area 1 with it yields clean ASCII (`analysis/capture.json`), the 7-bit form
+    # mangles 214 of its 448 bytes.
     out = bytearray(data)
     for i in range(len(out)):
         seed = borland_next(seed)
-        out[i] ^= (seed >> 16) & 0x7F
+        out[i] ^= (seed >> 16) & 0xFF
     return bytes(out), seed
 
 
@@ -255,10 +258,9 @@ def parse_file(data):
         "compressed": compressed,
         "reserved": reserved,
         "header_crc32": None if crc32 is None else f"{crc32:08x}",
+        "file_count": file_count,
+        "firmware_header_size": firmware_header_size,
     }
-    if marker == b"AlmaCode":
-        header["file_count"] = file_count
-        header["firmware_header_size"] = firmware_header_size
     return header
 
 
@@ -358,3 +360,204 @@ def build_flash_image(data, device_key=None, verbose=False):
                 f"aligned={block['aligned']:#06x} crc={crc1:08x} ok={crc_ok}"
             )
     return header, blocks, bytes(image)
+
+
+# ---------------------------------------------------------------- encoding (inverse primitives)
+
+
+def lzss_compress(data, tie="nearest"):
+    """Greedy LZSS encoder for the bit stream read by `lzss_decompress`.
+
+    Same 2048-byte window, same initial fill (`WINDOW_FILL`) and initial index, same token layout
+    (one flag bit, then 8 literal bits or an 11-bit window position plus 4 length bits), MSB-first.
+    The window slot of output index k is `(WINDOW_INITIAL_INDEX + k) % 2048`; slots not written yet
+    hold the fill byte, exactly as the decoder sees them.  Candidates are walked through a
+    two-byte-prefix hash chain (the minimum coded match is two bytes long).
+    """
+    total = len(data)
+    mask = WINDOW_SIZE - 1
+    longest = MAX_UNCODED + (1 << LENGTH_BITS) - 1  # 4 length bits -> 2..17
+    head = [-1] * 0x10000
+    chain = [-1] * WINDOW_SIZE
+    out = bytearray()
+    bit_buf = 0
+    bit_count = 0
+
+    def emit(value, count):
+        nonlocal bit_buf, bit_count
+        for shift in range(count - 1, -1, -1):
+            bit_buf = (bit_buf << 1) | ((value >> shift) & 1)
+            bit_count += 1
+            if bit_count == 8:
+                out.append(bit_buf)
+                bit_buf = 0
+                bit_count = 0
+
+    def run_length(dist, limit, pos):
+        """Bytes a reference `dist` back reproduces (the ring buffer makes it periodic)."""
+        length = 0
+        while length < limit:
+            index = pos - dist + length
+            value = data[index] if index >= 0 else WINDOW_FILL
+            if value != data[pos + length]:
+                break
+            length += 1
+        return length
+
+    def insert(index):
+        if index + 1 >= total:
+            return
+        hash_value = (data[index] << 8) | data[index + 1]
+        slot = (WINDOW_INITIAL_INDEX + index) & mask
+        chain[slot] = head[hash_value]
+        head[hash_value] = index
+
+    pos = 0
+    while pos < total:
+        limit = min(longest, total - pos)
+        best_len = 0
+        best_dist = 0
+        if limit >= 2 and pos:
+            index = head[(data[pos] << 8) | data[pos + 1]] if pos + 1 < total else -1
+            while index != -1:
+                dist = pos - index
+                if dist <= 0 or dist > WINDOW_SIZE:
+                    break
+                length = run_length(dist, limit, pos)
+                if length > best_len or (length == best_len and tie == "farthest" and dist > best_dist):
+                    best_len, best_dist = length, dist
+                if best_len == limit:
+                    break
+                index = chain[(WINDOW_INITIAL_INDEX + index) & mask]
+        if best_len >= MAX_UNCODED:
+            emit(0, 1)
+            emit((WINDOW_INITIAL_INDEX + pos - best_dist) & mask, OFFSET_BITS)
+            emit(best_len - MAX_UNCODED, LENGTH_BITS)
+            for offset in range(best_len):
+                insert(pos + offset)
+            pos += best_len
+        else:
+            emit(1, 1)
+            emit(data[pos], 8)
+            insert(pos)
+            pos += 1
+    if bit_count:
+        out.append((bit_buf << (8 - bit_count)) & 0xFF)
+    return bytes(out)
+
+
+def encode_key_block(mangle_index, inner_key, data_key, crc_pair, tail, outer_key=None):
+    """Rebuild the 512-byte key block: outer mangle over (index | inner-mangled key+crc | tail)."""
+    if len(tail) != KEY_BLOCK_SIZE - 26:
+        raise ValueError("key block tail must be %d bytes" % (KEY_BLOCK_SIZE - 26))
+    plain = bytearray(KEY_BLOCK_SIZE)
+    struct.pack_into("<H", plain, 0, mangle_index)
+    inner_plain = struct.pack("<4I", *data_key) + struct.pack("<II", *crc_pair)
+    plain[2:26] = mangle_encrypt_key(inner_key, inner_plain)
+    plain[26:] = tail
+    outer = HARDCODED_KEY_TABLE[0] if outer_key is None else outer_key
+    return mangle_encrypt_key(outer, bytes(plain))
+
+
+def encode_block(mangle_index, inner_key, data_key, crc_pair, tail, addr, payload, compressed):
+    """Rebuild one block (12-byte header + 512-byte key block + aligned data block)."""
+    stream = lzss_compress(bytes(payload)) if compressed else bytes(payload)
+    size = len(stream)
+    aligned = align_size(size)
+    data_block = mangle_encrypt_key(data_key, stream + bytes(aligned - size))
+    header = struct.pack(
+        "<III",
+        12,
+        (size ^ BLOCK_HEADER_SIZE_KEY) & M32,
+        (addr ^ BLOCK_HEADER_ADDR_KEY) & M32,
+    )
+    return header + encode_key_block(mangle_index, inner_key, data_key, crc_pair, tail) + data_block, size
+
+
+def encode_header(header, body):
+    """Rebuild the 52-byte file header; the trailing CRC covers everything after it."""
+    marker = b"Phyton\x00\x00" if header["marker"] == "Phyton" else b"AlmaCode"
+    serial = bytes.fromhex(header["serial"])
+    out = bytearray(header["header_size"])
+    out[0 : len(marker)] = marker
+    struct.pack_into("<I", out, 8, header["header_size"])
+    struct.pack_into("<I", out, 12, header["date_time"])
+    struct.pack_into("<I", out, 16, header["buffer_size"])
+    out[20 : 20 + len(serial)] = serial
+    out[36] = header["version_low"]
+    out[37] = header["version_high"]
+    struct.pack_into("<I", out, 38, header["file_count"])
+    struct.pack_into("<I", out, 42, header["firmware_header_size"])
+    out[46] = header["compressed"]
+    out[47] = header["reserved"]
+    struct.pack_into("<I", out, 48, calculate_crc(body))
+    return bytes(out) + body
+
+
+def split_key_block(raw):
+    """Decrypt one block's key area -> (mangle_index, inner_key, data_key, crc_pair, tail)."""
+    key_block = bytearray(mangle_decrypt_key(HARDCODED_KEY_TABLE[0], bytes(raw[:KEY_BLOCK_SIZE])))
+    mangle_index = struct.unpack_from("<H", key_block, 0)[0]
+    if mangle_index <= 7:
+        inner_key = HARDCODED_KEY_TABLE[mangle_index]
+    elif 8 <= mangle_index <= 15:
+        inner_key = ALTERNATE_KEY_TABLE[mangle_index - 8]
+    else:
+        inner_key = None
+    if inner_key is not None:
+        key_block[2:26] = mangle_decrypt_key(inner_key, bytes(key_block[2:26]))
+    data_key = tuple(struct.unpack_from("<4I", key_block, 2)) if inner_key else None
+    crc_pair = struct.unpack_from("<II", key_block, 18)
+    return mangle_index, inner_key, data_key, crc_pair, bytes(key_block[26:])
+
+
+def reencode_file(data, recompress=True):
+    """Rebuild a whole container from the decoded model; -> (bytes, per-layer evidence dict).
+
+    `recompress` re-runs `lzss_compress` on every payload (a real round trip through both models);
+    with False the stored stream is carried through, which isolates the crypto/layout layer.
+    """
+    header = parse_file(data)
+    blocks = iter_blocks(data, header["header_size"])
+    body = bytearray()
+    detail = []
+    for block in blocks:
+        raw = block["raw"]
+        mangle_index, inner_key, data_key, crc_pair, tail = split_key_block(raw)
+        data_block = bytes(raw[KEY_BLOCK_SIZE:])
+        stream = mangle_decrypt_key(data_key, data_block) if inner_key else data_block
+        payload = lzss_decompress(stream[: block["size"]]) if header["compressed"] else stream
+        expected = struct.pack(
+            "<III",
+            12,
+            (block["size"] ^ BLOCK_HEADER_SIZE_KEY) & M32,
+            (block["addr"] ^ BLOCK_HEADER_ADDR_KEY) & M32,
+        ) + raw
+        if recompress and inner_key is not None:
+            rebuilt, size = encode_block(
+                mangle_index, inner_key, data_key, crc_pair, tail, block["addr"], payload,
+                header["compressed"] > 0,
+            )
+        else:
+            rebuilt, size = expected, block["size"]
+        detail.append(
+            {
+                "addr": "0x%08X" % block["addr"],
+                "size": block["size"],
+                "rebuilt_size": size,
+                "size_match": size == block["size"],
+                "key_block_match": rebuilt[12:524] == raw[:512],
+                "data_block_match": rebuilt[524:] == data_block,
+                "block_match": rebuilt == expected,
+                "payload_len": len(payload),
+            }
+        )
+        body += rebuilt
+    rebuilt = encode_header(header, bytes(body))
+    return rebuilt, {
+        "header_match": rebuilt[: header["header_size"]] == data[: header["header_size"]],
+        "header_crc32_match": (
+            header["header_crc32"] == "%08x" % calculate_crc(bytes(data[header["header_size"]:]))
+        ),
+        "blocks": detail,
+    }

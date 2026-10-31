@@ -38,8 +38,8 @@
     },
     "blocks": {
       "path": "firmware/rc-101/fw4.14/blocks.json",
-      "bytes": 2220,
-      "sha256": "5ddeafbc79a3d69d0dfe5bc16011abafc3170f19cfeace33c32c3f868ab0ef27"
+      "bytes": 2274,
+      "sha256": "1f87c84036eccaec26114cd75b6ed3ffb6f86290dd6641717a9487e8d51ca883"
     },
     "listing": {
       "path": "firmware/rc-101/fw4.14/listing.s",

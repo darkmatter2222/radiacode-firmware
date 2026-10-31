@@ -50,6 +50,7 @@ def main():
            "-processor", CFG["mcu"]["processor"],
            "-scriptPath", os.path.join("pipeline", "scripts"),
            "-postScript", "DumpC.java", CFG["dir"],
+           "-postScript", "DumpListing.java", CFG["dir"],
            "-overwrite"]
     print(" ".join(cmd))
     log = os.path.join(config.ROOT, "ghidra_log.txt")

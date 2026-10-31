@@ -78,7 +78,8 @@ blocks[] : u32 header_size | u32 size ^ 0xCE27A932 | u32 addr ^ 0xB2D5A864
 * Payload: LZSS — 2048-byte window pre-filled with `0x20`, initial index `2022`, flag bit 1 = literal,
   0 = match (11-bit offset + 4-bit length, `+2`).
 * The small flash areas returned by cmd `0x081C` use a *different* stream cipher: Borland LCG keystream
-  (`seed * 0x015A4E35 + 1`, XOR of `(seed >> 16) & 0x7FFF`).
+  (`seed * 0x015A4E35 + 1`, XOR of the low 8 bits of `seed >> 16`, one continuous state across the size
+  word and the payload).
 
 All four primitives are implemented and test-vector-verified in `pipeline/rcfmt.py`, and self-tested by `pipeline/step1_validate.py`.
 
@@ -397,7 +398,8 @@ python pipeline/tools/lookup.py 0x080275C4        # owning function + C line ran
 ```
 
 Indexes: `index.json` (function -> C lines), `analysis/{functions,xrefs,
-vectors,callgraph,tables,strings,stats,verification,capture,container_check,vsfr_readout}.json`. Naming: `sub_XXXXXXXX` (capstone index),
+vectors,callgraph,tables,strings,stats,verification,capture,container_check,vsfr_readout}.json`, and the
+verification layer's `analysis/{roundtrip,crosscheck,differential,formal,confidence}.json` (§27). Naming: `sub_XXXXXXXX` (capstone index),
 `FUN_xxxxxxxx` (Ghidra C), `handler_<n>_<name>` (vector entries), `tbl_<id>_<address>` (table handlers).
 
 ## 16. Caveats
@@ -665,6 +667,11 @@ Artifacts are listed relative to the target directory (`firmware/<model>/<hw+fw>
 | 10 | `pipeline/step10_tables.py` | `analysis/tables.json` |
 | 11 | `pipeline/step11_verify.py` | `analysis/verification.json` |
 | 12 | `pipeline/step12_report.py` | `analysis/summary.md`, `manifest.json` |
+| 13 | `pipeline/step13_roundtrip.py` | `analysis/roundtrip.json` - container re-encoded byte for byte (§27) |
+| 14 | `pipeline/step14_crosscheck.py` (+ `pipeline/scripts/DumpListing.java`) | `analysis/ghidra_listing.json`, `analysis/crosscheck.json` |
+| 15 | `pipeline/step15_differential.py` (+ `emulate.py`, `models.py`) | `analysis/differential.json` |
+| 16 | `pipeline/step16_formal.py` | `analysis/formal.json` |
+| 17 | `pipeline/step17_confidence.py` | `analysis/confidence.json`, `analysis/confidence.md` |
 | - | `pipeline/tools/*.py` | one-off inspectors: `lookup.py`, `read_vsfrs.py`, `probe.py`, `inspect_*.py`, `debug_*.py`, `blescan.py`, `ifaces.py`, `fetch_apk.py`, `analyze_official.py` |
 
 Run from the repo root: `python pipeline/run.py`, `--only 4,5`, `--from 7`, `--device <key>`,
@@ -672,3 +679,50 @@ Run from the repo root: `python pipeline/run.py`, `--only 4,5`, `--from 7`, `--d
 `pipeline/protocol.py` holds
 the id table, the frame codec and the record decoders; `pipeline/rcble.py`, `rcsession.py`, `rcfmt.py` are
 the transport and container libraries.
+
+## 27. Verification layers and confidence
+
+Five independent layers, all offline, all per build. `python pipeline/run.py --only 13,14,15,16,17`
+(`--all-devices` for every registered build) writes `analysis/confidence.json` + `confidence.md`; the
+categories are deliberately **not** merged into one percentage - each answers a different question.
+Reference build `rc-102/hw1-fw4.14`:
+
+| category | measured | how |
+| --- | --- | --- |
+| `byte_matched` | `130148/130148` container bytes, key blocks `8/8`, data blocks `8/8`, header fields and the CRC field equal, key-block CRC pair equal `8/8`, whole-file CRC equal to the unit's `0x0012` reply | step 13 - `rcfmt.reencode_file` rewrites the vendor file from the model and the bytes are compared (`recompress=False`, so the payload stream is carried verbatim) |
+| `formally_verified` | `10/10` goals proved (z3 5.3.3): Mangle one round and the 48-round chain are permutations, the CRC register and word-step forms agree, CRC of the empty message is the init word, Borland LCG has full period (Hull-Dobell), MS-DOS date pack/unpack round-trips, LZSS token layout and window-slot step, `align_size` is the least multiple of 8 | step 16 - bit-vector premises, `unsat` on the negation |
+| `tested` | `8/8` function cases, `122` instructions executed, `189/189` model vectors, `8/8` decompressed-length identities, `39260` disassembly lines compared at `0.9999` agreement | step 15 runs each routine natively in Unicorn and compares the returned word **and** every byte the routine wrote with the Python transcription (the ABI's stack slots are excluded on both sides); the vectors cover CRC-32/MPEG-2, Mangle round/inverse and whole blocks, LZSS decode, MS-DOS dates, the Borland LCG (synthetic and against the captured `0x081C` replies) |
+| `preserved_unchanged` | `248320/248320` image bytes covered, `66745` instructions, `69209` listing lines, `1895` C blocks, `1027` data/ascii items, `3888` key-block tail bytes carried | the mixed C + assembly listing keeps those regions at their original address without rewriting them |
+| `unresolved` | `4` named items | listed below |
+
+Per build (same command, same fields):
+
+| target | container bytes | proofs | function cases | model vectors | line agreement | image bytes / insns / C blocks |
+| --- | --- | --- | --- | --- | --- | --- |
+| `rc-101/fw4.14` | 130388/130388 | 10/10 | 0/0 | 183/183 | 37891/39338 (`0.9999`) | 249344 / 67163 / 1832 |
+| `rc-102/hw1-fw4.14` | 130148/130148 | 10/10 | 8/8 | 189/189 | 39260/40743 (`0.9999`) | 248320 / 66745 / 1895 |
+| `rc-103/fw4.14` | 130132/130132 | 10/10 | 8/8 | 183/183 | 39260/40743 (`0.9999`) | 248320 / 66745 / 1895 |
+| `rc-103g/fw4.14` | 130444/130444 | 10/10 | 8/8 | 183/183 | 39258/40743 (`0.9999`) | 248576 / 66570 / 1894 |
+| `rc-110/fw4.14` | 133312/133312 | 10/10 | 0/0 | 186/186 | 39619/41147 (`0.9999`) | 251904 / 67873 / 1934 |
+| `rc-410/fw4.16` | 140836/140836 | 10/10 | 0/0 | 189/189 | 38477/40453 (`0.9958`) | 264192 / 72189 / 2123 |
+
+`0/0` function cases means the 16-byte signature of the transcribed routines is not at the same address
+in that build, so nothing is claimed - not a failure (the five builds without a live unit also carry the
+extra unresolved item "on-device frame comparison not available offline"). `0.9958` for `rc-410` is the
+one build where the two decoders differ on more lines (`161` graded semantic, largely the `movs r0, #9`
+vs `mov.cs r0, 0x9` flag-attachment class), which is why its agreement is the only one below `0.9999`.
+The vector total itself scales with the container's block count
+(`mangle_blocks` runs twice per block, `lzss_decode` once) and gains the 6 device-anchored Borland
+vectors where a `capture.json` exists - hence `189` for `rc-102` and `rc-410`, `183`/`186` elsewhere.
+
+The four remaining open points for `rc-102/hw1-fw4.14` (`analysis/confidence.json -> unresolved`):
+
+1. the definition of the per-block key-block CRC pair beyond `crc1 == crc2` (30 buffer/variant
+   combinations checked, none matched - only the equality is verified);
+2. the pipeline's own LZSS encoder is not bit-identical with the vendor stream (`0/8` stream-identical,
+   `4649/31831` tokens, `125890` vs `125815` bits) - a tie-break/search-order difference in the vendor's
+   hash chain, while every stream decodes identically;
+3. `4` disassembly lines where capstone and SLEIGH still disagree after normalisation:
+   `0x080220EA`, `0x080220EE`, `0x080255B6`, `0x0802C266`;
+4. lines only one decoder reaches - capstone sweeps the whole image, Ghidra stops at data
+   (`28676` only-capstone, `1483` only-ghidra).

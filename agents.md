@@ -3,7 +3,7 @@
 Status: **complete** for `rc-102/hw1-fw4.14` (the reference build), container + decode + disassembly
 for the other five registered builds. `README.md` = the full narrative (extraction, confidence,
 hardware, protocol, flows, capability matrix, target registry); `firmware.md` = the firmware reference
-(§1-§26); `firmware/<target>/analysis/summary.md` = generated statistics per build; this file = the
+(§1-§27, the last section being the five verification layers); `firmware/<target>/analysis/summary.md` = generated statistics per build; this file = the
 short notes an agent needs to keep working without re-deriving anything.
 
 ## 1. Layout and targets
@@ -25,6 +25,7 @@ firmware/rc-102/hw1-fw4.14/
 ├── ghidra_proj/         Ghidra cache (gitignored)
 └── analysis/            stats, vectors, strings, functions, xrefs, callgraph, tables,
                          capture, container_check, verification, vsfr_readout,
+                         roundtrip, crosscheck, differential, formal, confidence,
                          sweep_{noarg,witharg}, probe_*.json, summary.md
 ```
 
@@ -67,7 +68,7 @@ lines) and `manifest.json` (identity + checksums); the cross-target table is §3
 ## 3. Running the pipeline
 
 ```powershell
-python pipeline/run.py                          # steps 1-12 for the default target
+python pipeline/run.py                          # steps 1-17 for the default target
 python pipeline/run.py --list                   # targets + step table
 python pipeline/run.py --all-devices            # every registered build
 python pipeline/run.py --device rc-110/fw4.14   # one build
@@ -76,12 +77,23 @@ python pipeline/run.py --only 3                 # fetch containers + match their
 python pipeline/run.py --only 2                 # live read-only capture (--sweep adds the id sweep)
 python pipeline/run.py --only 6                 # Ghidra headless (needs ghidra_12.2_PUBLIC/ + jdk-25.0.5+8/)
 python pipeline/run.py --from 7                 # index, xrefs, callgraph, tables, verify, report
+python pipeline/run.py --only 13,14,15,16,17    # the verification layers only (all offline)
 ```
 
 Run from the repo root (steps open paths relative to it); `run.py` chdirs there itself and passes the
 target to each step through `RC_TARGET`. `pipeline/tools/*.py` insert `pipeline/` on `sys.path`, so
 `import config`, `protocol`, `rcble`, `rcsession`, `rcfmt` work from any cwd; select the build they
 read with `RC_TARGET=…`.
+
+Steps 13-17 are the verification layers, and they run without the unit:
+
+| layer | step | helper | needs | note |
+| --- | --- | --- | --- | --- |
+| L1 container byte-exactness | 13 | `rcfmt.reencode_file` | - | `recompress=False` isolates header + crypto + layout; `True` also exercises `rcfmt.lzss_compress` |
+| L2 cross-decoder agreement | 14 | - | `analysis/ghidra_listing.json` (step 6) | skips itself (exit 0) when that file is absent |
+| L4 differential execution | 15 | `emulate.py` (Unicorn) + `models.py` | flash image | one case per transcribed routine, gated by a 16-byte signature |
+| L5 formal checks | 16 | `models.py` | `z3-solver` | bit-vector goals only, side-effect-free routines only |
+| roll-up | 17 | - | the JSON files above | five categories, `analysis/confidence.{json,md}` |
 
 ## 4. Querying the results
 
@@ -110,6 +122,11 @@ Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
 | device-vs-image equality | `analysis/verification.json` | `checks.*` (all `true`), `c_coverage` |
 | live identity / strings / areas | `analysis/capture.json` | `identity`, `virtual_strings`, `flash_areas` |
 | container-vs-device field matches | `analysis/container_check.json` | `…_matches_device` flags |
+| L1 re-encode byte-exactness | `analysis/roundtrip.json` | `blocks[].{header,key,data}`, `recompress.*` |
+| L2 per-instruction agreement | `analysis/crosscheck.json` | `counts.{compared,identical,format_only,pc_relative,semantic}`, `semantic_lines[]` |
+| L4 native-vs-Python execution | `analysis/differential.json` | `cases[].{name,address,status,r0,bytes_written}`, `format_vectors` |
+| L5 proofs | `analysis/formal.json` | `checks[].{name,status}` |
+| the five-category roll-up | `analysis/confidence.json` (+ `.md`) | `categories.{byte_matched,formally_verified,tested,preserved_unchanged}`, `unresolved[]` |
 | live VSFR values | `analysis/vsfr_readout.json` | `single_nonzero`, `batch_shapes` |
 | which ids answer | `analysis/sweep_noarg.json`, `sweep_witharg.json` | keyed by `0x…` id |
 | per-block decode metadata | `blocks.json` | `blocks[].{addr, stored_size, plain_size, crc}` |
@@ -140,13 +157,18 @@ Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
   Vector IRQ handlers collapse onto few real entries plus the self-loop at `0x0803C4D9`, so per-IRQ
   bodies come from `tables.json`, not from the call graph.
 * Container obfuscation: per block `size ^ 0xCE27A932`, `addr ^ 0xB2D5A864`; Mangle is a 48-round Feistel
-  over 8-byte LE blocks with 4 round keys; CRC is MPEG-2 (`0x04C11DB7`, no reflection, init `0xFFFFFFFF`,
-  4-byte LE chunks); payload is LZSS (2048-byte window pre-filled with `0x20`, initial index 2022).
-  All of it lives in `pipeline/rcfmt.py`, checked by `pipeline/step1_validate.py`.
+  over 8-byte LE blocks with 4 round keys; CRC is the STM32 hardware-CRC semantics (32-bit LE words,
+  MSB-first, poly `0x04C11DB7`, init `0xFFFFFFFF`, no final XOR, a trailing partial word zero-padded),
+  which is the MPEG-2 table in the image; payload is LZSS (2048-byte window pre-filled with `0x20`).
+  All of it lives in `pipeline/rcfmt.py`, checked by `pipeline/step1_validate.py`. The constants are
+  `WINDOW_SIZE 2048` (`OFFSET_BITS 11`), `WINDOW_INITIAL_INDEX 2031` (`2048-0x10-1`), `WINDOW_FILL 0x20`,
+  match length `2..17` (`MAX_UNCODED 2`, `LENGTH_BITS 4`), MSB-first bit order; the slot of output index
+  `k` is `(2031 + k) mod 2048`.
 * `date_time` is MS-DOS packed (`((year-1980)<<9)|month<<5|day` high half, `hour<<11|min<<5|sec/2`
   low half), **not** a Unix epoch - `rcfmt._decode_datetime`.
 * `RD_FLASH_AREA` (`0x081C`) replies `{u32 status, u32 seed, u32 enc_size, enc[]}` with Borland-LCG XOR
-  (`seed*0x015A4E35+1`, keystream `(seed>>16)&0x7FFF`) - `protocol.borland_xor` / `decode_flash_area`.
+  (`seed*0x015A4E35+1`, keystream the low 8 bits of `seed>>16`, one continuous state: size word first,
+  payload after) - `protocol.borland_xor` / `decode_flash_area`.
 * No raw memory-read command exists (two full `0x0000`-`0x0FFF` sweeps), so bulk bytes come only from
   the vendor containers; the device confirms the `size / date_time / crc32` triple and serves the two
   small XOR-obfuscated areas.
@@ -156,6 +178,24 @@ Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
   index form returns zeros on this build.
 * Steps 2 and 11 exit `0` when the target has no `ble_address`, and steps 7/10/12 tolerate a missing
   `decompiled.c`, so partially processed targets stay coherent — a non-zero exit is a real failure.
+* Verification layers: `emulate.py` maps one power-of-two block per region (Unicorn rejects overlapping
+  or non-power-of-two maps) - a single `0x10000` block at `0x1FFF0000` covers the VSFR area - and its
+  `on_read_unmapped` hook must `return True`, otherwise the fetch of the sentinel LR is reported as a fault.
+* In the differential harness a preset must go in through `Mem.poke()` (not recorded); `Mem.write()` is
+  what the comparison treats as a memory effect. Both sides exclude `emulate.STACK_RANGE`
+  (`0x20007000`-`0x20008000`), the slots the ABI owns.
+* Function cases only run when the 16 bytes at the routine address equal `models.SIGNATURES`, so a build
+  whose code moved prints `0/0` cases (rc-101, rc-110, rc-410 today) - that is the honest answer, not a skip.
+* z3 5.3.3: the unsigned ops are `UREM`/`UDIV` (no `Urem`), `Expr` has no `is_value`, and `<=` on a
+  `BitVec` is the *signed* comparison - use `z3.ULE` for sizes and offsets.
+* The Borland keystream byte is 8 bits wide (`(seed >> 16) & 0xFF`); step 15 proves it by decoding the
+  captured `0x081C` replies both ways and requiring the 8-bit form to leave more `0x00`/`0xFF` padding.
+* Step 14 self-skips (exit `0`) without `analysis/ghidra_listing.json`. To regenerate that file alone:
+  `analyzeHeadless <ghidra_proj> RC102 -process flash.bin -noanalysis -scriptPath pipeline\scripts -postScript DumpListing.java <target_dir>`.
+* `config.load()` carries no `expected.end`; step 17 reads the image end from `analysis/stats.json`.
+* With the unit powered off, `--all-devices` ends `15/17` for `rc-102` (steps 2 and 11 exit `1` on
+  `BleakDeviceNotFoundError`) and `17/17` for the five targets whose `ble_address` is `null`. The
+  artifacts of the last live capture stay on disk, so the offline layers are unaffected.
 
 ## 7. Landmark addresses for `rc-102/hw1-fw4.14` (already resolved - do not re-derive)
 

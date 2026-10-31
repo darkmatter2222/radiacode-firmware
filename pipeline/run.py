@@ -39,6 +39,11 @@ STEPS = [
     (10, "step10_tables.py", "static {id, handler} dispatch tables", "offline"),
     (11, "step11_verify.py", "byte-for-byte device vs image verification", "BLE"),
     (12, "step12_report.py", "assemble the target's analysis/summary.md", "offline"),
+    (13, "step13_roundtrip.py", "byte-exact container re-encode + LZSS encoder equivalence (L1)", "offline"),
+    (14, "step14_crosscheck.py", "capstone vs Ghidra/SLEIGH instruction agreement (L2)", "offline"),
+    (15, "step15_differential.py", "Unicorn vs Python models, native code as reference (L4)", "offline"),
+    (16, "step16_formal.py", "Z3 proofs over the pure model (L5)", "offline"),
+    (17, "step17_confidence.py", "roll all evidence up into the five confidence categories", "offline"),
 ]
 
 

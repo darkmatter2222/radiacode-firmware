@@ -1,0 +1,201 @@
+{
+ "target": "rc-103/fw4.14",
+ "cases": [
+  {
+   "name": "const_080166ce",
+   "addr": "0x080166CE",
+   "args": [
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 2,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000001",
+   "model_r0": "0x00000001",
+   "r0_match": true,
+   "writes_native": 0,
+   "writes_model": 0,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "const_08017ef2",
+   "addr": "0x08017EF2",
+   "args": [
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 2,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000002",
+   "model_r0": "0x00000002",
+   "r0_match": true,
+   "writes_native": 0,
+   "writes_model": 0,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "const_08017ef6",
+   "addr": "0x08017EF6",
+   "args": [
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 2,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000003",
+   "model_r0": "0x00000003",
+   "r0_match": true,
+   "writes_native": 0,
+   "writes_model": 0,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "transfer_state_le",
+   "addr": "0x08017EB4",
+   "args": [
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 11,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000001",
+   "model_r0": "0x00000001",
+   "r0_match": true,
+   "writes_native": 0,
+   "writes_model": 0,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "transfer_state_gt",
+   "addr": "0x08017EB4",
+   "args": [
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 14,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000000",
+   "model_r0": "0x00000000",
+   "r0_match": true,
+   "writes_native": 0,
+   "writes_model": 0,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "transfer_state_other",
+   "addr": "0x08017EB4",
+   "args": [
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 13,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000000",
+   "model_r0": "0x00000000",
+   "r0_match": true,
+   "writes_native": 0,
+   "writes_model": 0,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "item_502_push",
+   "addr": "0x080275C4",
+   "args": [
+    "0x20000400",
+    "0x502",
+    "0x0",
+    "0x0"
+   ],
+   "instructions": 20,
+   "stopped": "reached sentinel",
+   "native_r0": "0x00000001",
+   "model_r0": "0x00000001",
+   "r0_match": true,
+   "writes_native": 8,
+   "writes_model": 8,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  },
+  {
+   "name": "frame_serialize",
+   "addr": "0x08028A4C",
+   "args": [
+    "0x20000500",
+    "0x0",
+    "0x0",
+    "0xA5A5A5A5"
+   ],
+   "instructions": 58,
+   "stopped": "reached sentinel",
+   "native_r0": "0x20000904",
+   "model_r0": "0x20000904",
+   "r0_match": true,
+   "writes_native": 28,
+   "writes_model": 28,
+   "write_bytes_match": true,
+   "first_write_diff": null
+  }
+ ],
+ "format": [
+  {
+   "model": "crc32_mpeg2",
+   "vectors": 12,
+   "passed": 12,
+   "notes": "table-free bitwise model vs the table version"
+  },
+  {
+   "model": "mangle_inverse",
+   "vectors": 128,
+   "passed": 128,
+   "notes": "48-round chain is a permutation, one round inverted"
+  },
+  {
+   "model": "mangle_blocks",
+   "vectors": 16,
+   "passed": 16,
+   "notes": "encrypt(decrypt(x)) == x on this container's blocks"
+  },
+  {
+   "model": "lzss_decode",
+   "vectors": 8,
+   "passed": 8,
+   "notes": "independent token walk over this container's streams"
+  },
+  {
+   "model": "msdos_datetime",
+   "vectors": 13,
+   "passed": 13,
+   "notes": "field extraction, cross-checked in step 1"
+  },
+  {
+   "model": "borland_lcg",
+   "vectors": 6,
+   "passed": 6,
+   "notes": "keystream bytes and final state"
+  },
+  {
+   "model": "borland_lcg_device",
+   "vectors": 0,
+   "passed": 0,
+   "notes": "against the captured 0x081C replies: length word, payload round-trip, 7-bit mask excluded"
+  }
+ ]
+}

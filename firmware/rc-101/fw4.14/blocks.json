@@ -11,7 +11,9 @@
     "version_high": 4,
     "compressed": 1,
     "reserved": 0,
-    "header_crc32": "1791a68b"
+    "header_crc32": "1791a68b",
+    "file_count": 0,
+    "firmware_header_size": 0
   },
   "whole_file_crc": "0921bcfb",
   "blocks": [

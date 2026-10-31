@@ -1,0 +1,166 @@
+{
+ "target": "rc-102/hw1-fw4.14",
+ "capstone_lines": 67936,
+ "ghidra_lines": 40743,
+ "compared": 39260,
+ "tiers": {
+  "identical": 7558,
+  "format_only": 29746,
+  "pc_relative": 1952,
+  "semantic": 4
+ },
+ "only_capstone": 28676,
+ "only_ghidra": 1483,
+ "agreement": 0.999898,
+ "strict_agreement": 0.192511,
+ "compared_inside_functions": 39260,
+ "examples": {
+  "identical": [],
+  "format_only": [
+   {
+    "addr": "0x08010196",
+    "capstone": "ldr r1, [r0]",
+    "ghidra": "ldr r1, r0 0x0"
+   },
+   {
+    "addr": "0x0801019A",
+    "capstone": "b #0x801019e",
+    "ghidra": "b 0801019e"
+   },
+   {
+    "addr": "0x0801019E",
+    "capstone": "ldr r2, [r0]",
+    "ghidra": "ldr r2, r0 0x0"
+   },
+   {
+    "addr": "0x080101A4",
+    "capstone": "bne #0x801019c",
+    "ghidra": "bne 0801019c"
+   },
+   {
+    "addr": "0x080101AA",
+    "capstone": "ldrh r0, [r2]",
+    "ghidra": "ldrh r0, r2 0x0"
+   },
+   {
+    "addr": "0x080101B2",
+    "capstone": "ldrh r4, [r0]",
+    "ghidra": "ldrh r4, r0 0x0"
+   },
+   {
+    "addr": "0x080101B8",
+    "capstone": "bhs #0x80101ca",
+    "ghidra": "bcs 080101ca"
+   },
+   {
+    "addr": "0x080101BA",
+    "capstone": "ldrd r6, r7, [r0]",
+    "ghidra": "ldrd r6, r7, r0 0x0"
+   },
+   {
+    "addr": "0x080101BE",
+    "capstone": "adds.w r2, r6, #0x10000",
+    "ghidra": "adds.w r2, r6, 0x10000"
+   },
+   {
+    "addr": "0x080101C2",
+    "capstone": "adc r3, r7, #0",
+    "ghidra": "adc r3, r7, 0x0"
+   },
+   {
+    "addr": "0x080101C6",
+    "capstone": "strd r2, r3, [r0]",
+    "ghidra": "strd r2, r3, r0 0x0"
+   },
+   {
+    "addr": "0x080101CA",
+    "capstone": "strh r1, [r0]",
+    "ghidra": "strh r1, r0 0x0"
+   }
+  ],
+  "pc_relative": [
+   {
+    "addr": "0x08010192",
+    "capstone": "ldr.w r0, [pc, #0xa74]",
+    "ghidra": "ldr.w r0, 08010c08"
+   },
+   {
+    "addr": "0x080101A6",
+    "capstone": "ldr.w r2, [pc, #0xab8]",
+    "ghidra": "ldr.w r2, 08010c60"
+   },
+   {
+    "addr": "0x080101AE",
+    "capstone": "ldr.w r0, [pc, #0xb90]",
+    "ghidra": "ldr.w r0, 08010d40"
+   },
+   {
+    "addr": "0x080101D6",
+    "capstone": "ldr.w r1, [pc, #0xa98]",
+    "ghidra": "ldr.w r1, 08010c70"
+   },
+   {
+    "addr": "0x080101DA",
+    "capstone": "ldr.w r4, [pc, #0xbc0]",
+    "ghidra": "ldr.w r4, 08010d9c"
+   },
+   {
+    "addr": "0x0801020C",
+    "capstone": "ldr.w r1, [pc, #0xa60]",
+    "ghidra": "ldr.w r1, 08010c70"
+   },
+   {
+    "addr": "0x0801021A",
+    "capstone": "ldr.w r1, [pc, #0xb80]",
+    "ghidra": "ldr.w r1, 08010d9c"
+   },
+   {
+    "addr": "0x08010288",
+    "capstone": "ldreq.w r0, [pc, #0xb38]",
+    "ghidra": "ldr.eq.w r0, 08010dc4"
+   },
+   {
+    "addr": "0x0801029E",
+    "capstone": "ldr.w r0, [pc, #0xb24]",
+    "ghidra": "ldr.w r0, 08010dc4"
+   },
+   {
+    "addr": "0x080102B2",
+    "capstone": "ldreq.w r0, [pc, #0xb10]",
+    "ghidra": "ldr.eq.w r0, 08010dc4"
+   },
+   {
+    "addr": "0x080102CC",
+    "capstone": "ldreq.w r0, [pc, #0xaf4]",
+    "ghidra": "ldr.eq.w r0, 08010dc4"
+   },
+   {
+    "addr": "0x080102EA",
+    "capstone": "ldr.w r0, [pc, #0xad8]",
+    "ghidra": "ldr.w r0, 08010dc4"
+   }
+  ],
+  "semantic": [
+   {
+    "addr": "0x080220EA",
+    "capstone": "movs r6, r5",
+    "ghidra": "ldrbtlt r0, r0 -0x2e"
+   },
+   {
+    "addr": "0x080220EE",
+    "capstone": "ldr r3, [pc, #0x30]",
+    "ghidra": "ldmdahi r12 r2 r3 r8 r9 r11 lr"
+   },
+   {
+    "addr": "0x080255B6",
+    "capstone": "eors.w ip, ip, r1, asr #32",
+    "ghidra": "eors.w r12, r12, r1"
+   },
+   {
+    "addr": "0x0802C266",
+    "capstone": "stmhs r0!, {r2, r3}",
+    "ghidra": "stmia.cs r0, r2 r3"
+   }
+  ]
+ }
+}
