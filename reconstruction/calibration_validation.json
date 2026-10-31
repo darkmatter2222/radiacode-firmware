@@ -1,0 +1,143 @@
+{
+  "status": "PASS",
+  "scope": "0x0802abf8 predicate return, writes, stack and callee-saved ABI; not FPSCR equivalence or firmware certification",
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "source_sha256": "1eb6aa898980d0c48ec3ad0103db33dcd9fc07dd2a8ccb91c5f883d856c177cf",
+  "harness_sha256": "053179117c7ee083e2610c28473645648104a093e88d85b7b3d405273e39ad00",
+  "flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-mfpu=fpv4-sp-d16",
+    "-mfloat-abi=softfp",
+    "-ffp-contract=off",
+    "-fno-fast-math",
+    "-O2",
+    "-ffreestanding",
+    "-nostdlib",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wl,--build-id=none",
+    "-Wl,-Ttext=0x08070000",
+    "-Wl,-e,recovered_0802abf8"
+  ],
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "binary_sha256": "3b912b789bdf07cf52b6b176de1f3289c6ee6bfc550ed593e466fc117553ba4f",
+  "cases": 10947,
+  "original_instruction_addresses": [
+    134392824,
+    134392828,
+    134392832,
+    134392836,
+    134392840,
+    134392844,
+    134392846,
+    134392850,
+    134392854,
+    134392858,
+    134392862,
+    134392864,
+    134392868,
+    134392872,
+    134392876,
+    134392878,
+    134392882,
+    134392886,
+    134392890,
+    134392894,
+    134392898,
+    134392902,
+    134392904,
+    134392908,
+    134392912,
+    134392916,
+    134392918,
+    134392920,
+    134392922,
+    134392924
+  ],
+  "fpscr_exception_flag_differences": 1513,
+  "failures": [],
+  "ordered_transcription_counterexamples": [
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 0,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 4194304,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 8388608,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 12582912,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 16777216,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 33554432,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0xff800001",
+        "0x41000000"
+      ],
+      "fpscr": 50331648,
+      "original": 1,
+      "ordered_transcription": 0
+    },
+    {
+      "words": [
+        "0x0",
+        "0x41000000",
+        "0x7fc00001"
+      ],
+      "fpscr": 0,
+      "original": 1,
+      "ordered_transcription": 0
+    }
+  ]
+}

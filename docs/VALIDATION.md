@@ -59,3 +59,10 @@ indirect-call graph, hardware equivalence capture or whole-program proof exists.
 Confidence reports retain these blockers; the release gate fails closed. It also
 checks input provenance and artifact hashes. It deliberately requires a future
 reviewed hardware evidence policy rather than accepting a hand-edited PASS flag.
+
+## Floating-point observer regression
+
+Read observers are restricted to MMIO because a global RAM-read hook in Unicorn
+2.1.4 changed execution of a conditional VFP load. A pinned original-image
+regression covers the failing case. The additional predicate experiment and
+its unresolved FPSCR differences are documented in `reconstruction/CALIBRATION.md`.

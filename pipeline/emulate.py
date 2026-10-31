@@ -81,7 +81,11 @@ def new_emulator(flash):
                                int.from_bytes(uc.mem_read(address, size), "little")))
 
     emu.hook_add(UC_HOOK_CODE, on_code)
-    emu.hook_add(UC_HOOK_MEM_READ, on_read)
+    # Unicorn 2.1.4 global RAM read hooks corrupt ITSTATE on conditional VFP
+    # loads (permanent regression: 0x0802abf8). Only MMIO reads are part of
+    # this harness contract. Keep the observer outside ordinary RAM/flash.
+    emu.hook_add(UC_HOOK_MEM_READ, on_read, begin=0x40000000, end=0x5fffffff)
+    emu.hook_add(UC_HOOK_MEM_READ, on_read, begin=0xe0000000, end=0xe00fffff)
     emu.hook_add(UC_HOOK_MEM_WRITE, on_write)
     # Unmapped accesses are faults. Returning True without mapping is not recovery.
     return emu, trace

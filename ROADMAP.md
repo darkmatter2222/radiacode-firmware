@@ -9,7 +9,7 @@ firmware-release approval are distinct.
 | 1. Trustworthy validators | Real re-encryption; completion checks; isolated execution; ordered writes; fixed dates/shifts; negative tests; explicit incomplete status | Expand mutation corpus and independent oracles |
 | 2. Fresh Ghidra recovery | Explicit Thumb context, RAM/MMIO mapping, seeded disassembly, all-six regeneration | Review indirect branches, function boundaries, types and remaining warnings |
 | 3. Auditable coverage | Reachability-based instruction addresses, unknown bytes, unresolved transfers, warning inventory | Confirm every application region and indirect edge; current candidate map is incomplete |
-| 4. Buildable source | Five compiled candidates / 1,360 differential cases | Reconstruct the remaining application, globals, ABI, startup, linker layout |
+| 4. Buildable source | Five compiled candidates / 1,360 differential cases; one FP predicate / 10,947 bounded comparisons with FPSCR differences | Reconstruct the remaining application, globals, ABI, startup, linker layout |
 | 5. Hybrid bridge | All-six byte-preserving assembler/linker baseline | Validated function replacement mechanism and subsystem integration; no flashable hybrid released |
 | 6. Behavioral tests | Deterministic boundaries and random cases; original ARM vs compiled ARM | Measurement, spectrum, calibration, persistence, timing, alarms, parsers and whole-system coverage |
 | 7. Board/hardware validation | Explicit missing-evidence gate; raw capture retention | Exact MCU/board model, peripheral semantics, interrupt/DMA tests and physical original/rebuilt comparisons |
@@ -29,6 +29,7 @@ firmware-release approval are distinct.
 ## Merge/release condition
 
 The full user-requested completion condition is not met while these items remain.
-Keep the implementation branch reviewable; do not merge it on a claim that all
-firmware behavior has been certified. `pipeline/release_gate.py` returns 2 until
+Merge tested repository increments independently of firmware certification, as
+requested by the owner. Do not describe those merges as certification of all
+firmware behavior. `pipeline/release_gate.py` returns 2 until
 that evidence exists. A green repository test suite does not override this gate.
