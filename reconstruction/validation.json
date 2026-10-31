@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "scope": "five compiled candidates, including one partial dispatcher path; not complete firmware",
+  "source_sha256": "8521ea8614b849137c8856128ade6ab90eb3c6ca23cc653ca7cde83a5bf68d5f",
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-mfloat-abi=soft",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-fno-unwind-tables",
+    "-fno-asynchronous-unwind-tables",
+    "-nostdlib",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wl,--build-id=none",
+    "-Wl,-Ttext=0x08070000",
+    "-Wl,-e,recovered_080166ce"
+  ],
+  "compiled_binary_sha256": "a4d59ff6b94a63ccccc0c88626232b3c0a9a1b4e7c97018ea20c61ab16d2553b",
+  "cases": 1360,
+  "passed": 1360,
+  "unique_original_instructions": 44,
+  "functions": {
+    "__bss_end__": 134680680,
+    "__bss_start": 134680680,
+    "__bss_start__": 134680680,
+    "__data_start": 134680680,
+    "__end__": 134680680,
+    "_bss_end__": 134680680,
+    "_edata": 134680680,
+    "_end": 134680680,
+    "_stack": 524288,
+    "recovered_080166ce": 134676480,
+    "recovered_08017eb4": 134676492,
+    "recovered_08017ef2": 134676484,
+    "recovered_08017ef6": 134676488,
+    "recovered_item_502": 134676548
+  },
+  "failures": [],
+  "baselines": [
+    {
+      "target": "rc-102/hw1-fw4.14",
+      "status": "PASS",
+      "scope": "original bytes assembled and linked; zero source-recovery credit",
+      "original_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+      "rebuilt_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6"
+    },
+    {
+      "target": "rc-101/fw4.14",
+      "status": "PASS",
+      "scope": "original bytes assembled and linked; zero source-recovery credit",
+      "original_sha256": "15cd254be5ee3474d746b74c2cf46d46743c6455d9d5448fec3ef3f2b7c69ea9",
+      "rebuilt_sha256": "15cd254be5ee3474d746b74c2cf46d46743c6455d9d5448fec3ef3f2b7c69ea9"
+    },
+    {
+      "target": "rc-103/fw4.14",
+      "status": "PASS",
+      "scope": "original bytes assembled and linked; zero source-recovery credit",
+      "original_sha256": "96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d",
+      "rebuilt_sha256": "96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d"
+    },
+    {
+      "target": "rc-103g/fw4.14",
+      "status": "PASS",
+      "scope": "original bytes assembled and linked; zero source-recovery credit",
+      "original_sha256": "828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5",
+      "rebuilt_sha256": "828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5"
+    },
+    {
+      "target": "rc-110/fw4.14",
+      "status": "PASS",
+      "scope": "original bytes assembled and linked; zero source-recovery credit",
+      "original_sha256": "71045208580628e2f8e9c7c29bb25426ee074b00a69b93153e53db006a923502",
+      "rebuilt_sha256": "71045208580628e2f8e9c7c29bb25426ee074b00a69b93153e53db006a923502"
+    },
+    {
+      "target": "rc-410/fw4.16",
+      "status": "PASS",
+      "scope": "original bytes assembled and linked; zero source-recovery credit",
+      "original_sha256": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e",
+      "rebuilt_sha256": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e"
+    }
+  ]
+}

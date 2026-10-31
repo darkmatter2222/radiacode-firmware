@@ -93,7 +93,6 @@ async def read_device():
             ("GET_VERSION", GET_VERSION, b""),
             ("GET_SERIAL", GET_SERIAL, b""),
             ("FW_IMAGE_GET_INFO", FW_IMAGE_GET_INFO, b""),
-            ("BLOCK_COUNT", BLOCK_COUNT, b""),
             ("FW_DESCRIPTOR", RD_SIGNAT, b""),
             ("VS_CONFIGURATION", RD_VIRT_STRING, struct.pack("<I", CONFIGURATION_VS)),
         ):
@@ -104,12 +103,15 @@ async def read_device():
 
 
 def main():
+    if "--live" not in sys.argv:
+        print("SKIP: live device access requires --live")
+        return 2
     base = int(CFG["mcu"]["base"], 16)
     expected = CFG["expected"]
     if not CFG["ble_address"]:
         print("target %s has no live unit (ble_address is null) - skipping the on-device check"
               % CFG["key"])
-        return 0
+        return 2
     raw = asyncio.run(read_device())
 
     size, buffer_size, date_time, crc = struct.unpack("<IIII", bytes.fromhex(raw["FW_IMAGE_GET_INFO"]))
@@ -142,7 +144,7 @@ def main():
             "buffer_size": buffer_size,
             "date_time": f"0x{date_time:08X}",
             "crc": f"0x{crc:08X}",
-            "block_count": struct.unpack("<I", bytes.fromhex(raw["BLOCK_COUNT"]))[0],
+            "block_count": None, # update-session command deliberately not sent
             "descriptor": text(bytes.fromhex(raw["FW_DESCRIPTOR"])),
         },
         "files": {
@@ -166,13 +168,14 @@ def main():
             "date_time_matches_registry": _hex(date_time) == _hex(expected["date_time"]),
             "blocks_match_registry": len(blocks) == expected["blocks"],
         },
-        "c_coverage": coverage(functions, CFG["listing"]),
+        "candidate_range_accounting_not_c_coverage": coverage(functions, CFG["listing"]),
     }
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
     with open(CFG["verification"], "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2)
-    print(json.dumps(payload["checks"] | payload["c_coverage"], indent=2))
+    print(json.dumps(payload["checks"] | payload["candidate_range_accounting_not_c_coverage"], indent=2))
+    return 1 if any(v is False for v in payload["checks"].values()) else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -1,14 +1,7 @@
-"""Step 2 — read-only capture from the live unit of the active target over BLE.
+"""Explicit live capture (--live). Session setup and clock writes change device state.
 
-Writes the target's `analysis/capture.json`: identity, the virtual-string map, the numbered
-register space and the four parameter areas. With `--sweep` it also writes
-`analysis/sweep_noarg.json` and `analysis/sweep_witharg.json` (every command id probed twice,
-without and with a `u32` argument). Every command issued here is a read; the only writes are the
-`SET_EXCHANGE` sign and the idempotent wall-clock `SET_LOCAL_TIME`, both required before the
-device answers anything. The BLE address and the sign come from `pipeline/devices.json`.
-
-    python pipeline/step2_probe.py            # fast capture (~30 s)
-    python pipeline/step2_probe.py --sweep    # + full 0x0000-0x0FFF id sweep (~14 min, cached)
+Unknown command sweeps require --unsafe-command-sweep. They are not read-only.
+Raw area reply bytes are preserved beside decoded interpretations.
 """
 
 import os
@@ -56,7 +49,7 @@ async def capture(sweep=False):
 
         # 1. identity
         identity = {}
-        for cid in (0x0005, 0x000A, 0x000B, 0x0012, 0x0013, 0x0101, 0x0807):
+        for cid in (0x0005, 0x000A, 0x000B, 0x0012, 0x0101, 0x0807):
             data = await cmd(t, cid)
             if data is None:
                 continue
@@ -105,7 +98,7 @@ async def capture(sweep=False):
         for area in range(0, 4):
             data = await cmd(t, 0x081C, struct.pack("<I", area))
             if data:
-                areas[str(area)] = decode_flash_area(data)
+                areas[str(area)] = dict(decode_flash_area(data), raw_payload_hex=data.hex())
         out["flash_areas"] = areas
 
         # 5. optional: whole command-id space, twice - no argument and with a u32 argument
@@ -129,11 +122,16 @@ async def capture(sweep=False):
 
 
 def main():
+    if "--live" not in sys.argv:
+        print("SKIP: live device access requires --live")
+        return 2
+    if "--sweep" in sys.argv and "--unsafe-command-sweep" not in sys.argv:
+        raise ValueError("Unknown command sweeps may mutate device state; use --unsafe-command-sweep explicitly")
     if not CFG["ble_address"]:
         print("target %s has no live unit (ble_address is null) - nothing to capture" % CFG["key"])
-        return 0
+        return 2
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
-    data = asyncio.run(capture(sweep="--sweep" in sys.argv))
+    data = asyncio.run(capture(sweep="--unsafe-command-sweep" in sys.argv))
     with open(CFG["capture"], "w", encoding="utf-8") as fh:
         json.dump(data, fh, indent=2, ensure_ascii=False)
     print(json.dumps({

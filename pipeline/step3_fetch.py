@@ -111,6 +111,7 @@ def check():
     date_time = "%08x" % header["date_time"]
     crc = "%08x" % whole
     checks = {
+        "comparison_source": "saved device capture" if os.path.exists(CFG["capture"]) else "registry only; no live device evidence",
         "target": CFG["key"],
         "container": CFG["container"],
         "size": len(data),
@@ -138,5 +139,6 @@ if __name__ == "__main__":
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
     with open(CFG["container_check"], "w", encoding="utf-8") as fh:
         json.dump(checks, fh, indent=2)
-    print("all match:", all(v is True for k, v in checks.items() if k.endswith("_device")
-                            or k == "blocks_match_container"))
+    passed = all(v is True for k, v in checks.items() if k.endswith("_device") or k == "blocks_match_container")
+    print("all match:", passed)
+    sys.exit(0 if passed else 1)

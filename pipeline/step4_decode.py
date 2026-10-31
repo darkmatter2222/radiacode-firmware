@@ -30,6 +30,8 @@ for index, block in enumerate(blocks):
     if compressed:
         plain = rcfmt.lzss_decompress(plain)
     ok = rcfmt.calculate_crc(plain) == crc1
+    if not ok:
+        raise ValueError(f"block {index} payload CRC mismatch")
     offset = block["addr"] - BASE
     end = offset + len(plain)
     if len(image) < end:

@@ -38,7 +38,7 @@ public class DumpListing extends GhidraScript {
             analysis.mkdirs();
         }
         try (PrintWriter out = new PrintWriter(new File(analysis, "ghidra_listing.json"))) {
-            out.print("{\"instructions\":[");
+            out.print("{\"operand_schema\":\"rendered-v1\",\"instructions\":[");
             int instructions = 0;
             InstructionIterator walker = listing.getInstructions(true);
             while (walker.hasNext()) {
@@ -84,20 +84,9 @@ public class DumpListing extends GhidraScript {
     }
 
     private String operands(Instruction ins) {
-        StringBuilder text = new StringBuilder();
-        for (int i = 0; i < ins.getNumOperands(); i++) {
-            if (i > 0) {
-                text.append(", ");
-            }
-            Object[] items = ins.getOpObjects(i);
-            for (int j = 0; j < items.length; j++) {
-                if (j > 0) {
-                    text.append(' ');
-                }
-                text.append(items[j] == null ? "" : items[j].toString());
-            }
-        }
-        return text.toString();
+        String text = ins.toString();
+        int space = text.indexOf(' ');
+        return space < 0 ? "" : text.substring(space + 1).trim();
     }
 
     private String hex(Address address) {

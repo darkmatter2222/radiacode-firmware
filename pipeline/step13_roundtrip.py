@@ -20,6 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import config
+import evidence
 import rcfmt
 
 CFG = config.load()
@@ -155,8 +156,9 @@ def main():
           % (lzss["decode_identical"], lzss["blocks"], lzss["stream_identical"], lzss["blocks"],
              lzss["tokens_identical"], max(lzss["tokens_vendor"], lzss["tokens_own"]),
              lzss["payload_bytes"], lzss["vendor_stream_bytes"], lzss["own_stream_bytes"]))
+    evidence.write(CFG["roundtrip"], result, CFG)
     print("wrote", out)
-    return 0 if exact else 1
+    return 0 if exact and lzss["decode_identical"] == lzss["blocks"] else 1
 
 
 if __name__ == "__main__":

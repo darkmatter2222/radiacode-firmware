@@ -19,10 +19,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import config
+import evidence
 
 CFG = config.load()
-GHIDRA = os.path.join(config.ROOT, "ghidra_12.2_PUBLIC")
-JDK = next((os.path.join(config.ROOT, d) for d in os.listdir(config.ROOT)
+GHIDRA = os.environ.get("GHIDRA_HOME", os.path.join(config.ROOT, "ghidra_12.2_PUBLIC"))
+JDK = os.environ.get("JAVA_HOME") or next((os.path.join(config.ROOT, d) for d in os.listdir(config.ROOT)
             if d.startswith("jdk-")), None)
 IMAGE = CFG["flash"]
 OUT_C = CFG["c"]
@@ -49,6 +50,7 @@ def main():
            "-loader-blockName", "FLASH",
            "-processor", CFG["mcu"]["processor"],
            "-scriptPath", os.path.join("pipeline", "scripts"),
+           "-preScript", "PrepareFirmware.java", CFG["dir"],
            "-postScript", "DumpC.java", CFG["dir"],
            "-postScript", "DumpListing.java", CFG["dir"],
            "-overwrite"]
@@ -62,6 +64,13 @@ def main():
         blocks = sum(1 for line in open(OUT_C, encoding="utf-8", errors="replace")
                      if line.startswith("/* ===== "))
         print("C output:", OUT_C, lines, "lines,", blocks, "function blocks")
+    if rc == 0:
+        evidence.write(os.path.join(CFG["analysis_dir"], "ghidra_run.json"), {
+            "status": "PASS", "scope": "analysis/export completed; not equivalence",
+            "ghidra": "12.2", "processor": CFG["mcu"]["processor"],
+            "scripts": {name: evidence.sha256(os.path.join(config.ROOT,"pipeline","scripts",name))
+                        for name in ("PrepareFirmware.java","DumpC.java","DumpListing.java")},
+            "output_sha256": evidence.sha256(OUT_C)}, CFG)
     return rc
 
 

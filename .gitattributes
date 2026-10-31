@@ -1,4 +1,4 @@
-* text=auto
+* text=auto eol=lf
 *.py text
 *.md text
 *.java text
@@ -8,3 +8,7 @@
 *.s text
 *.c text
 *.bin binary
+# Preserve raw generated decompiler formatting while checking handwritten code.
+firmware/**/decompiled.c whitespace=-blank-at-eol
+firmware/**/listing.s whitespace=-blank-at-eol
+docs/historical/* whitespace=-blank-at-eol
