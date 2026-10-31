@@ -1,15 +1,16 @@
-"""Disassemble the decoded RadiaCode-102 firmware (ARMv7E-M / Thumb-2) and index it.
+"""Disassemble the decoded firmware image of the active target (ARMv7E-M / Thumb-2) and index it.
 
 Strategy: linear sweep of the whole flash image with re-synchronisation on zero runs and
 ASCII blobs, plus a function index built from the interrupt vector table and every
 observed branch/link target.
 
-Outputs (under ./firmware):
-  rc102_flash.bin          flat flash image, base 0x08010000 (written by decode_firmware.py)
-  listing/rc102_flash.s    annotated Thumb-2 disassembly
+Outputs (inside the target directory, see `pipeline/devices.json`):
+  flash.bin          flat flash image (written by step 4)
+  listing.s          annotated Thumb-2 disassembly
   analysis/vectors.json    interrupt vector table
   analysis/strings.json    ASCII strings with addresses
   analysis/functions.json  function index (address, name, size, callers, callee count)
+  analysis/stats.json      the counts quoted by the report
 """
 
 import json
@@ -18,12 +19,15 @@ from collections import defaultdict
 
 from capstone import CS_ARCH_ARM, CS_MODE_THUMB, Cs
 
-BASE = 0x08000000
-IMAGE = "firmware/rc102_flash.bin"
-VTOR = 0x08010000
+import config
 
-os.makedirs("firmware/analysis", exist_ok=True)
-os.makedirs("firmware/listing", exist_ok=True)
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+IMAGE = CFG["flash"]
+VTOR = int(CFG["mcu"]["vector_table"], 16)
+
+os.makedirs(CFG["analysis_dir"], exist_ok=True)
+os.makedirs(CFG["dir"], exist_ok=True)
 
 CORE_VECTORS = [
     "InitialSP", "Reset", "NMI", "HardFault", "MemManage", "BusFault", "UsageFault",
@@ -60,7 +64,7 @@ for i, byte in enumerate(data):
             strings.append({"offset": start, "length": i - start, "text": data[start:i].decode("ascii")})
         start = None
 string_by_start = {item["offset"]: item for item in strings}
-with open("firmware/analysis/strings.json", "w", encoding="utf-8") as fh:
+with open(CFG["strings"], "w", encoding="utf-8") as fh:
     json.dump(
         [{"address": f"0x{BASE + s['offset']:08X}", "length": s["length"], "text": s["text"]} for s in strings],
         fh,
@@ -91,7 +95,7 @@ while index < 128 and VTOR + 4 * index + 4 <= end:
         int.from_bytes(data[addr + 4 * k - BASE : addr + 4 * k - BASE + 4], "little") == 0 for k in range(1, 9)
     ):
         break
-with open("firmware/analysis/vectors.json", "w", encoding="utf-8") as fh:
+with open(CFG["vectors"], "w", encoding="utf-8") as fh:
     json.dump({"vtor": f"0x{VTOR:08X}", "count": len(rows), "entries": rows}, fh, indent=2)
 
 VTOR_END = VTOR + 4 * len(rows)  # the table itself is data, not instructions
@@ -207,7 +211,7 @@ for kind, addr, width in items:
     else:
         word = int.from_bytes(data[off : off + 4], "little")
         lines.append(f"{addr:08x}  {data[off:off+4].hex(' ')}   .word    0x{word:08X}")
-with open("firmware/listing/rc102_flash.s", "w", encoding="utf-8") as fh:
+with open(CFG["listing"], "w", encoding="utf-8") as fh:
     fh.write("\n".join(lines) + "\n")
 
 # ------------------------------------------------------------------ function index
@@ -234,7 +238,7 @@ for position, addr in enumerate(starts):
             "callee_count": len(callees[addr]),
         }
     )
-with open("firmware/analysis/functions.json", "w", encoding="utf-8") as fh:
+with open(CFG["functions"], "w", encoding="utf-8") as fh:
     json.dump(functions, fh, indent=2)
 
 stats = {
@@ -252,7 +256,7 @@ stats = {
     "fill_items": sum(1 for kind, _, _ in items if kind == "fill"),
     "byte_items": sum(1 for kind, _, _ in items if kind == "byte"),
 }
-with open("firmware/analysis/stats.json", "w", encoding="utf-8") as fh:
+with open(CFG["stats"], "w", encoding="utf-8") as fh:
     json.dump(stats, fh, indent=2)
 
 print(json.dumps(stats))

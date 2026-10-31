@@ -1,7 +1,10 @@
 # RadiaCode-102 firmware — full description
 
 Extracted from a live unit (`RC-102-008228`) over BLE, then decoded, disassembled and decompiled.
-Every value below comes from the artifacts in `firmware/`; items marked *(inferred)* are derived from
+Every value below comes from the artifacts of the build `rc-102/hw1-fw4.14`, i.e. the directory
+`firmware/rc-102/hw1-fw4.14/` - **all artifact paths in this file are relative to that directory**
+(`flash.bin`, `listing.s`, `decompiled.c`, `index.json`, `analysis/*.json`); other registered builds
+are listed in `README.md` §3.1 and have the same layout. Items marked *(inferred)* are derived from
 code structure rather than a name in the binary.
 
 ## 1. Identity
@@ -13,14 +16,14 @@ code structure rather than a name in the binary.
 | firmware version | 4.14 (`version_high 4`, `version_low 14`) | container header; format `v%02d.%02d` @ `0x08014A04` |
 | firmware build | `Jul  7 2025 11:19:22` = `date_time 0x5AE7428A` | @ `0x08028F14`, cmd `0x000A` |
 | bootloader build | `Feb  6 2023 15:49:14` | cmd `0x000A` |
-| container | `Phyton\0\0`, 130148 B, whole-file CRC `0x13095ABB`, 8 blocks | `firmware/rc102_blocks.json` |
-| flat image | 248320 B, `0x08000000`-`0x0803CA00` | `firmware/rc102_flash.bin` |
+| container | `Phyton\0\0`, 130148 B, whole-file CRC `0x13095ABB`, 8 blocks | `blocks.json` |
+| flat image | 248320 B, `0x08000000`-`0x0803CA00` | `flash.bin` |
 | MCU | STM32L47x/L48x-class, Cortex-M4F, ARMv7E-M, Thumb-2 | vector names + IRQ numbering (LPUART2=65, LPTIM3/4/5=66/67/68, JPEG/DMA2D/LCD exist) |
 | BLE name | `RC-102-%06.6X` | @ `0x08019F0C` |
 | GATT | Nordic UART service `e63215e5-7003-49d8-96b0-b024798fb901`, write `...e6`, notify `...e7` | live probing (`rcsession.py`) |
 
 Image-vs-unit identity is proven by four independent matches (size, `date_time`, CRC, and the 3256-byte
-config string read back byte-identically from the device): `firmware/analysis/verification.json`.
+config string read back byte-identically from the device): `analysis/verification.json`.
 
 ## 2. Memory model
 
@@ -39,7 +42,7 @@ Data blobs living inside the code image:
 | `0x08035EBE` +0x49 x7 | 72 B each | seven monotonic byte ramps (0x20-0x7E, step 1-3) — quantised log / gamma-style curves *(inferred)* |
 | `0x08036C10` | 44 pairs | `{u32 id, u32 handler}` table; ids `0x0`-`0x6`, `0x400`-`0x40A`, `0x800`-`0x80A`, `0xC01`-`0xC18` |
 | `0x08038D9C` | 36 B | base-36 digit alphabet `0123456789abcdefghijklmnopqrstuvwxyz` |
-| `0x08022F4C`, `0x08038454`, `0x08038494`, `0x08038CD4`, `0x0803943C`, `0x0803A3FC`, `0x08020A18` | 4-10 pairs | further `{id, handler}` runs (`firmware/analysis/tables.json`) |
+| `0x08022F4C`, `0x08038454`, `0x08038494`, `0x08038CD4`, `0x0803943C`, `0x0803A3FC`, `0x08020A18` | 4-10 pairs | further `{id, handler}` runs (`analysis/tables.json`) |
 
 ## 3. Decoded block layout
 
@@ -369,7 +372,7 @@ confirms the `size / date_time / crc32` triple and the two XOR-obfuscated config
 | `0x0803BFE0`, `0x0803BFF0` | `%02d:%02d:%02d`, `%dd %02d:%02d` | `sub_0802BD18` |
 | `0x0802F9F0`, `0x080306AC` | the two config blobs (§9-§10) | `sub_08028E40` |
 
-1906 ASCII runs in total (`firmware/analysis/strings.json`); the rest are 4-7-character literal-pool
+1906 ASCII runs in total (`analysis/strings.json`); the rest are 4-7-character literal-pool
 fragments.
 
 ## 14. Static-analysis facts
@@ -393,8 +396,8 @@ fragments.
 python pipeline/tools/lookup.py 0x080275C4        # owning function + C line range + callers + dispatch ids + strings + asm
 ```
 
-Indexes: `firmware/decompiled/index.json` (function -> C lines), `firmware/analysis/{functions,xrefs,
-vectors,callgraph,tables,strings,stats,verification,device_capture,container_check,vsfr_readout}.json`. Naming: `sub_XXXXXXXX` (capstone index),
+Indexes: `index.json` (function -> C lines), `analysis/{functions,xrefs,
+vectors,callgraph,tables,strings,stats,verification,capture,container_check,vsfr_readout}.json`. Naming: `sub_XXXXXXXX` (capstone index),
 `FUN_xxxxxxxx` (Ghidra C), `handler_<n>_<name>` (vector entries), `tbl_<id>_<address>` (table handlers).
 
 ## 16. Caveats
@@ -406,7 +409,9 @@ vectors,callgraph,tables,strings,stats,verification,device_capture,container_che
 * `0x08036C10`'s 44-entry table is *not* the BLE command table: its ids (`0x400`-`0x40A`, `0x800`-`0x80A`,
   `0xC01`-`0xC18`) do not match the ids that answer on the wire, so it is an internal object/property
   registry keyed the same way — the real per-item dispatcher is the switch at `0x080275C4`.
-* `date_time` is a Unix timestamp (`0x5AE7428A` = 2025-07-07 08:20:20 UTC in the container header); the
+* `date_time` is an **MS-DOS packed date/time** word (high half `(year-1980)<<9 | month<<5 | day`, low
+  half `hour<<11 | minute<<5 | (second/2)`), so `0x5AE7428A` decodes to 2025-07-07 08:20:20 — it is *not*
+  a Unix epoch (`rcfmt._decode_datetime`); the
   in-image build stamp string `Jul  7 2025 11:19:22` is the compiled `__DATE__ __TIME__` of the same build.
 
 ## 17. How a firmware update works
@@ -424,7 +429,7 @@ Three layers, only one of which is the "firmware":
 | layer | content | replaced by an update? |
 | --- | --- | --- |
 | vendor bootloader | `0x08000000`-`0x0800FFFF` (64 KiB) | **no** — no block in any container starts below `0x08010000`, so the programmer itself survives |
-| application image | `0x08010000`-`0x0803CA00`, i.e. `firmware/rc102_flash.bin` | **yes**, wholesale — it is a complete program (vectors, code, literal pools) with the config text compiled in |
+| application image | `0x08010000`-`0x0803CA00`, i.e. `flash.bin` | **yes**, wholesale — it is a complete program (vectors, code, literal pools) with the config text compiled in |
 | parameter areas | the two `RD_FLASH_AREA` records (0 and 1), XOR-obfuscated, seeded | no — separate, calibration/id-bearing, so per-unit data survives |
 
 So: the *code* really is reflashed (a full image, not a data file), while the *device parameters* behave
@@ -480,12 +485,12 @@ through the VSFR address chain in `sub_080275C4` (§7).
 | The bootloader is outside every container, so it is never overwritten by an update | all 8 blocks start at `0x08010000` or higher |
 | A failed/timed-out transfer leaves the previous image active: activation happens only after the CRC check, and reconnect failures are reported rather than assumed | `RECONNECTION_TIMED_OUT_DURING_UPDATE` |
 | Parameter/calibration records are separate from the code image | the two `0x081C` areas keep their own seed + XOR stream |
-| Only 13 ids accept anything at all (full `0x0000`-`0x0FFF` sweep) — a small, closed surface | `firmware/analysis/sweep_noarg.json`, `firmware/analysis/sweep_witharg.json` |
+| Only 13 ids accept anything at all (full `0x0000`-`0x0FFF` sweep) — a small, closed surface | `analysis/sweep_noarg.json`, `analysis/sweep_witharg.json` |
 
 Practical consequences for this repo's read-only workflow: `0x0005`, `0x000A`, `0x000B`, `0x0012`,
 `0x0013`, `0x0101`, `0x0807`, `0x081C`, `0x0824`-`0x082B` are pure reads; `0x0007` (sign) and `0x0A04`
 (wall-clock) are the only idempotent writes that were exercised. Nothing else was needed to reproduce
-`firmware/rc102_flash.bin` bit-for-bit (§1 identity table).
+`flash.bin` bit-for-bit (§1 identity table).
 
 ## 19. Boot-up and the main loop
 
@@ -552,7 +557,7 @@ and is the only place the per-frame series is exposed.
 
 ## 21. Live readout, decoded
 
-Three structures worth naming precisely, all captured in `firmware/analysis/device_capture.json`.
+Three structures worth naming precisely, all captured in `analysis/capture.json`.
 
 **The 76-byte `DEVICE_INFO` record (VS `0x0F0`, duplicated at `0x203`)**
 
@@ -644,22 +649,26 @@ per-channel rows.
 
 ## 26. Pipeline reference
 
+Artifacts are listed relative to the target directory (`firmware/<model>/<hw+fw>/`):
+
 | step | file | artifact |
 | --- | --- | --- |
 | 1 | `pipeline/step1_validate.py` | self-test of Mangle/CRC/LZSS against the reference vectors |
-| 2 | `pipeline/step2_probe.py` (+`--sweep`) | `analysis/device_capture.json`, `sweep_noarg.json`, `sweep_witharg.json` |
-| 3 | `pipeline/step3_fetch.py` | `official/*.bin`, `analysis/container_check.json` |
-| 4 | `pipeline/step4_decode.py` | `firmware/rc102_flash.bin`, `rc102_blocks.json` |
-| 5 | `pipeline/step5_disassemble.py` | `listing/rc102_flash.s`, `analysis/{strings,vectors,functions,stats}.json` |
-| 6 | `pipeline/step6_decompile.py` + `pipeline/scripts/DumpC.java` | `decompiled/rc102_flash.c` |
-| 7 | `pipeline/step7_index_c.py` | `decompiled/index.json` |
+| 2 | `pipeline/step2_probe.py` (+`--sweep`) | `analysis/capture.json`, `analysis/sweep_noarg.json`, `analysis/sweep_witharg.json` |
+| 3 | `pipeline/step3_fetch.py` | `<container>.bin` in the target dir, `official/{apk,exe}.bin`, `analysis/container_check.json` |
+| 4 | `pipeline/step4_decode.py` | `flash.bin`, `blocks.json` |
+| 5 | `pipeline/step5_disassemble.py` | `listing.s`, `analysis/{strings,vectors,functions,stats}.json` |
+| 6 | `pipeline/step6_decompile.py` + `pipeline/scripts/DumpC.java` | `decompiled.c` |
+| 7 | `pipeline/step7_index_c.py` | `index.json` |
 | 8 | `pipeline/step8_xrefs.py` | `analysis/xrefs.json` |
 | 9 | `pipeline/step9_callgraph.py` | `analysis/callgraph.json` |
 | 10 | `pipeline/step10_tables.py` | `analysis/tables.json` |
 | 11 | `pipeline/step11_verify.py` | `analysis/verification.json` |
-| 12 | `pipeline/step12_report.py` | `analysis/summary.md` |
+| 12 | `pipeline/step12_report.py` | `analysis/summary.md`, `manifest.json` |
 | - | `pipeline/tools/*.py` | one-off inspectors: `lookup.py`, `read_vsfrs.py`, `probe.py`, `inspect_*.py`, `debug_*.py`, `blescan.py`, `ifaces.py`, `fetch_apk.py`, `analyze_official.py` |
 
-Run from the repo root: `python pipeline/run.py`, `--only 4,5`, `--from 7`. `pipeline/protocol.py` holds
+Run from the repo root: `python pipeline/run.py`, `--only 4,5`, `--from 7`, `--device <key>`,
+`--all-devices`; the target comes from `pipeline/devices.json` and reaches every step via `RC_TARGET`.
+`pipeline/protocol.py` holds
 the id table, the frame codec and the record decoders; `pipeline/rcble.py`, `rcsession.py`, `rcfmt.py` are
 the transport and container libraries.

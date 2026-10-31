@@ -1,0 +1,119 @@
+{
+  "header": {
+    "marker": "Phyton",
+    "header_size": 52,
+    "date_time": 1555646948,
+    "date": "2026-05-25 09:15:08",
+    "buffer_size": 32768,
+    "serial": "00000000000000000000000000000000",
+    "version": "4.16",
+    "version_low": 16,
+    "version_high": 4,
+    "compressed": 1,
+    "reserved": 0,
+    "header_crc32": "01a7fd49"
+  },
+  "whole_file_crc": "c759bfb1",
+  "blocks": [
+    {
+      "index": 0,
+      "addr": "0x08010000",
+      "offset": "0x10000",
+      "stored_size": 8314,
+      "aligned_size": 8320,
+      "plain_size": 15872,
+      "crc": "9c689840",
+      "crc_ok": true
+    },
+    {
+      "index": 1,
+      "addr": "0x08013e00",
+      "offset": "0x13e00",
+      "stored_size": 18348,
+      "aligned_size": 18352,
+      "plain_size": 23040,
+      "crc": "2a972460",
+      "crc_ok": true
+    },
+    {
+      "index": 2,
+      "addr": "0x08019800",
+      "offset": "0x19800",
+      "stored_size": 12158,
+      "aligned_size": 12160,
+      "plain_size": 17408,
+      "crc": "08eaba8d",
+      "crc_ok": true
+    },
+    {
+      "index": 3,
+      "addr": "0x0801dc00",
+      "offset": "0x1dc00",
+      "stored_size": 21716,
+      "aligned_size": 21720,
+      "plain_size": 27392,
+      "crc": "1da6683c",
+      "crc_ok": true
+    },
+    {
+      "index": 4,
+      "addr": "0x08024700",
+      "offset": "0x24700",
+      "stored_size": 13640,
+      "aligned_size": 13640,
+      "plain_size": 16128,
+      "crc": "73d9abee",
+      "crc_ok": true
+    },
+    {
+      "index": 5,
+      "addr": "0x08028600",
+      "offset": "0x28600",
+      "stored_size": 22924,
+      "aligned_size": 22928,
+      "plain_size": 26624,
+      "crc": "3a90bfaa",
+      "crc_ok": true
+    },
+    {
+      "index": 6,
+      "addr": "0x0802ee00",
+      "offset": "0x2ee00",
+      "stored_size": 14323,
+      "aligned_size": 14328,
+      "plain_size": 19712,
+      "crc": "020e63c1",
+      "crc_ok": true
+    },
+    {
+      "index": 7,
+      "addr": "0x08033b00",
+      "offset": "0x33b00",
+      "stored_size": 5812,
+      "aligned_size": 5816,
+      "plain_size": 17920,
+      "crc": "15bdaa1e",
+      "crc_ok": true
+    },
+    {
+      "index": 8,
+      "addr": "0x08038100",
+      "offset": "0x38100",
+      "stored_size": 9108,
+      "aligned_size": 9112,
+      "plain_size": 15872,
+      "crc": "1cc058dd",
+      "crc_ok": true
+    },
+    {
+      "index": 9,
+      "addr": "0x0803bf00",
+      "offset": "0x3bf00",
+      "stored_size": 9162,
+      "aligned_size": 9168,
+      "plain_size": 18688,
+      "crc": "bee1d1ec",
+      "crc_ok": true
+    }
+  ]
+}

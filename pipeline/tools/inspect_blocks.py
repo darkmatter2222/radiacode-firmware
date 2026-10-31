@@ -8,11 +8,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import struct
 
+import config
 import rcfmt
 
-BASE = 0x08010000
-meta = json.load(open("firmware/rc102_blocks.json", encoding="utf-8"))
-data = open("firmware/rc102_flash.bin", "rb").read()
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+meta = json.load(open(CFG["blocks"], encoding="utf-8"))
+data = open(CFG["flash"], "rb").read()
 
 for record in meta["blocks"]:
     offset = int(record["offset"], 16)

@@ -1,0 +1,60 @@
+{
+  "target": "rc-103g/fw4.14",
+  "device": "RadiaCode-103G",
+  "model": "rc-103g",
+  "hw": null,
+  "fw": "4.14",
+  "boot": null,
+  "serial": null,
+  "ble_address": null,
+  "mcu": {
+    "family": "STM32L4",
+    "processor": "ARM:LE:32:v7",
+    "base": "0x08000000",
+    "vector_table": "0x08010000",
+    "initial_sp": null,
+    "reset": null
+  },
+  "expected": {
+    "size": 130444,
+    "chunk": 4096,
+    "buffer_size": 32768,
+    "date_time": "0x5AE742CF",
+    "crc32": "0x1EB48B8A",
+    "frames": null,
+    "blocks": 8
+  },
+  "landmarks": {},
+  "files": {
+    "container": {
+      "path": "firmware/rc-103g/fw4.14/rc-103gz.bin",
+      "bytes": 130444,
+      "sha256": "bc2508f34f285b5530174d4459176e0fa9c7f8afb06c376a00e770edda706b83"
+    },
+    "flash": {
+      "path": "firmware/rc-103g/fw4.14/flash.bin",
+      "bytes": 248576,
+      "sha256": "828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5"
+    },
+    "blocks": {
+      "path": "firmware/rc-103g/fw4.14/blocks.json",
+      "bytes": 2222,
+      "sha256": "f8c511feab53c483399c36f6600b44db49b2885e882826aa03b2f755dcb27775"
+    },
+    "listing": {
+      "path": "firmware/rc-103g/fw4.14/listing.s",
+      "bytes": 2737522,
+      "sha256": "2fb06e6920ffa92fc309803dab6823cee83fb7a2a1e5a5d3646b64c09188812c"
+    },
+    "c": {
+      "path": "firmware/rc-103g/fw4.14/decompiled.c",
+      "bytes": 1741199,
+      "sha256": "f87126c58b5a99fb256fd2c76172138416997101265732783ff8a5c97f060649"
+    },
+    "index": {
+      "path": "firmware/rc-103g/fw4.14/index.json",
+      "bytes": 341786,
+      "sha256": "c8efdf83972d77c31a0e6be10178f0c0f6fa576323e43161b8436aa85079ceb6"
+    }
+  }
+}

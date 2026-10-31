@@ -1,0 +1,18 @@
+{
+  "target": "rc-102/hw1-fw4.14",
+  "container": "firmware/rc-102/hw1-fw4.14/rc-102z.bin",
+  "size": 130148,
+  "size_matches_device": true,
+  "date_time": "0x5AE7428A",
+  "date_time_matches_device": true,
+  "container_buffer_size": 32768,
+  "device_write_chunk_0x0012": 4096,
+  "version": "4.14",
+  "whole_file_crc": "0x13095ABB",
+  "whole_file_crc_matches_device": true,
+  "after_header_crc": "8573b5f0",
+  "container_blocks": 8,
+  "blocks_match_container": true,
+  "device_frame_count_0x0013": 19,
+  "serial": "00000000000000000000000000000000"
+}

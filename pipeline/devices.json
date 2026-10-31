@@ -1,0 +1,214 @@
+{
+  "_comment": "Target registry. One entry per (model, hardware version, firmware version) triple. 'dir' is the directory that holds every artifact of that exact build; containers keep their vendor file name inside it. Add a block here to add a device - no step file needs editing.",
+  "default": "rc-102/hw1-fw4.14",
+  "transport": {
+    "service": "e63215e5-7003-49d8-96b0-b024798fb901",
+    "write": "e63215e6-7003-49d8-96b0-b024798fb901",
+    "notify": "e63215e7-7003-49d8-96b0-b024798fb901",
+    "chunk": 18,
+    "seq_base": 128,
+    "sign_hex": "01ff12ff"
+  },
+  "apk": "https://downloads.radiacode.com/EN/RadiaCode.apk",
+  "exe": "https://downloads.radiacode.com/EN/RadiaCode.exe",
+  "targets": [
+    {
+      "key": "rc-102/hw1-fw4.14",
+      "model": "rc-102",
+      "device": "RadiaCode-102",
+      "hw": "1",
+      "fw": "4.14",
+      "boot": "4.0",
+      "analyzed": true,
+      "serial": "RC-102-008228",
+      "ble_address": "52:43:06:60:20:24",
+      "dir": "firmware/rc-102/hw1-fw4.14",
+      "containers": ["rc-102z.bin"],
+      "primary_container": "rc-102z.bin",
+      "mcu": {
+        "family": "STM32L4",
+        "processor": "ARM:LE:32:v7",
+        "base": "0x08000000",
+        "vector_table": "0x08010000",
+        "initial_sp": "0x20000800",
+        "reset": "0x0803BA71"
+      },
+      "expected": {
+        "size": 130148,
+        "chunk": 4096,
+        "buffer_size": 32768,
+        "date_time": "0x5AE7428A",
+        "crc32": "0x13095ABB",
+        "frames": 19,
+        "blocks": 8
+      },
+      "landmarks": {
+        "config_text": "0x0802F9F0",
+        "config_text_bytes": 3256,
+        "vsfr_map": "0x080306AC",
+        "item_table": "0x08035A64",
+        "registry": "0x08036C10"
+      }
+    },
+    {
+      "key": "rc-101/fw4.14",
+      "model": "rc-101",
+      "device": "RadiaCode-101",
+      "hw": null,
+      "fw": "4.14",
+      "boot": null,
+      "analyzed": false,
+      "serial": null,
+      "ble_address": null,
+      "dir": "firmware/rc-101/fw4.14",
+      "containers": ["rc-101_v01z.bin", "rc-101_v01.bin"],
+      "primary_container": "rc-101_v01z.bin",
+      "mcu": {
+        "family": "STM32L4",
+        "processor": "ARM:LE:32:v7",
+        "base": "0x08000000",
+        "vector_table": "0x08010000",
+        "initial_sp": null,
+        "reset": null
+      },
+      "expected": {
+        "size": 130388,
+        "chunk": 4096,
+        "buffer_size": 32768,
+        "date_time": "0x5AE74263",
+        "crc32": "0x0921BCFB",
+        "frames": null,
+        "blocks": 8
+      },
+      "landmarks": {}
+    },
+    {
+      "key": "rc-103/fw4.14",
+      "model": "rc-103",
+      "device": "RadiaCode-103",
+      "hw": null,
+      "fw": "4.14",
+      "boot": null,
+      "analyzed": false,
+      "serial": null,
+      "ble_address": null,
+      "dir": "firmware/rc-103/fw4.14",
+      "containers": ["rc-103z.bin"],
+      "primary_container": "rc-103z.bin",
+      "mcu": {
+        "family": "STM32L4",
+        "processor": "ARM:LE:32:v7",
+        "base": "0x08000000",
+        "vector_table": "0x08010000",
+        "initial_sp": null,
+        "reset": null
+      },
+      "expected": {
+        "size": 130132,
+        "chunk": 4096,
+        "buffer_size": 32768,
+        "date_time": "0x5AE742AD",
+        "crc32": "0xEFC84C86",
+        "frames": null,
+        "blocks": 8
+      },
+      "landmarks": {}
+    },
+    {
+      "key": "rc-103g/fw4.14",
+      "model": "rc-103g",
+      "device": "RadiaCode-103G",
+      "hw": null,
+      "fw": "4.14",
+      "boot": null,
+      "analyzed": false,
+      "serial": null,
+      "ble_address": null,
+      "dir": "firmware/rc-103g/fw4.14",
+      "containers": ["rc-103gz.bin"],
+      "primary_container": "rc-103gz.bin",
+      "mcu": {
+        "family": "STM32L4",
+        "processor": "ARM:LE:32:v7",
+        "base": "0x08000000",
+        "vector_table": "0x08010000",
+        "initial_sp": null,
+        "reset": null
+      },
+      "expected": {
+        "size": 130444,
+        "chunk": 4096,
+        "buffer_size": 32768,
+        "date_time": "0x5AE742CF",
+        "crc32": "0x1EB48B8A",
+        "frames": null,
+        "blocks": 8
+      },
+      "landmarks": {}
+    },
+    {
+      "key": "rc-110/fw4.14",
+      "model": "rc-110",
+      "device": "RadiaCode-110",
+      "hw": null,
+      "fw": "4.14",
+      "boot": null,
+      "analyzed": false,
+      "serial": null,
+      "ble_address": null,
+      "dir": "firmware/rc-110/fw4.14",
+      "containers": ["rc-110z.bin"],
+      "primary_container": "rc-110z.bin",
+      "mcu": {
+        "family": "STM32L4",
+        "processor": "ARM:LE:32:v7",
+        "base": "0x08000000",
+        "vector_table": "0x08010000",
+        "initial_sp": null,
+        "reset": null
+      },
+      "expected": {
+        "size": 133312,
+        "chunk": 4096,
+        "buffer_size": 32768,
+        "date_time": "0x5AE742EE",
+        "crc32": "0x23FEA728",
+        "frames": null,
+        "blocks": 9
+      },
+      "landmarks": {}
+    },
+    {
+      "key": "rc-410/fw4.16",
+      "model": "rc-410",
+      "device": "RadiaCode-410",
+      "hw": null,
+      "fw": "4.16",
+      "boot": null,
+      "analyzed": false,
+      "serial": null,
+      "ble_address": null,
+      "dir": "firmware/rc-410/fw4.16",
+      "containers": ["rc-410z.bin"],
+      "primary_container": "rc-410z.bin",
+      "mcu": {
+        "family": "STM32L4",
+        "processor": "ARM:LE:32:v7",
+        "base": "0x08000000",
+        "vector_table": "0x08010000",
+        "initial_sp": null,
+        "reset": null
+      },
+      "expected": {
+        "size": 140836,
+        "chunk": 4096,
+        "buffer_size": 32768,
+        "date_time": "0x5CB949E4",
+        "crc32": "0xC759BFB1",
+        "frames": null,
+        "blocks": 10
+      },
+      "landmarks": {}
+    }
+  ]
+}

@@ -1,19 +1,26 @@
 """Extract pointer-table structures ({id, handler} pairs) from the decoded image.
 
 The firmware dispatches most work through static tables of `{u32 id, u32 handler}` pairs (command
-ids, virtual-string ids, SFR descriptors).  This script finds those runs and writes
-firmware/analysis/tables.json.
+ids, virtual-string ids, SFR descriptors).  This step finds those runs and writes the target's
+`analysis/tables.json`.
 """
 
 import json
+import os
+import sys
 
-BASE = 0x08000000
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-data = open("firmware/rc102_flash.bin", "rb").read()
+import config
+
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+
+data = open(CFG["flash"], "rb").read()
 size = len(data)
 end = BASE + size
 
-functions = json.load(open("firmware/analysis/functions.json", encoding="utf-8"))
+functions = json.load(open(CFG["functions"], encoding="utf-8"))
 names = {int(item["address"], 16): item["name"] for item in functions}
 starts = set(names)
 
@@ -73,8 +80,8 @@ while off + 8 <= size:
     off = cursor if cursor > off else off + 4
 
 decompiled_addresses = set(
-    item["address"].upper() for item in json.load(open("firmware/decompiled/index.json", encoding="utf-8"))["functions"]
-)
+    item["address"].upper() for item in json.load(open(CFG["index"], encoding="utf-8"))["functions"]
+) if os.path.exists(CFG["index"]) else set()
 decompiled = len(
     {
         e["handler"].upper()
@@ -90,7 +97,8 @@ payload = {
     "decompiled_handlers": decompiled,
     "tables": tables,
 }
-with open("firmware/analysis/tables.json", "w", encoding="utf-8") as fh:
+os.makedirs(CFG["analysis_dir"], exist_ok=True)
+with open(CFG["tables"], "w", encoding="utf-8") as fh:
     json.dump(payload, fh, indent=2)
 
 print(

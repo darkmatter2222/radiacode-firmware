@@ -1,9 +1,16 @@
-"""Print candidate vector tables and their entries."""
+"""Print candidate vector tables and their entries for the active target."""
 
+import os
 import struct
+import sys
 
-BASE = 0x08010000
-data = open("firmware/rc102_flash.bin", "rb").read()
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import config
+
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+data = open(CFG["flash"], "rb").read()
 
 
 def words(off, count):

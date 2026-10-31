@@ -1,9 +1,16 @@
-"""Quick structural inspection of the decoded flash image."""
+"""Quick structural inspection of the decoded flash image of the active target."""
 
+import os
 import struct
+import sys
 
-BASE = 0x08010000
-data = open("firmware/rc102_flash.bin", "rb").read()
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import config
+
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+data = open(CFG["flash"], "rb").read()
 print("size", len(data), hex(len(data)), "end", hex(BASE + len(data)))
 print("first 64 bytes:", data[:64].hex())
 

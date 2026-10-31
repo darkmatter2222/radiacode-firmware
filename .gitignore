@@ -4,8 +4,9 @@ jdk-25.0.5+8/
 __pycache__/
 *.pyc
 
-# regenerable: Ghidra project cache (step 6 recreates it)
-firmware/ghidra_proj/
+# regenerable: Ghidra project cache + its log (step 6 recreates both)
+firmware/**/ghidra_proj/
+ghidra_log.txt
 
 # large vendor downloads, refetched by `python pipeline/run.py --only 3`
 official/apk.bin

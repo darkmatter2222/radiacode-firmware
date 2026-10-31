@@ -1,0 +1,99 @@
+{
+  "header": {
+    "marker": "Phyton",
+    "header_size": 52,
+    "date_time": 1525105325,
+    "date": "2025-07-07 08:21:26",
+    "buffer_size": 32768,
+    "serial": "00000000000000000000000000000000",
+    "version": "4.14",
+    "version_low": 14,
+    "version_high": 4,
+    "compressed": 1,
+    "reserved": 0,
+    "header_crc32": "9d6b2b55"
+  },
+  "whole_file_crc": "efc84c86",
+  "blocks": [
+    {
+      "index": 0,
+      "addr": "0x08010000",
+      "offset": "0x10000",
+      "stored_size": 19245,
+      "aligned_size": 19248,
+      "plain_size": 30464,
+      "crc": "74e65990",
+      "crc_ok": true
+    },
+    {
+      "index": 1,
+      "addr": "0x08017700",
+      "offset": "0x17700",
+      "stored_size": 16097,
+      "aligned_size": 16104,
+      "plain_size": 19968,
+      "crc": "7d756f92",
+      "crc_ok": true
+    },
+    {
+      "index": 2,
+      "addr": "0x0801c500",
+      "offset": "0x1c500",
+      "stored_size": 12901,
+      "aligned_size": 12904,
+      "plain_size": 16128,
+      "crc": "8f4231f0",
+      "crc_ok": true
+    },
+    {
+      "index": 3,
+      "addr": "0x08020400",
+      "offset": "0x20400",
+      "stored_size": 22904,
+      "aligned_size": 22904,
+      "plain_size": 27648,
+      "crc": "635951b0",
+      "crc_ok": true
+    },
+    {
+      "index": 4,
+      "addr": "0x08027000",
+      "offset": "0x27000",
+      "stored_size": 24140,
+      "aligned_size": 24144,
+      "plain_size": 27904,
+      "crc": "bb0ddbfa",
+      "crc_ok": true
+    },
+    {
+      "index": 5,
+      "addr": "0x0802dd00",
+      "offset": "0x2dd00",
+      "stored_size": 13181,
+      "aligned_size": 13184,
+      "plain_size": 28160,
+      "crc": "068ee9e4",
+      "crc_ok": true
+    },
+    {
+      "index": 6,
+      "addr": "0x08034b00",
+      "offset": "0x34b00",
+      "stored_size": 11718,
+      "aligned_size": 11720,
+      "plain_size": 19968,
+      "crc": "d3c8305e",
+      "crc_ok": true
+    },
+    {
+      "index": 7,
+      "addr": "0x08039900",
+      "offset": "0x39900",
+      "stored_size": 5674,
+      "aligned_size": 5680,
+      "plain_size": 12544,
+      "crc": "55f3e1ed",
+      "crc_ok": true
+    }
+  ]
+}

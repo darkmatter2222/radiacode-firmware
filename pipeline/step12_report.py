@@ -1,26 +1,35 @@
-"""Build firmware/analysis/summary.md from the generated artifacts."""
+"""Step 12 - build the target's `analysis/summary.md` and `manifest.json` from the artifacts."""
 
+import hashlib
 import json
 import os
 import re
+import sys
 from collections import Counter
 
-BASE = 0x08000000
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-blocks = json.load(open("firmware/rc102_blocks.json", encoding="utf-8"))
-vectors = json.load(open("firmware/analysis/vectors.json", encoding="utf-8"))
-strings = json.load(open("firmware/analysis/strings.json", encoding="utf-8"))
-functions = json.load(open("firmware/analysis/functions.json", encoding="utf-8"))
+import config
 
-data = open("firmware/rc102_flash.bin", "rb").read()
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+EXP = CFG["expected"]
+LAND = CFG["landmarks"]
+
+blocks = json.load(open(CFG["blocks"], encoding="utf-8"))
+vectors = json.load(open(CFG["vectors"], encoding="utf-8"))
+strings = json.load(open(CFG["strings"], encoding="utf-8"))
+functions = json.load(open(CFG["functions"], encoding="utf-8"))
+
+data = open(CFG["flash"], "rb").read()
 size = len(data)
 end = BASE + size
 
-stats = json.load(open("firmware/analysis/stats.json", encoding="utf-8"))
+stats = json.load(open(CFG["stats"], encoding="utf-8"))
 ins_count = stats["instructions"]
-listing = open("firmware/listing/rc102_flash.s", encoding="utf-8").read().splitlines()
+listing = open(CFG["listing"], encoding="utf-8").read().splitlines()
 
-c_text = open("firmware/decompiled/rc102_flash.c", encoding="utf-8").read()
+c_text = open(CFG["c"], encoding="utf-8").read() if os.path.exists(CFG["c"]) else ""
 c_funcs = re.findall(r"/\* ===== (\S+) @ (\w+) ===== \*/", c_text)
 c_failed = c_text.count("/* decompilation failed */")
 
@@ -38,39 +47,67 @@ for line in listing:
                 break
 
 notable = [s for s in strings if any(
-    token in s["text"] for token in ("RadiaCode", "rc-10", "STM32", "Version", "CRC", "Phyton"))]
+    token in s["text"] for token in ("RadiaCode", CFG["model"], "STM32", "Version", "CRC", "Phyton"))]
 
 lines = []
 add = lines.append
-add("# RadiaCode-102 firmware analysis")
+DASH = lambda value: "-" if value in (None, "") else value
+add("# %s firmware analysis - `%s`" % (CFG["device"], CFG["key"]))
 add("")
-add("Device: RadiaCode-102, serial `RC-102-008228`, BLE `52:43:06:60:20:24`.")
+add("Device: %s, serial `%s`, BLE `%s`. Bootloader `%s`, firmware `%s`%s." % (
+    CFG["device"], DASH(CFG["serial"]), DASH(CFG["ble_address"]), DASH(CFG["boot"]), CFG["fw"],
+    "" if CFG["hw"] is None else ", hardware revision `%s`" % CFG["hw"]))
+add("")
+add("Target directory: `%s` - every file below lives inside it. The active target is chosen by"
+    % CFG["dir"])
+add("`RC_TARGET` or `pipeline/run.py --device`; the registry is `pipeline/devices.json`.")
+add("")
+add("### Registered targets")
+add("")
+add("| target | device | fw | hw | container | bytes | blocks | analyzed |")
+add("| --- | --- | --- | --- | --- | --- | --- | --- |")
+for item in config.raw()["targets"]:
+    add("| `%s` | %s | %s | %s | `%s` | %s | %s | %s |" % (
+        item["key"], item["device"], item["fw"], item["hw"] if item["hw"] else "-",
+        item["primary_container"], item["expected"]["size"], item["expected"]["blocks"],
+        "yes" if item["analyzed"] else "container + decode only"))
 add("")
 add("## How the image was obtained")
 add("")
-add("The device was read over BLE (Nordic UART service `e63215e5-…fb901`, 4-byte little-endian")
+add("The device was read over BLE (Nordic UART service `%s…`, 4-byte little-endian"
+    % CFG["transport"]["service"][:8])
 add("length prefix + `cmd(u16 LE) + 0x00 + seq`). No write/erase command was used; only reads:")
 add("")
 add("| BLE command | value |")
 add("| --- | --- |")
-add("| `0x000A` GET_VERSION | boot `4.0` (Feb 20 2023 15:49:14), firmware `4.14` (Jul 7 2025 11:19:22) |")
-add("| `0x000B` GET_SERIAL | `RC-102-008228` |")
-add("| `0x0012` FW_IMAGE_GET_INFO | size `130148`, buffer `4096`, date_time `0x5AE7428A`, crc `0x13095ABB` |")
-add("| `0x0013` | `19` (block/frame count) |")
-add("| `0x0101` | `rc-102.bin`, `RadiaCode RC-102` |")
+add("| `0x000A` GET_VERSION | boot `%s`, firmware `%s` |" % (DASH(CFG["boot"]), CFG["fw"]))
+add("| `0x000B` GET_SERIAL | `%s` |" % DASH(CFG["serial"]))
+add("| `0x0012` FW_IMAGE_GET_INFO | size `%s`, buffer `%s`, date_time `%s`, crc `%s` |"
+    % (EXP["size"], EXP["chunk"], EXP["date_time"], EXP["crc32"]))
+add("| `0x0013` | `%s` (block/frame count) |" % (EXP["frames"] if EXP["frames"] is not None else "n/a"))
 add("| `0x081C` RD_FLASH area 0/1 | XOR-obfuscated `PublicAPI` struct (Borland LCG), device parameters |")
 add("")
+if not CFG["analyzed"]:
+    add("Values in that table are the registry's (`pipeline/devices.json`), read from the container")
+    add("header by step 3; this target has no live unit in `analysis/capture.json`.")
+    add("")
 add("The device exposes no image-read command (verified by a full `0x0000-0x0FFF` scan, with and")
-add("without a `u32` argument), so the image bytes come from the official `rc-102z.bin` shipped in")
-add("`https://downloads.radiacode.com/EN/RadiaCode.apk` (`assets/HardSoft/`). Identity with the unit")
-add("in hand is proven by three independent matches: file length `130148`, header `date_time`")
-add("`0x5AE7428A`, whole-file CRC `0x13095ABB` - all equal to the device's own `0x0012` answer -")
-add("plus the in-image vendor-config text (3256 bytes) found byte-identically at `0x0802F9F0`,")
-add("matching the device's `VS CONFIGURATION` string. See `firmware/analysis/verification.json`.")
+add("without a `u32` argument), so the image bytes come from the official `%s` shipped in"
+    % CFG["primary_container"])
+add("`%s` (`assets/HardSoft/`). Identity with the unit" % CFG["apk_url"])
+add("in hand is proven by three independent matches: file length `%s`, header `date_time`"
+    % EXP["size"])
+add("`%s`, whole-file CRC `%s` - all equal to the device's own `0x0012` answer -" % (
+    EXP["date_time"], EXP["crc32"]))
+add("plus the in-image vendor-config text found byte-identically in the image%s" % (
+    "" if not LAND else " at `%s`" % LAND.get("config_text", "")))
+add("(see `analysis/verification.json`).")
 add("")
-add("Memory model: the container addresses blocks from `0x08000000`, so the flat image spans")
-add("`0x08000000-0x0803CA00`; offsets `0x00000-0xFFFF` stay zero because the bootloader region")
-add("(`0x08000000-0x0800FFFF`) is not part of this file. Application base = `0x08010000`.")
+add("Memory model: the container addresses blocks from `0x%08X`, so the flat image spans" % BASE)
+add("`0x%08X-0x%08X`; offsets `0x00000-0xFFFF` stay zero because the bootloader region" % (
+    BASE, end))
+add("`0x%08X-0x%08X` is not part of this file. Application base = `%s`." % (
+    BASE, int(CFG["mcu"]["vector_table"], 16) - 1, CFG["mcu"]["vector_table"]))
 add("")
 add("## File format (`Phyton\\x00\\x00` container)")
 add("")
@@ -94,7 +131,7 @@ add("  literal, 0 = match with 11-bit offset + 4-bit length (+2).")
 add("")
 add("## Decoded flash image")
 add("")
-add(f"`firmware/rc102_flash.bin`: {size} bytes (`0x{BASE:08X}`-`0x{end:08X}`), every block CRC verified.")
+add(f"`{CFG['flash']}`: {size} bytes (`0x{BASE:08X}`-`0x{end:08X}`), every block CRC verified.")
 add("")
 add("| # | address | decompressed size | crc | instructions |")
 add("| --- | --- | --- | --- | --- |")
@@ -106,10 +143,10 @@ for record in blocks["blocks"]:
 add("")
 add("## Verification against the live device")
 add("")
-if os.path.exists("firmware/analysis/verification.json"):
-    verification = json.load(open("firmware/analysis/verification.json", encoding="utf-8"))
+if os.path.exists(CFG["verification"]):
+    verification = json.load(open(CFG["verification"], encoding="utf-8"))
     add("")
-    add("Re-read from the unit after decompilation (`verify_match.py`, read-only commands only):")
+    add("Re-read from the unit after decompilation (step 11, read-only commands only):")
     add("")
     add("| check | result |")
     add("| --- | --- |")
@@ -132,9 +169,12 @@ for row in vectors["entries"][:16]:
     add(f"[{row['index']:2d}] {row['name']:<12} {row['address']}")
 add("```")
 add("")
-add("* Initial SP `0x20000800` (64 KiB SRAM at `0x20000000`), reset handler "
-    f"`{[r['address'] for r in vectors['entries'] if r['name'] == 'Reset'][0]}`.")
-add("* All IRQ vectors collapse onto a single dispatcher (`0x0803C4D9`), i.e. one common IRQ entry.")
+add("* Initial SP `%s`%s, reset handler "
+    % (CFG["mcu"]["initial_sp"] or "not read",
+       " (64 KiB SRAM at `0x20000000`)" if CFG["mcu"]["initial_sp"] else "")
+    + f"`{[r['address'] for r in vectors['entries'] if r['name'] == 'Reset'][0]}`.")
+add("* All IRQ vectors collapse onto a single dispatcher (`%s`), i.e. one common IRQ entry."
+    % LAND.get("irq_dispatcher", "see analysis/vectors.json"))
 add("")
 add("## Decompile statistics")
 add("")
@@ -147,8 +187,8 @@ add(f"* ASCII strings harvested: {len(strings)}")
 add("")
 add("### Call graph (direct `b`/`bl` edges from each vector handler)")
 add("")
-if os.path.exists("firmware/analysis/callgraph.json"):
-    graph = json.load(open("firmware/analysis/callgraph.json", encoding="utf-8"))
+if os.path.exists(CFG["callgraph"]):
+    graph = json.load(open(CFG["callgraph"], encoding="utf-8"))
     add("")
     add(f"{graph['total_functions']} indexed functions, {graph['reachable_total']} reachable from a")
     add("vector handler, "
@@ -164,8 +204,8 @@ if os.path.exists("firmware/analysis/callgraph.json"):
     add("")
 add("### Static `{id, handler}` tables")
 add("")
-if os.path.exists("firmware/analysis/tables.json"):
-    tables = json.load(open("firmware/analysis/tables.json", encoding="utf-8"))
+if os.path.exists(CFG["tables"]):
+    tables = json.load(open(CFG["tables"], encoding="utf-8"))
     add("")
     add(f"{tables['table_count']} runs of >= {tables['min_run']} `{{u32 id, u32 handler}}` pairs;")
     add(f"every handler ({tables['decompiled_handlers']}) is present in the C output.")
@@ -188,10 +228,10 @@ for function in sorted(functions, key=lambda item: -len(item["callers"]))[:15]:
 add("")
 add("### Functions with literal-pool string references")
 add("")
-add("Derived from `firmware/analysis/xrefs.json` (literal pointers into the string table):")
+add(f"Derived from `{CFG['xrefs']}` (literal pointers into the string table):")
 add("")
-if os.path.exists("firmware/analysis/xrefs.json"):
-    xrefs = json.load(open("firmware/analysis/xrefs.json", encoding="utf-8"))
+if os.path.exists(CFG["xrefs"]):
+    xrefs = json.load(open(CFG["xrefs"], encoding="utf-8"))
     add("")
     add("| function | referenced strings (first) |")
     add("| --- | --- |")
@@ -214,25 +254,31 @@ add("")
 add("## Artifacts")
 add("")
 add("```")
-add("firmware/rc102_flash.bin            decoded flat flash image (base 0x08000000)")
-add("firmware/rc102_blocks.json          per-block metadata")
-add("firmware/listing/rc102_flash.s      annotated Thumb-2 disassembly")
-add("firmware/decompiled/rc102_flash.c   Ghidra C decompilation, one block per function")
-add("firmware/analysis/vectors.json      interrupt vector table")
-add("firmware/analysis/strings.json      strings with addresses")
-add("firmware/analysis/functions.json    function index (callers, size, decoded instructions)")
-add("firmware/analysis/stats.json        counts for the numbers above")
-add("firmware/analysis/xrefs.json        literal-pool cross-references (string -> function)")
-add("firmware/analysis/callgraph.json    reachability from each vector handler")
-add("firmware/analysis/tables.json       static {id, handler} dispatch tables")
-add("firmware/analysis/verification.json device-vs-image byte comparisons")
-add("firmware/analysis/device_capture.json  live identity, virtual strings, parameter areas (step 2)")
-add("firmware/analysis/container_check.json vendor-file vs device field matches (step 3)")
-add("firmware/analysis/vsfr_readout.json    live VSFR values, single-value form (tools)")
-add("firmware/analysis/sweep_noarg.json     which command ids answer, no argument")
-add("firmware/analysis/sweep_witharg.json   which command ids answer, with a u32 argument")
-add("firmware/decompiled/index.json      C file: function -> line range (keys are upper-case hex)")
-add("firmware/analysis/summary.md        this file")
+add("%-42s %s" % ("%s/container.bin" % CFG["dir"], "vendor container as shipped (%s)"
+                  % CFG["primary_container"]))
+add("%-42s %s" % (CFG["flash"], "decoded flat flash image (base %s)" % CFG["mcu"]["base"]))
+add("%-42s %s" % (CFG["blocks"], "per-block metadata"))
+add("%-42s %s" % (CFG["listing"], "annotated Thumb-2 disassembly"))
+add("%-42s %s" % (CFG["c"], "Ghidra C decompilation, one block per function"))
+add("%-42s %s" % (CFG["index"], "C file: function -> line range (upper-case hex keys)"))
+for name in ("vectors", "strings", "functions", "stats", "xrefs", "callgraph", "tables"):
+    add("%-42s %s" % (CFG[name], {
+        "vectors": "interrupt vector table",
+        "strings": "strings with addresses",
+        "functions": "function index (callers, size, instructions)",
+        "stats": "counts for the numbers above",
+        "xrefs": "literal-pool cross-references",
+        "callgraph": "reachability from each vector handler",
+        "tables": "static {id, handler} dispatch tables",
+    }[name]))
+add("%-42s %s" % (CFG["verification"], "device-vs-image byte comparisons"))
+add("%-42s %s" % (CFG["capture"], "live identity, virtual strings, parameter areas (step 2)"))
+add("%-42s %s" % (CFG["container_check"], "vendor-file vs device field matches (step 3)"))
+add("%-42s %s" % (CFG["vsfr"], "live VSFR values, single-value form (tools)"))
+add("%-42s %s" % (CFG["sweep_noarg"], "which command ids answer, no argument"))
+add("%-42s %s" % (CFG["sweep_witharg"], "which command ids answer, with a u32 argument"))
+add("%-42s %s" % (CFG["manifest"], "this build's identity + file checksums"))
+add("%-42s %s" % (CFG["summary"], "this file"))
 add("```")
 add("")
 add("## Reproduce")
@@ -252,10 +298,40 @@ add("")
 add("Naming: the capstone index (`functions.json`, `xrefs.json`) uses `sub_XXXXXXXX`; the Ghidra C")
 add("uses `FUN_xxxxxxxx` (lower-case hex), `handler_*` for vector-table entries and")
 add("`tbl_<id>_<address>` for handlers found in a static `{id, handler}` table. `0x`-prefixed,")
-add("upper-case addresses in `index.json` map a function address to its line range in `rc102_flash.c`.")
+add("upper-case addresses in `index.json` map a function address to its line range in `decompiled.c`.")
 add("")
 
-with open("firmware/analysis/summary.md", "w", encoding="utf-8") as fh:
+os.makedirs(CFG["analysis_dir"], exist_ok=True)
+with open(CFG["summary"], "w", encoding="utf-8") as fh:
     fh.write("\n".join(lines) + "\n")
 
-print("wrote firmware/analysis/summary.md", len(lines), "lines")
+print("wrote", CFG["summary"], len(lines), "lines")
+
+
+def _digest(path):
+    with open(path, "rb") as fh:
+        blob = fh.read()
+    return {"bytes": len(blob), "sha256": hashlib.sha256(blob).hexdigest()}
+
+
+manifest = {
+    "target": CFG["key"],
+    "device": CFG["device"],
+    "model": CFG["model"],
+    "hw": CFG["hw"],
+    "fw": CFG["fw"],
+    "boot": CFG["boot"],
+    "serial": CFG["serial"],
+    "ble_address": CFG["ble_address"],
+    "mcu": CFG["mcu"],
+    "expected": CFG["expected"],
+    "landmarks": CFG["landmarks"],
+    "files": {},
+}
+for name in ("container", "flash", "blocks", "listing", "c", "index"):
+    if os.path.exists(CFG[name]):
+        manifest["files"][name] = dict(path=CFG[name], **_digest(CFG[name]))
+os.makedirs(CFG["dir"], exist_ok=True)
+with open(CFG["manifest"], "w", encoding="utf-8") as fh:
+    json.dump(manifest, fh, indent=2)
+print("wrote", CFG["manifest"], "with", len(manifest["files"]), "checksums")

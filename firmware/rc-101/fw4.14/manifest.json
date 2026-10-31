@@ -1,0 +1,60 @@
+{
+  "target": "rc-101/fw4.14",
+  "device": "RadiaCode-101",
+  "model": "rc-101",
+  "hw": null,
+  "fw": "4.14",
+  "boot": null,
+  "serial": null,
+  "ble_address": null,
+  "mcu": {
+    "family": "STM32L4",
+    "processor": "ARM:LE:32:v7",
+    "base": "0x08000000",
+    "vector_table": "0x08010000",
+    "initial_sp": null,
+    "reset": null
+  },
+  "expected": {
+    "size": 130388,
+    "chunk": 4096,
+    "buffer_size": 32768,
+    "date_time": "0x5AE74263",
+    "crc32": "0x0921BCFB",
+    "frames": null,
+    "blocks": 8
+  },
+  "landmarks": {},
+  "files": {
+    "container": {
+      "path": "firmware/rc-101/fw4.14/rc-101_v01z.bin",
+      "bytes": 130388,
+      "sha256": "641659ebcf915fada3253fba936efc9ddf7ab8882770e44d2b3b2d08b944b714"
+    },
+    "flash": {
+      "path": "firmware/rc-101/fw4.14/flash.bin",
+      "bytes": 249344,
+      "sha256": "15cd254be5ee3474d746b74c2cf46d46743c6455d9d5448fec3ef3f2b7c69ea9"
+    },
+    "blocks": {
+      "path": "firmware/rc-101/fw4.14/blocks.json",
+      "bytes": 2220,
+      "sha256": "5ddeafbc79a3d69d0dfe5bc16011abafc3170f19cfeace33c32c3f868ab0ef27"
+    },
+    "listing": {
+      "path": "firmware/rc-101/fw4.14/listing.s",
+      "bytes": 2765826,
+      "sha256": "0c2d5801ad1885b4e0e23b47cf3b1da04973267d51599e61822b7fc4855cbbec"
+    },
+    "c": {
+      "path": "firmware/rc-101/fw4.14/decompiled.c",
+      "bytes": 1541792,
+      "sha256": "4e68d07714d5592fe45a019039cb3d168421468b50eeb9f651ae0b9a5e5255b6"
+    },
+    "index": {
+      "path": "firmware/rc-101/fw4.14/index.json",
+      "bytes": 330550,
+      "sha256": "a112d5a1a1db2ef1f438f1502ea1a78445fc27f5ae72561d638579958c453ae5"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "target": "rc-103g/fw4.14",
+  "container": "firmware/rc-103g/fw4.14/rc-103gz.bin",
+  "size": 130444,
+  "size_matches_device": true,
+  "date_time": "0x5AE742CF",
+  "date_time_matches_device": true,
+  "container_buffer_size": 32768,
+  "device_write_chunk_0x0012": 4096,
+  "version": "4.14",
+  "whole_file_crc": "0x1EB48B8A",
+  "whole_file_crc_matches_device": true,
+  "after_header_crc": "7480e7bf",
+  "container_blocks": 8,
+  "blocks_match_container": true,
+  "device_frame_count_0x0013": null,
+  "serial": "00000000000000000000000000000000"
+}

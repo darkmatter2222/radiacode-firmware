@@ -1,0 +1,18 @@
+{
+  "target": "rc-101/fw4.14",
+  "container": "firmware/rc-101/fw4.14/rc-101_v01z.bin",
+  "size": 130388,
+  "size_matches_device": true,
+  "date_time": "0x5AE74263",
+  "date_time_matches_device": true,
+  "container_buffer_size": 32768,
+  "device_write_chunk_0x0012": 4096,
+  "version": "4.14",
+  "whole_file_crc": "0x0921BCFB",
+  "whole_file_crc_matches_device": true,
+  "after_header_crc": "1791a68b",
+  "container_blocks": 8,
+  "blocks_match_container": true,
+  "device_frame_count_0x0013": null,
+  "serial": "00000000000000000000000000000000"
+}

@@ -41,6 +41,30 @@ CMD = {
     0x0A04: "SET_LOCAL_TIME",
 }
 
+# named shortcuts for the ids steps use most
+GET_STATUS = 0x0005
+SET_EXCHANGE = 0x0007
+GET_VERSION = 0x000A
+GET_SERIAL = 0x000B
+FW_IMAGE_GET_INFO = 0x0012
+BLOCK_COUNT = 0x0013            # the id that answers with the staged frame count
+FW_IMAGE_WRITE = 0x0014
+RD_SIGNAT = 0x0101
+RD_HW_CONFIG = 0x0807
+RD_FLASH_AREA = 0x081C
+RD_VIRT_SFR = 0x0824
+WR_VIRT_SFR = 0x0825
+RD_VIRT_STRING = 0x0826
+WR_VIRT_STRING = 0x0827
+RD_VIRT_SFR_BATCH = 0x082A
+WR_VIRT_SFR_BATCH = 0x082B
+SET_LOCAL_TIME = 0x0A04
+SET_TIME = SET_LOCAL_TIME       # alias, the name used by the vendor SDK's docstring
+CONFIGURATION_VS = 0x002        # the [DeviceParams] + [DataStructure] text
+SERIAL_NUMBER_VS = 0x008
+DEVICE_INFO_VS = 0x0F0
+DATA_BUF_VS = 0x100
+
 # ids that answered during a full 0x0000-0x0FFF sweep, with and without a u32 argument
 ANSWERING = (0x0005, 0x0007, 0x000A, 0x000B, 0x0012, 0x0013, 0x0101, 0x0807, 0x081C,
              0x0824, 0x0826, 0x082A, 0x0A04)

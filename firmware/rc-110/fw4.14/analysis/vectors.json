@@ -1,0 +1,496 @@
+{
+  "vtor": "0x08010000",
+  "count": 98,
+  "entries": [
+    {
+      "index": 0,
+      "name": "InitialSP",
+      "address": "0x20000800"
+    },
+    {
+      "index": 1,
+      "name": "Reset",
+      "address": "0x0803C7C9"
+    },
+    {
+      "index": 2,
+      "name": "NMI",
+      "address": "0x08037049"
+    },
+    {
+      "index": 3,
+      "name": "HardFault",
+      "address": "0x0803704B"
+    },
+    {
+      "index": 4,
+      "name": "MemManage",
+      "address": "0x0803704D"
+    },
+    {
+      "index": 5,
+      "name": "BusFault",
+      "address": "0x0803704F"
+    },
+    {
+      "index": 6,
+      "name": "UsageFault",
+      "address": "0x08037051"
+    },
+    {
+      "index": 7,
+      "name": "Reserved7",
+      "address": "0x00000000"
+    },
+    {
+      "index": 8,
+      "name": "Reserved8",
+      "address": "0x00000000"
+    },
+    {
+      "index": 9,
+      "name": "Reserved9",
+      "address": "0x00000000"
+    },
+    {
+      "index": 10,
+      "name": "Reserved10",
+      "address": "0x00000000"
+    },
+    {
+      "index": 11,
+      "name": "SVCall",
+      "address": "0x08037053"
+    },
+    {
+      "index": 12,
+      "name": "DebugMon",
+      "address": "0x08037055"
+    },
+    {
+      "index": 13,
+      "name": "Reserved13",
+      "address": "0x00000000"
+    },
+    {
+      "index": 14,
+      "name": "PendSV",
+      "address": "0x08037057"
+    },
+    {
+      "index": 15,
+      "name": "SysTick",
+      "address": "0x08037059"
+    },
+    {
+      "index": 16,
+      "name": "IRQ0_WWDG",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 17,
+      "name": "IRQ1_PVD",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 18,
+      "name": "IRQ2_TAMP_STAMP",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 19,
+      "name": "IRQ3_RTC_WKUP",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 20,
+      "name": "IRQ4_FLASH",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 21,
+      "name": "IRQ5_RCC",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 22,
+      "name": "IRQ6_EXTI0",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 23,
+      "name": "IRQ7_EXTI1",
+      "address": "0x0803705B"
+    },
+    {
+      "index": 24,
+      "name": "IRQ8_EXTI2",
+      "address": "0x0803706F"
+    },
+    {
+      "index": 25,
+      "name": "IRQ9_EXTI3",
+      "address": "0x08037197"
+    },
+    {
+      "index": 26,
+      "name": "IRQ10_EXTI4",
+      "address": "0x08037083"
+    },
+    {
+      "index": 27,
+      "name": "IRQ11_DMA1_CH0",
+      "address": "0x080370A1"
+    },
+    {
+      "index": 28,
+      "name": "IRQ12_DMA1_CH1",
+      "address": "0x080370C1"
+    },
+    {
+      "index": 29,
+      "name": "IRQ13_DMA1_CH2",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 30,
+      "name": "IRQ14_DMA1_CH3",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 31,
+      "name": "IRQ15_DMA1_CH4",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 32,
+      "name": "IRQ16_DMA1_CH5",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 33,
+      "name": "IRQ17_DMA1_CH6",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 34,
+      "name": "IRQ18_ADC1_2",
+      "address": "0x080370ED"
+    },
+    {
+      "index": 35,
+      "name": "IRQ19_USB_HP",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 36,
+      "name": "IRQ20_USB_LP",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 37,
+      "name": "IRQ21_DAC",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 38,
+      "name": "IRQ22_SPI1",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 39,
+      "name": "IRQ23_USART1",
+      "address": "0x0803710B"
+    },
+    {
+      "index": 40,
+      "name": "IRQ24_USART2",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 41,
+      "name": "IRQ25_USART3",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 42,
+      "name": "IRQ26_EXTI9_5",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 43,
+      "name": "IRQ27_TIM1",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 44,
+      "name": "IRQ28_TIM2",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 45,
+      "name": "IRQ29_TIM3",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 46,
+      "name": "IRQ30_TIM4",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 47,
+      "name": "IRQ31_TIM5",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 48,
+      "name": "IRQ32_SPI2",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 49,
+      "name": "IRQ33_TIM8",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 50,
+      "name": "IRQ34_TIM7",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 51,
+      "name": "IRQ35_LCD",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 52,
+      "name": "IRQ36_TIM9",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 53,
+      "name": "IRQ37_TIM10",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 54,
+      "name": "IRQ38_TIM11",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 55,
+      "name": "IRQ39_USB_OTG_FS",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 56,
+      "name": "IRQ40_DMA2_CH0",
+      "address": "0x08037145"
+    },
+    {
+      "index": 57,
+      "name": "IRQ41_DMA2_CH1",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 58,
+      "name": "IRQ42_DMA2_CH2",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 59,
+      "name": "IRQ43_DMA2_CH3",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 60,
+      "name": "IRQ44_DMA2_CH4",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 61,
+      "name": "IRQ45_DMA2_CH5",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 62,
+      "name": "IRQ46_DMA2_CH6",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 63,
+      "name": "IRQ47_USART6",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 64,
+      "name": "IRQ48_JPEG",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 65,
+      "name": "IRQ49_NSTC",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 66,
+      "name": "IRQ50_AES",
+      "address": "0x08037167"
+    },
+    {
+      "index": 67,
+      "name": "IRQ51_RNG",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 68,
+      "name": "IRQ52_CAPTURE_COMPARE",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 69,
+      "name": "IRQ53_LCD_TFT",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 70,
+      "name": "IRQ54_TIM12",
+      "address": "0x0803716B"
+    },
+    {
+      "index": 71,
+      "name": "IRQ55_TIM13",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 72,
+      "name": "IRQ56_TIM14",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 73,
+      "name": "IRQ57_DMA2D",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 74,
+      "name": "IRQ58_COMP",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 75,
+      "name": "IRQ59_LPTIM1",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 76,
+      "name": "IRQ60_LPUART1",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 77,
+      "name": "IRQ61_QUADSPI",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 78,
+      "name": "IRQ62_LPTIM2",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 79,
+      "name": "IRQ63_USB_FS",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 80,
+      "name": "IRQ64_DMAMUX",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 81,
+      "name": "IRQ65_LPUART2",
+      "address": "0x0803716F"
+    },
+    {
+      "index": 82,
+      "name": "IRQ66_LPTIM3",
+      "address": "0x08037187"
+    },
+    {
+      "index": 83,
+      "name": "IRQ67_LPTIM4",
+      "address": "0x080371A7"
+    },
+    {
+      "index": 84,
+      "name": "IRQ68_LPTIM5",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 85,
+      "name": "IRQ69_RTC",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 86,
+      "name": "IRQ70",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 87,
+      "name": "IRQ71",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 88,
+      "name": "IRQ72",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 89,
+      "name": "IRQ73",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 90,
+      "name": "IRQ74",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 91,
+      "name": "IRQ75",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 92,
+      "name": "IRQ76",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 93,
+      "name": "IRQ77",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 94,
+      "name": "IRQ78",
+      "address": "0x00000000"
+    },
+    {
+      "index": 95,
+      "name": "IRQ79",
+      "address": "0x00000000"
+    },
+    {
+      "index": 96,
+      "name": "IRQ80",
+      "address": "0x0803D245"
+    },
+    {
+      "index": 97,
+      "name": "IRQ81",
+      "address": "0x0803D245"
+    }
+  ]
+}

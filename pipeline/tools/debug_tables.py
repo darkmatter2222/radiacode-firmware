@@ -1,9 +1,16 @@
 """Locate the BLE command dispatch table by matching the known command-id sequence."""
 
 import json
+import os
+import sys
 
-BASE = 0x08000000
-data = open("firmware/rc102_flash.bin", "rb").read()
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import config
+
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+data = open(CFG["flash"], "rb").read()
 
 known = [0x0005, 0x000A, 0x000B, 0x0012, 0x0013]
 
@@ -23,7 +30,8 @@ for stride in (1, 2, 3, 4, 6):
             break
 
 # also dump the two promising tables in raw form
-for probe in (0x08036C10, 0x08038CD4):
+probes = [int(v, 16) for v in CFG["landmarks"].values() if isinstance(v, str) and v.startswith("0x")]
+for probe in (probes or [0x08036C10, 0x08038CD4]):
     off = (probe - BASE) // 4
     print(f"raw at {probe:#010x}:")
     for row in range(0, 6):

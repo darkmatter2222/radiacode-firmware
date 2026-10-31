@@ -1,9 +1,11 @@
-"""Step 2 — read-only capture from a live RadiaCode-102 over BLE.
+"""Step 2 — read-only capture from the live unit of the active target over BLE.
 
-Writes `firmware/analysis/device_capture.json`: identity, decoded measurements, the virtual-string
-map, the numbered register space, the two parameter areas, and (optionally) the full command sweep.
-Every command issued here is a read; the only writes are the `SET_EXCHANGE` sign and the idempotent
-wall-clock `SET_LOCAL_TIME`, both required before the device answers anything.
+Writes the target's `analysis/capture.json`: identity, the virtual-string map, the numbered
+register space and the four parameter areas. With `--sweep` it also writes
+`analysis/sweep_noarg.json` and `analysis/sweep_witharg.json` (every command id probed twice,
+without and with a `u32` argument). Every command issued here is a read; the only writes are the
+`SET_EXCHANGE` sign and the idempotent wall-clock `SET_LOCAL_TIME`, both required before the
+device answers anything. The BLE address and the sign come from `pipeline/devices.json`.
 
     python pipeline/step2_probe.py            # fast capture (~30 s)
     python pipeline/step2_probe.py --sweep    # + full 0x0000-0x0FFF id sweep (~14 min, cached)
@@ -19,14 +21,14 @@ import datetime
 import json
 import struct
 
+import config
 from protocol import (ANSWERING, CMD, SIGN, VS, decode_calib, decode_flash_area,
                       decode_image_info, decode_signature, decode_versions, serial_from_address,
                       split)
 
 from rcble import BleTransport
 
-OUT = "firmware/analysis/device_capture.json"
-ADDRESS = "52:43:06:60:20:24"
+CFG = config.load()
 VS_IDS = [0x002, 0x003, 0x008, 0x00D, 0x00F, 0x0F0, 0x100, 0x101, 0x200, 0x202, 0x203,
           0x205, 0x206, 0x207, 0x208, 0x220]
 
@@ -41,9 +43,11 @@ async def cmd(t, cid, args=b"", tries=2):
 
 
 async def capture(sweep=False):
-    t = BleTransport(ADDRESS)
+    address = CFG["ble_address"]
+    t = BleTransport(address)
     await t.open()
-    out = {"address": ADDRESS, "taken": datetime.datetime.now().isoformat(timespec="seconds")}
+    out = {"target": CFG["key"], "address": address,
+           "taken": datetime.datetime.now().isoformat(timespec="seconds")}
     try:
         out["SET_EXCHANGE"] = (await cmd(t, 0x0007, SIGN)).hex()
         now = datetime.datetime.now()
@@ -61,10 +65,12 @@ async def capture(sweep=False):
                 rec["decoded"] = decode_versions(data)
             elif cid == 0x0012:
                 rec["decoded"] = decode_image_info(data)
+            elif cid == 0x0013:
+                rec["decoded"] = {"frames": struct.unpack("<I", data)[0]}
             elif cid == 0x0101:
                 rec["decoded"] = decode_signature(data)
             identity[CMD[cid]] = rec
-        identity["BLE_NAME_FROM_ADDRESS"] = serial_from_address(ADDRESS)
+        identity["BLE_NAME_FROM_ADDRESS"] = serial_from_address(address)
         out["identity"] = identity
 
         # 2. virtual strings (the only bulk data channel): envelope + decoded body
@@ -102,36 +108,45 @@ async def capture(sweep=False):
                 areas[str(area)] = decode_flash_area(data)
         out["flash_areas"] = areas
 
-        # 5. optional: whole command-id space
+        # 5. optional: whole command-id space, twice - no argument and with a u32 argument
         if sweep:
-            found = {}
-            for cid in range(0x1000):
-                if cid in (0x0007, 0x0A04):
-                    continue
-                data = await cmd(t, cid, tries=1)
-                if data:
-                    found["0x%04X" % cid] = {"len": len(data), "hex": data.hex()[:160]}
-            out["command_sweep"] = found
+            for name, args in (("noarg", b""), ("witharg", struct.pack("<I", 0))):
+                found = {}
+                for cid in range(0x1000):
+                    if cid in (0x0007, 0x0A04):
+                        continue
+                    data = await cmd(t, cid, args, tries=1)
+                    if data:
+                        found["0x%04X" % cid] = {"len": len(data), "hex": data.hex()[:160]}
+                out["command_sweep_" + name] = found
+            with open(CFG["sweep_noarg"], "w", encoding="utf-8") as fh:
+                json.dump(out["command_sweep_noarg"], fh, indent=2)
+            with open(CFG["sweep_witharg"], "w", encoding="utf-8") as fh:
+                json.dump(out["command_sweep_witharg"], fh, indent=2)
     finally:
         await t.close()
     return out
 
 
 def main():
-    os.makedirs("firmware/analysis", exist_ok=True)
+    if not CFG["ble_address"]:
+        print("target %s has no live unit (ble_address is null) - nothing to capture" % CFG["key"])
+        return 0
+    os.makedirs(CFG["analysis_dir"], exist_ok=True)
     data = asyncio.run(capture(sweep="--sweep" in sys.argv))
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(CFG["capture"], "w", encoding="utf-8") as fh:
         json.dump(data, fh, indent=2, ensure_ascii=False)
     print(json.dumps({
-        "written": OUT,
+        "written": CFG["capture"],
         "identity": sorted(data.get("identity", {})),
         "virtual_strings": len(data.get("virtual_strings", {})),
         "nonzero_registers": len(data.get("numeric_registers_nonzero", {})),
         "areas": sorted(data.get("flash_areas", {})),
-        "sweep": len(data.get("command_sweep", {})) if "command_sweep" in data else "cached",
+        "sweep": (len(data["command_sweep_noarg"]) if "command_sweep_noarg" in data else "cached"),
         "expected_answering_ids": [hex(c) for c in ANSWERING],
     }, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

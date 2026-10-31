@@ -2,7 +2,7 @@
 
     python pipeline/tools/read_vsfrs.py
 
-Writes `firmware/analysis/vsfr_readout.json`. Every id used here is a read (`0x0824`, `0x082A`); the
+Writes the target's `analysis/vsfr_readout.json`. Every id used here is a read (`0x0824`, `0x082A`); the
 session is opened first with `SET_EXCHANGE`, and the wall clock is refreshed with the idempotent
 `SET_LOCAL_TIME`, exactly as `step2_probe.py` does.
 """
@@ -17,12 +17,14 @@ import datetime
 import json
 import struct
 
+import config  # noqa: E402
 from protocol import CMD, VS, decode_calib, split  # noqa: E402
 
 from rcble import BleTransport  # noqa: E402
 
-ADDRESS = "52:43:06:60:20:24"
-OUT = "firmware/analysis/vsfr_readout.json"
+CFG = config.load()
+ADDRESS = CFG["ble_address"]
+OUT = CFG["vsfr"]
 
 # name -> VSFR address, from the in-image map (§8 of firmware.md)
 VSFRS = [
@@ -71,6 +73,9 @@ BATCH_SHAPES = {
 
 
 async def main():
+    if not ADDRESS:
+        print("target %s has no live unit (ble_address is null) - nothing to read" % CFG["key"])
+        return
     t = BleTransport(ADDRESS)
     await t.open()
     out = {"address": ADDRESS, "taken": datetime.datetime.now().isoformat(timespec="seconds")}
@@ -131,7 +136,7 @@ async def main():
         out["string_pairs"] = snaps
     finally:
         await t.close()
-    os.makedirs("firmware/analysis", exist_ok=True)
+    os.makedirs(CFG["analysis_dir"], exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=2, ensure_ascii=False)
     print("wrote", OUT, "| nonzero VSFRs:", len(out["single_nonzero"]),

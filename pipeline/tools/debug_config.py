@@ -1,12 +1,20 @@
 """Diff the in-image vendor configuration text against the live device's VS CONFIGURATION."""
 
 import json
+import os
+import sys
 
-payload = json.load(open("firmware/analysis/verification.json", encoding="utf-8"))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import config
+
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+payload = json.load(open(CFG["verification"], encoding="utf-8"))
 device = bytes.fromhex(payload["device"]["raw_hex"]["VS_CONFIGURATION"])
-image = open("firmware/rc102_flash.bin", "rb").read()
+image = open(CFG["flash"], "rb").read()
 
-offset = 0x030000
+offset = int(payload["checks"]["config_text_address"], 16) - BASE
 in_image = image[offset:].split(b"\x00")[0]
 body = device[8:]
 device_text = body.split(b"\x00")[0]

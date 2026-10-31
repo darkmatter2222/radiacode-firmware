@@ -1,7 +1,7 @@
 """Cross-reference literal pools: which function loads which string / calls which function.
 
-Reads firmware/rc102_flash.bin plus the JSON indexes produced by disassemble.py and writes
-firmware/analysis/xrefs.json:
+Reads the target's `flash.bin` plus the JSON indexes produced by step 5 and writes its
+`analysis/xrefs.json`:
 
   string_refs   : per string -> referencing addresses + owning functions
   function_info : per function -> strings and callees reachable through its literal pool
@@ -10,15 +10,21 @@ firmware/analysis/xrefs.json:
 import bisect
 import json
 import os
+import sys
 
-BASE = 0x08000000
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-data = open("firmware/rc102_flash.bin", "rb").read()
+import config
+
+CFG = config.load()
+BASE = int(CFG["mcu"]["base"], 16)
+
+data = open(CFG["flash"], "rb").read()
 size = len(data)
 end = BASE + size
 
-strings = json.load(open("firmware/analysis/strings.json", encoding="utf-8"))
-functions = json.load(open("firmware/analysis/functions.json", encoding="utf-8"))
+strings = json.load(open(CFG["strings"], encoding="utf-8"))
+functions = json.load(open(CFG["functions"], encoding="utf-8"))
 
 starts = [int(item["address"], 16) for item in functions]
 name_by_addr = {int(item["address"], 16): item["name"] for item in functions}
@@ -63,7 +69,7 @@ for offset in range(0, size - 4, 4):
             function_strings[container].append(text)
 
 output = {
-    "generated_from": "firmware/rc102_flash.bin + firmware/analysis/{strings,functions}.json",
+    "generated_from": "%s + %s/{strings,functions}.json" % (CFG["flash"], CFG["analysis_dir"]),
     "literal_pool_string_count": len(string_refs),
     "functions_with_strings": len(function_strings),
     "string_refs": string_refs,
@@ -71,8 +77,8 @@ output = {
         sorted(function_strings.items(), key=lambda kv: -len(kv[1]))
     ),
 }
-os.makedirs("firmware/analysis", exist_ok=True)
-with open("firmware/analysis/xrefs.json", "w", encoding="utf-8") as fh:
+os.makedirs(CFG["analysis_dir"], exist_ok=True)
+with open(CFG["xrefs"], "w", encoding="utf-8") as fh:
     json.dump(output, fh, indent=2)
 
 print(

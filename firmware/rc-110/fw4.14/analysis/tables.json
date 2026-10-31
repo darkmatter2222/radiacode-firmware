@@ -1,0 +1,507 @@
+{
+  "table_count": 8,
+  "min_run": 4,
+  "decompiled_handlers": 85,
+  "tables": [
+    {
+      "address": "0x08020C90",
+      "entries": [
+        {
+          "id": "0x28F",
+          "handler": "0x08020BBC",
+          "handler_name": "sub_08020BBC"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08020BAE",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x199A",
+          "handler": "0x08020BBC",
+          "handler_name": "sub_08020BBC"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08020BAE",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x199A",
+          "handler": "0x08020BB2",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x199A",
+          "handler": "0x08020BAE",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x199A",
+          "handler": "0x08020BBC",
+          "handler_name": "sub_08020BBC"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08020BAE",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0xCCD",
+          "handler": "0x08020BB2",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x2666",
+          "handler": "0x08020BAE",
+          "handler_name": "unindexed"
+        }
+      ]
+    },
+    {
+      "address": "0x080233D4",
+      "entries": [
+        {
+          "id": "0x2172",
+          "handler": "0x080231DE",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x4000",
+          "handler": "0x080231E4",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x080231FC",
+          "handler_name": "sub_080231FC"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08023222",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08023232",
+          "handler_name": "unindexed"
+        }
+      ]
+    },
+    {
+      "address": "0x0803785C",
+      "entries": [
+        {
+          "id": "0x0",
+          "handler": "0x08020B84",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x1",
+          "handler": "0x080355F2",
+          "handler_name": "sub_080355F2"
+        },
+        {
+          "id": "0x2",
+          "handler": "0x080355FE",
+          "handler_name": "sub_080355FE"
+        },
+        {
+          "id": "0x3",
+          "handler": "0x08035608",
+          "handler_name": "sub_08035608"
+        },
+        {
+          "id": "0x4",
+          "handler": "0x08035660",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x5",
+          "handler": "0x08035672",
+          "handler_name": "sub_08035672"
+        },
+        {
+          "id": "0x6",
+          "handler": "0x08035684",
+          "handler_name": "sub_08035684"
+        },
+        {
+          "id": "0x400",
+          "handler": "0x08035694",
+          "handler_name": "sub_08035694"
+        },
+        {
+          "id": "0x401",
+          "handler": "0x0803569E",
+          "handler_name": "sub_0803569E"
+        },
+        {
+          "id": "0x402",
+          "handler": "0x080356AE",
+          "handler_name": "sub_080356AE"
+        },
+        {
+          "id": "0x403",
+          "handler": "0x080356BA",
+          "handler_name": "sub_080356BA"
+        },
+        {
+          "id": "0x404",
+          "handler": "0x080356C6",
+          "handler_name": "sub_080356C6"
+        },
+        {
+          "id": "0x405",
+          "handler": "0x080356D0",
+          "handler_name": "sub_080356D0"
+        },
+        {
+          "id": "0x407",
+          "handler": "0x080356DA",
+          "handler_name": "sub_080356DA"
+        },
+        {
+          "id": "0x408",
+          "handler": "0x080356EC",
+          "handler_name": "sub_080356EC"
+        },
+        {
+          "id": "0x409",
+          "handler": "0x080356F8",
+          "handler_name": "sub_080356F8"
+        },
+        {
+          "id": "0x40A",
+          "handler": "0x08035708",
+          "handler_name": "sub_08035708"
+        },
+        {
+          "id": "0x800",
+          "handler": "0x08035716",
+          "handler_name": "sub_08035716"
+        },
+        {
+          "id": "0x801",
+          "handler": "0x08035724",
+          "handler_name": "sub_08035724"
+        },
+        {
+          "id": "0x802",
+          "handler": "0x08035734",
+          "handler_name": "sub_08035734"
+        },
+        {
+          "id": "0x80A",
+          "handler": "0x08035760",
+          "handler_name": "sub_08035760"
+        },
+        {
+          "id": "0xC01",
+          "handler": "0x08035778",
+          "handler_name": "sub_08035778"
+        },
+        {
+          "id": "0xC02",
+          "handler": "0x08035790",
+          "handler_name": "sub_08035790"
+        },
+        {
+          "id": "0xC03",
+          "handler": "0x0803579C",
+          "handler_name": "sub_0803579C"
+        },
+        {
+          "id": "0xC04",
+          "handler": "0x080357AA",
+          "handler_name": "sub_080357AA"
+        },
+        {
+          "id": "0xC05",
+          "handler": "0x080357BC",
+          "handler_name": "sub_080357BC"
+        },
+        {
+          "id": "0xC06",
+          "handler": "0x080357EE",
+          "handler_name": "sub_080357EE"
+        },
+        {
+          "id": "0xC07",
+          "handler": "0x08035800",
+          "handler_name": "sub_08035800"
+        },
+        {
+          "id": "0xC08",
+          "handler": "0x08035810",
+          "handler_name": "sub_08035810"
+        },
+        {
+          "id": "0xC09",
+          "handler": "0x08035820",
+          "handler_name": "sub_08035820"
+        },
+        {
+          "id": "0xC0A",
+          "handler": "0x08035830",
+          "handler_name": "sub_08035830"
+        },
+        {
+          "id": "0xC0C",
+          "handler": "0x08035842",
+          "handler_name": "sub_08035842"
+        },
+        {
+          "id": "0xC0D",
+          "handler": "0x08035858",
+          "handler_name": "sub_08035858"
+        },
+        {
+          "id": "0xC0E",
+          "handler": "0x08035864",
+          "handler_name": "sub_08035864"
+        },
+        {
+          "id": "0xC0F",
+          "handler": "0x08035876",
+          "handler_name": "sub_08035876"
+        },
+        {
+          "id": "0xC10",
+          "handler": "0x08035888",
+          "handler_name": "sub_08035888"
+        },
+        {
+          "id": "0xC11",
+          "handler": "0x08035896",
+          "handler_name": "sub_08035896"
+        },
+        {
+          "id": "0xC12",
+          "handler": "0x080358AA",
+          "handler_name": "sub_080358AA"
+        },
+        {
+          "id": "0xC13",
+          "handler": "0x080358BC",
+          "handler_name": "sub_080358BC"
+        },
+        {
+          "id": "0xC14",
+          "handler": "0x080358CE",
+          "handler_name": "sub_080358CE"
+        },
+        {
+          "id": "0xC15",
+          "handler": "0x080358DE",
+          "handler_name": "sub_080358DE"
+        },
+        {
+          "id": "0xC16",
+          "handler": "0x08035908",
+          "handler_name": "sub_08035908"
+        },
+        {
+          "id": "0xC17",
+          "handler": "0x08035916",
+          "handler_name": "sub_08035916"
+        },
+        {
+          "id": "0xC18",
+          "handler": "0x08035922",
+          "handler_name": "sub_08035922"
+        }
+      ]
+    },
+    {
+      "address": "0x080391AC",
+      "entries": [
+        {
+          "id": "0xA4",
+          "handler": "0x08017274",
+          "handler_name": "sub_08017274"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x080172A4",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0xA4",
+          "handler": "0x080172DC",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0xA4",
+          "handler": "0x08017372",
+          "handler_name": "sub_08017372"
+        },
+        {
+          "id": "0xA3D",
+          "handler": "0x080173B4",
+          "handler_name": "unindexed"
+        }
+      ]
+    },
+    {
+      "address": "0x080391EC",
+      "entries": [
+        {
+          "id": "0x0",
+          "handler": "0x080171F8",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x0801728A",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x080172BC",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x0801732E",
+          "handler_name": "sub_0801732E"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08017392",
+          "handler_name": "sub_08017392"
+        },
+        {
+          "id": "0x28F",
+          "handler": "0x080174C8",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08017636",
+          "handler_name": "sub_08017636"
+        }
+      ]
+    },
+    {
+      "address": "0x08039944",
+      "entries": [
+        {
+          "id": "0x1",
+          "handler": "0x08035938",
+          "handler_name": "sub_08035938"
+        },
+        {
+          "id": "0x2",
+          "handler": "0x0803596A",
+          "handler_name": "sub_0803596A"
+        },
+        {
+          "id": "0x3",
+          "handler": "0x080359C4",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x4",
+          "handler": "0x080359E2",
+          "handler_name": "sub_080359E2"
+        },
+        {
+          "id": "0x5",
+          "handler": "0x080359F4",
+          "handler_name": "sub_080359F4"
+        },
+        {
+          "id": "0x7",
+          "handler": "0x08035A04",
+          "handler_name": "sub_08035A04"
+        },
+        {
+          "id": "0x8",
+          "handler": "0x08035A1A",
+          "handler_name": "sub_08035A1A"
+        },
+        {
+          "id": "0x9",
+          "handler": "0x08035A28",
+          "handler_name": "sub_08035A28"
+        },
+        {
+          "id": "0xA",
+          "handler": "0x08035A36",
+          "handler_name": "sub_08035A36"
+        },
+        {
+          "id": "0xB",
+          "handler": "0x08035A74",
+          "handler_name": "sub_08035A74"
+        }
+      ]
+    },
+    {
+      "address": "0x0803A0EC",
+      "entries": [
+        {
+          "id": "0x5",
+          "handler": "0x08035560",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x8",
+          "handler": "0x08035572",
+          "handler_name": "sub_08035572"
+        },
+        {
+          "id": "0xC",
+          "handler": "0x08035584",
+          "handler_name": "sub_08035584"
+        },
+        {
+          "id": "0x10",
+          "handler": "0x0803559C",
+          "handler_name": "sub_0803559C"
+        },
+        {
+          "id": "0x13",
+          "handler": "0x080355A8",
+          "handler_name": "sub_080355A8"
+        },
+        {
+          "id": "0x1A",
+          "handler": "0x080355D6",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x30",
+          "handler": "0x080355E2",
+          "handler_name": "sub_080355E2"
+        }
+      ]
+    },
+    {
+      "address": "0x0803B11C",
+      "entries": [
+        {
+          "id": "0x148",
+          "handler": "0x0801B66E",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x199A",
+          "handler": "0x0801B676",
+          "handler_name": "sub_0801B676"
+        },
+        {
+          "id": "0x199A",
+          "handler": "0x0801B716",
+          "handler_name": "unindexed"
+        },
+        {
+          "id": "0x0",
+          "handler": "0x08015998",
+          "handler_name": "unindexed"
+        }
+      ]
+    }
+  ]
+}

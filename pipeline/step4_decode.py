@@ -1,15 +1,19 @@
-"""Decode the device firmware image into a flat flash binary + metadata."""
+"""Decode the container of the active target into a flat flash binary + per-block metadata."""
 
 import json
 import os
 
+import config
 import rcfmt
 
-SRC = "official/rc-102z.bin"
-OUT_DIR = "firmware"
+CFG = config.load()
+SRC = CFG["container"]
+OUT_DIR = CFG["dir"]
+BASE = int(CFG["mcu"]["base"], 16)
 
 os.makedirs(OUT_DIR, exist_ok=True)
 data = open(SRC, "rb").read()
+print("target:", CFG["key"], "| device:", CFG["device"], "| fw", CFG["fw"], "| hw", CFG["hw"])
 
 header = rcfmt.parse_file(data)
 whole_crc = rcfmt.calculate_crc(data)
@@ -26,7 +30,7 @@ for index, block in enumerate(blocks):
     if compressed:
         plain = rcfmt.lzss_decompress(plain)
     ok = rcfmt.calculate_crc(plain) == crc1
-    offset = block["addr"] - rcfmt.BASE_ADDRESS
+    offset = block["addr"] - BASE
     end = offset + len(plain)
     if len(image) < end:
         image.extend(bytes(end - len(image)))
@@ -48,10 +52,10 @@ for index, block in enumerate(blocks):
         f"decrypted={plain_len} decompressed={len(plain)} crc={crc1:08x} ok={ok}"
     )
 
-image_path = os.path.join(OUT_DIR, "rc102_flash.bin")
+image_path = CFG["flash"]
 with open(image_path, "wb") as fh:
     fh.write(image)
-with open(os.path.join(OUT_DIR, "rc102_blocks.json"), "w", encoding="utf-8") as fh:
+with open(CFG["blocks"], "w", encoding="utf-8") as fh:
     json.dump({"header": header, "whole_file_crc": f"{whole_crc:08x}", "blocks": records}, fh, indent=2)
 
 print("flash image:", image_path, len(image), "bytes")

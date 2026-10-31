@@ -1,9 +1,12 @@
 // DumpC.java -- headless helper: seed functions from the vector table, decompile them all.
 //
-// Run with:
-//   analyzeHeadless firmware\ghidra_proj RC102 -import firmware\rc102_flash.bin \
+// Run with (the single script argument is the target directory that holds flash.bin,
+// analysis/*.json and receives decompiled.c; see pipeline/step6_decompile.py):
+//   analyzeHeadless firmware/rc-102/hw1-fw4.14/ghidra_proj RC102 \
+//     -import firmware/rc-102/hw1-fw4.14/flash.bin \
 //     -loader BinaryLoader -loader-baseAddr 0x08010000 -loader-blockName FLASH \
-//     -processor "ARM:LE:32:v7" -scriptPath scripts -postScript DumpC.java
+//     -processor "ARM:LE:32:v7" -scriptPath pipeline/scripts \
+//     -postScript DumpC.java firmware/rc-102/hw1-fw4.14
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,6 +35,10 @@ public class DumpC extends GhidraScript {
         Program program = currentProgram;
         AddressFactory factory = program.getAddressFactory();
 
+        // the target directory (holds flash.bin + analysis/*.json) comes from the script argument
+        String[] scriptArgs = getScriptArgs();
+        String dir = scriptArgs.length > 0 && !scriptArgs[0].isEmpty() ? scriptArgs[0] : "firmware";
+
         for (int i = 1; i < VECTOR_COUNT; i++) {
             long value = readWord(program, factory, VTOR + 4L * i);
             if (value != 0 && (value & 1L) == 1L) {
@@ -44,12 +51,12 @@ public class DumpC extends GhidraScript {
 
         // seed the remaining function starts discovered by the capstone pass
         int seeded = 0;
-        seeded += seedFromJson(factory, new File("firmware/analysis/functions.json"), "\"address\": \"0x([0-9A-Fa-f]{8})\"");
-        seeded += seedTableHandlers(factory, new File("firmware/analysis/tables.json"));
+        seeded += seedFromJson(factory, new File(dir, "analysis/functions.json"), "\"address\": \"0x([0-9A-Fa-f]{8})\"");
+        seeded += seedTableHandlers(factory, new File(dir, "analysis/tables.json"));
 
-        File dir = new File("firmware/decompiled");
-        if (!dir.exists()) {
-            dir.mkdirs();
+        File parent = new File(dir).getParentFile();
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
         }
 
         DecompInterface decomp = new DecompInterface();
@@ -57,11 +64,10 @@ public class DumpC extends GhidraScript {
 
         int done = 0;
         int failed = 0;
-        PrintWriter out = new PrintWriter(new File(dir, "rc102_flash.c"));
+        PrintWriter out = new PrintWriter(new File(dir, "decompiled.c"));
         try {
-            out.println("/* RadiaCode-102 firmware, rc-102z.bin v4.14 (whole-file crc 13095abb)");
-            out.println(" * decoded flash image 0x08000000 - 0x0803ca00 (blocks at 0x08010000+), Cortex-M4 (ARMv7E-M)");
-            out.println(" * Ghidra headless decompilation */");
+            out.println("/* " + dir + " - " + program.getName()
+                + ", Cortex-M4 (ARMv7E-M), Ghidra headless decompilation, one block per function */");
             out.println();
 
             Iterator<Function> functions = program.getFunctionManager().getFunctions(true);

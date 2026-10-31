@@ -1,0 +1,66 @@
+{
+  "target": "rc-102/hw1-fw4.14",
+  "device": "RadiaCode-102",
+  "model": "rc-102",
+  "hw": "1",
+  "fw": "4.14",
+  "boot": "4.0",
+  "serial": "RC-102-008228",
+  "ble_address": "52:43:06:60:20:24",
+  "mcu": {
+    "family": "STM32L4",
+    "processor": "ARM:LE:32:v7",
+    "base": "0x08000000",
+    "vector_table": "0x08010000",
+    "initial_sp": "0x20000800",
+    "reset": "0x0803BA71"
+  },
+  "expected": {
+    "size": 130148,
+    "chunk": 4096,
+    "buffer_size": 32768,
+    "date_time": "0x5AE7428A",
+    "crc32": "0x13095ABB",
+    "frames": 19,
+    "blocks": 8
+  },
+  "landmarks": {
+    "config_text": "0x0802F9F0",
+    "config_text_bytes": 3256,
+    "vsfr_map": "0x080306AC",
+    "item_table": "0x08035A64",
+    "registry": "0x08036C10"
+  },
+  "files": {
+    "container": {
+      "path": "firmware/rc-102/hw1-fw4.14/rc-102z.bin",
+      "bytes": 130148,
+      "sha256": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392"
+    },
+    "flash": {
+      "path": "firmware/rc-102/hw1-fw4.14/flash.bin",
+      "bytes": 248320,
+      "sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6"
+    },
+    "blocks": {
+      "path": "firmware/rc-102/hw1-fw4.14/blocks.json",
+      "bytes": 2222,
+      "sha256": "928844eb95a405a6b6146d2df13219a81a2b64f8b5fdf3484ff390d9b0b38996"
+    },
+    "listing": {
+      "path": "firmware/rc-102/hw1-fw4.14/listing.s",
+      "bytes": 2743197,
+      "sha256": "2de12fbc62a2fad915aab8ee9ae029625fc026daf9961a92020baa19568786b4"
+    },
+    "c": {
+      "path": "firmware/rc-102/hw1-fw4.14/decompiled.c",
+      "bytes": 1745379,
+      "sha256": "d4efe41ef3134d7e359ccc5bf8281cf12e39b7b4c98708e77ef31e09e34a139e"
+    },
+    "index": {
+      "path": "firmware/rc-102/hw1-fw4.14/index.json",
+      "bytes": 341970,
+      "sha256": "9d2ec379b790cf581c1279b89bb5373b68625c35bf611c141929ee003d5847ac"
+    }
+  }
+}

@@ -1,7 +1,8 @@
-"""Tiny query helper for the decompiled RadiaCode-102 firmware.
+"""Tiny query helper for the decompiled firmware of the active target.
 
 Usage:
-    python lookup.py 0x080349A6 [0x08010188 ...]
+    python pipeline/tools/lookup.py 0x080349A6 [0x08010188 ...]
+    RC_TARGET=rc-110/fw4.14 python pipeline/tools/lookup.py 0x08010188
 
 Prints, per address: the owning function (name + line range in the C file), its callers/callees,
 any string it references, and the raw disassembly around it.
@@ -9,23 +10,29 @@ any string it references, and the raw disassembly around it.
 
 import bisect
 import json
+import os
 import sys
 
-IMAGE_BASE = 0x08000000
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-_INDEX = json.load(open("firmware/decompiled/index.json", encoding="utf-8"))
-_FUNCTIONS = json.load(open("firmware/analysis/functions.json", encoding="utf-8"))
-_XREFS = json.load(open("firmware/analysis/xrefs.json", encoding="utf-8"))
-_TABLES = json.load(open("firmware/analysis/tables.json", encoding="utf-8"))
+import config
 
-_C_LINES = open("firmware/decompiled/rc102_flash.c", encoding="utf-8").read().splitlines()
-_LISTING = open("firmware/listing/rc102_flash.s", encoding="utf-8").read().splitlines()
-_IMAGE = open("firmware/rc102_flash.bin", "rb").read()
+CFG = config.load()
+IMAGE_BASE = int(CFG["mcu"]["base"], 16)
+
+_INDEX = json.load(open(CFG["index"], encoding="utf-8"))
+_FUNCTIONS = json.load(open(CFG["functions"], encoding="utf-8"))
+_XREFS = json.load(open(CFG["xrefs"], encoding="utf-8"))
+_TABLES = json.load(open(CFG["tables"], encoding="utf-8"))
+
+_C_LINES = open(CFG["c"], encoding="utf-8").read().splitlines()
+_LISTING = open(CFG["listing"], encoding="utf-8").read().splitlines()
+_IMAGE = open(CFG["flash"], "rb").read()
 
 _starts = [int(item["address"], 16) for item in _INDEX["functions"]]
 _by_address = {item["address"]: item for item in _INDEX["functions"]}
 _function_by_address = {int(item["address"], 16): item for item in _FUNCTIONS}
-_strings = {int(item["address"], 16): item["text"] for item in json.load(open("firmware/analysis/strings.json", encoding="utf-8"))}
+_strings = {int(item["address"], 16): item["text"] for item in json.load(open(CFG["strings"], encoding="utf-8"))}
 _table_ids = {}
 for _table in _TABLES["tables"]:
     for _entry in _table["entries"]:
@@ -49,7 +56,7 @@ def describe(address):
     if function is None:
         print("   no decompiled function covers this address")
     else:
-        print(f"   function {function['name']}  ->  rc102_flash.c lines {function['line']}-{function['end_line']}")
+        print(f"   function {function['name']}  ->  decompiled.c lines {function['line']}-{function['end_line']}")
         indexed = _function_by_address.get(int(function["address"], 16))
         if indexed:
             print(f"   size 0x{indexed['size']:x}, decoded instructions {indexed['instructions_decoded']}, "

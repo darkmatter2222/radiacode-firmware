@@ -1,16 +1,27 @@
-"""Index the Ghidra C output so the 1.4 MB file can be navigated by address.
+"""Index the Ghidra C output so the multi-megabyte file can be navigated by address.
 
-Writes firmware/decompiled/index.json: one entry per decompiled function with the line range
-inside firmware/decompiled/rc102_flash.c, plus a flat address -> line map.
+Writes the target's `index.json`: one entry per decompiled function with the line range inside
+the target's `decompiled.c`, plus a flat address -> line map.
 """
 
 import json
+import os
 import re
+import sys
 
-C_FILE = "firmware/decompiled/rc102_flash.c"
-OUT = "firmware/decompiled/index.json"
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import config
+
+CFG = config.load()
+C_FILE = CFG["c"]
+OUT = CFG["index"]
 
 banner = re.compile(r"^/\* ===== (\S+) @ (\w+) ===== \*/$")
+
+if not os.path.exists(C_FILE):
+    print("no %s yet - run step 6 first" % C_FILE)
+    raise SystemExit(0)
 
 lines = open(C_FILE, encoding="utf-8").read().splitlines()
 

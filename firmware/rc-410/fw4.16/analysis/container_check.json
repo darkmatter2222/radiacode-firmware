@@ -1,0 +1,18 @@
+{
+  "target": "rc-410/fw4.16",
+  "container": "firmware/rc-410/fw4.16/rc-410z.bin",
+  "size": 140836,
+  "size_matches_device": true,
+  "date_time": "0x5CB949E4",
+  "date_time_matches_device": true,
+  "container_buffer_size": 32768,
+  "device_write_chunk_0x0012": 4096,
+  "version": "4.16",
+  "whole_file_crc": "0xC759BFB1",
+  "whole_file_crc_matches_device": true,
+  "after_header_crc": "01a7fd49",
+  "container_blocks": 10,
+  "blocks_match_container": true,
+  "device_frame_count_0x0013": null,
+  "serial": "00000000000000000000000000000000"
+}

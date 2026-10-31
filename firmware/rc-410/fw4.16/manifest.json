@@ -1,0 +1,60 @@
+{
+  "target": "rc-410/fw4.16",
+  "device": "RadiaCode-410",
+  "model": "rc-410",
+  "hw": null,
+  "fw": "4.16",
+  "boot": null,
+  "serial": null,
+  "ble_address": null,
+  "mcu": {
+    "family": "STM32L4",
+    "processor": "ARM:LE:32:v7",
+    "base": "0x08000000",
+    "vector_table": "0x08010000",
+    "initial_sp": null,
+    "reset": null
+  },
+  "expected": {
+    "size": 140836,
+    "chunk": 4096,
+    "buffer_size": 32768,
+    "date_time": "0x5CB949E4",
+    "crc32": "0xC759BFB1",
+    "frames": null,
+    "blocks": 10
+  },
+  "landmarks": {},
+  "files": {
+    "container": {
+      "path": "firmware/rc-410/fw4.16/rc-410z.bin",
+      "bytes": 140836,
+      "sha256": "8c4209014d61a4e2b90f04aa0c7b63b8793d03844838b761c1809fc60471c9e4"
+    },
+    "flash": {
+      "path": "firmware/rc-410/fw4.16/flash.bin",
+      "bytes": 264192,
+      "sha256": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e"
+    },
+    "blocks": {
+      "path": "firmware/rc-410/fw4.16/blocks.json",
+      "bytes": 2668,
+      "sha256": "956bf54672889fcd877860c49d0268fb37f48b36c0823c5119a523f0423e723f"
+    },
+    "listing": {
+      "path": "firmware/rc-410/fw4.16/listing.s",
+      "bytes": 2964705,
+      "sha256": "4c9371f0942720a0cc4ce8d45ea5fa357c2513c66274d42eb35dc4bc260447ab"
+    },
+    "c": {
+      "path": "firmware/rc-410/fw4.16/decompiled.c",
+      "bytes": 1798713,
+      "sha256": "b863018af752b129b3a92353f18ff9ace832b4269adf5e2e9d3c00589a8ed8f5"
+    },
+    "index": {
+      "path": "firmware/rc-410/fw4.16/index.json",
+      "bytes": 383176,
+      "sha256": "f28d4346d06f091af19d19ae6c5371286834f3c582eb7478b120f0e3e415b7b8"
+    }
+  }
+}

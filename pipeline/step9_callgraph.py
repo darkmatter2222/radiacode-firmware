@@ -1,7 +1,7 @@
 """Reachability from each interrupt vector handler, built from the caller lists.
 
-Reads firmware/analysis/{vectors,functions}.json (produced by disassemble.py) and writes
-firmware/analysis/callgraph.json:
+Reads the target's `analysis/{vectors,functions}.json` (produced by step 5) and writes its
+`analysis/callgraph.json`:
 
   entries      : per vector handler -> reachable function count + BFS depth histogram
   orphans      : functions not reachable from any handler
@@ -10,11 +10,18 @@ firmware/analysis/callgraph.json:
 
 import bisect
 import json
+import os
 import re
+import sys
 from collections import defaultdict, deque
 
-vectors = json.load(open("firmware/analysis/vectors.json", encoding="utf-8"))
-functions = json.load(open("firmware/analysis/functions.json", encoding="utf-8"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import config
+
+CFG = config.load()
+vectors = json.load(open(CFG["vectors"], encoding="utf-8"))
+functions = json.load(open(CFG["functions"], encoding="utf-8"))
 
 starts = [int(item["address"], 16) for item in functions]
 names = {int(item["address"], 16): item["name"] for item in functions}
@@ -32,7 +39,7 @@ def owner(addr):
 
 
 # direct edges straight from the listing: b / bl / b.w / bl.n ...
-for line in open("firmware/listing/rc102_flash.s", encoding="utf-8"):
+for line in open(CFG["listing"], encoding="utf-8"):
     match = listing_line.match(line)
     if not match:
         continue
@@ -122,7 +129,7 @@ payload = {
     "orphan_count": len(orphans),
     "shared_core": shared_core,
 }
-with open("firmware/analysis/callgraph.json", "w", encoding="utf-8") as fh:
+with open(CFG["callgraph"], "w", encoding="utf-8") as fh:
     json.dump(payload, fh, indent=2)
 
 print(

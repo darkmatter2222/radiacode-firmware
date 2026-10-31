@@ -1,0 +1,60 @@
+{
+  "target": "rc-110/fw4.14",
+  "device": "RadiaCode-110",
+  "model": "rc-110",
+  "hw": null,
+  "fw": "4.14",
+  "boot": null,
+  "serial": null,
+  "ble_address": null,
+  "mcu": {
+    "family": "STM32L4",
+    "processor": "ARM:LE:32:v7",
+    "base": "0x08000000",
+    "vector_table": "0x08010000",
+    "initial_sp": null,
+    "reset": null
+  },
+  "expected": {
+    "size": 133312,
+    "chunk": 4096,
+    "buffer_size": 32768,
+    "date_time": "0x5AE742EE",
+    "crc32": "0x23FEA728",
+    "frames": null,
+    "blocks": 9
+  },
+  "landmarks": {},
+  "files": {
+    "container": {
+      "path": "firmware/rc-110/fw4.14/rc-110z.bin",
+      "bytes": 133312,
+      "sha256": "5b2706856e0becd9353c3617e4ac29b55cec52c935541a9ba20285dfbbab78fe"
+    },
+    "flash": {
+      "path": "firmware/rc-110/fw4.14/flash.bin",
+      "bytes": 251904,
+      "sha256": "71045208580628e2f8e9c7c29bb25426ee074b00a69b93153e53db006a923502"
+    },
+    "blocks": {
+      "path": "firmware/rc-110/fw4.14/blocks.json",
+      "bytes": 2445,
+      "sha256": "4c75508fe1313ae4c891a5eb9dbe112a9044cb32fe8f3da347d20004fde22c64"
+    },
+    "listing": {
+      "path": "firmware/rc-110/fw4.14/listing.s",
+      "bytes": 2788880,
+      "sha256": "cbc2ea5029213cbf30c87707481880caa1ebf4bb4714289bf16d86719087fa1e"
+    },
+    "c": {
+      "path": "firmware/rc-110/fw4.14/decompiled.c",
+      "bytes": 1703011,
+      "sha256": "9d5db61e58a8f58b7eb6c56cf4ab81d6e07093278418c8f2f4c8995461aadcb4"
+    },
+    "index": {
+      "path": "firmware/rc-110/fw4.14/index.json",
+      "bytes": 349031,
+      "sha256": "22136def350f282fcf750afdeb86c7aacb3cc9ecce44ab958048d6763b9005f7"
+    }
+  }
+}

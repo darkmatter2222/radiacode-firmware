@@ -1,0 +1,1407 @@
+{
+  "generated_from": "firmware/rc-103g/fw4.14/flash.bin + firmware/rc-103g/fw4.14/analysis/{strings,functions}.json",
+  "literal_pool_string_count": 86,
+  "functions_with_strings": 38,
+  "string_refs": {
+    "0x08036406": {
+      "text": "pGpGpGpGXH",
+      "referenced_by": [
+        {
+          "at": "0x0801002C",
+          "in": null
+        },
+        {
+          "at": "0x08010030",
+          "in": null
+        },
+        {
+          "at": "0x08010038",
+          "in": null
+        },
+        {
+          "at": "0x0801003C",
+          "in": null
+        },
+        {
+          "at": "0x0801005C",
+          "in": null
+        }
+      ]
+    },
+    "0x08036420": {
+      "text": "pGSH",
+      "referenced_by": [
+        {
+          "at": "0x08010060",
+          "in": null
+        }
+      ]
+    },
+    "0x08036434": {
+      "text": "pGNH",
+      "referenced_by": [
+        {
+          "at": "0x08010068",
+          "in": null
+        }
+      ]
+    },
+    "0x0803653B": {
+      "text": "HAhA",
+      "referenced_by": [
+        {
+          "at": "0x08010148",
+          "in": null
+        }
+      ]
+    },
+    "0x0802EA5B": {
+      "text": " pG@!",
+      "referenced_by": [
+        {
+          "at": "0x080165DC",
+          "in": "sub_080165D8"
+        }
+      ]
+    },
+    "0x08020941": {
+      "text": "`pG1I/KO",
+      "referenced_by": [
+        {
+          "at": "0x08020A1C",
+          "in": "sub_08020A04"
+        },
+        {
+          "at": "0x08020A2C",
+          "in": "sub_08020A04"
+        },
+        {
+          "at": "0x08020A4C",
+          "in": "sub_08020A04"
+        }
+      ]
+    },
+    "0x08039020": {
+      "text": "BLE: Connection parameter update error #0x%0.2X! Interval is %d.",
+      "referenced_by": [
+        {
+          "at": "0x08022EB8",
+          "in": "sub_08022E98"
+        }
+      ]
+    },
+    "0x0803BD54": {
+      "text": "%d message(s) lost!",
+      "referenced_by": [
+        {
+          "at": "0x08024734",
+          "in": "sub_08024638"
+        }
+      ]
+    },
+    "0x0803C48C": {
+      "text": "%d, ",
+      "referenced_by": [
+        {
+          "at": "0x08024738",
+          "in": "sub_08024736"
+        }
+      ]
+    },
+    "0x080392F4": {
+      "text": "BLE: error packet received => %0.2X; %0.2X; %0.2X; %0.2X!",
+      "referenced_by": [
+        {
+          "at": "0x080270C4",
+          "in": "sub_08027086"
+        }
+      ]
+    },
+    "0x0802748A": {
+      "text": "BhJ`pG8",
+      "referenced_by": [
+        {
+          "at": "0x08027350",
+          "in": "sub_08027342"
+        },
+        {
+          "at": "0x080378BC",
+          "in": "sub_08037278"
+        }
+      ]
+    },
+    "0x0803727F": {
+      "text": " Error: S%d Packet size corrupted! PacketSize = 0x%08X",
+      "referenced_by": [
+        {
+          "at": "0x08027D68",
+          "in": "sub_08027D06"
+        }
+      ]
+    },
+    "0x080372B8": {
+      "text": "Error: S%d Command corrupted! Cmd = 0x%08X",
+      "referenced_by": [
+        {
+          "at": "0x08027D74",
+          "in": "sub_08027D06"
+        }
+      ]
+    },
+    "0x080372E4": {
+      "text": "Error: S%d Valid sign corrupted! Sgn = 0x%08X",
+      "referenced_by": [
+        {
+          "at": "0x08027D78",
+          "in": "sub_08027D06"
+        }
+      ]
+    },
+    "0x08037314": {
+      "text": "Error: S%d Packet or String size corrupted! PacketSize = 0x%08X, StringSize = 0x%08X",
+      "referenced_by": [
+        {
+          "at": "0x08027D7C",
+          "in": "sub_08027D06"
+        }
+      ]
+    },
+    "0x0803736C": {
+      "text": "Error: S%d Data frame corrupted!",
+      "referenced_by": [
+        {
+          "at": "0x08027D80",
+          "in": "sub_08027D06"
+        }
+      ]
+    },
+    "0x0802F9F0": {
+      "text": "[DeviceParams]\nCR_AlarmsNum=2\nCR_AlarmMin_cps=1e-1\nCR_AlarmMax_cps=50e3\nDR_AlarmsNum=2\nDR_AlarmMin_R_h=1e-6\nDR_AlarmMax_R_h=1e-1\nDS_AlarmsNum=2\nDS_AlarmMin_R=1e-6\nDS_AlarmMax_R=1e3\nMinFrmPeriod_ms=500\nVSFR_DISP_OFF_TIME=5 s|5 ",
+      "referenced_by": [
+        {
+          "at": "0x08028E50",
+          "in": "sub_08028E40"
+        }
+      ]
+    },
+    "0x080306AC": {
+      "text": "[VSFR_DEVICE_CTRL]\nAddr=0x00000500\nVirtual=1\nSize=1\n[VSFR_DEVICE_LANG]\nAddr=0x00000502\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DEVICE_ON]\nAddr=0x00000503\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DEVICE_TIME]\nAddr=0x00000504\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_BLE_TX_PWR]\nAddr=0x00000700\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CTRL]\nAddr=0x00000510\nVirtual=1\nSize=1\n[VSFR_DISP_BRT]\nAddr=0x00000511\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CONTR]\nAddr=0x00000512\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_OFF_TIME]\nAddr=0x00000513\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_DISP_ON]\nAddr=0x00000514\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DISP_DIR]\nAddr=0x00000515\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_BACKLT_ON]\nAddr=0x00000516\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_SOUND_CTRL]\nAddr=0x00000520\nVirtual=1\nSize=2\n[VSFR_SOUND_VOL]\nAddr=0x00000521\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_SOUND_ON]\nAddr=0x00000522\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_VIBRO_CTRL]\nAddr=0x00000530\nVirtual=1\nSize=1\n[VSFR_VIBRO_ON]\nAddr=0x00000531\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_ALARM_MODE]\nAddr=0x000005E0\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_MS_RUN]\nAddr=0x00000603\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_PLAY_SIGNAL]\nAddr=0x000005E1\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_CHARGER_STATE]\nAddr=0x0000C200\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=1\n[RC_VSFR_DR_LEV1_uR_h]\nAddr=0x00008000\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_LEV2_uR_h]\nAddr=0x00008001\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_100uR]\nAddr=0x00008002\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_100uR]\nAddr=0x00008003\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_uR]\nAddr=0x00008014\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_uR]\nAddr=0x00008015\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_UNITS]\nAddr=0x00008004\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_USE_nSv_h]\nAddr=0x0000800C\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CR_UNITS]\nAddr=0x00008013\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CPS_FILTER]\nAddr=0x00008005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_CR_LEV1_cp10s]\nAddr=0x00008008\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_CR_LEV2_cp10s]\nAddr=0x00008009\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_UNITS]\nAddr=0x00008016\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_DOSE_RESET]\nAddr=0x00008007\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CHN_TO_keV_A0]\nAddr=0x00008010\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A1]\nAddr=0x00008011\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A2]\nAddr=0x00008012\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CPS]\nAddr=0x00008020\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_uR_h]\nAddr=0x00008021\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_uR]\nAddr=0x00008022\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_degC]\nAddr=0x00008024\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_RAW_TEMP_degC]\nAddr=0x00008033\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_UP_degC]\nAddr=0x00008034\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_DN_degC]\nAddr=0x00008035\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_ACC_X]\nAddr=0x00008025\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Y]\nAddr=0x00008026\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Z]\nAddr=0x00008027\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_OPT]\nAddr=0x00008028\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_VBIAS_mV]\nAddr=0x0000C000\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_COMP_LEV]\nAddr=0x0000C001\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_CALIB_MODE]\nAddr=0x0000C002\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_SYS_MCU_ID0]\nAddr=0xFFFF0000\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID1]\nAddr=0xFFFF0001\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID2]\nAddr=0xFFFF0002\nVirtual=1\nSize=4\n[VSFR_SYS_DEVICE_ID]\nAddr=0xFFFF0005\nVirtual=1\nSize=4\n[VSFR_SYS_SIGNATURE]\nAddr=0xFFFF0006\nVirtual=1\nSize=4\n[VSFR_SYS_RX_SIZE]\nAddr=0xFFFF0007\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_TX_SIZE]\nAddr=0xFFFF0008\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_BOOT_VERSION]\nAddr=0xFFFF0009\nVirtual=1\nSize=4\n[VSFR_SYS_TARGET_VERSION]\nAddr=0xFFFF000A\nVirtual=1\nSize=4\n[VSFR_SYS_STATUS]\nAddr=0xFFFF000B\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_VREF]\nAddr=0xFFFF000C\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[VSFR_SYS_MCU_TEMP]\nAddr=0xFFFF000D\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[RC_VSFR_DPOT_RDAC]\nAddr=0x0000C004\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_RDAC_EEPROM]\nAddr=0x0000C005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_TOLER]\nAddr=0x0000C006\nVirtual=1\nDisplayFormat=1\nSize=1\n ",
+      "referenced_by": [
+        {
+          "at": "0x08028E54",
+          "in": "sub_08028E40"
+        }
+      ]
+    },
+    "0x0801F106": {
+      "text": "\n hF",
+      "referenced_by": [
+        {
+          "at": "0x0802BB40",
+          "in": "sub_0802BA72"
+        },
+        {
+          "at": "0x0803681C",
+          "in": "sub_0803672A"
+        }
+      ]
+    },
+    "0x0803BFF8": {
+      "text": "%02d:%02d:%02d",
+      "referenced_by": [
+        {
+          "at": "0x0802BD20",
+          "in": "sub_0802BD18"
+        }
+      ]
+    },
+    "0x0803C008": {
+      "text": "%dd %02d:%02d",
+      "referenced_by": [
+        {
+          "at": "0x0802BD24",
+          "in": "sub_0802BD18"
+        }
+      ]
+    },
+    "0x08038E74": {
+      "text": "BLE: disconnected by remote user",
+      "referenced_by": [
+        {
+          "at": "0x08034EA8",
+          "in": "sub_08034E78"
+        }
+      ]
+    },
+    "0x08038154": {
+      "text": "BLE: connection timeout expired",
+      "referenced_by": [
+        {
+          "at": "0x08034EAC",
+          "in": "sub_08034E78"
+        }
+      ]
+    },
+    "0x08038E98": {
+      "text": "BLE: disconnected by reason 0x%0.2X",
+      "referenced_by": [
+        {
+          "at": "0x08034EB0",
+          "in": "sub_08034E78"
+        }
+      ]
+    },
+    "0x08038174": {
+      "text": "BLE: HW error/SPI",
+      "referenced_by": [
+        {
+          "at": "0x08034F30",
+          "in": "sub_08034F08"
+        }
+      ]
+    },
+    "0x08038188": {
+      "text": "BLE: HW error/Radio",
+      "referenced_by": [
+        {
+          "at": "0x08034F34",
+          "in": "sub_08034F08"
+        }
+      ]
+    },
+    "0x0803819C": {
+      "text": "BLE: HW error/Timer overrun",
+      "referenced_by": [
+        {
+          "at": "0x08034F38",
+          "in": "sub_08034F08"
+        }
+      ]
+    },
+    "0x080381B8": {
+      "text": "BLE: HW error/Unknown",
+      "referenced_by": [
+        {
+          "at": "0x08034F3C",
+          "in": "sub_08034F08"
+        }
+      ]
+    },
+    "0x08019EF4": {
+      "text": "BLE: error #0x%0.2X!",
+      "referenced_by": [
+        {
+          "at": "0x08034F44",
+          "in": "sub_08034F08"
+        },
+        {
+          "at": "0x08034F9C",
+          "in": "sub_08034F5E"
+        },
+        {
+          "at": "0x08034FC4",
+          "in": "sub_08034FA0"
+        },
+        {
+          "at": "0x0803503C",
+          "in": "sub_08035014"
+        }
+      ]
+    },
+    "0x0803813C": {
+      "text": "BLE: client connected",
+      "referenced_by": [
+        {
+          "at": "0x08035068",
+          "in": "sub_08035040"
+        }
+      ]
+    },
+    "0x0801BB1F": {
+      "text": "xpG@xpG",
+      "referenced_by": [
+        {
+          "at": "0x08035A74",
+          "in": "sub_0803509E"
+        },
+        {
+          "at": "0x08035A80",
+          "in": "sub_08035A7A"
+        }
+      ]
+    },
+    "0x0801BB2F": {
+      "text": "ypG@ypG",
+      "referenced_by": [
+        {
+          "at": "0x08035A98",
+          "in": "sub_08035A92"
+        },
+        {
+          "at": "0x08035AA4",
+          "in": "sub_08035A9E"
+        }
+      ]
+    },
+    "0x0801BF1B": {
+      "text": " pGA",
+      "referenced_by": [
+        {
+          "at": "0x08035ACC",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BF33": {
+      "text": " pGA",
+      "referenced_by": [
+        {
+          "at": "0x08035AFC",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BC76": {
+      "text": "pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035B70",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BC7E": {
+      "text": "pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035B7C",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BC85": {
+      "text": " pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035B88",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BC8C": {
+      "text": "@ pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035B94",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BC95": {
+      "text": " pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035BA0",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BC9D": {
+      "text": " pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035BAC",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCA5": {
+      "text": "0pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035BB8",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCAC": {
+      "text": "@0pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035BC4",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCB5": {
+      "text": "0pG@md",
+      "referenced_by": [
+        {
+          "at": "0x08035BD0",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCC4": {
+      "text": "@@pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035BF4",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCCD": {
+      "text": "@pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C00",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCD5": {
+      "text": "@pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C0C",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCDD": {
+      "text": "PpG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C18",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCE4": {
+      "text": "@PpG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C24",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCED": {
+      "text": "PpG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C30",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCF5": {
+      "text": "PpG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C3C",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BCFD": {
+      "text": "`pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C48",
+          "in": "sub_08035AB6"
+        }
+      ]
+    },
+    "0x0801BD04": {
+      "text": "@`pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C54",
+          "in": "sub_08035C4A"
+        }
+      ]
+    },
+    "0x0801BD0D": {
+      "text": "`pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C60",
+          "in": "sub_08035C56"
+        }
+      ]
+    },
+    "0x0801BD15": {
+      "text": "`pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C6C",
+          "in": "sub_08035C62"
+        }
+      ]
+    },
+    "0x0801BD1D": {
+      "text": "ppG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C78",
+          "in": "sub_08035C6E"
+        }
+      ]
+    },
+    "0x0801BD24": {
+      "text": "@ppG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C84",
+          "in": "sub_08035C7A"
+        }
+      ]
+    },
+    "0x0801BD2D": {
+      "text": "ppG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035C90",
+          "in": "sub_08035C86"
+        }
+      ]
+    },
+    "0x0801BE45": {
+      "text": " pGA",
+      "referenced_by": [
+        {
+          "at": "0x08035DA8",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BE5D": {
+      "text": " pGA",
+      "referenced_by": [
+        {
+          "at": "0x08035DD8",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BE0B": {
+      "text": " pGp",
+      "referenced_by": [
+        {
+          "at": "0x08035DFC",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BE6F": {
+      "text": " pGp",
+      "referenced_by": [
+        {
+          "at": "0x08035E14",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BFD5": {
+      "text": " pG8",
+      "referenced_by": [
+        {
+          "at": "0x08035E20",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BC60": {
+      "text": "pG@m",
+      "referenced_by": [
+        {
+          "at": "0x08035E28",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BEAB": {
+      "text": " pGA",
+      "referenced_by": [
+        {
+          "at": "0x08035E50",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BEC3": {
+      "text": " pGA",
+      "referenced_by": [
+        {
+          "at": "0x08035E80",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x0801BED5": {
+      "text": " pGp",
+      "referenced_by": [
+        {
+          "at": "0x08035EA4",
+          "in": "sub_08035D8E"
+        }
+      ]
+    },
+    "0x08020871": {
+      "text": " pG0",
+      "referenced_by": [
+        {
+          "at": "0x08036AD4",
+          "in": "sub_080368C4"
+        },
+        {
+          "at": "0x08036B34",
+          "in": "sub_080368C4"
+        },
+        {
+          "at": "0x08036BD4",
+          "in": "sub_080368C4"
+        },
+        {
+          "at": "0x080373AC",
+          "in": "sub_08037278"
+        },
+        {
+          "at": "0x080373EC",
+          "in": "sub_08037278"
+        },
+        {
+          "at": "0x0803778C",
+          "in": "sub_08037278"
+        },
+        {
+          "at": "0x080377CC",
+          "in": "sub_08037278"
+        },
+        {
+          "at": "0x08037AC8",
+          "in": "sub_08037AAA"
+        },
+        {
+          "at": "0x08037AE8",
+          "in": "sub_08037AAA"
+        },
+        {
+          "at": "0x080380B8",
+          "in": "sub_08037AAA"
+        }
+      ]
+    },
+    "0x0802D6A8": {
+      "text": "pGpGb",
+      "referenced_by": [
+        {
+          "at": "0x08039BC4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039BE8",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039BEC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039BF0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039C10",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039C3C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039CA0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039CC0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039CCC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039D1C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039D20",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039D24",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039D74",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039D78",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039D7C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039DC8",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039DD4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039DF4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E00",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E20",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E2C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E4C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E58",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E78",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039E84",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039EA4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039EB0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039ED0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039EDC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039EFC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039F08",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039F34",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039F58",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039F5C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039F60",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039F8C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039FB8",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039FE4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A010",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A03C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A068",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A094",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A0C0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A0E0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A0EC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A10C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A118",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A138",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A144",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A164",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A170",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A190",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A19C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A1BC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A1C8",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A1E8",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A1F4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A214",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A220",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A240",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A24C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A26C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A278",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A298",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A2A4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A2C4",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A2D0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A2F0",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A2FC",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A31C",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A328",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A348",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A354",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x0803A840",
+          "in": "sub_0803A598"
+        },
+        {
+          "at": "0x0803A864",
+          "in": "sub_0803A598"
+        },
+        {
+          "at": "0x0803A888",
+          "in": "sub_0803A598"
+        },
+        {
+          "at": "0x0803ACF8",
+          "in": "sub_0803A9B2"
+        },
+        {
+          "at": "0x0803B088",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B08C",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0A4",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0A8",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0C0",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0C4",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0DC",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0E0",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0F8",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B0FC",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B114",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B118",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B130",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B134",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B9DC",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803B9F8",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803BA14",
+          "in": "sub_0803AF16"
+        },
+        {
+          "at": "0x0803BA30",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x0801042A": {
+      "text": "pGpG",
+      "referenced_by": [
+        {
+          "at": "0x08039C14",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039C18",
+          "in": "sub_08039A3E"
+        }
+      ]
+    },
+    "0x080103A0": {
+      "text": "pGpG",
+      "referenced_by": [
+        {
+          "at": "0x08039C40",
+          "in": "sub_08039A3E"
+        },
+        {
+          "at": "0x08039C44",
+          "in": "sub_08039A3E"
+        }
+      ]
+    },
+    "0x0803C4E9": {
+      "text": " pG; pG",
+      "referenced_by": [
+        {
+          "at": "0x0803A86C",
+          "in": "sub_0803A598"
+        },
+        {
+          "at": "0x0803A890",
+          "in": "sub_0803A598"
+        }
+      ]
+    },
+    "0x080114F7": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B360",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x08011593": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B37C",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x0801268F": {
+      "text": "apG8",
+      "referenced_by": [
+        {
+          "at": "0x0803B53C",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x08012D99": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B654",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x080131D5": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B750",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x08013351": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B788",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x0801373D": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B84C",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x080138CF": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B884",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x08013A49": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B8BC",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x08013E55": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B980",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x08013FCB": {
+      "text": "apGp",
+      "referenced_by": [
+        {
+          "at": "0x0803B9B8",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x0801F84F": {
+      "text": "tpGp",
+      "referenced_by": [
+        {
+          "at": "0x0803BA4C",
+          "in": "sub_0803AF16"
+        }
+      ]
+    },
+    "0x080167A1": {
+      "text": "sB`pG8",
+      "referenced_by": [
+        {
+          "at": "0x0803BCC4",
+          "in": "handler_reset"
+        }
+      ]
+    },
+    "0x0801D420": {
+      "text": "HIIK\nhB",
+      "referenced_by": [
+        {
+          "at": "0x0803BD3C",
+          "in": "handler_reset"
+        }
+      ]
+    },
+    "0x0801B019": {
+      "text": "hpG8",
+      "referenced_by": [
+        {
+          "at": "0x0803BEB8",
+          "in": "handler_reset"
+        }
+      ]
+    }
+  },
+  "function_strings": {
+    "sub_08035AB6": [
+      " pGA",
+      "pG@m",
+      " pG@m",
+      "@ pG@m",
+      "0pG@m",
+      "@0pG@m",
+      "0pG@md",
+      "@@pG@m",
+      "@pG@m",
+      "PpG@m",
+      "@PpG@m",
+      "`pG@m"
+    ],
+    "sub_08027D06": [
+      " Error: S%d Packet size corrupted! PacketSize = 0x%08X",
+      "Error: S%d Command corrupted! Cmd = 0x%08X",
+      "Error: S%d Valid sign corrupted! Sgn = 0x%08X",
+      "Error: S%d Packet or String size corrupted! PacketSize = 0x%08X, StringSize = 0x%08X",
+      "Error: S%d Data frame corrupted!"
+    ],
+    "sub_08034F08": [
+      "BLE: HW error/SPI",
+      "BLE: HW error/Radio",
+      "BLE: HW error/Timer overrun",
+      "BLE: HW error/Unknown",
+      "BLE: error #0x%0.2X!"
+    ],
+    "sub_08035D8E": [
+      " pGA",
+      " pGp",
+      " pG8",
+      "pG@m"
+    ],
+    "sub_0803AF16": [
+      "pGpGb",
+      "apGp",
+      "apG8",
+      "tpGp"
+    ],
+    "sub_08034E78": [
+      "BLE: disconnected by remote user",
+      "BLE: connection timeout expired",
+      "BLE: disconnected by reason 0x%0.2X"
+    ],
+    "handler_reset": [
+      "sB`pG8",
+      "HIIK\nhB",
+      "hpG8"
+    ],
+    "sub_08028E40": [
+      "[DeviceParams]\nCR_AlarmsNum=2\nCR_AlarmMin_cps=1e-1\nCR_AlarmMax_cps=50e3\nDR_AlarmsNum=2\nDR_AlarmMin_R_h=1e-6\nDR_AlarmMax_R_h=1e-1\nDS_AlarmsNum=2\nDS_AlarmMin_R=1e-6\nDS_AlarmMax_R=1e3\nMinFrmPeriod_ms=500\nVSFR_DISP_OFF_TIME=5 s|5 ",
+      "[VSFR_DEVICE_CTRL]\nAddr=0x00000500\nVirtual=1\nSize=1\n[VSFR_DEVICE_LANG]\nAddr=0x00000502\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DEVICE_ON]\nAddr=0x00000503\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DEVICE_TIME]\nAddr=0x00000504\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_BLE_TX_PWR]\nAddr=0x00000700\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CTRL]\nAddr=0x00000510\nVirtual=1\nSize=1\n[VSFR_DISP_BRT]\nAddr=0x00000511\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_CONTR]\nAddr=0x00000512\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_OFF_TIME]\nAddr=0x00000513\nVirtual=1\nDisplayFormat=1\nSize=4\n[VSFR_DISP_ON]\nAddr=0x00000514\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_DISP_DIR]\nAddr=0x00000515\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_DISP_BACKLT_ON]\nAddr=0x00000516\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_SOUND_CTRL]\nAddr=0x00000520\nVirtual=1\nSize=2\n[VSFR_SOUND_VOL]\nAddr=0x00000521\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_SOUND_ON]\nAddr=0x00000522\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_VIBRO_CTRL]\nAddr=0x00000530\nVirtual=1\nSize=1\n[VSFR_VIBRO_ON]\nAddr=0x00000531\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_ALARM_MODE]\nAddr=0x000005E0\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_MS_RUN]\nAddr=0x00000603\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_PLAY_SIGNAL]\nAddr=0x000005E1\nVirtual=1\nDisplayFormat=1\nSize=1\n[VSFR_CHARGER_STATE]\nAddr=0x0000C200\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=1\n[RC_VSFR_DR_LEV1_uR_h]\nAddr=0x00008000\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_LEV2_uR_h]\nAddr=0x00008001\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_100uR]\nAddr=0x00008002\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_100uR]\nAddr=0x00008003\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV1_uR]\nAddr=0x00008014\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_LEV2_uR]\nAddr=0x00008015\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_UNITS]\nAddr=0x00008004\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_USE_nSv_h]\nAddr=0x0000800C\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CR_UNITS]\nAddr=0x00008013\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CPS_FILTER]\nAddr=0x00008005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_CR_LEV1_cp10s]\nAddr=0x00008008\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_CR_LEV2_cp10s]\nAddr=0x00008009\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_UNITS]\nAddr=0x00008016\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_DOSE_RESET]\nAddr=0x00008007\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[RC_VSFR_CHN_TO_keV_A0]\nAddr=0x00008010\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A1]\nAddr=0x00008011\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CHN_TO_keV_A2]\nAddr=0x00008012\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_CPS]\nAddr=0x00008020\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DR_uR_h]\nAddr=0x00008021\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_DS_uR]\nAddr=0x00008022\nVirtual=1\nDisplayFormat=1\nSize=4\n[RC_VSFR_TEMP_degC]\nAddr=0x00008024\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_RAW_TEMP_degC]\nAddr=0x00008033\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_UP_degC]\nAddr=0x00008034\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_TEMP_DN_degC]\nAddr=0x00008035\nVirtual=1\nType=float\nSize=4\n[RC_VSFR_ACC_X]\nAddr=0x00008025\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Y]\nAddr=0x00008026\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_ACC_Z]\nAddr=0x00008027\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_OPT]\nAddr=0x00008028\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_VBIAS_mV]\nAddr=0x0000C000\nVirtual=1\nDisplayFormat=1\nSize=2\n[RC_VSFR_COMP_LEV]\nAddr=0x0000C001\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=2\n[RC_VSFR_CALIB_MODE]\nAddr=0x0000C002\nVirtual=1\nDisplayFormat=1\nSize=1\nMin=0\nMax=1\n[VSFR_SYS_MCU_ID0]\nAddr=0xFFFF0000\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID1]\nAddr=0xFFFF0001\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_ID2]\nAddr=0xFFFF0002\nVirtual=1\nSize=4\n[VSFR_SYS_DEVICE_ID]\nAddr=0xFFFF0005\nVirtual=1\nSize=4\n[VSFR_SYS_SIGNATURE]\nAddr=0xFFFF0006\nVirtual=1\nSize=4\n[VSFR_SYS_RX_SIZE]\nAddr=0xFFFF0007\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_TX_SIZE]\nAddr=0xFFFF0008\nVirtual=1\nDisplayFormat=1\nSize=2\n[VSFR_SYS_BOOT_VERSION]\nAddr=0xFFFF0009\nVirtual=1\nSize=4\n[VSFR_SYS_TARGET_VERSION]\nAddr=0xFFFF000A\nVirtual=1\nSize=4\n[VSFR_SYS_STATUS]\nAddr=0xFFFF000B\nVirtual=1\nSize=4\n[VSFR_SYS_MCU_VREF]\nAddr=0xFFFF000C\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[VSFR_SYS_MCU_TEMP]\nAddr=0xFFFF000D\nVirtual=1\nDisplayFormat=1\nSigned=1\nSize=4\n[RC_VSFR_DPOT_RDAC]\nAddr=0x0000C004\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_RDAC_EEPROM]\nAddr=0x0000C005\nVirtual=1\nDisplayFormat=1\nSize=1\n[RC_VSFR_DPOT_TOLER]\nAddr=0x0000C006\nVirtual=1\nDisplayFormat=1\nSize=1\n "
+    ],
+    "sub_0802BD18": [
+      "%02d:%02d:%02d",
+      "%dd %02d:%02d"
+    ],
+    "sub_08037278": [
+      " pG0",
+      "BhJ`pG8"
+    ],
+    "sub_08039A3E": [
+      "pGpGb",
+      "pGpG"
+    ],
+    "sub_0803A598": [
+      "pGpGb",
+      " pG; pG"
+    ],
+    "sub_080165D8": [
+      " pG@!"
+    ],
+    "sub_08020A04": [
+      "`pG1I/KO"
+    ],
+    "sub_08022E98": [
+      "BLE: Connection parameter update error #0x%0.2X! Interval is %d."
+    ],
+    "sub_08024638": [
+      "%d message(s) lost!"
+    ],
+    "sub_08024736": [
+      "%d, "
+    ],
+    "sub_08027086": [
+      "BLE: error packet received => %0.2X; %0.2X; %0.2X; %0.2X!"
+    ],
+    "sub_08027342": [
+      "BhJ`pG8"
+    ],
+    "sub_0802BA72": [
+      "\n hF"
+    ],
+    "sub_08034F5E": [
+      "BLE: error #0x%0.2X!"
+    ],
+    "sub_08034FA0": [
+      "BLE: error #0x%0.2X!"
+    ],
+    "sub_08035014": [
+      "BLE: error #0x%0.2X!"
+    ],
+    "sub_08035040": [
+      "BLE: client connected"
+    ],
+    "sub_0803509E": [
+      "xpG@xpG"
+    ],
+    "sub_08035A7A": [
+      "xpG@xpG"
+    ],
+    "sub_08035A92": [
+      "ypG@ypG"
+    ],
+    "sub_08035A9E": [
+      "ypG@ypG"
+    ],
+    "sub_08035C4A": [
+      "@`pG@m"
+    ],
+    "sub_08035C56": [
+      "`pG@m"
+    ],
+    "sub_08035C62": [
+      "`pG@m"
+    ],
+    "sub_08035C6E": [
+      "ppG@m"
+    ],
+    "sub_08035C7A": [
+      "@ppG@m"
+    ],
+    "sub_08035C86": [
+      "ppG@m"
+    ],
+    "sub_0803672A": [
+      "\n hF"
+    ],
+    "sub_080368C4": [
+      " pG0"
+    ],
+    "sub_08037AAA": [
+      " pG0"
+    ],
+    "sub_0803A9B2": [
+      "pGpGb"
+    ]
+  }
+}

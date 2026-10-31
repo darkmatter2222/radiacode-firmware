@@ -1,22 +1,54 @@
 # agents.md — working notes for this repo
 
-Status: **complete**. Firmware extracted from a live RadiaCode-102 (read-only) and decompiled to C.
-`README.md` = the full narrative (extraction, confidence, hardware, protocol, flows, capability matrix);
-`firmware.md` = the firmware reference (§1-§26); `firmware/analysis/summary.md` = generated statistics;
-this file = the short notes an agent needs to keep working without re-deriving anything.
+Status: **complete** for `rc-102/hw1-fw4.14` (the reference build), container + decode + disassembly
+for the other five registered builds. `README.md` = the full narrative (extraction, confidence,
+hardware, protocol, flows, capability matrix, target registry); `firmware.md` = the firmware reference
+(§1-§26); `firmware/<target>/analysis/summary.md` = generated statistics per build; this file = the
+short notes an agent needs to keep working without re-deriving anything.
 
-## 1. Fixed facts (do not re-derive)
+## 1. Layout and targets
+
+One directory per build: `firmware/<model>/<hw+fw version>/`, e.g. `firmware/rc-102/hw1-fw4.14/`.
+The registry `pipeline/devices.json` is the single source of truth; `pipeline/config.py` turns the
+active key into every path, so no step or tool contains a literal path. Active target = `--device` /
+`--all-devices` on `run.py`, else `RC_TARGET`, else the registry's `default`.
+
+```
+firmware/rc-102/hw1-fw4.14/
+├── rc-102z.bin          vendor container, exactly as shipped in the APK
+├── flash.bin            decoded flat image, base 0x08000000
+├── blocks.json          per-block address / stored / decompressed / crc
+├── listing.s            capstone Thumb-2 listing
+├── decompiled.c         Ghidra C, one /* ===== FUN_… @ addr ===== */ block per function
+├── index.json           function -> line range inside decompiled.c
+├── manifest.json        identity + sha256 of the six files above (step 12)
+├── ghidra_proj/         Ghidra cache (gitignored)
+└── analysis/            stats, vectors, strings, functions, xrefs, callgraph, tables,
+                         capture, container_check, verification, vsfr_readout,
+                         sweep_{noarg,witharg}, probe_*.json, summary.md
+```
+
+| target | device | fw | state |
+| --- | --- | --- | --- |
+| `rc-102/hw1-fw4.14` | RadiaCode-102 (hw 1) | 4.14 | full: steps 1-12, live unit attached |
+| `rc-101/fw4.14` | RadiaCode-101 | 4.14 | steps 1-12, no live unit (2 and 11 self-skip) |
+| `rc-103/fw4.14` | RadiaCode-103 | 4.14 | same |
+| `rc-103g/fw4.14` | RadiaCode-103G | 4.14 | same |
+| `rc-110/fw4.14` | RadiaCode-110 | 4.14 | same |
+| `rc-410/fw4.16` | RadiaCode-410 | 4.16 | same |
+
+## 2. Fixed facts for `rc-102/hw1-fw4.14` (do not re-derive)
 
 | fact | value |
 | --- | --- |
-| device | RadiaCode-102, serial `RC-102-008228`, BLE `52:43:06:60:20:24` |
+| device | RadiaCode-102, serial `RC-102-008228`, BLE `52:43:06:60:20:24`, hw `1`, boot `4.0` |
 | BLE transport | Nordic UART service `e63215e5-…fb901` (write `…e6`, notify `…e7`); frame = `u32 LE length` + `cmd(u16 LE) + 0x00 + seq` (`pipeline/rcble.py`, `pipeline/rcsession.py`) |
-| firmware | v4.14, container `official/rc-102z.bin`, 130148 B, `date_time 0x5AE7428A`, crc32 `0x13095ABB`, `buffer_size 32768` |
+| firmware | v4.14, container `rc-102z.bin` (in the target dir), 130148 B, `date_time 0x5AE7428A` (MS-DOS packed → 2025-07-07 08:20:20), crc32 `0x13095ABB`, `buffer_size 32768` |
 | container | `Phyton\0\0`, 8 Mangle/LZSS blocks, header 52 B, every block CRC verified |
-| flat image | `firmware/rc102_flash.bin`, 248320 B, `0x08000000`-`0x0803CA00` |
+| flat image | `flash.bin`, 248320 B, `0x08000000`-`0x0803CA00` |
 | MCU | STM32L4-class / Cortex-M4F, ARMv7E-M, Thumb-2; app base `0x08010000`, 98 vectors, `InitialSP 0x20000800`, `Reset 0x0803BA71` |
 | counts | 66,745 decoded instructions, 69,209 listing lines, 1,867 function candidates, 1,906 strings, 291 `.word` + 736 `ascii` + 1,191 `.fill` + 242 `.byte` items |
-| decompilation | `firmware/decompiled/rc102_flash.c`, 1,895 blocks / 70,679 lines (Ghidra 12.2: seeded 1,172, decompiled 1,893, failed 2) |
+| decompilation | `decompiled.c`, 1,895 blocks / 70,677 lines (Ghidra 12.2: seeded 1,172, decompiled 1,893, failed 2) |
 | callgraph | 90 handlers traced, 99 reachable, 1,768 orphans, deepest 33 functions at depth 7 (`Reset`) |
 | tables | 8 static `{id, handler}` runs, largest 44, 85/85 handlers present in the C |
 | answering ids | 13 of `0x0000`-`0x0FFF` (`protocol.ANSWERING`); `0x0824` = `RD_VIRT_SFR` takes the VSFR address, `0x0826` = `RD_VIRT_STRING` takes the VS id |
@@ -24,90 +56,108 @@ this file = the short notes an agent needs to keep working without re-deriving a
 | record stream | VS `0x100`: 45-byte + 21-byte records alternating (66-byte frame), `firmware.md` §20 |
 
 Identity of the image with the unit in hand is already proven twice: `analysis/container_check.json`
-(size / date_time / crc against `0x0012`) and `analysis/verification.json` (+ the 3,256-byte config text).
-Only read commands were ever issued except the two idempotent session writes `0x0007` (sign
-`01 FF 12 FF`) and `0x0A04` (wall clock).
+(size / date_time / crc against `0x0012`, plus the registry cross-check) and
+`analysis/verification.json` (+ the 3,256-byte config text, 12/12 checks `true`). Only read commands
+were ever issued except the two idempotent session writes `0x0007` (sign `01 FF 12 FF`) and `0x0A04`
+(wall clock).
 
-## 2. Running the pipeline
+Per-target numbers live in each `analysis/stats.json` (instructions, functions, strings, listing
+lines) and `manifest.json` (identity + checksums); the cross-target table is §3.1 of `README.md`.
 
-```powershell
-python pipeline/run.py                     # steps 1-12 in order (device + network needed)
-python pipeline/run.py --list              # the step table
-python pipeline/run.py --only 1,4,5        # offline: self-test, decode, disassemble
-python pipeline/run.py --only 3            # fetch the vendor container + match its fields
-python pipeline/run.py --only 2            # live read-only capture   (--sweep adds the id sweep)
-python pipeline/run.py --only 6            # Ghidra headless (needs ghidra_12.2_PUBLIC/ + jdk-25.0.5+8/)
-python pipeline/run.py --from 7            # index, xrefs, callgraph, tables, verify, report
-```
-
-Run everything **from the repo root** (steps open `firmware/...` relative paths). `pipeline/tools/*.py`
-each insert their parent directory on `sys.path`, so `import protocol`, `rcble`, `rcsession`, `rcfmt`
-work from any cwd.
-
-## 3. Querying the results
+## 3. Running the pipeline
 
 ```powershell
-python pipeline/tools/lookup.py 0x0803BA70   # owning function + C lines + callers + dispatch ids + strings + listing
-python pipeline/tools/read_vsfrs.py           # live VSFR readout -> analysis/vsfr_readout.json
-python pipeline/tools/probe.py                # single live command, raw hex
-python pipeline/tools/debug_graph.py 0x080275C4  # call-graph neighbourhood of one function
+python pipeline/run.py                          # steps 1-12 for the default target
+python pipeline/run.py --list                   # targets + step table
+python pipeline/run.py --all-devices            # every registered build
+python pipeline/run.py --device rc-110/fw4.14   # one build
+python pipeline/run.py --only 1,4,5             # offline: self-test, decode, disassemble
+python pipeline/run.py --only 3                 # fetch containers + match their fields
+python pipeline/run.py --only 2                 # live read-only capture (--sweep adds the id sweep)
+python pipeline/run.py --only 6                 # Ghidra headless (needs ghidra_12.2_PUBLIC/ + jdk-25.0.5+8/)
+python pipeline/run.py --from 7                 # index, xrefs, callgraph, tables, verify, report
 ```
 
-To read a function's C, use the line range from `firmware/decompiled/index.json` (keys are `0x`-prefixed
-upper-case addresses) - the C file is 1.7 MB, do not read it whole.
+Run from the repo root (steps open paths relative to it); `run.py` chdirs there itself and passes the
+target to each step through `RC_TARGET`. `pipeline/tools/*.py` insert `pipeline/` on `sys.path`, so
+`import config`, `protocol`, `rcble`, `rcsession`, `rcfmt` work from any cwd; select the build they
+read with `RC_TARGET=…`.
+
+## 4. Querying the results
+
+```powershell
+python pipeline/tools/lookup.py 0x0803BA70        # default target: function + C lines + callers + strings
+RC_TARGET=rc-410/fw4.16 python pipeline/tools/lookup.py 0x08010188
+python pipeline/tools/read_vsfrs.py               # live VSFR readout -> analysis/vsfr_readout.json
+python pipeline/tools/analyze_official.py         # every registered container, one JSON line each
+python pipeline/tools/probe.py                    # single live command, raw hex
+python pipeline/tools/debug_graph.py              # call-graph neighbourhood of the reset handler
+```
+
+To read a function's C, use the line range from `index.json` (keys are `0x`-prefixed upper-case
+addresses) - `decompiled.c` is ~1.7 MB, do not read it whole.
+
+Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
 
 | need | file | key |
 | --- | --- | --- |
-| function -> C lines | `firmware/decompiled/index.json` | `functions[].address` / `line` / `end_line` |
-| callers, size, instruction count | `firmware/analysis/functions.json` | array of 1,867, `callers` are addresses |
-| string -> referencing function | `firmware/analysis/xrefs.json` | literal-pool pointers (87 reached, 38 functions) |
-| vector table | `firmware/analysis/vectors.json` | index = vector number |
-| reachability from a handler | `firmware/analysis/callgraph.json` | `handler_*` |
-| command-id dispatch tables | `firmware/analysis/tables.json` | `tables[].entries[].{id, handler, handler_name}` |
-| device-vs-image equality | `firmware/analysis/verification.json` | `checks.*` (all `true`) |
-| live identity / strings / areas | `firmware/analysis/device_capture.json` | `identity`, `virtual_strings`, `flash_areas` |
-| container-vs-device field matches | `firmware/analysis/container_check.json` | `…_matches_device` flags |
-| live VSFR values | `firmware/analysis/vsfr_readout.json` | `single_nonzero`, `batch_shapes` |
-| which ids answer | `firmware/analysis/sweep_noarg.json`, `sweep_witharg.json` | keyed by `0x…` id |
-| per-block decode metadata | `firmware/rc102_blocks.json` | `blocks[].{address, stored, decompressed, crc}` |
-| raw live reply hex (pre-decode evidence) | `firmware/analysis/probe_raw.json`, `probe_shapes.json`, `probe_records.json`, `probe_vsmap.json` | keyed by command/VS id |
-| protocol constants in code | `pipeline/protocol.py` | `CMD`, `ANSWERING`, `VS`, `CHANNELS`, decoders |
+| function -> C lines | `index.json` | `functions[].address` / `line` / `end_line` |
+| callers, size, instruction count | `analysis/functions.json` | array of 1,867, `callers` are addresses |
+| string -> referencing function | `analysis/xrefs.json` | literal-pool pointers (87 reached, 38 functions) |
+| vector table | `analysis/vectors.json` | index = vector number |
+| reachability from a handler | `analysis/callgraph.json` | `handler_*` |
+| command-id dispatch tables | `analysis/tables.json` | `tables[].entries[].{id, handler, handler_name}` |
+| device-vs-image equality | `analysis/verification.json` | `checks.*` (all `true`), `c_coverage` |
+| live identity / strings / areas | `analysis/capture.json` | `identity`, `virtual_strings`, `flash_areas` |
+| container-vs-device field matches | `analysis/container_check.json` | `…_matches_device` flags |
+| live VSFR values | `analysis/vsfr_readout.json` | `single_nonzero`, `batch_shapes` |
+| which ids answer | `analysis/sweep_noarg.json`, `sweep_witharg.json` | keyed by `0x…` id |
+| per-block decode metadata | `blocks.json` | `blocks[].{addr, stored_size, plain_size, crc}` |
+| this build's identity + checksums | `manifest.json` | `target`, `mcu`, `expected`, `files.*` |
+| raw live reply hex (pre-decode evidence) | `analysis/probe_raw.json`, `probe_shapes.json`, `probe_records.json`, `probe_vsmap.json` | keyed by command/VS id |
+| registry / constants in code | `pipeline/devices.json`, `pipeline/protocol.py` | targets; `CMD`, `ANSWERING`, `VS`, decoders |
 
-## 4. Naming conventions (intentionally different per tool)
+## 5. Naming conventions (intentionally different per tool)
 
-* `sub_XXXXXXXX` — capstone index (`functions.json`, `xrefs.json`), upper-case hex.
+* `sub_XXXXXXXX` — capstone index (`analysis/functions.json`, `xrefs.json`), upper-case hex.
 * `FUN_xxxxxxxx` — Ghidra C output, lower-case hex.
 * `handler_<n>_<name>` — entries seeded from the vector table (`handler_1_reset`).
 * `tbl_<id>_<address>` — handlers reached only from a static `{u32 id, u32 handler}` table.
 
-## 5. Gotchas
+## 6. Gotchas
 
 * Ghidra 12.2 needs JDK 25+: `step6_decompile.py` sets `JAVA_HOME` from `jdk-*/` next to the repo root;
-  the post-script is `pipeline/scripts/DumpC.java` (passed with `-scriptPath pipeline\scripts`).
-* Import must use `-loader-baseAddr 0x08000000` with `-processor "ARM:LE:32:v7"`; the C file uses the
-  `0x08000000` numbering, image file offsets are `addr - 0x08000000`.
+  the post-script is `pipeline/scripts/DumpC.java`, passed with `-scriptPath pipeline\scripts` and one
+  script argument - the target directory - which is where it writes `decompiled.c`.
+* Import must use `-loader-baseAddr 0x08000000` with `-processor "ARM:LE:32:v7"` and `-overwrite`
+  (re-importing into an existing per-target project); the C file uses the `0x08000000` numbering,
+  image file offsets are `addr - 0x08000000`.
 * Offsets `0x00000`-`0xFFFFF` are zero-filled (the bootloader is not in this container) - not missing data.
 * The linear sweep prints data as `.word` / `ascii` / `.fill` lines, so short sequences like `00 bf` ->
   `nop` and literal pools decode as odd instructions (`cdp2`, `movs r0, r0`). Trust the mnemonic only
   inside known function ranges.
 * Ghidra left 2 stubs at `0x08016cc6` and `0x0802abf8`: data-table slots, code only in the listing.
-  Vector IRQ handlers collapse onto few real entries plus the self-loop at `0x0803C4D9`, so per-IRQ bodies
-  come from `tables.json`, not from the call graph.
+  Vector IRQ handlers collapse onto few real entries plus the self-loop at `0x0803C4D9`, so per-IRQ
+  bodies come from `tables.json`, not from the call graph.
 * Container obfuscation: per block `size ^ 0xCE27A932`, `addr ^ 0xB2D5A864`; Mangle is a 48-round Feistel
   over 8-byte LE blocks with 4 round keys; CRC is MPEG-2 (`0x04C11DB7`, no reflection, init `0xFFFFFFFF`,
   4-byte LE chunks); payload is LZSS (2048-byte window pre-filled with `0x20`, initial index 2022).
   All of it lives in `pipeline/rcfmt.py`, checked by `pipeline/step1_validate.py`.
+* `date_time` is MS-DOS packed (`((year-1980)<<9)|month<<5|day` high half, `hour<<11|min<<5|sec/2`
+  low half), **not** a Unix epoch - `rcfmt._decode_datetime`.
 * `RD_FLASH_AREA` (`0x081C`) replies `{u32 status, u32 seed, u32 enc_size, enc[]}` with Borland-LCG XOR
   (`seed*0x015A4E35+1`, keystream `(seed>>16)&0x7FFF`) - `protocol.borland_xor` / `decode_flash_area`.
 * No raw memory-read command exists (two full `0x0000`-`0x0FFF` sweeps), so bulk bytes come only from
-  `official/*.bin`; the device confirms the `size / date_time / crc32` triple and serves the two small
-  XOR-obfuscated areas.
+  the vendor containers; the device confirms the `size / date_time / crc32` triple and serves the two
+  small XOR-obfuscated areas.
 * At idle the measurement/system VSFR block answers the bare `00000000` word (rare-data group, 3-min
   `DBLag_ms`); do not read that as "the sensor is absent".
 * `0x082A` (`RD_VIRT_SFR_BATCH`) only answers for the plain `u32` address form; `0x0824` with the 91-entry
   index form returns zeros on this build.
+* Steps 2 and 11 exit `0` when the target has no `ble_address`, and steps 7/10/12 tolerate a missing
+  `decompiled.c`, so partially processed targets stay coherent — a non-zero exit is a real failure.
 
-## 6. Landmark addresses (already resolved - do not re-derive)
+## 7. Landmark addresses for `rc-102/hw1-fw4.14` (already resolved - do not re-derive)
 
 | address | what |
 | --- | --- |
@@ -129,12 +179,17 @@ upper-case addresses) - the C file is 1.7 MB, do not read it whole.
 | `0x08037267`-`0x08037354` | the five `Error: S%d …` framing strings |
 | `0x0801F424`, `0x0802ACD8`, `0x0802D748` | CRC-32/MPEG-2 polynomial tables |
 
-## 7. Suggested next steps (nothing pending for the stated goal)
+Those addresses are per build; the registry's `landmarks` block carries the ones the steps quote, so a
+new target either fills them in or leaves the block empty (the reports then print `n/a`).
 
-* Name hot functions from the "Most-called" list in `firmware/analysis/summary.md` (`0x08017FA8` has 163
+## 8. Suggested next steps
+
+* Name hot functions from the "Most-called" list in each `analysis/summary.md` (`0x08017FA8` has 163
   callers, `0x0801953C` 110).
-* Use `tables.json` dispatch ids to map wire ids (`0x0807`, `0x081C`, `0x0A04`) to handler addresses.
+* Use `analysis/tables.json` dispatch ids to map wire ids (`0x0807`, `0x081C`, `0x0A04`) to handler addresses.
 * Structure the 448-byte `0x081C` area 1 record against the `PublicAPI`/`VS CONFIGURATION` text; the
   76-byte `0x0F0` record still has 5 unidentified words (`firmware.md` §21).
 * Re-run `pipeline/tools/read_vsfrs.py` while a measurement is running (`VSFR_MS_RUN` = 1) to catch the
   `0x8000`-`0x8035` block non-zero and confirm each `DType`/`RType` encoding.
+* Diff two builds (e.g. `rc-102/hw1-fw4.14` vs `rc-410/fw4.16`) by comparing their `listing.s` /
+  `analysis/strings.json`: the model-specific strings and table sizes are the interesting deltas.

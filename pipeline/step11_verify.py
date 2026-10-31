@@ -1,27 +1,34 @@
-"""Close-the-loop check: live device values vs the decoded image artifacts (read-only).
+"""Step 11 - close-the-loop check: live device values vs the decoded image artifacts (read-only).
 
-Writes firmware/analysis/verification.json with the device replies, the derived comparisons
-(size / date_time / crc / block count / vendor-config text) and the C-coverage metric.
+Writes the target's `analysis/verification.json` with the device replies, the derived comparisons
+(size / date_time / crc / block count / vendor-config text / decoded length) and the C-coverage metric.
+Every expected value comes from `pipeline/devices.json`, so the same step works for any target.
 """
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import asyncio
 import datetime
 import json
 import struct
 
+import config
+import rcfmt
+from protocol import (BLOCK_COUNT, CONFIGURATION_VS, FW_IMAGE_GET_INFO, GET_SERIAL, GET_VERSION,
+                      RD_SIGNAT, RD_VIRT_STRING, SET_EXCHANGE, SET_TIME)
 from rcsession import Session
 
-import rcfmt
+CFG = config.load()
 
-SET_EXCHANGE = 0x0007
-GET_VERSION = 0x000A
-GET_SERIAL = 0x000B
-FW_IMAGE_GET_INFO = 0x0012
-BLOCK_COUNT = 0x0013
-FW_DESCRIPTOR = 0x0101
-SET_TIME = 0x0A04
-RD_VIRT_STRING = 0x0826
-CONFIGURATION_VS = 2
+
+def _hex(value):
+    """`0x13095ABB`, `13095abb`, `323429955`-style int -> `13095abb`."""
+    if isinstance(value, int):
+        return "%08x" % value
+    return str(value).lower().replace("0x", "")
 
 
 def text(payload):
@@ -35,7 +42,7 @@ def version_strings(payload_hex):
     return [run.decode("ascii") for run in re.findall(rb"[ -~]{8,}", blob)]
 
 
-def coverage(functions, stats):
+def coverage(functions, listing):
     """Fraction of decoded instructions that sit inside an indexed function range."""
     import bisect
     import re
@@ -47,7 +54,7 @@ def coverage(functions, stats):
     inside = 0
     total = 0
     address_field = re.compile(r"^[0-9a-f]{8}$")
-    for line in open("firmware/listing/rc102_flash.s", encoding="utf-8"):
+    for line in open(listing, encoding="utf-8"):
         if line.startswith(";"):
             continue
         head = line[:8]
@@ -69,11 +76,11 @@ def coverage(functions, stats):
 
 
 async def read_device():
-    session = Session()
+    session = Session(CFG["ble_address"])
     await session.open()
     raw = {}
     try:
-        await session.cmd(SET_EXCHANGE, b"\x01\xff\x12\xff")
+        await session.cmd(SET_EXCHANGE, bytes.fromhex(CFG["transport"]["sign_hex"]))
         now = datetime.datetime.now()
         stamp = struct.pack(
             "<BBBBBBBB", now.day, now.month, now.year - 2000, 0, now.second, now.minute, now.hour, 0
@@ -87,7 +94,7 @@ async def read_device():
             ("GET_SERIAL", GET_SERIAL, b""),
             ("FW_IMAGE_GET_INFO", FW_IMAGE_GET_INFO, b""),
             ("BLOCK_COUNT", BLOCK_COUNT, b""),
-            ("FW_DESCRIPTOR", FW_DESCRIPTOR, b""),
+            ("FW_DESCRIPTOR", RD_SIGNAT, b""),
             ("VS_CONFIGURATION", RD_VIRT_STRING, struct.pack("<I", CONFIGURATION_VS)),
         ):
             raw[name] = (await session.cmd(command, args)).hex()
@@ -97,14 +104,21 @@ async def read_device():
 
 
 def main():
+    base = int(CFG["mcu"]["base"], 16)
+    expected = CFG["expected"]
+    if not CFG["ble_address"]:
+        print("target %s has no live unit (ble_address is null) - skipping the on-device check"
+              % CFG["key"])
+        return 0
     raw = asyncio.run(read_device())
 
     size, buffer_size, date_time, crc = struct.unpack("<IIII", bytes.fromhex(raw["FW_IMAGE_GET_INFO"]))
-    image = open("firmware/rc102_flash.bin", "rb").read()
-    container = open("official/rc-102z.bin", "rb").read()
+    image = open(CFG["flash"], "rb").read()
+    container = open(CFG["container"], "rb").read()
     header = rcfmt.parse_file(container)
     whole_crc = rcfmt.calculate_crc(container)
-    blocks = json.load(open("firmware/rc102_blocks.json", encoding="utf-8"))["blocks"]
+    block_meta = json.load(open(CFG["blocks"], encoding="utf-8"))
+    blocks = block_meta["blocks"]
 
     # vendor configuration text: the device prefixes it with u32 tag + u32 length
     body_all = bytes.fromhex(raw["VS_CONFIGURATION"])[8:]
@@ -112,10 +126,14 @@ def main():
     position = image.find(device_text)
     in_image = image[position : position + len(device_text)] if position >= 0 else b""
 
-    stats = json.load(open("firmware/analysis/stats.json", encoding="utf-8"))
-    functions = json.load(open("firmware/analysis/functions.json", encoding="utf-8"))
+    stats = json.load(open(CFG["stats"], encoding="utf-8"))
+    functions = json.load(open(CFG["functions"], encoding="utf-8"))
+
+    # the decoded image should end exactly where the last block says it does
+    tail = max(int(item["offset"], 16) + item["plain_size"] for item in blocks)
 
     payload = {
+        "target": CFG["key"],
         "device": {
             "raw_hex": raw,
             "boot_and_firmware_builds": version_strings(raw["GET_VERSION"]),
@@ -128,9 +146,10 @@ def main():
             "descriptor": text(bytes.fromhex(raw["FW_DESCRIPTOR"])),
         },
         "files": {
-            "official_rc102z_size": len(container),
-            "official_rc102z_crc": f"{whole_crc:08x}",
-            "official_rc102z_date_time": f"0x{header['date_time']:08X}",
+            "container": CFG["container"],
+            "container_size": len(container),
+            "container_crc": f"{whole_crc:08x}",
+            "container_date_time": f"0x{header['date_time']:08X}",
             "container_blocks": len(blocks),
             "decoded_image_bytes": len(image),
         },
@@ -140,12 +159,17 @@ def main():
             "crc_matches_device": whole_crc == crc,
             "config_text_matches_device": bool(device_text) and in_image == device_text,
             "config_text_bytes": len(device_text),
-            "config_text_address": None if position < 0 else f"0x{0x08000000 + position:08X}",
-            "decoded_bytes_equal_block_sum": len(image) == 0x3CA00,
+            "config_text_address": None if position < 0 else f"0x{base + position:08X}",
+            "decoded_bytes_equal_block_sum": len(image) == tail,
+            "size_matches_registry": len(container) == expected["size"],
+            "crc_matches_registry": _hex(whole_crc) == _hex(expected["crc32"]),
+            "date_time_matches_registry": _hex(date_time) == _hex(expected["date_time"]),
+            "blocks_match_registry": len(blocks) == expected["blocks"],
         },
-        "c_coverage": coverage(functions, stats),
+        "c_coverage": coverage(functions, CFG["listing"]),
     }
-    with open("firmware/analysis/verification.json", "w", encoding="utf-8") as fh:
+    os.makedirs(CFG["analysis_dir"], exist_ok=True)
+    with open(CFG["verification"], "w", encoding="utf-8") as fh:
         json.dump(payload, fh, indent=2)
     print(json.dumps(payload["checks"] | payload["c_coverage"], indent=2))
 

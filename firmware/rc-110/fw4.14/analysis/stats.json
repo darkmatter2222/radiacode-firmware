@@ -1,0 +1,15 @@
+{
+  "image_bytes": 251904,
+  "base": "0x08000000",
+  "end": "0x0803D800",
+  "instructions": 67873,
+  "functions": 1908,
+  "strings": 1980,
+  "vectors": 98,
+  "listing_lines": 70404,
+  "covered_bytes": 251904,
+  "data_word_items": 311,
+  "ascii_items": 772,
+  "fill_items": 1194,
+  "byte_items": 250
+}
