@@ -16,6 +16,24 @@ import z3
 
 
 class ValidationRegression(unittest.TestCase):
+    def test_conditional_vfp_read_observer_does_not_change_execution(self):
+        import struct
+        image = (ROOT / config.load('rc-102/hw1-fw4.14')['flash']).read_bytes()
+        uc, trace = emulate.new_emulator(image)
+        # A global UC_HOOK_MEM_READ caused stale ITSTATE to skip the MOVS
+        # return assignment, leaving the input pointer in r0 instead of zero.
+        uc.mem_write(0x20000400, struct.pack('<III', 0, 0x7f7fffff, 0x80000001))
+        out = emulate.run_function(uc, trace, 0x0802abf8, (0x20000400,0,0,0))
+        self.assertEqual((out['stopped'],out['r0']), ('RETURN',0))
+        self.assertIn(0x0802ac56, out['unique_addresses'])
+
+    def test_mmio_reads_remain_observed(self):
+        uc, trace = emulate.new_emulator(bytes.fromhex('00687047'))
+        uc.mem_write(0x40000000, bytes.fromhex('78563412'))
+        out = emulate.run_function(uc, trace, emulate.FLASH_BASE, (0x40000000,0,0,0))
+        self.assertEqual(out['r0'], 0x12345678)
+        self.assertEqual(out['mmio'], [('read',0x40000000,4,0x12345678)])
+
     def test_budget_is_not_return(self):
         uc, trace = emulate.new_emulator(bytes.fromhex('fee7'))
         out = emulate.run_function(uc, trace, emulate.FLASH_BASE, cycles=7)
