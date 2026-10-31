@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 import config
 import evidence
+import report_documents
 import rcfmt
 from step15_differential import case_passed
 
@@ -60,15 +61,15 @@ def main():
                         'No complete subsystem/interrupt/peripheral equivalence test',
                         'No hardware equivalence evidence or acquired bootloader']}
     evidence.write(CFG['confidence'],report,CFG)
-    lines=['# Evidence report: '+CFG['key'],'', '**Firmware equivalence: NOT ESTABLISHED. Release ready: false.**','',
+    lines=['## Current evidence: '+CFG['key'],'', '**Firmware equivalence: NOT ESTABLISHED. Release ready: false.**','',
            '| Evidence | Result |','| --- | --- |',
            f'| Extraction | {report["extraction"]["status"]}; {len(blocks)} payload CRCs verified |',
            f'| C export | {len(c)} blocks; {report["decompilation"]["failed"]} failures; {report["decompilation"]["truncated"]} truncated; {report["decompilation"]["with_warnings"]} with warnings |',
            f'| Python differential | {report["python_differential"]["passed"]}/{len(executed)} cases; not compiled C |',
            f'| Decoder comparison | {cross.get("status","INCONCLUSIVE")} |',
            f'| Auxiliary proofs | {formal.get("proved",0)} proved; not firmware equivalence |','| Hardware comparison | SKIP |','',
-           '## Blockers','',*['- '+x for x in report['blockers']],'']
-    Path(CFG['confidence_md']).write_text('\n'.join(lines))
+           '### Current blockers','',*['- '+x for x in report['blockers']],'']
+    report_documents.update(CFG['confidence_md'], '\n'.join(lines))
     print(CFG['key'],report['decompilation']['blocks'],'C blocks;',report['decompilation']['truncated'],'truncated; release_ready=False')
     return 0 if extraction else 1 # successful report generation is not a release pass
 

@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import config
 import evidence
+import report_documents
 
 CFG=config.load()
 
@@ -10,16 +11,20 @@ CFG=config.load()
 def main():
     config.ensure_dirs(CFG)
     report=json.loads(Path(CFG['confidence']).read_text()) if Path(CFG['confidence']).exists() else {}
-    summary=['# '+CFG['key'],'',
-             'This is an extracted application and research reconstruction. Full firmware equivalence is not established.',
-             'The synthetic bootloader padding is not acquired device memory. C output is not a complete buildable application.','',
-             'See [confidence.md](confidence.md) for current evidence, warnings, and blockers.','',
-             '## Reproduce','', '```sh',
-             'python -m unittest discover -s tests -v',
-             'python pipeline/run.py --all-devices --only 1,13,14,15,16,17',
-             'python pipeline/step12_report.py', '```','',
+    dec=report.get('decompilation', {})
+    summary=['## Current analysis update','',
+             '| Item | Current result |','| --- | --- |',
+             '| Target | `'+CFG['key']+'` |',
+             '| Application extraction | '+report.get('extraction',{}).get('status','INCONCLUSIVE')+' |',
+             '| Exported C blocks | '+str(dec.get('blocks','unknown'))+' |',
+             '| Explicit failures / truncated / warnings | '+str(dec.get('failed','?'))+' / '+str(dec.get('truncated','?'))+' / '+str(dec.get('with_warnings','?'))+' |',
+             '| Complete rebuilt firmware | Not yet established |','',
+             'The original report below retains its section links and baseline observations.',
+             'Current evidence: [confidence.md](confidence.md), [confidence.json](confidence.json),',
+             '[recovery_delta.json](recovery_delta.json). Counts measure discovery, not functional coverage.','',
+             'Regenerate from the repository root with `python pipeline/run.py --all-devices --only 17,12`.',
              'Exit 2 denotes incomplete or inconclusive evidence; it is not a pass.','']
-    Path(CFG['summary']).write_text('\n'.join(summary))
+    report_documents.update(CFG['summary'], '\n'.join(summary))
     files={}
     paths={name:CFG[name] for name in ('container','flash','blocks','listing','c','index')}
     paths.update({name:CFG[name] for name in config.ANALYSIS_FILES if name!='summary'})
