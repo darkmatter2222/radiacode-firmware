@@ -1,0 +1,763 @@
+{
+  "target": "rc-102/hw1-fw4.14",
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "raw_source_sha256": "0dcefbc5e7aba5643b87e4cb80e2e52a35b8f2348c5d1da8a1125cc206c5c520",
+  "functions": [
+    {
+      "address": "0x0801022e",
+      "original": "FUN_0801022e",
+      "name": "object_set_active_flags_0801022e",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Set byte fields +0x18 and +0x1c and the shared +0x1d flag to one.",
+      "notes": "Object subsystem and physical side effects are not established by this small wrapper.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "22f4d13bfde4db057adad84cd2476561a09de30632846dc9a6bad56375cd7353"
+    },
+    {
+      "address": "0x08010242",
+      "original": "FUN_08010242",
+      "name": "object_clear_active_flags_and_schedule_08010242",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Clear the same object/shared flags and schedule with delay argument 0xf0000.",
+      "notes": "Scheduling interpretation follows the deadline store in 0x0801675c; delay units remain unknown.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "a323ec1928a0f5dddffb920d648c22f3a102c784795f16e30a35cee3ebb5ac99"
+    },
+    {
+      "address": "0x08010262",
+      "original": "FUN_08010262",
+      "name": "object_signal_and_activate_if_pending_08010262",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "If byte +0x1d is set, enqueue code 0x1009 and activate the object.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "70d34fbee61f145904ad33aa1f6bc6f5065f0624ac09563b5714e8575cda1f47"
+    },
+    {
+      "address": "0x08014898",
+      "original": "FUN_08014898",
+      "name": "dispatch_and_read_result_field_08014898",
+      "locals": {
+        "param_1": "dispatch_argument",
+        "iVar1": "context_address"
+      },
+      "summary": "Call the dispatcher and return context word +0x10.",
+      "notes": "The business meaning of this result field remains unconfirmed.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "db833737be7bae4392b301e9779f28b271f0a003d0b402f27dd29dcb40c36b8d"
+    },
+    {
+      "address": "0x080148d6",
+      "original": "FUN_080148d6",
+      "name": "context_set_flag_1a_080148d6",
+      "locals": {},
+      "summary": "Store one in the context field at offset 0x1a.",
+      "notes": "Names describe observed field operations, not an inferred peripheral.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "6878996f52903416af3e28739c7bd7d7192d1913ad76b3e941c44ee7704a586d"
+    },
+    {
+      "address": "0x080148de",
+      "original": "FUN_080148de",
+      "name": "context_clear_flag_pair_1a_080148de",
+      "locals": {},
+      "summary": "Store zero in the context field at offset 0x1a..0x1b.",
+      "notes": "Names describe observed field operations, not an inferred peripheral.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "7388d9a65c29d6656ba00551845deb12e2cb0f94a5343e0a9f592c8dcdfd2908"
+    },
+    {
+      "address": "0x0801596c",
+      "original": "FUN_0801596c",
+      "name": "worker_set_flag_09_0801596c",
+      "locals": {},
+      "summary": "Store one in the context field at offset 9.",
+      "notes": "Names describe observed field operations, not an inferred peripheral.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "c6e690da0da8f85adf12d2b2d2c1c04aa76ce9243068f733081ffbb08365dd6f"
+    },
+    {
+      "address": "0x08015976",
+      "original": "FUN_08015976",
+      "name": "worker_clear_flag_09_08015976",
+      "locals": {},
+      "summary": "Store zero in the context field at offset 9.",
+      "notes": "Names describe observed field operations, not an inferred peripheral.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "76f72058089bf35f023a6d2b25e9ad1036ea848d6bb0831677a9d389b88792c2"
+    },
+    {
+      "address": "0x080148e6",
+      "original": "FUN_080148e6",
+      "name": "context_latch_pending_and_signal_080148e6",
+      "locals": {
+        "iVar1": "context_address"
+      },
+      "summary": "Enqueue 0x1009 when +0x1c is set and +0x1d is clear, then set +0x1d.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "ae9879b66730519f96e6b5f54513c0e084c771217b1e71eebee4b23f553552ac"
+    },
+    {
+      "address": "0x08015a0e",
+      "original": "FUN_08015a0e",
+      "name": "shared_context_write_flag_1d_08015a0e",
+      "locals": {
+        "param_1": "flag_value"
+      },
+      "summary": "Store the supplied byte at shared-context offset 0x1d.",
+      "notes": "No boolean normalization is performed: preserve the entire byte.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "24cfd4a60a79baff9b3aff88de396474ae56156df03747375f038e922798d2e6"
+    },
+    {
+      "address": "0x08015a20",
+      "original": "FUN_08015a20",
+      "name": "shared_context_write_flag_1c_08015a20",
+      "locals": {
+        "param_1": "flag_value"
+      },
+      "summary": "Store the supplied byte at shared-context offset 0x1c.",
+      "notes": "No boolean normalization is performed: preserve the entire byte.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "da3e82e90eeb282d5b1bafdc96c396e631ae14b809e02f82d2a79f8c30a13e66"
+    },
+    {
+      "address": "0x08015a28",
+      "original": "FUN_08015a28",
+      "name": "shared_context_write_flag_1e_08015a28",
+      "locals": {
+        "param_1": "flag_value"
+      },
+      "summary": "Store the supplied byte at shared-context offset 0x1e.",
+      "notes": "No boolean normalization is performed: preserve the entire byte.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "0c8b3788ae12ffaa81d7841ba44ab90bef4244ea226fb7d2c977c694541dfbfe"
+    },
+    {
+      "address": "0x08015a72",
+      "original": "FUN_08015a72",
+      "name": "shared_context_write_flag_20_08015a72",
+      "locals": {
+        "param_1": "flag_value"
+      },
+      "summary": "Store the supplied byte at shared-context offset 0x20.",
+      "notes": "No boolean normalization is performed: preserve the entire byte.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "028a4beb21282258136bbab8c85372b1db0deb65d2b9c4760e01f0233846146a"
+    },
+    {
+      "address": "0x08015e92",
+      "original": "FUN_08015e92",
+      "name": "write_shared_byte_08015e92",
+      "locals": {
+        "param_1": "byte_value"
+      },
+      "summary": "Store one byte through the global pointer literal at 0x08016008.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "1a0f9f2606eaa67a50581b3537563623c9a8053d9a1a7d9b8e9e1df110db33d3"
+    },
+    {
+      "address": "0x08015ede",
+      "original": "FUN_08015ede",
+      "name": "set_shared_flag_pair_08015ede",
+      "locals": {
+        "puVar1": "flag_bytes"
+      },
+      "summary": "Set bytes zero and four in the shared flag block to one.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "b2bcbeb479589bd2b0d010333e24f9c4ddd770cc89afc796482e368659ea72cc"
+    },
+    {
+      "address": "0x08015eec",
+      "original": "FUN_08015eec",
+      "name": "select_clamped_u16_table_entry_08015eec",
+      "locals": {
+        "param_1": "table_index"
+      },
+      "summary": "Clamp an unsigned index to 3 and store a zero-extended 16-bit table entry at context +0x24c.",
+      "notes": "The table has four selectable entries; its physical meaning is not yet assigned.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "cdcee725809272191b97fb7dbc7f4d87fb853fd3d8b77e8d8625f3b3b6b57d41"
+    },
+    {
+      "address": "0x0801609e",
+      "original": "FUN_0801609e",
+      "name": "initialize_interval_and_schedule_now_0801609e",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Set word +0x10 to 60 and invoke the scheduling helper with delay zero.",
+      "notes": "Do not infer seconds from the value 60; time units require caller/timer review.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "3e094444ca3c8aa7b98993f74fefe69c2c59514f80eedbb4d4d921e51569abad"
+    },
+    {
+      "address": "0x080165cc",
+      "original": "FUN_080165cc",
+      "name": "clear_object_state_fields_080165cc",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Zero words +0x18/+0x1c and byte +0x20; leave other fields untouched.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "c883b0ea510e038b02648a10e80626cf31f542d35b445d4a4be2cabbad9b07dc"
+    },
+    {
+      "address": "0x08016664",
+      "original": "FUN_08016664",
+      "name": "clear_object_bit_18_08016664",
+      "locals": {
+        "param_1": "object_address",
+        "param_2": "bit_index"
+      },
+      "summary": "Clear a selected bit in word +0x18.",
+      "notes": "The decompiler masks the shift count to a byte. C shifts >=32 require instruction-level review before compilation.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "4752db23a75cc7296703623305d1ab54bb99a4ec3bd60d7427186a4d746979b5"
+    },
+    {
+      "address": "0x0801675c",
+      "original": "FUN_0801675c",
+      "name": "schedule_object_relative_0801675c",
+      "locals": {
+        "param_1": "object_address",
+        "param_2": "delay_ticks",
+        "param_3": "unused_decompiler_argument",
+        "param_4": "queue_argument",
+        "iVar2": "current_ticks",
+        "uVar1": "queue_handle"
+      },
+      "summary": "Store current ticks plus delay at object +8 and pass the object through two queue helpers.",
+      "notes": "Signature is not fully recovered: the unused third argument and fourth forwarded value need ABI review. Do not drop them merely because one is unused.",
+      "confidence": "caller/dataflow inference",
+      "raw_block_sha256": "3078be09cf1fcdb113fecd58916d995affe81479c22a1131f9c38f7594224d6a"
+    },
+    {
+      "address": "0x080167f6",
+      "original": "FUN_080167f6",
+      "name": "configure_nonzero_interval_and_schedule_080167f6",
+      "locals": {
+        "param_1": "object_address",
+        "param_2": "payload_word",
+        "param_3": "interval_ticks",
+        "param_4": "delay_ticks"
+      },
+      "summary": "Ignore zero intervals; otherwise store words +0x14/+0x10 and schedule the object.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "23e2634b175321337f3e0ad36afa74979d047cbb2877e5ab7691255816fbd02b"
+    },
+    {
+      "address": "0x08016834",
+      "original": "FUN_08016834",
+      "name": "queue_handle_is_present_08016834",
+      "locals": {},
+      "summary": "Return whether the global queue handle is non-null.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "9c96298b3b664a429e7edd6699a13372fc211cb69ca3b6e8fb3f86d705e253c0"
+    },
+    {
+      "address": "0x0801683e",
+      "original": "FUN_0801683e",
+      "name": "read_queue_head_deadline_0801683e",
+      "locals": {},
+      "summary": "Read word +8 from the object addressed by the global queue handle.",
+      "notes": "The original has no null check. Caller preconditions must be recovered before adding any behavior.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "6537ef8bda4c0177feef287b0a56ccf07cac401f8a645f4e8cc6bd4fa52910fc"
+    },
+    {
+      "address": "0x08016858",
+      "original": "FUN_08016858",
+      "name": "event_ring_reset_indices_08016858",
+      "locals": {
+        "iVar1": "ring_address"
+      },
+      "summary": "Reset both event-ring indices at offsets +0x20/+0x24 to zero.",
+      "notes": "The 16 stored halfwords are not cleared.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "6d3fb1fb9cf6cb2c477780189f907057e0dbb3d5475a9f7573cedcf12036d810"
+    },
+    {
+      "address": "0x08016862",
+      "original": "FUN_08016862",
+      "name": "event_ring_try_push_08016862",
+      "locals": {
+        "param_1": "event_code",
+        "iVar1": "ring_address",
+        "iVar2": "next_write_index"
+      },
+      "summary": "Advance the write index modulo 16; return 1 if full, otherwise store a 16-bit event and return 0.",
+      "notes": "One slot is reserved to distinguish full from empty. Preserve the unusual return convention: zero means success.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "0da4d632f4ce7c403b6ae839c4302ef445040521874a013aa3c429a2fe7e6475"
+    },
+    {
+      "address": "0x080168a0",
+      "original": "FUN_080168a0",
+      "name": "event_ring_has_pending_080168a0",
+      "locals": {},
+      "summary": "Return whether the read and write indices differ.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "51572ffa04a4ad73bfa66e4a066158d05c3753f2ee768437e048fabc85860515"
+    },
+    {
+      "address": "0x080169e8",
+      "original": "FUN_080169e8",
+      "name": "clear_object_flag_04_080169e8",
+      "locals": {},
+      "summary": "Clear byte +4 through the global context pointer.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "831816ee7e4bad9cd8b93dd874b383b3440ac93ea236cc88ff84a80e08a18842"
+    },
+    {
+      "address": "0x08016d30",
+      "original": "FUN_08016d30",
+      "name": "update_selected_low_halfword_08016d30",
+      "locals": {
+        "param_1": "object_address",
+        "param_2": "field_index",
+        "param_3": "replacement_bits"
+      },
+      "summary": "Use a byte offset table to select a word, retain its upper 16 bits, and OR in the supplied value.",
+      "notes": "The input is NOT masked to 16 bits. High input bits can set upper bits; do not rewrite as a uint16_t assignment.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "50ef6f185748f6e82df7a0d9263c54e784286f59b9ccb2e246e17b9553831575"
+    },
+    {
+      "address": "0x08016d98",
+      "original": "FUN_08016d98",
+      "name": "read_stable_counter16_with_offset_08016d98",
+      "locals": {
+        "uVar1": "counter_snapshot"
+      },
+      "summary": "Read the low 16 bits until two consecutive reads match, add a shared offset, and wrap to 16 bits.",
+      "notes": "This retry loop may not terminate if the observed source changes continuously. Volatile semantics matter.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "18a194a205bdeb936aa7e9e2f1df85fb00045fa20c22842d7918a90e9c168f2e"
+    },
+    {
+      "address": "0x08017624",
+      "original": "FUN_08017624",
+      "name": "set_transfer_mode_and_refresh_08017624",
+      "locals": {
+        "param_1": "transfer_mode",
+        "uVar1": "refresh_value",
+        "unaff_r7": "unresolved_incoming_r7"
+      },
+      "summary": "Write mode byte +0x11, obtain a refresh value, and call the refresh helper.",
+      "notes": "unresolved_incoming_r7 is a decompiler ABI artifact, NOT a valid initialized C local.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "54b7972a2f7feca56b0148d91236d294a8499e404990d13c65df336199447fe1"
+    },
+    {
+      "address": "0x08017bb0",
+      "original": "FUN_08017bb0",
+      "name": "read_transfer_table_halfword_08017bb0",
+      "locals": {
+        "param_1": "entry_index"
+      },
+      "summary": "Read a halfword from transfer-state offset +0x34 plus index*2.",
+      "notes": "No bounds check appears in this export.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "a81d9fed5dcc52173c3a1d4ee76002628f9cd534912e2e879c8b111a2e5ae4b1"
+    },
+    {
+      "address": "0x08017e9e",
+      "original": "FUN_08017e9e",
+      "name": "invoke_optional_transfer_callback_08017e9e",
+      "locals": {},
+      "summary": "Invoke the callback at transfer-state offset +0x74 when non-null.",
+      "notes": "Ghidra reports unresolved indirect control flow. This name does not resolve the callback target set.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "b9636a100d9d50cb8fd84f4be92dd5ed632d796b1e99d7698cebbb4afc240386"
+    },
+    {
+      "address": "0x08017eaa",
+      "original": "FUN_08017eaa",
+      "name": "read_transfer_mode_08017eaa",
+      "locals": {},
+      "summary": "Return transfer-state byte +0x11.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "ca26a3c050923bf40d32155223e818a698914666f1e451827e86e556b2e29b76"
+    },
+    {
+      "address": "0x08017eb4",
+      "original": "FUN_08017eb4",
+      "name": "transfer_positions_allow_progress_08017eb4",
+      "locals": {
+        "cVar1": "transfer_mode"
+      },
+      "summary": "Compare signed words +0x50 and +0x54; modes 2/4/6 permit equality, other modes require strict less-than.",
+      "notes": "The words are named positions rather than asserted producer/consumer pointers. Compiled differential evidence: reconstruction/validation.json.",
+      "confidence": "compiled differential tests",
+      "raw_block_sha256": "c78bd49448842f2b8e1638320f6a88d09c4837c84ca82614217460b286cd2023"
+    },
+    {
+      "address": "0x0802abf8",
+      "original": "FUN_0802abf8",
+      "name": "coefficient_triplet_passes_bounds_0802abf8",
+      "locals": {
+        "param_1": "coefficients",
+        "bVar1": "linear_term_meets_lower_bound",
+        "fVar2": "polynomial_value_at_256",
+        "puVar3": "quadratic_term_misrendered_as_pointer"
+      },
+      "summary": "Check three binary32 coefficients and a polynomial evaluated at 256.",
+      "notes": "KNOWN DECOMPILER DEFECT: the pointer-typed temporary is a float artifact, and the ordered conjunction changes NaN behavior. Use reconstruction/calibration.c for the tested implementation; this annotated export intentionally preserves the defective expression.",
+      "confidence": "instruction review and compiled differential tests",
+      "raw_block_sha256": "3936e28ef9ef962ac5d2b3bfd92d92bca2d257f3b8748e2c4af6e11811c57008"
+    },
+    {
+      "address": "0x08038800",
+      "original": "FUN_08038800",
+      "name": "read_indirect_halfword_10_08038800",
+      "locals": {},
+      "summary": "Return halfword +0x10 from the object reached through a global pointer.",
+      "notes": "No null check is present in this export.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "d11b2b4bd698855f756c566024a3aada88c4442ba931bcb51a796fa1b24b6b49"
+    },
+    {
+      "address": "0x08038a58",
+      "original": "FUN_08038a58",
+      "name": "initialize_clock_register_block_08038a58",
+      "locals": {
+        "puVar1": "clock_register_words",
+        "puVar2": "configuration_register"
+      },
+      "summary": "Initialize the register block using the masks and ordering shown in the original instructions.",
+      "notes": "Clock-controller role is inferred from register addresses and masks; exact MCU model and timing remain unverified.",
+      "confidence": "register/dataflow inference",
+      "raw_block_sha256": "5567fdc35cfa6b8dfb88788cc3f222daaf7b57741289a6765079182899a3cd51"
+    },
+    {
+      "address": "0x0803961c",
+      "original": "FUN_0803961c",
+      "name": "increment_and_wrap_object_value_0803961c",
+      "locals": {
+        "param_1": "object_words",
+        "param_2": "increment",
+        "param_3": "unused_decompiler_argument",
+        "param_4": "notification_argument",
+        "iVar1": "upper_bound"
+      },
+      "summary": "Add an increment to word +0x18; wrap to the lower virtual-method bound when the upper bound is exceeded.",
+      "notes": "Virtual slots +0x14/+0x18 supply bounds. Signature and notification side effects remain under review.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "e57c4d124ab71c589b3dd1fe94a310c2c1d5a48bfe7dd9ca89a29ac58c139966"
+    },
+    {
+      "address": "0x0803974c",
+      "original": "FUN_0803974c",
+      "name": "decrement_and_wrap_object_value_0803974c",
+      "locals": {
+        "param_1": "object_words",
+        "param_2": "decrement",
+        "param_3": "unused_decompiler_argument",
+        "param_4": "notification_argument",
+        "iVar1": "lower_bound"
+      },
+      "summary": "Subtract a decrement from word +0x18; wrap to the upper virtual-method bound when below the lower bound.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "73f9587220d213ccd5cf9ed9761749c295506895096a3abf1ec9ef19bdfd8ba8"
+    },
+    {
+      "address": "0x0803a560",
+      "original": "FUN_0803a560",
+      "name": "walk_relative_initialization_records_0803a560",
+      "locals": {
+        "piVar1": "record_cursor",
+        "piVar2": "records_end"
+      },
+      "summary": "Invoke a record-relative function pointer and use its return value as the next record.",
+      "notes": "The table record format and callback ABI need review; this is not a conventional fixed-stride array.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "0a744fd80b7d7a9dd6e10c13fc2a2d84b295d9f3f79a3b776c900db65cb98043"
+    },
+    {
+      "address": "0x0803a978",
+      "original": "FUN_0803a978",
+      "name": "enable_coprocessor_access_with_barriers_0803a978",
+      "locals": {},
+      "summary": "Set CPACR bits 20..23, execute DSB/ISB, and return 0x02000000.",
+      "notes": "The returned constant is preserved without assigning an unverified purpose.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "b711f124338b47541d1ddb24205b45de13c011d2355b84863d382ecb3656596b"
+    },
+    {
+      "address": "0x0803aec8",
+      "original": "FUN_0803aec8",
+      "name": "call_relative_function_table_0803aec8",
+      "locals": {
+        "param_1": "entry_cursor",
+        "param_2": "entries_end",
+        "param_3": "unused_decompiler_argument",
+        "param_4": "unresolved_return_argument"
+      },
+      "summary": "Call each entry-relative function address from cursor up to end.",
+      "notes": "The returned fourth argument may be a recovered-signature artifact; do not treat it as an intentional status without ABI review.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "64ff7d15590ed626af7208548948614c8ae8b6fac6a20e3d4e6825ecca3be7bf"
+    },
+    {
+      "address": "0x0803ba70",
+      "original": "Reset_Handler",
+      "name": "application_reset_entry_0803ba70",
+      "locals": {
+        "bVar1": "current_mode_is_privileged"
+      },
+      "summary": "Set MSP when privileged, then invoke the two vector/literal-resolved startup targets.",
+      "notes": "The export reports unresolved indirect control flow. It does not establish a complete boot sequence.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "907f2384e9fceb3cf7baac70c9bf9e6642c6faadc3a77a9cf672717801b936b6"
+    },
+    {
+      "address": "0x0803c4d8",
+      "original": "FUN_0803c4d8",
+      "name": "trap_forever_0803c4d8",
+      "locals": {},
+      "summary": "Loop forever with no observable work.",
+      "notes": "An unused-vector target is not evidence that the normal application idles here.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "186568b7b097eff82bc4183f2b4327b80ff96e89d4f924cf837632c6aeefe5e8"
+    },
+    {
+      "address": "0x0801f3b4",
+      "original": "FUN_0801f3b4",
+      "name": "read_nonnegative_context_index_0801f3b4",
+      "locals": {
+        "iVar1": "signed_context_index"
+      },
+      "summary": "Read signed byte +0x14 and clamp negative values to zero.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "ac51ad2ccc4783d43bdb44f4df12c98b1e71826bff248068af1b9d2c5c1b92a3"
+    },
+    {
+      "address": "0x0801f3c2",
+      "original": "FUN_0801f3c2",
+      "name": "read_context_index_with_positive_bias_0801f3c2",
+      "locals": {
+        "iVar1": "signed_context_index"
+      },
+      "summary": "Add ten to nonnegative byte +0x14 values; preserve negative values.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "f7dbfdf5954c73db676bd1cb8c8918750faac888a04819cf763723c79f3429ea"
+    },
+    {
+      "address": "0x0801f3d0",
+      "original": "FUN_0801f3d0",
+      "name": "get_shared_context_address_0801f3d0",
+      "locals": {},
+      "summary": "Return the shared-context pointer literal.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "9a194cb2ef24c2ecc54e710f5f109a56e8645ef1674066fbbb06928dbad5412b"
+    },
+    {
+      "address": "0x0801f900",
+      "original": "FUN_0801f900",
+      "name": "read_defaultable_object_byte_1_0801f900",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Use the default object when null, then return byte at offset +1.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "fe24983b0f7dfeb95b332a5238c89e2555aab35dc32a5e350cc758f08cab63d7"
+    },
+    {
+      "address": "0x0801f908",
+      "original": "FUN_0801f908",
+      "name": "read_defaultable_object_halfword_2_0801f908",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Use the default object when null, then return halfword at offset +2.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "068c9b81db3ae68820870bbcd6a38cd43afd5ae99f500d1e58abc4dfea147c7f"
+    },
+    {
+      "address": "0x0801f910",
+      "original": "FUN_0801f910",
+      "name": "read_defaultable_object_halfword_8_0801f910",
+      "locals": {
+        "param_1": "object_address"
+      },
+      "summary": "Use the default object when null, then return halfword at offset +8.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "ab7d4f8b7d259c0c9eae2ee8d6b82ea1ff79dc7c609093ed603b99c2fa555519"
+    },
+    {
+      "address": "0x0801fa2c",
+      "original": "FUN_0801fa2c",
+      "name": "apply_and_cache_bound_word_0801fa2c",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "uVar1": "bound_value"
+      },
+      "summary": "If source pointer +0x0c is non-null, pass its word to 0x0802bcb0 and cache it at +8.",
+      "notes": "Binding/cache terminology follows the dataflow; the callee-specific presentation semantics and ABI are not fully recovered.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "b294c87d0095dc3f51c9e35836fa34f564199da85008e863b70c6badc9a73d9f"
+    },
+    {
+      "address": "0x0801fa88",
+      "original": "FUN_0801fa88",
+      "name": "apply_and_cache_bound_word_0801fa88",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "uVar1": "bound_value"
+      },
+      "summary": "If source pointer +0x0c is non-null, pass its word to 0x0802bda0 and cache it at +8.",
+      "notes": "Binding/cache terminology follows the dataflow; the callee-specific presentation semantics and ABI are not fully recovered.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "2f7cb049a630e7d3b0f1754c4e7fe00e8f12172e66e29e904ff036e2029d1452"
+    },
+    {
+      "address": "0x0801fd3c",
+      "original": "FUN_0801fd3c",
+      "name": "apply_and_cache_bound_word_0801fd3c",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "uVar1": "bound_value"
+      },
+      "summary": "If source pointer +0x0c is non-null, pass its word to 0x0802be1c and cache it at +8.",
+      "notes": "Binding/cache terminology follows the dataflow; the callee-specific presentation semantics and ABI are not fully recovered.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "6373ac9a8316286103eca60d81e58c898c4b2d28c7cac1d88e1d76a6b557cdad"
+    },
+    {
+      "address": "0x0801fa42",
+      "original": "FUN_0801fa42",
+      "name": "apply_bound_word_if_changed_0801fa42",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "piVar1": "bound_word_pointer",
+        "iVar2": "cached_value",
+        "unaff_r5": "bound_value_r5_artifact"
+      },
+      "summary": "Compare a non-null bound word with cache +8; invoke 0x0802bcb0 and update cache only on change.",
+      "notes": "The r5-derived temporary and returned fourth argument are Ghidra signature artifacts requiring review before compilation.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "f216300139e4c1fa346225d3b7a48f15dc4f1c7e9cfddd86ece29eaaee1c6a8a"
+    },
+    {
+      "address": "0x0801fb7c",
+      "original": "FUN_0801fb7c",
+      "name": "apply_bound_word_if_changed_0801fb7c",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "piVar1": "bound_word_pointer",
+        "iVar2": "cached_value",
+        "unaff_r5": "bound_value_r5_artifact"
+      },
+      "summary": "Compare a non-null bound word with cache +8; invoke 0x0802bda0 and update cache only on change.",
+      "notes": "The r5-derived temporary and returned fourth argument are Ghidra signature artifacts requiring review before compilation.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "9f238c5c42f47ac624e452b708a459102f2b42c9b9fbe77e571e3bad04729b7b"
+    },
+    {
+      "address": "0x0801fdba",
+      "original": "FUN_0801fdba",
+      "name": "apply_bound_word_if_changed_0801fdba",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "piVar1": "bound_word_pointer",
+        "iVar2": "cached_value",
+        "unaff_r5": "bound_value_r5_artifact"
+      },
+      "summary": "Compare a non-null bound word with cache +8; invoke 0x0802be1c and update cache only on change.",
+      "notes": "The r5-derived temporary and returned fourth argument are Ghidra signature artifacts requiring review before compilation.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "3af1f60dc599065a88338f51617baaa3b3a7e09e57d0dac571c7e7b4fdb4c179"
+    },
+    {
+      "address": "0x0801ffec",
+      "original": "FUN_0801ffec",
+      "name": "apply_indexed_word_if_changed_0801ffec",
+      "locals": {
+        "param_1": "binding_address",
+        "param_2": "unused_argument_2",
+        "param_3": "unused_argument_3",
+        "param_4": "unresolved_return_argument",
+        "iVar1": "selected_table_word"
+      },
+      "summary": "Use the bound byte as an index into a word table; invoke helpers and cache only if the selected word changed.",
+      "notes": "",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "aefc61f6036440bfbb8f7087fd2248a13f4a16e9b60b93776fa6534ae2aa5d62"
+    },
+    {
+      "address": "0x080203f8",
+      "original": "FUN_080203f8",
+      "name": "initialize_callback_state_080203f8",
+      "locals": {
+        "puVar1": "callback_state_bytes"
+      },
+      "summary": "Clear selected status/callback words and initialize two interval fields to 1000.",
+      "notes": "The units of 1000 and interrupt/concurrency guarantees are not established by this initializer.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "a29111eef9280677ea493a303768af1ce3fb4a85ebc3812f13ff5612af4e9b91"
+    },
+    {
+      "address": "0x0802041a",
+      "original": "FUN_0802041a",
+      "name": "drain_two_slot_callback_queue_0802041a",
+      "locals": {
+        "iVar1": "callback_state_address",
+        "pcVar2": "pending_callback"
+      },
+      "summary": "Disable interrupts while shifting callback slots, then invoke each non-null callback with interrupts enabled.",
+      "notes": "This explicitly enables interrupts; it does not save and restore the prior interrupt mask. Preserve that distinction.",
+      "confidence": "instruction-derived",
+      "raw_block_sha256": "347d487cd33066b7935621d7da6d00f816988be1e12e424fa69b78284dfbc832"
+    }
+  ],
+  "globals": {
+    "DAT_08017f28": "transfer_state_pointer_literal",
+    "DAT_080168d0": "event_ring_pointer_literal",
+    "DAT_08016854": "queue_handle_pointer_literal",
+    "DAT_0802ac60": "coefficient_abs_limit_literal",
+    "DAT_0802ac64": "polynomial_sample_index_literal",
+    "DAT_0802ac68": "polynomial_lower_bound_literal",
+    "DAT_0802ac6c": "polynomial_upper_bound_literal"
+  }
+}

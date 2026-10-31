@@ -12,3 +12,6 @@
 firmware/**/decompiled.c whitespace=-blank-at-eol
 firmware/**/listing.s whitespace=-blank-at-eol
 docs/historical/* whitespace=-blank-at-eol
+
+# The readable companion retains original decompiler whitespace for reversibility.
+reconstruction/annotated/*.c whitespace=-blank-at-eol,-blank-at-eof

@@ -44,11 +44,11 @@ def main():
     # Only the complete transfer-state leaf is eligible. Partial dispatcher
     # and floating-point candidates deliberately have no replacement path.
     source=folder/'candidate.c'
-    source.write_text((ROOT/'reconstruction/rc102_leaf.c').read_text().split('/* Only')[0])
+    source.write_text((ROOT/'reconstruction/rc102_leaf.c').read_text())
     # Put each function in its own section so the linker can place the reviewed
     # function exactly, independent of compiler ordering of other functions.
     linker=folder/'candidate.ld'
-    linker.write_text('SECTIONS { . = 0x08070000; .text : { *(.text.recovered_08017eb4) } /DISCARD/ : { *(.text*) *(.ARM*) *(.comment) } }')
+    linker.write_text('SECTIONS { . = 0x08070000; .text : { *(.text.rc_transfer_positions_allow_progress) } /DISCARD/ : { *(.text*) *(.ARM*) *(.comment) } }')
     flags=['-mcpu=cortex-m4','-mthumb','-O2','-ffreestanding','-fno-builtin','-ffunction-sections',
            '-fno-unwind-tables','-fno-asynchronous-unwind-tables','-nostdlib','-Wl,--build-id=none']
     build.run([gcc,*flags,'-T',str(linker),str(source),'-o',str(folder/'candidate.elf')])

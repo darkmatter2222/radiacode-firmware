@@ -12,7 +12,9 @@ from unicorn.arm_const import (UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2,
     UC_ARM_REG_C1_C0_2, UC_CPU_ARM_CORTEX_M4)
 
 FLASH_BASE, FLASH_SIZE = 0x08000000, 0x80000
-SRAM_BASE, SRAM_SIZE = 0x20000000, 0x8000
+# Map the 64 KiB logical SRAM window used by observed globals (event ring at
+# 0x2000f424). This test map does not establish the physical MCU RAM capacity.
+SRAM_BASE, SRAM_SIZE = 0x20000000, 0x10000
 STACK_TOP = 0x20007F00
 STACK_RANGE = (0x20007000, 0x20008000)
 SENTINEL = 0x0A0A0001

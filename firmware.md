@@ -17,6 +17,10 @@ Every value below comes from the artifacts of the build `rc-102/hw1-fw4.14`, i.e
 are listed in `README.md` §3.1 and have the same layout. Items marked *(inferred)* are derived from
 code structure rather than a name in the binary.
 
+Reviewed source names and detailed code comments are indexed in
+[reconstruction/annotated/README.md](reconstruction/annotated/README.md).
+The raw export and original reference sections below remain available.
+
 ## 1. Identity
 
 | item | value | evidence |

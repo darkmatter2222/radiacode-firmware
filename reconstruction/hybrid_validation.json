@@ -1,8 +1,8 @@
 {
   "status": "PASS",
   "scope": "one complete leaf, direct entry and synthetic BL caller; emulator only, not system/hardware equivalence",
-  "source_sha256": "8521ea8614b849137c8856128ade6ab90eb3c6ca23cc653ca7cde83a5bf68d5f",
-  "harness_sha256": "208d2766318f4df90f150b59c07fef8e02f1a8bba7aa85c6fe1e17a027f10d9a",
+  "source_sha256": "49bc1fad80fb084a94e7adc57f238e2efc0baceaaa9a56606e1aab2ff9ca39ba",
+  "harness_sha256": "3bad436176996f9fee056fd119d4e7b9fa4470266a4e634270d360c8f6387f1c",
   "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
   "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
   "flags": [
@@ -17,13 +17,13 @@
     "-nostdlib",
     "-Wl,--build-id=none"
   ],
-  "candidate_sha256": "632912287ea166d010dc7906b1025916486977559c8ebbb9f93611089894240f",
+  "candidate_sha256": "b7ffe6d732c8eb6466f3616d016fadb284160a17abc1692763b0a0a90802a5db",
   "patch_hex": "58f0a4b8",
   "original_prefix_hex": "1c4a507c",
   "entry": 134315700,
   "target": 134676480,
   "caller": 134680576,
-  "hybrid_sha256": "9d88b6bb0d479101e0e773d25f1852f59c202e679b903e3e87b19a386a3aab02",
+  "hybrid_sha256": "6e6fda4fc575b94f7e845b0f718bfb4d1cf6ecf618198c83dcf633a0d4c12488",
   "cases": 1424,
   "failures": [],
   "guard_rejections": 4,
