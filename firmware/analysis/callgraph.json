@@ -1,0 +1,1144 @@
+{
+  "note": "reachability over direct call edges (bl targets) from each vector handler",
+  "total_functions": 1867,
+  "handlers": [
+    {
+      "index": 1,
+      "name": "Reset",
+      "address": "0x0803BA71",
+      "entry": "0x0803BA70",
+      "reachable": 33,
+      "max_depth": 7,
+      "sample": [
+        "0x08014900 (sub_08014900)",
+        "0x08014920 (sub_08014920)",
+        "0x080194F4 (sub_080194F4)",
+        "0x0801954C (sub_0801954C)",
+        "0x0801978A (sub_0801978A)",
+        "0x08019ACA (sub_08019ACA)",
+        "0x08019AD6 (sub_08019AD6)",
+        "0x0801F908 (sub_0801F908)"
+      ]
+    },
+    {
+      "index": 2,
+      "name": "NMI",
+      "address": "0x080363FD",
+      "entry": "0x080363FC",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x080363FC (handler_nmi)"
+      ]
+    },
+    {
+      "index": 3,
+      "name": "HardFault",
+      "address": "0x080363FF",
+      "entry": "0x080363FE",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x080363FE (handler_hardfault)"
+      ]
+    },
+    {
+      "index": 4,
+      "name": "MemManage",
+      "address": "0x08036401",
+      "entry": "0x08036400",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x08036400 (handler_memmanage)"
+      ]
+    },
+    {
+      "index": 5,
+      "name": "BusFault",
+      "address": "0x08036403",
+      "entry": "0x08036402",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x08036402 (handler_busfault)"
+      ]
+    },
+    {
+      "index": 6,
+      "name": "UsageFault",
+      "address": "0x08036405",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 11,
+      "name": "SVCall",
+      "address": "0x08036407",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 12,
+      "name": "DebugMon",
+      "address": "0x08036409",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 14,
+      "name": "PendSV",
+      "address": "0x0803640B",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 15,
+      "name": "SysTick",
+      "address": "0x0803640D",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 16,
+      "name": "IRQ0_WWDG",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 17,
+      "name": "IRQ1_PVD",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 18,
+      "name": "IRQ2_TAMP_STAMP",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 19,
+      "name": "IRQ3_RTC_WKUP",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 20,
+      "name": "IRQ4_FLASH",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 21,
+      "name": "IRQ5_RCC",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 22,
+      "name": "IRQ6_EXTI0",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 23,
+      "name": "IRQ7_EXTI1",
+      "address": "0x0803640F",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 24,
+      "name": "IRQ8_EXTI2",
+      "address": "0x08036423",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 25,
+      "name": "IRQ9_EXTI3",
+      "address": "0x0803654B",
+      "entry": "0x0803654A",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803654A (handler_irq9_exti3)"
+      ]
+    },
+    {
+      "index": 26,
+      "name": "IRQ10_EXTI4",
+      "address": "0x08036437",
+      "entry": "0x08036404",
+      "reachable": 20,
+      "max_depth": 6,
+      "sample": [
+        "0x08015FF4 (sub_08015FF4)",
+        "0x08016106 (sub_08016106)",
+        "0x080165CC (sub_080165CC)",
+        "0x08016720 (sub_08016720)",
+        "0x0801675C (sub_0801675C)",
+        "0x08016D50 (sub_08016D50)",
+        "0x08016D74 (sub_08016D74)",
+        "0x08016E78 (sub_08016E78)"
+      ]
+    },
+    {
+      "index": 27,
+      "name": "IRQ11_DMA1_CH0",
+      "address": "0x08036455",
+      "entry": "0x08036454",
+      "reachable": 2,
+      "max_depth": 1,
+      "sample": [
+        "0x08017EFE (sub_08017EFE)",
+        "0x08036454 (handler_irq11_dma1_ch0)"
+      ]
+    },
+    {
+      "index": 28,
+      "name": "IRQ12_DMA1_CH1",
+      "address": "0x08036475",
+      "entry": "0x08036474",
+      "reachable": 25,
+      "max_depth": 5,
+      "sample": [
+        "0x08018E9A (sub_08018E9A)",
+        "0x08018F10 (sub_08018F10)",
+        "0x080191F0 (sub_080191F0)",
+        "0x080255EC (sub_080255EC)",
+        "0x08025822 (sub_08025822)",
+        "0x08025B60 (sub_08025B60)",
+        "0x08025C08 (sub_08025C08)",
+        "0x08025C26 (sub_08025C26)"
+      ]
+    },
+    {
+      "index": 29,
+      "name": "IRQ13_DMA1_CH2",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 30,
+      "name": "IRQ14_DMA1_CH3",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 31,
+      "name": "IRQ15_DMA1_CH4",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 32,
+      "name": "IRQ16_DMA1_CH5",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 33,
+      "name": "IRQ17_DMA1_CH6",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 34,
+      "name": "IRQ18_ADC1_2",
+      "address": "0x080364A1",
+      "entry": "0x080364A0",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x080364A0 (handler_irq18_adc1_2)"
+      ]
+    },
+    {
+      "index": 35,
+      "name": "IRQ19_USB_HP",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 36,
+      "name": "IRQ20_USB_LP",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 37,
+      "name": "IRQ21_DAC",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 38,
+      "name": "IRQ22_SPI1",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 39,
+      "name": "IRQ23_USART1",
+      "address": "0x080364BF",
+      "entry": "0x080364BE",
+      "reachable": 3,
+      "max_depth": 2,
+      "sample": [
+        "0x080228EC (sub_080228EC)",
+        "0x08022914 (sub_08022914)",
+        "0x080364BE (handler_irq23_usart1)"
+      ]
+    },
+    {
+      "index": 40,
+      "name": "IRQ24_USART2",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 41,
+      "name": "IRQ25_USART3",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 42,
+      "name": "IRQ26_EXTI9_5",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 43,
+      "name": "IRQ27_TIM1",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 44,
+      "name": "IRQ28_TIM2",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 45,
+      "name": "IRQ29_TIM3",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 46,
+      "name": "IRQ30_TIM4",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 47,
+      "name": "IRQ31_TIM5",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 48,
+      "name": "IRQ32_SPI2",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 49,
+      "name": "IRQ33_TIM8",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 50,
+      "name": "IRQ34_TIM7",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 51,
+      "name": "IRQ35_LCD",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 52,
+      "name": "IRQ36_TIM9",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 53,
+      "name": "IRQ37_TIM10",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 54,
+      "name": "IRQ38_TIM11",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 55,
+      "name": "IRQ39_USB_OTG_FS",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 56,
+      "name": "IRQ40_DMA2_CH0",
+      "address": "0x080364F9",
+      "entry": "0x080364F8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x080364F8 (handler_irq40_dma2_ch0)"
+      ]
+    },
+    {
+      "index": 57,
+      "name": "IRQ41_DMA2_CH1",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 58,
+      "name": "IRQ42_DMA2_CH2",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 59,
+      "name": "IRQ43_DMA2_CH3",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 60,
+      "name": "IRQ44_DMA2_CH4",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 61,
+      "name": "IRQ45_DMA2_CH5",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 62,
+      "name": "IRQ46_DMA2_CH6",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 63,
+      "name": "IRQ47_USART6",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 64,
+      "name": "IRQ48_JPEG",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 65,
+      "name": "IRQ49_NSTC",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 66,
+      "name": "IRQ50_AES",
+      "address": "0x0803651B",
+      "entry": "0x0803651A",
+      "reachable": 3,
+      "max_depth": 2,
+      "sample": [
+        "0x080206B2 (sub_080206B2)",
+        "0x08024524 (sub_08024524)",
+        "0x0803651A (handler_irq50_aes)"
+      ]
+    },
+    {
+      "index": 67,
+      "name": "IRQ51_RNG",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 68,
+      "name": "IRQ52_CAPTURE_COMPARE",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 69,
+      "name": "IRQ53_LCD_TFT",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 70,
+      "name": "IRQ54_TIM12",
+      "address": "0x0803651F",
+      "entry": "0x0803651E",
+      "reachable": 2,
+      "max_depth": 1,
+      "sample": [
+        "0x08020F40 (sub_08020F40)",
+        "0x0803651E (handler_irq54_tim12)"
+      ]
+    },
+    {
+      "index": 71,
+      "name": "IRQ55_TIM13",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 72,
+      "name": "IRQ56_TIM14",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 73,
+      "name": "IRQ57_DMA2D",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 74,
+      "name": "IRQ58_COMP",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 75,
+      "name": "IRQ59_LPTIM1",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 76,
+      "name": "IRQ60_LPUART1",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 77,
+      "name": "IRQ61_QUADSPI",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 78,
+      "name": "IRQ62_LPTIM2",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 79,
+      "name": "IRQ63_USB_FS",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 80,
+      "name": "IRQ64_DMAMUX",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 81,
+      "name": "IRQ65_LPUART2",
+      "address": "0x08036523",
+      "entry": "0x08036522",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x08036522 (handler_irq65_lpuart2)"
+      ]
+    },
+    {
+      "index": 82,
+      "name": "IRQ66_LPTIM3",
+      "address": "0x0803653B",
+      "entry": "0x0803653A",
+      "reachable": 25,
+      "max_depth": 5,
+      "sample": [
+        "0x08018E9A (sub_08018E9A)",
+        "0x08018F10 (sub_08018F10)",
+        "0x080191F0 (sub_080191F0)",
+        "0x080255EC (sub_080255EC)",
+        "0x08025822 (sub_08025822)",
+        "0x08025B60 (sub_08025B60)",
+        "0x08025C08 (sub_08025C08)",
+        "0x08025C26 (sub_08025C26)"
+      ]
+    },
+    {
+      "index": 83,
+      "name": "IRQ67_LPTIM4",
+      "address": "0x0803655B",
+      "entry": "0x0803655A",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803655A (handler_irq67_lptim4)"
+      ]
+    },
+    {
+      "index": 84,
+      "name": "IRQ68_LPTIM5",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 85,
+      "name": "IRQ69_RTC",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 86,
+      "name": "IRQ70",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 87,
+      "name": "IRQ71",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 88,
+      "name": "IRQ72",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 89,
+      "name": "IRQ73",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 90,
+      "name": "IRQ74",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 91,
+      "name": "IRQ75",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 92,
+      "name": "IRQ76",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 93,
+      "name": "IRQ77",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 96,
+      "name": "IRQ80",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    },
+    {
+      "index": 97,
+      "name": "IRQ81",
+      "address": "0x0803C4D9",
+      "entry": "0x0803C4D8",
+      "reachable": 1,
+      "max_depth": 0,
+      "sample": [
+        "0x0803C4D8 (handler_irq0_wwdg)"
+      ]
+    }
+  ],
+  "reachable_total": 99,
+  "orphans": [
+    "0x08010190",
+    "0x080101D4",
+    "0x0801020C",
+    "0x0801022E",
+    "0x08010242",
+    "0x08010262",
+    "0x08010278",
+    "0x08010282",
+    "0x08010292",
+    "0x080102BC",
+    "0x080102C6",
+    "0x080102D6",
+    "0x080102DE",
+    "0x08010390",
+    "0x080103B2",
+    "0x080103F2",
+    "0x0801043E",
+    "0x08010490",
+    "0x0801049E",
+    "0x080104BA",
+    "0x080104CA",
+    "0x0801051A",
+    "0x08010554",
+    "0x080105A8",
+    "0x080105B2",
+    "0x080105D8",
+    "0x0801061A",
+    "0x08010674",
+    "0x0801067A",
+    "0x080106B6",
+    "0x080106EC",
+    "0x080106F4",
+    "0x08010708",
+    "0x0801074A",
+    "0x08010778",
+    "0x080107B4",
+    "0x080107EE",
+    "0x0801084A",
+    "0x0801085A",
+    "0x080108A4",
+    "0x080108BA",
+    "0x080108FC",
+    "0x08010938",
+    "0x08010972",
+    "0x080109AA",
+    "0x080109BA",
+    "0x080109CC",
+    "0x080109DE",
+    "0x080109EC",
+    "0x08010A2E",
+    "0x08010A46",
+    "0x08010A5E",
+    "0x08010B9C",
+    "0x08010BCE",
+    "0x08010C06",
+    "0x08010C16",
+    "0x08010C7E",
+    "0x08010DAA",
+    "0x08010DC4",
+    "0x08011072"
+  ],
+  "orphan_count": 1768,
+  "shared_core": []
+}

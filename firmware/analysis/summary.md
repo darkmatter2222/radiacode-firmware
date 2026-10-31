@@ -1,0 +1,249 @@
+# RadiaCode-102 firmware analysis
+
+Device: RadiaCode-102, serial `RC-102-008228`, BLE `52:43:06:60:20:24`.
+
+## How the image was obtained
+
+The device was read over BLE (Nordic UART service `e63215e5-…fb901`, 4-byte little-endian
+length prefix + `cmd(u16 LE) + 0x00 + seq`). No write/erase command was used; only reads:
+
+| BLE command | value |
+| --- | --- |
+| `0x000A` GET_VERSION | boot `4.0` (Feb 20 2023 15:49:14), firmware `4.14` (Jul 7 2025 11:19:22) |
+| `0x000B` GET_SERIAL | `RC-102-008228` |
+| `0x0012` FW_IMAGE_GET_INFO | size `130148`, buffer `4096`, date_time `0x5AE7428A`, crc `0x13095ABB` |
+| `0x0013` | `19` (block/frame count) |
+| `0x0101` | `rc-102.bin`, `RadiaCode RC-102` |
+| `0x081C` RD_FLASH area 0/1 | XOR-obfuscated `PublicAPI` struct (Borland LCG), device parameters |
+
+The device exposes no image-read command (verified by a full `0x0000-0x0FFF` scan, with and
+without a `u32` argument), so the image bytes come from the official `rc-102z.bin` shipped in
+`https://downloads.radiacode.com/EN/RadiaCode.apk` (`assets/HardSoft/`). Identity with the unit
+in hand is proven by three independent matches: file length `130148`, header `date_time`
+`0x5AE7428A`, whole-file CRC `0x13095ABB` - all equal to the device's own `0x0012` answer -
+plus the in-image vendor-config text (3256 bytes) found byte-identically at `0x0802F9F0`,
+matching the device's `VS CONFIGURATION` string. See `firmware/analysis/verification.json`.
+
+Memory model: the container addresses blocks from `0x08000000`, so the flat image spans
+`0x08000000-0x0803CA00`; offsets `0x00000-0xFFFF` stay zero because the bootloader region
+(`0x08000000-0x0800FFFF`) is not part of this file. Application base = `0x08010000`.
+
+## File format (`Phyton\x00\x00` container)
+
+```
+header   : marker[8] | u32 header_size | u32 date_time | u32 buffer_size | u8[16] serial
+           | u8 version_low | u8 version_high | u32 file_count | u32 fw_header_size
+           | u8 compressed | u8 reserved | u32 crc32
+blocks[] : u32 header_size | u32 size ^ 0xCE27A932 | u32 addr ^ 0xB2D5A864
+           | key_block[512] | data[size aligned to 8]
+```
+
+* `key_block` is unmangled with hardcoded key table slot 0 (index at `[0:2]`, 16-byte data key at
+  `[2:18]`, CRC pair at `[18:26]`); the key/CRC region is then unmangled a second time with the
+  table selected by that index (`0-7` hardcoded, `8-15` zero table, `0xFFFF` device id key).
+* The Mangle cipher is a 48-round Feistel network over 8-byte blocks, 4 round keys
+  (`key[rnd & 3]`), round function `B' = rnd + key + ((B>>8)^(B<<6)) + B + A`.
+* CRC: MPEG-2 polynomial `0x04C11DB7`, no reflection, init `0xFFFFFFFF`, fed in 4-byte LE chunks
+  (`rcfmt.calculate_crc`).
+* Payload: LZSS, 2048-byte window pre-filled with `0x20`, initial index `2022`, flag bit 1 =
+  literal, 0 = match with 11-bit offset + 4-bit length (+2).
+
+## Decoded flash image
+
+`firmware/rc102_flash.bin`: 248320 bytes (`0x08000000`-`0x0803CA00`), every block CRC verified.
+
+| # | address | decompressed size | crc | instructions |
+| --- | --- | --- | --- | --- |
+| 0 | `0x08010000` | 0x7000 (28672) | `7f0ef5e3` | 10686 |
+| 1 | `0x08017000` | 0x4f00 (20224) | `d87719e6` | 7599 |
+| 2 | `0x0801bf00` | 0x4000 (16384) | `affad014` | 6193 |
+| 3 | `0x0801ff00` | 0x7a00 (31232) | `91a0e8c8` | 11986 |
+| 4 | `0x08027900` | 0x6400 (25600) | `a87ba0d5` | 9714 |
+| 5 | `0x0802dd00` | 0x4f00 (20224) | `3a567504` | 5872 |
+| 6 | `0x08032c00` | 0x5700 (22272) | `c758d839` | 8555 |
+| 7 | `0x08038300` | 0x4700 (18176) | `f790ccd9` | 6673 |
+
+## Verification against the live device
+
+
+Re-read from the unit after decompilation (`verify_match.py`, read-only commands only):
+
+| check | result |
+| --- | --- |
+| `size_matches_device` | True |
+| `date_time_matches_device` | True |
+| `crc_matches_device` | True |
+| `config_text_matches_device` | True |
+| `config_text_bytes` | 3256 |
+| `config_text_address` | 0x0802F9F0 |
+| `decoded_bytes_equal_block_sum` | True |
+
+Code inside indexed function ranges: 66,985 / 66,987 decoded instructions (100%).
+
+Device-reported builds: `Feb  6 2023 15:49:14`, `Jul  7 2025 11:19:22`
+
+## Core (Cortex-M4, ARMv7E-M)
+
+Vector table at `0x08010000` (98 entries):
+
+```
+[ 0] InitialSP    0x20000800
+[ 1] Reset        0x0803BA71
+[ 2] NMI          0x080363FD
+[ 3] HardFault    0x080363FF
+[ 4] MemManage    0x08036401
+[ 5] BusFault     0x08036403
+[ 6] UsageFault   0x08036405
+[ 7] Reserved7    0x00000000
+[ 8] Reserved8    0x00000000
+[ 9] Reserved9    0x00000000
+[10] Reserved10   0x00000000
+[11] SVCall       0x08036407
+[12] DebugMon     0x08036409
+[13] Reserved13   0x00000000
+[14] PendSV       0x0803640B
+[15] SysTick      0x0803640D
+```
+
+* Initial SP `0x20000800` (64 KiB SRAM at `0x20000000`), reset handler `0x0803BA71`.
+* All IRQ vectors collapse onto a single dispatcher (`0x0803C4D9`), i.e. one common IRQ entry.
+
+## Decompile statistics
+
+* Thumb-2 instructions decoded (capstone linear sweep): 66,745
+* data words emitted as `.word` in the listing: 291, ascii lines: 736, zero fills: 1,191
+* function candidates (vector table + `bl` targets + return-follows): 1867
+* functions decompiled to C by Ghidra 12.2: 1895 (2 failures)
+* ASCII strings harvested: 1906
+
+### Call graph (direct `b`/`bl` edges from each vector handler)
+
+
+1867 indexed functions, 99 reachable from a
+vector handler, 1768 only reachable through tables/indirect calls.
+
+| vector | handler | entry | reachable | depth |
+| --- | --- | --- | --- | --- |
+| 1 `Reset` | `0x0803BA71` | `0x0803BA70` | 33 | 7 |
+| 28 `IRQ12_DMA1_CH1` | `0x08036475` | `0x08036474` | 25 | 5 |
+| 82 `IRQ66_LPTIM3` | `0x0803653B` | `0x0803653A` | 25 | 5 |
+| 6 `UsageFault` | `0x08036405` | `0x08036404` | 20 | 6 |
+| 11 `SVCall` | `0x08036407` | `0x08036404` | 20 | 6 |
+| 12 `DebugMon` | `0x08036409` | `0x08036404` | 20 | 6 |
+| 14 `PendSV` | `0x0803640B` | `0x08036404` | 20 | 6 |
+| 15 `SysTick` | `0x0803640D` | `0x08036404` | 20 | 6 |
+
+### Static `{id, handler}` tables
+
+
+8 runs of >= 4 `{u32 id, u32 handler}` pairs;
+every handler (85) is present in the C output.
+
+* `0x08036C10` - 44 entries, id `0x0`..`0xC18`, handlers `0x0802090C`..`0x08034CD6`
+* `0x08020A18` - 10 entries, id `0x28F`..`0x2666`, handlers `0x08020944`..`0x08020936`
+* `0x08038CD4` - 10 entries, id `0x1`..`0xB`, handlers `0x08034CEC`..`0x08034E28`
+* `0x08038494` - 7 entries, id `0x0`..`0x0`, handlers `0x080170B4`..`0x080174F2`
+* `0x0803943C` - 7 entries, id `0x5`..`0x30`, handlers `0x08034914`..`0x08034996`
+
+### Most-called functions
+
+| address | name | callers |
+| --- | --- | --- |
+| `0x08017FA8` | `sub_08017FA8` | 163 |
+| `0x0801953C` | `sub_0801953C` | 110 |
+| `0x08017FCC` | `sub_08017FCC` | 85 |
+| `0x080194F4` | `sub_080194F4` | 63 |
+| `0x08019AD6` | `sub_08019AD6` | 58 |
+| `0x08025448` | `sub_08025448` | 51 |
+| `0x0802008C` | `sub_0802008C` | 50 |
+| `0x0801F920` | `sub_0801F920` | 46 |
+| `0x08017FF0` | `sub_08017FF0` | 45 |
+| `0x0802B0B8` | `sub_0802B0B8` | 42 |
+| `0x08024504` | `sub_08024504` | 40 |
+| `0x08018074` | `sub_08018074` | 39 |
+| `0x0801D694` | `sub_0801D694` | 29 |
+| `0x080183A2` | `sub_080183A2` | 28 |
+| `0x0802D368` | `sub_0802D368` | 25 |
+
+### Functions with literal-pool string references
+
+Derived from `firmware/analysis/xrefs.json` (literal pointers into the string table):
+
+
+| function | referenced strings (first) |
+| --- | --- |
+| `sub_08035AB6` | 12: `@ pG@m` |
+| `sub_08027D06` | 5: `Error: S%d Packet or String size corrupted! PacketSize = 0x%` |
+| `sub_08034F08` | 5: `BLE: HW error/Timer overrun` |
+| `sub_08035D8E` | 4: ` pGA` |
+| `sub_0803AEFE` | 4: `pGpGb` |
+| `handler_reset` | 4: `HIIK / hB` |
+| `sub_08034E78` | 3: `BLE: disconnected by reason 0x%0.2X` |
+| `sub_08028E40` | 2: `[VSFR_DEVICE_CTRL] / Addr=0x00000500 / Virtual=1 / Size=1 / [VSFR_DE` |
+| `sub_0802BD18` | 2: `%02d:%02d:%02d` |
+| `sub_08037260` | 2: `BhJ`pG8` |
+| `sub_08039A26` | 2: `pGpGb` |
+| `sub_0803A580` | 2: ` pG; pG` |
+| `sub_080165D8` | 1: ` pG@!` |
+| `sub_08020A04` | 1: ``pG1I/KO` |
+| `sub_08022E98` | 1: `BLE: Connection parameter update error #0x%0.2X! Interval is` |
+| `sub_08024638` | 1: `%d message(s) lost!` |
+| `sub_08024736` | 1: `%d, ` |
+| `sub_08027086` | 1: `BLE: error packet received => %0.2X; %0.2X; %0.2X; %0.2X!` |
+
+Ghidra left 2 stubs (`0x08016cc6`, `0x0802abf8`): data-table slots whose code is only in the listing.
+
+### Notable strings
+
+* `0x08019F1C` `RadiaCode-102`
+* `0x08027294` `CRC Error: 0x%08X != 0x%08X`
+* `0x0802FB09` `
+DispBacklight=0-9
+Language=English
+DBLag_ms=180000
+FrameTimeStep_us=10000
+Ene`
+
+## Artifacts
+
+```
+firmware/rc102_flash.bin            decoded flat flash image (base 0x08000000)
+firmware/rc102_blocks.json          per-block metadata
+firmware/listing/rc102_flash.s      annotated Thumb-2 disassembly
+firmware/decompiled/rc102_flash.c   Ghidra C decompilation, one block per function
+firmware/analysis/vectors.json      interrupt vector table
+firmware/analysis/strings.json      strings with addresses
+firmware/analysis/functions.json    function index (callers, size, decoded instructions)
+firmware/analysis/stats.json        counts for the numbers above
+firmware/analysis/xrefs.json        literal-pool cross-references (string -> function)
+firmware/analysis/callgraph.json    reachability from each vector handler
+firmware/analysis/tables.json       static {id, handler} dispatch tables
+firmware/analysis/verification.json device-vs-image byte comparisons
+firmware/analysis/device_capture.json  live identity, virtual strings, parameter areas (step 2)
+firmware/analysis/container_check.json vendor-file vs device field matches (step 3)
+firmware/analysis/vsfr_readout.json    live VSFR values, single-value form (tools)
+firmware/analysis/sweep_noarg.json     which command ids answer, no argument
+firmware/analysis/sweep_witharg.json   which command ids answer, with a u32 argument
+firmware/decompiled/index.json      C file: function -> line range (keys are upper-case hex)
+firmware/analysis/summary.md        this file
+```
+
+## Reproduce
+
+```powershell
+python pipeline/run.py                    # every step, in order
+python pipeline/run.py --list             # the step table
+python pipeline/run.py --only 1,4,5       # offline: self-test, decode, disassemble
+python pipeline/run.py --only 3           # fetch + match the vendor container
+python pipeline/run.py --only 2           # live read-only capture (BLE)
+python pipeline/run.py --only 6           # Ghidra headless decompilation
+python pipeline/run.py --from 7           # index, xrefs, callgraph, tables, verify, report
+python pipeline/tools/lookup.py 0x080275C4   # ad-hoc query: function + callers + strings
+python pipeline/tools/read_vsfrs.py          # live VSFR readout
+```
+
+Naming: the capstone index (`functions.json`, `xrefs.json`) uses `sub_XXXXXXXX`; the Ghidra C
+uses `FUN_xxxxxxxx` (lower-case hex), `handler_*` for vector-table entries and
+`tbl_<id>_<address>` for handlers found in a static `{id, handler}` table. `0x`-prefixed,
+upper-case addresses in `index.json` map a function address to its line range in `rc102_flash.c`.
+

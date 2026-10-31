@@ -1,0 +1,10 @@
+* text=auto
+*.py text
+*.md text
+*.java text
+*.json text
+*.html text
+*.sql text
+*.s text
+*.c text
+*.bin binary

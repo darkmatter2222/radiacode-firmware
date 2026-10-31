@@ -1,0 +1,108 @@
+{
+  "address": "52:43:06:60:20:24",
+  "taken": "2026-10-31T10:10:25",
+  "single_nonzero": {
+    "VSFR_DEVICE_CTRL": {
+      "RD_VIRT_SFR": {
+        "hex": "010000003e000000"
+      }
+    },
+    "VSFR_DEVICE_LANG": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000000000000"
+      }
+    },
+    "VSFR_DEVICE_ON": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000000000000"
+      }
+    },
+    "VSFR_DEVICE_TIME": {
+      "RD_VIRT_SFR": {
+        "hex": "01000000173d3400"
+      }
+    },
+    "VSFR_BLE_TX_PWR": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000003000000"
+      }
+    },
+    "VSFR_DISP_CTRL": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000005000000"
+      }
+    },
+    "VSFR_DISP_BRT": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000009000000"
+      }
+    },
+    "VSFR_DISP_CONTR": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000005000000"
+      }
+    },
+    "VSFR_DISP_OFF_TIME": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000005000000"
+      }
+    },
+    "VSFR_DISP_ON": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000001000000"
+      }
+    },
+    "VSFR_DISP_DIR": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000000000000"
+      }
+    },
+    "VSFR_DISP_BACKLT_ON": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000000000000"
+      }
+    },
+    "VSFR_SOUND_CTRL": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000000030000"
+      }
+    },
+    "VSFR_SOUND_VOL": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000032000000"
+      }
+    },
+    "VSFR_SOUND_ON": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000001000000"
+      }
+    },
+    "VSFR_VIBRO_CTRL": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000003000000"
+      }
+    },
+    "VSFR_VIBRO_ON": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000001000000"
+      }
+    },
+    "VSFR_ALARM_MODE": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000001000000"
+      }
+    },
+    "VSFR_MS_RUN": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000000000000"
+      }
+    },
+    "VSFR_CHARGER_STATE": {
+      "RD_VIRT_SFR": {
+        "hex": "0100000001000000"
+      }
+    }
+  },
+  "batch_shapes": {},
+  "string_pairs": {}
+}
