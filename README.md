@@ -1,97 +1,833 @@
-# RadiaCode application firmware research
+# RadiaCode firmware — extracted, decompiled, documented
 
-Vendor application containers for six RadiaCode builds, reproducible decoding,
-Thumb disassembly, Ghidra exports, and bounded reconstruction experiments.
+Reverse engineering of the **RadiaCode-102** scintillation dosimeter firmware (unit in hand: serial
+`RC-102-008228`, BLE `52:43:06:60:20:24`, hardware `1`, firmware **4.14**). The project combines vendor application containers, historical **BLE** observations
+(Nordic UART Service), and a rerunnable 17-step extraction and analysis pipeline.
+No JTAG/SWD dump is included. The current pipeline defaults to offline analysis;
+explicit live operation and its state-changing commands are described in §2.
 
-**Full firmware equivalence is not established. These C exports are not a
-complete buildable replacement firmware. No generated replacement was flashed.**
-The bootloader is absent; the first 64 KiB of the flat images are synthetic
-address-preserving padding. Preserve the vendor containers as immutable inputs.
+**Current progress:** all six application images reproduce with valid payload CRCs,
+fresh Ghidra exports are reproducible, and compiled reconstruction experiments are
+under test. A complete buildable replacement firmware is still in progress.
+See §4 for the evidence and [ROADMAP.md](ROADMAP.md) for the next milestones.
 
-## Current evidence
+The hardware, protocol and flow descriptions below retain the original research
+narrative. Historical captures are identified as such; interpretations of board
+hardware, bootloader behavior and undocumented commands remain working hypotheses
+unless linked evidence establishes them.
 
-- All six decoded images reproduce the checked-in bytes; 51 payload-block CRCs pass.
-- The container carried-stream round trip now really decrypts and re-encrypts
-  the key and payload blocks. It does not compile recovered application source.
-- Fresh Ghidra analysis sets Thumb context before analysis, maps SRAM/MMIO, and
-  disassembles seeded entries. Warnings and unresolved control flow remain tracked.
-- Five ARM-compiled reference-build candidates (one is a single dispatcher path)
-  are tested on 1,360 deterministic cases. See `reconstruction/validation.json`.
-- A separate floating-point predicate experiment passes 10,947 return/memory/ABI
-  comparisons but still differs in FPSCR exception flags. See
-  [reconstruction/CALIBRATION.md](reconstruction/CALIBRATION.md).
-- An assembler/linker baseline preserves all six original images exactly. This
-  earns no source-recovery credit and is not a newly reconstructed firmware.
-- Z3 checks auxiliary format properties. They are not proofs of firmware equivalence.
-- Device captures are historical observations. No fresh hardware equivalence test
-  has been performed. Reports mark unavailable raw-ciphertext tests as SKIP.
+Six builds are registered (one directory per model under `firmware/`, each holding one firmware
+version): the RadiaCode-102 `hw1-fw4.14` build is the reference for the deepest analysis, all six carry
+their vendor container plus regenerated decode, disassembly and Ghidra artifacts (§3.1).
 
-The authoritative per-target status is `firmware/<target>/analysis/confidence.json`.
-`release_ready` remains false. See [ROADMAP.md](ROADMAP.md) for unfinished work and
-[docs/VALIDATION.md](docs/VALIDATION.md) for contracts and limitations.
-
-## Reproduce offline
-
-Python 3.12 and the pinned packages:
-
-```sh
-python -m pip install -r requirements.txt
-python -m unittest discover -s tests -v
-python pipeline/run.py --all-devices --only 1,13,14,15,16,17,12
-python pipeline/release_gate.py
-```
-
-Exit codes: **0** selected work passed/completed, **1** failure, **2** inconclusive
-or unavailable evidence. A report-generation exit 0 is not a firmware certification.
-The decoder comparison and release gate currently return 2 intentionally.
-
-`run.py` defaults to offline steps. Live steps require explicit `--live`; unknown
-command sweeps additionally require `--unsafe-command-sweep` because commands can
-change device state. Session setup/clock writes are not read-only. The staging
-command `0x0013` is no longer sent by default capture/verification.
-
-## Fresh decompilation
-
-Use Ghidra 12.2 and JDK 25. Set `GHIDRA_HOME` and `JAVA_HOME` to their unpacked
-locations. The official Ghidra 12.2 ZIP used in this audit has SHA-256
-`2c2cd776db3c1f6a097ba418922378ac3649cadd5e844a6f5f088ae628a7be67`.
-
-```sh
-python pipeline/run.py --all-devices --only 5,6,7,8,9,10
-python pipeline/run.py --all-devices --only 13,14,15,16,17,12
-```
-
-The Capstone stage uses control-flow discovery, vectors, static table candidates,
-and image-hash-bound reviewed seeds. It does not classify printable instructions
-as strings or declare every address after a return to be a new function.
-Ghidra discovers additional code independently. The difference is unresolved
-coverage, not a reason to silently inflate agreement percentages.
-
-## Compile and execute reconstructed candidates
-
-Install GNU Arm Embedded GCC/binutils. Set `ARM_GCC` to the compiler executable
-if it is not on PATH. The recorded run used GCC 13.2.1.
-
-```sh
-python pipeline/build_reconstruction.py
-```
-
-This builds preserved-byte baselines for all targets and compiles
-`reconstruction/rc102_leaf.c` for Cortex-M4. Original and compiled functions run
-in separate clean Unicorn instances. Returns, stack restoration, non-stack memory
-writes, and MMIO traces are compared. `build/` is disposable output; the JSON
-report records image/source/compiler/binary identity and failures.
-
-## Repository map
-
-| Path | Purpose |
+| file | what it is |
 | --- | --- |
-| `firmware/` | Immutable vendor inputs and regenerable analysis per target |
-| `pipeline/` | Decoder, discovery, decompiler driver, validators, release gate |
-| `reconstruction/` | Reviewed candidate C and compiled differential evidence |
-| `tests/` | Negative/mutation regressions and pinned upstream vectors |
-| `firmware.md` | Evidence-backed reference and limits |
-| `docs/historical/` | Pre-audit narratives, retained but not authoritative |
+| **`README.md`** (this file) | the whole story: extraction, decompilation, confidence, hardware, protocol, flows, capability matrix |
+| [`firmware.md`](firmware.md) | the original full firmware walkthrough: memory, container, VSFR map, config, channels, commands and verification, with a validation update |
+| [`agents.md`](agents.md) | short working notes: where each artifact lives and how it was generated |
+| [`pipeline/devices.json`](pipeline/devices.json) | the target registry: one block per (model, hardware, firmware) triple - paths, expected values, landmarks, BLE address |
+| `firmware/<model>/<hw+fw>/analysis/summary.md` | machine-generated statistics for that build, regenerated by step 12 |
+| `firmware/<model>/<hw+fw>/analysis/confidence.md` | the same build's evidence and unresolved work, regenerated by step 17 (§4) |
+| [`goal.md`](goal.md) | the original task brief, kept verbatim |
 
-No percentage of exported C blocks, decoded lines, byte accounting, or passing
-auxiliary properties is a percentage of recovered functionality.
+```
+             pipeline/devices.json  ->  the active target, e.g. "rc-102/hw1-fw4.14"
+                                 |
+                                 v  pipeline/config.py turns that key into every path below
+                                 |
+                       +----------------------+
+  BLE (NUS)  ────────► | step2 / step11 (BLE) |  explicit live capture
+                       +----------------------+          |
+                             ^  identity + CRC triple     |
+                             |                            v
++==================+    +-----------------+    +--------------------------------------------------+
+| RadiaCode.apk    |--->| step3 fetch +   |--->| firmware/rc-102/hw1-fw4.14/rc-102z.bin             |
+| downloads/.../EN |    |  crc cross-check|    | 130148 B "Phyton\0\0"                              |
++==================+    +-----------------+    +------------------------+---------------------------+
+                                                                         | step4  Mangle + LZSS
+                                                                         v
+                                         firmware/rc-102/hw1-fw4.14/flash.bin   248320 B flat
+                                                                         |
+          +------------------+---------------+---------------+-------------+--------+
+          |                  |               |               |                      |
+          v                  v               v               v                      v
+   step5 capstone      step6 Ghidra     step7 index     step8/9/10             step11 verify
+   listing + strings   C, tracked warnings   line map        xref/callgraph/        byte-exact vs device
+          |                  |              |            tables  (JSON)                      |
+          +------------------+--------------+---------------+---------------------------------+
+                                     |
+                                     v
+         step12  firmware/rc-102/hw1-fw4.14/analysis/{summary.md,manifest.json}
+
+   steps 13-17, the verification layers - offline, no unit needed:
+     step13 container re-encode ─┐
+     step14 capstone vs SLEIGH  ─┼─► analysis/{roundtrip,crosscheck,differential,formal}.json
+     step15 Unicorn vs models   ─┤          |
+     step16 Z3 proofs           ─┘          v
+                              step17  analysis/confidence.{json,md}  ->  evidence + limits
+```
+
+---
+
+## 1. Result at a glance
+
+| item | value | proven by |
+| --- | --- | --- |
+| firmware version | **4.14**, image `date_time 0x5AE7428A` (MS-DOS packed date/time → 2025-07-07 08:20:20), build stamp `Jul 7 2025 11:19:22` | `0x000A`, `0x0012`, `0x0101` + in-image string @ `0x08028F14` |
+| bootloader version | **4.0**, `Feb 6 2023 15:49:14` | `0x000A` array, id `0` |
+| serial | `RC-102-008228` | `0x000B`, VS `0x008`, area 1 text, BLE name |
+| vendor container | `firmware/rc-102/hw1-fw4.14/rc-102z.bin`, 130148 B, CRC-32/MPEG-2 `0x13095ABB`, 8 blocks | step 3 (`analysis/container_check.json`: every device field matched) |
+| flat flash image | `firmware/rc-102/hw1-fw4.14/flash.bin`, 248320 B, `0x08000000`-`0x0803CA00`, all 8 block CRCs OK | step 4 (`blocks.json`) |
+| MCU | ST STM32L4-class, Arm Cortex-M4F, ARMv7E-M / Thumb-2, `0x08000000` flash base | instruction set and register-address evidence; exact MCU/IRQ assignment unconfirmed |
+| application base / vectors | `0x08010000`, 98 entries, `InitialSP = 0x20000800`, `Reset = 0x0803BA71` | step 5 (`analysis/vectors.json`) |
+| disassembly | reachability-based Thumb candidates; unknown bytes remain explicit | step 5 (`analysis/stats.json`) |
+| decompilation | 999 exported reference blocks, 0 explicit failures, 43 blocks with warnings (Ghidra 12.2); incomplete coverage | `analysis/recovery_delta.json` |
+| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 1,360 compiled leaf comparisons | §4 and `reconstruction/validation.json` |
+| device parameters | VS `0x002` = 3256 B, byte-identical to the in-image text at `0x0802F9F0` | step 11 (`analysis/verification.json`) |
+| sensors | CsI(Tl) 10x10x10 `c10_CsI_C30035` + MCA, AS6212-AWLT temperature, MCU ADC (battery), 3-axis accelerometer, optical channel | `[DataStructure]`, VSFR map |
+| real-time cadence | `MinFrmPeriod_ms = 500` (2 Hz), `FrameTimeStep_us = 10000`, `DBLag_ms = 180000` | VS `0x002` |
+| image contents | 182784 B of application plus 65536 B synthetic padding; bootloader bytes absent | decoded block bounds |
+
+---
+
+## 2. How the firmware was extracted
+
+The historical `0x0000`-`0x0FFF` command sweeps found no general memory-read
+command for the tested request forms and device state. This is not proof that no
+such command exists. Bulk image bytes come from the vendor container. The stored
+BLE identity, size/date/CRC and configuration-text matches support correspondence
+with the observed unit; they are not a full readback of its flash.
+
+```
+              device (BLE)                     vendor file
+   ┌───────────────────────────┐        ┌────────────────────────────┐
+   │ 0x0012 FW_IMAGE_GET_INFO  │        │ …/hw1-fw4.14/rc-102z.bin   │
+   │  size      = 130148       │ <====> │ len(...)        = 130148   │
+   │  date_time = 0x5AE7428A   │ <====> │ header.date_time           │
+   │  crc32     = 0x13095ABB   │ <====> │ crc32(whole file)          │
+   │ 0x0013 = 19 frames        │ <====> │ 8 Mangle/LZSS blocks       │
+   │ 0x0101 = "rc-102.bin",    │ <====> │ name + product in header   │
+   │        "RadiaCode RC-102" │        │                            │
+   │ VS 0x002 config text 3256 │ <====> │ in-image bytes @0x0802F9F0 │
+   └───────────────────────────┘        └────────────────────────────┘
+             (verification.json: every "…_matches_device" flag is true)
+```
+
+Wire details (from the decompiled parser + the community `radiacode` client, and reproduced by
+`pipeline/rcble.py`):
+
+```
+host -> device, one logical frame, chopped into 18-byte GATT writes
+ +---------------------------------------------------------------+
+ | u32 LE length | u16 LE cmd | u8 0x00 | u8 seq | args ...      |
+ +---------------------------------------------------------------+
+                             |            └ 0x80 + (counter % 32)
+                             └ header byte is always 0
+
+device -> host, one notify stream
+ +---------------------------------------------------------------+
+ | u32 LE length | u16 LE cmd | u8 0x00 | u8 seq | u32 version   |
+ |                                        (echo)  | u32 size      |
+ |                                                | data[size]    |
+ +---------------------------------------------------------------+
+   matching: the reply header (4 B) must equal the request header
+```
+
+Historical session setup used two state-changing commands: `SET_EXCHANGE` (`0x0007`, sign `01 FF 12 FF`,
+the compiled constant `0xFF12FF01` sits at `0x08027DA0` / `0x08028EEC`) opens the session - before it,
+most ids stay silent - and `SET_LOCAL_TIME` (`0x0A04`, eight `u8` fields) refreshes the clock. The historical capture also used `0x0013`, an update/staging command; it must not
+be described as read-only. Current capture omits it by default. Live steps require
+`--live`, and unknown-command sweeps additionally require `--unsafe-command-sweep`.
+Clock writes change device state, and repeated unknown requests are not assumed safe.
+
+The four parameter/record areas read with `0x081C` arrive XOR-obfuscated with a seeded Borland LCG
+(`seed = seed * 0x015A4E35 + 1`, byte keystream `(seed >> 16) & 0xFF`, one continuous state: the size
+word first, then the payload), which `pipeline/protocol.py` unwraps.
+
+---
+
+## 3. The pipeline (one entry point, 17 steps)
+
+Every step is a separate process whose paths come from `pipeline/config.py`, which resolves the
+active target key against the registry `pipeline/devices.json`. One target = one directory, so runs
+never interfere with each other.
+
+```
+   python pipeline/run.py                          # default offline steps, default target
+   python pipeline/run.py --list                   # targets + step table
+   python pipeline/run.py --device rc-110/fw4.14   # one build
+   python pipeline/run.py --all-devices            # all six, in registry order
+   python pipeline/run.py --only 1,4,5             # selected steps
+   python pipeline/run.py --from 7                 # resume at step 7
+   python pipeline/run.py --only 2 --live --unsafe-command-sweep                # step 2 plus the long id sweep
+   $env:RC_TARGET='rc-410/fw4.16'; python pipeline/step5_disassemble.py   # steps run alone too
+```
+
+| # | file | needs | what it does | writes (inside the target dir) |
+| --- | --- | --- | --- | --- |
+| 1 | `step1_validate.py` | offline | self-test the container primitives against the `PhytonUtils` reference vectors | stdout |
+| 2 | `step2_probe.py` | BLE | explicit live capture: identity, 15 virtual strings, register index space, 4 parameter areas; `--unsafe-command-sweep` enables unknown-command probing | `analysis/capture.json`, `analysis/sweep_{noarg,witharg}.json` |
+| 3 | `step3_fetch.py` | network | download `RadiaCode.apk` + `RadiaCode.exe`, unpack the containers into their target dirs, match `size / date_time / crc32` | `<container>.bin`, `official/{apk,exe}.bin`, `analysis/container_check.json` |
+| 4 | `step4_decode.py` | offline | header parse, per-block Mangle decrypt + CRC + LZSS -> flat image | `flash.bin`, `blocks.json` |
+| 5 | `step5_disassemble.py` | offline | Capstone Thumb reachability discovery, reviewed seeds, unknown bytes, strings + vectors | `listing.s`, `analysis/{strings,vectors,functions,stats}.json` |
+| 6 | `step6_decompile.py` | Ghidra | headless analysis with explicit Thumb context, SRAM/MMIO maps, seeded disassembly and C export | `decompiled.c`, `ghidra_proj/` |
+| 7 | `step7_index_c.py` | offline | function -> C line-range index | `index.json` |
+| 8 | `step8_xrefs.py` | offline | literal-pool xrefs: which function loads which string / callee | `analysis/xrefs.json` |
+| 9 | `step9_callgraph.py` | offline | BFS reachability from every vector handler | `analysis/callgraph.json` |
+| 10 | `step10_tables.py` | offline | static `{id, getter/handler}` runs (the numbered 91-entry table, the 44-entry registry) | `analysis/tables.json` |
+| 11 | `step11_verify.py` | BLE | byte-for-byte device vs image verification, plus the registry cross-check | `analysis/verification.json` |
+| 12 | `step12_report.py` | offline | statistics report + this build's identity/checksum manifest | `analysis/summary.md`, `manifest.json` |
+| 13 | `step13_roundtrip.py` | offline | **L1** container re-encode from the model, byte diff vs the vendor file; LZSS encoder equivalence | `analysis/roundtrip.json` |
+| 14 | `step14_crosscheck.py` | offline | **L2** capstone vs Ghidra/SLEIGH instruction agreement, preserving operand order, conditions, flags, shifts and widths | `analysis/crosscheck.json` |
+| 15 | `step15_differential.py` | offline | **L4** Unicorn execution of the original code vs the Python models, plus pure-model vectors | `analysis/differential.json` |
+| 16 | `step16_formal.py` | offline | **L5** Z3 proofs over the side-effect-free parts of the model | `analysis/formal.json` |
+| 17 | `step17_confidence.py` | offline | report evidence, warnings, provenance and explicit unresolved work | `analysis/confidence.json`, `analysis/confidence.md` |
+
+Offline operation is the default. Live steps require `--live`; step 6 requires
+Ghidra, and step 3 needs network access. Exit 0 means the selected work completed,
+1 means failure, and 2 means inconclusive or unavailable evidence. Missing tests
+are not passes. Step 12 writes manifests last, after other reports.
+
+Step 14 needs `ghidra_listing.json` from step 6. Step 15 runs only transcriptions
+bound to an approved whole-image SHA-256, rather than matching a short prefix.
+Historical captures are preserved; no fresh physical-device validation was
+performed during the reconstruction work.
+
+Helper modules (importable, no side effects): `pipeline/config.py` (registry + path resolution),
+`pipeline/protocol.py` (ids, framing, record decoders), `pipeline/rcble.py` (bleak transport +
+framing), `pipeline/rcsession.py` (retrying session), `pipeline/rcfmt.py` (Phyton container both ways:
+Mangle Feistel, CRC-32/MPEG-2, LZSS decode *and* encode, `reencode_file`), `pipeline/emulate.py`
+(Unicorn harness: region maps, `run_function`, write trace), `pipeline/models.py` (hand transcriptions
+of the routines under test + their whole-image applicability hashes). One-off inspectors live in `pipeline/tools/`
+(`lookup.py`, `read_vsfrs.py`, `probe.py`, `inspect_image.py`, `inspect_blocks.py`,
+`inspect_vectors.py`, `debug_*.py`, `blescan.py`, `ifaces.py`, `fetch_apk.py`, `analyze_official.py`);
+they read the same registry, so `RC_TARGET=…` selects the build they look at.
+
+Requirements: Python 3.12 and `pip install -r requirements.txt`; Ghidra 12.2
+and JDK 25 for fresh decompilation (`GHIDRA_HOME`, `JAVA_HOME`), and GNU Arm GCC
+for compiled candidates (`ARM_GCC` when not on PATH). Detailed reproduction
+commands and tool identities are in [docs/REPRODUCING.md](docs/REPRODUCING.md).
+
+### 3.1 Registered targets
+
+| target key | device | fw | container | B | blocks | image end |
+| --- | --- | --- | --- | --- | --- | --- |
+| `rc-102/hw1-fw4.14` | RadiaCode-102 (hw 1) | 4.14 | `rc-102z.bin` | 130148 | 8 | `0x0803CA00` |
+| `rc-101/fw4.14` | RadiaCode-101 | 4.14 | `rc-101_v01z.bin` | 130388 | 8 | `0x0803CE00` |
+| `rc-103/fw4.14` | RadiaCode-103 | 4.14 | `rc-103z.bin` | 130132 | 8 | `0x0803CA00` |
+| `rc-103g/fw4.14` | RadiaCode-103G | 4.14 | `rc-103gz.bin` | 130444 | 8 | `0x0803CB00` |
+| `rc-110/fw4.14` | RadiaCode-110 | 4.14 | `rc-110z.bin` | 133312 | 9 | `0x0803D800` |
+| `rc-410/fw4.16` | RadiaCode-410 | 4.16 | `rc-410z.bin` | 140836 | 10 | `0x08040800` |
+
+The `…z.bin` names are the LZSS-compressed containers the vendor's updater ships; `rc-101` also keeps its
+uncompressed sibling `rc-101_v01.bin` (188576 B, `compressed = 0`, 9 blocks) in the same directory, and
+the pipeline uses the compressed one as `primary_container`.
+
+All six decode with every per-block CRC verified, and all six match their registry triple
+(`size / date_time / crc32`) in `analysis/container_check.json`. Only `rc-102/hw1-fw4.14` has a live
+unit behind it, so only that directory carries the on-device evidence (`capture.json`,
+`verification.json`, `vsfr_readout.json`, the two `sweep_*.json`, the four `probe_*.json` files).
+Every build's `manifest.json` hashes its current artifacts exactly. Generated
+`summary.md`, `confidence.md` and `recovery_delta.json` contain the current counts
+and review inventory. Candidate/function counts measure discovery, not recovered
+functionality; missing applicable tests remain SKIP or INCONCLUSIVE.
+
+The naming convention is `firmware/<model>/<hw+fw version>/`: the hardware revision comes from the
+`0x000B` reply (first byte, `01` here) and the firmware version from `0x000A`, both read from the
+device; a model whose hardware revision has not been read uses `fw<version>` alone.
+
+### 3.2 Adding a device or a firmware version
+
+1. Append one block to `pipeline/devices.json` - `key`, `model`, `device`, `hw`, `fw`, `boot`,
+   `analyzed` (drives the "analyzed" column of each `summary.md`), `serial`, `ble_address` (`null` when
+   no unit is in hand), `dir`, `containers`, `primary_container`, `mcu` (family, processor id, base,
+   vector table, initial SP, reset), `expected` (`size / chunk / buffer_size / date_time / crc32 /
+   frames / blocks`) and `landmarks` (the addresses the reports quote; an empty block prints `n/a`).
+   No step file needs editing.
+2. Acquire the correct vendor container with explicit step 3, then run the offline
+   stages for `--device <key>`. Run step 6 with Ghidra configured. With a unit attached,
+   set `ble_address` and explicitly select steps 2 and 11 with `--live`. Review the
+   command behavior before live work. Generate confidence and manifests last.
+3. A new firmware version of an existing model is another block with a different `dir`
+   (`firmware/rc-102/hw1-fw4.15`), so old and new builds sit side by side and every diagram keeps its
+   exact byte offsets.
+
+The two installers in `official/` (`apk.bin`, `exe.bin`, ~55 MB together) are gitignored and refetched
+by `--only 3`; the containers themselves are committed inside the target directories.
+
+---
+
+## 4. Confidence in the decompilation
+
+The project tests each layer separately. Extraction accuracy, readable C,
+compiled behavior and physical-device equivalence answer different questions.
+The current per-build record is `analysis/confidence.json`.
+
+| layer | current evidence | what it establishes |
+| --- | --- | --- |
+| Container and flash | Six reproduced images; 51/51 payload CRCs; real carried-stream re-encryption | Reproducible extraction of the supplied application containers |
+| Decompiler recovery | Ghidra 12.2, explicit Thumb context; repeated C exports identical for all six builds | Reproducible analysis, with warnings and unresolved coverage still tracked |
+| Instruction comparison | Conditions, flags, operand order, widths and shifts retained | Conservative agreement where established; unknown renderings remain unresolved |
+| Compiled leaves | Five small candidates, one limited dispatcher path; 1,360 comparisons pass | Tested return, memory and integer ABI behavior in a bounded emulator |
+| Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/ABI agreement; FPSCR exception flags still differ |
+| Formal checks | Ten auxiliary model properties pass | Properties of format/model operations, not original-versus-rebuilt firmware equivalence |
+| Hardware behavior | Historical BLE captures only | No physical original-versus-rebuilt comparison yet |
+
+For the reference build, fresh recovery changed 1,895 exported blocks to 999,
+explicit failures from 2 to 0, truncated blocks from 627 to 0, and warning-bearing
+blocks from 690 to 43. The lower function count is **not** proof that removed
+candidates were invalid; `analysis/recovery_delta.json` lists them for review.
+
+Two concrete tests illustrate why the distinctions matter: compiled comparisons
+caught a byte-versus-word load error in the `0x502` accessor path, and the VFP
+experiment found NaN behavior that differs from the readable decompiler output.
+It also exposed a memory-observer problem in Unicorn; that case is now a
+regression test. Details are in [docs/VALIDATION.md](docs/VALIDATION.md) and
+[reconstruction/CALIBRATION.md](reconstruction/CALIBRATION.md).
+
+The release gate remains INCONCLUSIVE until complete reconstruction and hardware
+evidence exist. Tested repository improvements can be merged independently;
+a green test suite is not a firmware certification.
+
+---
+
+## 5. Hardware
+
+### 5.1 MCU and on-chip peripherals
+
+The peripheral labels in the original table below are provisional hypotheses,
+not validated IRQ identities. Generated vectors now use neutral numbered names.
+The exact MCU and board mapping still need confirmation.
+
+The image is a self-contained Cortex-M4 program: vectors at `0x08010000`, `InitialSP = 0x20000800`,
+`Reset = 0x0803BA71`, the software-reset constant pair `0x05FA0004` (`SCB->AIRCR`, VECTKEY | SYSRESETREQ)
+in literal pools at `0x0801E330`, `0x08022724`, `0x08027DC0`, and peripheral-register accesses. Nine exception
+stubs (`0x080363FD`-`0x0803640D`) and exactly nine IRQs have their own code; every other vector points at
+`0x0803C4D9`, a 4-byte self-loop.
+
+```
+  IRQ  handler        what it services (from the code + the vector name)
+  ---  ------------   ---------------------------------------------------------
+    7  0x0803640F     EXTI1  - button / radio interrupt line
+    8  0x08036423     EXTI2  - second external line
+    9  0x0803654B     EXTI3
+   10  0x08036437     EXTI4
+   11  0x08036455     DMA1_CH0  - BLE module + ADC transfers
+   12  0x08036475     DMA1_CH1  -> posts event FUN_080191F0
+   18  0x080364A1     ADC1_2    - battery / analog sampling
+   23  0x080364BF     USART1    - BLE module link
+   40  0x080364F9     DMA2_CH0
+   50  0x0803651B     AES       - container CRC/crypto helpers
+   54  0x0803651F     TIM12
+   65  0x08036523     LPUART2
+   66  0x0803653B     LPTIM3    - frame tick / wake
+   67  0x0803655B     LPTIM4
+  rest 0x0803C4D9     self-loop (unused)
+```
+
+Each real ISR is a 3-6 instruction trampoline: read a peripheral status word, OR a bit into a shadow
+status (`0x20`, `0x40`, `0x80`, ...), post an event. The numbered trampolines at `0x0803C4B6`+ load the id
+(`movs r1, #n`) and tail-jump into the shared entry at `0x0803C4B2`. That is the whole interrupt model:
+**tiny ISRs + one event pump** (§9).
+
+### 5.2 Sensors and analog channels
+
+Named hardware in the device's own `[DataStructure]` text (VS `0x002`) plus the VSFR map:
+
+| sensor tag | physical part | reported as | channel id / VSFR addr |
+| --- | --- | --- | --- |
+| `c10_CsI_C30035` | CsI(Tl) scintillator, 10 x 10 x 10 mm, with the MCA front end | raw counts, count rate (cps), dose rate (R/h), dose (R), dose counter (uR), the two error percentages | ids 2, 3, 4, 5, 7, 16, 22 / `0x8020`, `0x8021`, `0x8022` |
+| `AS6212-AWLT` | digital thermometer (interface not established here) | temperature in degC, range `-20`..`40`, `raw*0.01 - 20` | id 8 / `0x8024`, `0x8033`-`0x8035` |
+| `MCU_ADC` | internal ADC (IRQ 18) | battery charge level in %, `raw*0.01`; raw supply-voltage samples | id 9 / `0xFFFF000C` |
+| accelerometer | 3-axis | `ACC_X`, `ACC_Y`, `ACC_Z` (u16, signed) | `0x8025`-`0x8027` |
+| optical channel | light sensor | `OPT` (u16) | `0x8028` |
+| MCA chain | bias / comparator / digital pots | `VBIAS_mV`, `COMP_LEV`, `DPOT_RDAC`, `DPOT_RDAC_EEPROM`, `DPOT_TOLER` | `0xC000`, `0xC001`, `0xC004`-`0xC006` |
+| charger | state flag | `VSFR_CHARGER_STATE` (u8, signed) | `0xC200` |
+
+Energy calibration is a 3-coefficient polynomial `keV = A0 + A1*ch + A2*ch^2`, read live from VS `0x202`
+(12 bytes, three IEEE-754 floats) and mirrored inside the VS `0x200` / `0x205` headers:
+
+```
+   A0 = 5.158747    A1 = 2.375635    A2 = 0.000356931
+   ch   0 ->    5.159 keV     ch 100 ->  246.292 keV
+   ch 512 -> 1315.051 keV     ch 1023 -> 2808.972 keV
+```
+
+### 5.3 Battery metrics
+
+There is no dedicated fuel gauge: the level is an ADC ratio plus a charger flag.
+
+```
+ CHN_ChargeLevel    id 9, Sensor=MCU_ADC, Unit=%, DType=4, RType=1, Expr=1 P1=0.01  ->  % = raw/100
+ VSFR_CHARGER_STATE @0xC200  u8 signed, answered 1 while idle
+ VSFR_SYS_MCU_VREF  @0xFFFF000C  u32 (fmt, signed)          -> ADC reference word
+ raw supply samples  f32s inside the VS 0x100 frame stream   -> 4.947917, 4.875, 4.770833, 4.854167 V
+ BattChargeMonitor=0 in [DeviceParams]                       -> active charge monitor off
+```
+
+Observed live: the ADC sample floats inside VS `0x100` sit at `4.947917` / `4.875` / `4.770833` V, but their interpretation as actual cell voltage is unverified, and `VSFR_CHARGER_STATE` reports `1`. `BattChargeMonitor=0` plus
+`DBLag_ms=180000` explain why the charge/temperature VSFRs answer the bare zero word at idle: the
+`GRP_RareData` group that carries them is refreshed on the 3-minute cycle, not per frame.
+
+### 5.4 Live VSFR readout (single-value form: `0x0824` + `u32` address)
+
+`python pipeline/tools/read_vsfrs.py` -> `analysis/vsfr_readout.json`. The reply of `0x0824`
+belongs to the same envelope family as the string reads: 8 bytes `{u32 version=1, u32 value}` when the
+item is populated, a bare 4-byte `00000000` when it is not. Of the 67 mapped entries, these 20 answered
+with a non-zero value while the unit sat idle (value = the second word, little-endian):
+
+| VSFR | addr | raw reply | value | reading |
+| --- | --- | --- | --- | --- |
+| `VSFR_DEVICE_CTRL` | `0x000500` | `010000003e000000` | `62` | control word |
+| `VSFR_DEVICE_LANG` | `0x000502` | `0100000000000000` | `0` | index 0 = `English`, matching `Language=English` |
+| `VSFR_DEVICE_ON` | `0x000503` | `0100000000000000` | `0` | enum 0/1 |
+| `VSFR_DEVICE_TIME` | `0x000504` | `01000000173d3400` | `3423511` | ms since boot (~57 min), same order as the event-log stamps |
+| `VSFR_BLE_TX_PWR` | `0x000700` | `0100000003000000` | `3` | transmit-power index |
+| `VSFR_DISP_CTRL` | `0x000510` | `0100000005000000` | `5` | control word |
+| `VSFR_DISP_BRT` | `0x000511` | `0100000009000000` | `9` | max of the declared `DispBacklight=0-9` range |
+| `VSFR_DISP_CONTR` | `0x000512` | `0100000005000000` | `5` | contrast |
+| `VSFR_DISP_OFF_TIME` | `0x000513` | `0100000005000000` | `5` | index 5 of `5 s;10 s;15 s;30 s;2 min;5 min` = **5 min** |
+| `VSFR_DISP_ON` | `0x000514` | `0100000001000000` | `1` | on |
+| `VSFR_DISP_DIR` | `0x000515` | `0100000000000000` | `0` | orientation |
+| `VSFR_DISP_BACKLT_ON` | `0x000516` | `0100000000000000` | `0` | backlight off at idle |
+| `VSFR_SOUND_CTRL` | `0x000520` | `0100000000030000` | `768` | 16-bit packed control (`0x0300`) |
+| `VSFR_SOUND_VOL` | `0x000521` | `0100000032000000` | `50` | 50 % |
+| `VSFR_SOUND_ON` | `0x000522` | `0100000001000000` | `1` | on |
+| `VSFR_VIBRO_CTRL` | `0x000530` | `0100000003000000` | `3` | control word |
+| `VSFR_VIBRO_ON` | `0x000531` | `0100000001000000` | `1` | on |
+| `VSFR_ALARM_MODE` | `0x0005E0` | `0100000001000000` | `1` | 1 = the two-level band model of `[DeviceParams]` |
+| `VSFR_MS_RUN` | `0x000603` | `0100000000000000` | `0` | measurement not running (host-driven) |
+| `VSFR_CHARGER_STATE` | `0x000C200` | `0100000001000000` | `1` | charge state 1 |
+
+Three negative results that matter, recorded rather than smoothed over: the measurement block
+(`0x8000`-`0x8035`: counts, dose, temperature, accelerometer, optical, Vbias) and the system block
+(`0xFFFF0000`+) answered the bare zero word for every entry at idle - consistent with `BattChargeMonitor
+= 0` and the 3-minute `DBLag_ms` cycle; the `0x082A` batch form did not answer for `{addr}`,
+`{addr,count}` or `{count,addr}`; and the numbered index form of `0x0824` (arguments `0x00`-`0x5A`)
+returns `00000000` for all 91 indices on this build, so that table is recovered statically by step 10.
+
+### 5.5 Timings, frequencies and intervals
+
+Everything the device itself declares:
+
+| key | value | meaning |
+| --- | --- | --- |
+| `FrameTimeStep_us` | `10000` | declared interval = 10 ms (100 Hz), not 100 kHz; the 24-bit tick inside the record stream advances ~90 ticks between the two items of a frame |
+| `MinFrmPeriod_ms` | `500` | fastest real-time reporting period = **2 Hz** |
+| `DBLag_ms` | `180000` | database / rare-group lag = **3 min** |
+| `CR_AlarmMin_cps` / `CR_AlarmMax_cps` | `1e-1` / `50e3` | count-rate alarm band, 2 levels (`CR_AlarmsNum=2`) |
+| `DR_AlarmMin_R_h` / `DR_AlarmMax_R_h` | `1e-6` / `1e-1` | dose-rate alarm band, 2 levels |
+| `DS_AlarmMin_R` / `DS_AlarmMax_R` | `1e-6` / `1e3` | accumulated-dose alarm band, 2 levels |
+| `VSFR_DISP_OFF_TIME` | `5 s; 10 s; 15 s; 30 s; 2 min; 5 min` | display off-time enum (index 5 live) |
+| `DispBacklight` | `0`-`9` | 10 backlight levels (live value 9) |
+| `EnergyCompensation` | `1` | temperature compensation of the spectrum enabled |
+| `SpecFormatVersion` | `1` | spectrum wire-format revision |
+| `SP2DR_Table` | `CsI_10x10x10` | spectrum -> dose-rate table selected for this crystal |
+| `TextASCII_MaxSize` | `0` | ASCII text block disabled |
+| `BattChargeMonitor` | `0` | charge monitor off |
+| `Language` | `English` | UI language |
+
+BLE link timings are negotiated, not hard-coded; a rejected update is reported as
+`BLE: Connection parameter update error #0x%0.2X! Interval is %d.` (`0x08039008`), and host writes go out
+in 18-byte chunks (measured MTU-limited behaviour, matching the community client).
+
+---
+
+## 6. Memory and storage map
+
+```
+ 0x08000000 +---------------------------+  65536 B  vendor bootloader (never inside a container,
+            |  bootloader (not shipped) |           bootloader bytes are not acquired)
+ 0x0800FFFF +---------------------------+
+ 0x08010000 |  vector table, 98 words   |  InitialSP 0x20000800, Reset 0x0803BA71
+            |  code + literal pools     |  8 Mangle/LZSS blocks: 0x08010000, 0x08017000,
+            |                           |  0x0801BF00, 0x0801FF00, 0x08027900, 0x0802DD00,
+            |                           |  0x08032C00, 0x08038300
+ 0x0802F9F0 |  [DeviceParams] + [DataStructure] text, 3256 B (identical to live VS 0x002)
+ 0x080306AC |  VSFR map, 67 records {addr, size, type, flags, min, max}
+ 0x08035A64 |  numbered item table, 91 x {u32 id, u32 getter, u32 setter}, ids 0x00-0x5A
+ 0x08036C10 |  44-entry {id, handler} object/property registry (ids 0x400-0x40A, 0x800-0x80A, 0xC01-0xC18)
+ 0x0803CA00 +---------------------------+  end of image
+            Harness SRAM: 0x20000000-0x20007FFF (32 KiB); test stack 0x20007F00.
+            Vector initial SP is 0x20000800; actual board RAM capacity remains unconfirmed.
+            parameter areas (outside the code image, read with 0x081C, Borland-LCG XOR):
+              area 0 -> 72 B  : magic 0x19601217 + size, then mostly 0xFF (unwritten tail)
+              area 1 -> 448 B : magic 0x19601217 + size 0x1C0, "RC-102-008228", "rc-102.bin",
+                                "RadiaCode-102", 05 01 da da da ..., 3000
+              area 2, 3 -> status 12 (not present)
+```
+
+Capacity arithmetic: container 130148 B on the wire -> 182784 B of application after Mangle + LZSS
+(1.40 : 1 including the container header), 8 blocks of 16-31 KiB decompressed each; 248320 B flat image,
+of which the first 65536 B are zero-filled placeholder for the unshipped bootloader.
+
+---
+
+## 7. Boot-up sequence
+
+Working reconstruction from application code and strings. The bootloader itself
+is absent, so its checks and failure behavior below are hypotheses, not observed
+bootloader execution. String order alone does not establish initialization order.
+
+```
+ reset (hardware) ──► 0x08000000 vendor bootloader
+        │
+        │  validates the application image (whole-image CRC-32/MPEG-2 + per-block CRCs)
+        │  CRC mismatch  -> stays in the bootloader, waits for FW_IMAGE_WRITE
+        │  CRC ok        -> jumps to the application vector table
+        ▼
+ 0x08010001  Reset  @ 0x0803BA70/71
+        │  1. load SP from 0x08010000 (0x20000800)
+        │  2. install the vector table (98 entries)
+        │  3. seed the 91-entry item table (0x08035A64) and the 44-entry registry (0x08036C10)
+        ▼
+ "Start Main loop"   @ 0x0801F464
+        │  driver-table dispatcher: for each registered driver, call its poll routine
+        ▼
+ +----------------------------------------+     +-----------------------------------+
+ | event pump @ 0x0803C458-0x0803C4D9     | <-- | ISRs (9 real ones) post bits into |
+ | drains queues, runs deferred handlers  |     | a shadow status word              |
+ +----------------------------------------+     +-----------------------------------+
+        │
+        │  peripheral bring-up, in the order the strings appear:
+        │    "BLE: Hardware initialization" -> "BLE: Start"     (0x08022EE0-0x08022F34)
+        │    failure paths: "BLE: Init sequence error!", "BLE: Start sequence error!"
+        ▼
+ advertising  "RC-102-008228"      (= "RC-102-%06.6X" @ 0x08019F0C over the last two address bytes)
+        │
+        ▼  connect + subscribe
+ "BLE: client connected"  @ 0x08038124
+        │
+        ▼  first frame from the host
+ SET_EXCHANGE (0x0007) sign 01 FF 12 FF  ->  session opened, remaining ids go live
+```
+
+The repeated self-loop target appears in unused vectors. That does not establish
+that the application uses it as its normal idle loop.
+
+---
+
+## 8. Command handling: how one frame is processed
+
+```
+ 18-byte GATT writes
+        │  reassemble by the leading u32 length
+        ▼
+ sub_08027D06  frame validator          4 independent checks, each with its own error string
+        │   ├─ "Error: S%d Packet size corrupted! PacketSize=0x%08X"    @0x08037267
+        │   ├─ "Error: S%d Command corrupted!  Cmd=0x%08X"              @0x080372A0
+        │   ├─ "Error: S%d Valid sign corrupted! Sgn=0x%08X"            @0x080372CC
+        │   ├─ "Error: S%d Packet or String size corrupted! ..."         @0x080372FC
+        │   └─ "Error: S%d Data frame corrupted!"                        @0x08037354
+        ▼
+ first-level id switch  (small ids: 0x0005 0x0007 0x000A 0x000B 0x0012 0x0013)
+        │
+        ├─ second-level switches for 0x0101, 0x0807, 0x081C, 0x0824-0x082B, 0x0A04
+        │
+        └─ per-item access -> sub_080275C4, a subs/beq chain over the 16-bit VSFR address:
+              0x500 0x502 0x503 0x504 0x505-0x50D 0x510-0x516 0x520-0x522 0x530 0x531 0x5E0 0x603 0x700
+              +0x7900 -> the 0x8000-0x8035 measurement block
+              0xC000-0xC200 -> calibration block
+              0xFFFF0000+    -> system block
+           callers pass an item count and an 8-byte-per-item result buffer
+```
+
+Command responses observed in the historical sweeps (not an exhaustive protocol specification):
+
+| cmd | name | request | response |
+| --- | --- | --- | --- |
+| `0x0005` | `GET_STATUS` | - | `u32 2` |
+| `0x0007` | `SET_EXCHANGE` | sign `01 FF 12 FF` | echo (`05 01 da da 20 10 00 10 01 02 00 00`) |
+| `0x000A` | `GET_VERSION` | - | array of `{u16 id, u16 ver, u8 len, stamp}`: id `0` = boot 4 / `Feb 6 2023 15:49:14`, id `0x0E` = firmware 4 / `Jul 7 2025 11:19:22` |
+| `0x000B` | `GET_SERIAL` | - | `u32 len=12`, container serial field (printable `P22B91`); human id `RC-102-008228` |
+| `0x0012` | `FW_IMAGE_GET_INFO` | - | `{u32 size, u32 buffer_size, u32 date_time, u32 crc32}` |
+| `0x0013` | `FW_IMAGE_UPDATE` | - | `u32 19` (frame count of the staged image) |
+| `0x0101` | `RD_SIGNAT` | - | `{u32 date_time, u8 len, "rc-102.bin", u8 len, "RadiaCode RC-102", 01, 30}` |
+| `0x0807` | `RD_HW_CONFIG` | - | 15 B: `0f 00 00 00 00 00 00 00 00 00 01 e8 03 00 00` |
+| `0x081C` | `RD_FLASH_AREA` | `u32 area` | `{u32 status, u32 seed, u32 enc_size, enc[]}` XOR stream (§2) |
+| `0x0824` | `RD_VIRT_SFR` | `u32` VSFR address | 4-byte value |
+| `0x0826` | `RD_VIRT_STRING` | `u32` string id | `{u32 version, u32 size, data}` |
+| `0x082A` | `RD_VIRT_SFR_BATCH` | `u32` address | answers for the index form only |
+| `0x0A04` | `SET_LOCAL_TIME` | 8 x `u8` `day,mon,yr-2000,0,sec,min,hr,0` | ack |
+
+Virtual strings that carry data (the `{u32 version, u32 size, data}` envelope):
+
+| id | name | size | live content |
+| --- | --- | --- | --- |
+| `0x002` | `CONFIGURATION` | 3256 | the whole `[DeviceParams]` + `[DataStructure]` text (§5.5, §10) |
+| `0x008` | `SERIAL_NUMBER` | 13 | `RC-102-008228` |
+| `0x00F` | `EVENT_LOG` | 274 | `"<ms>, <text>"` ring: `BLE: client connected`, `BLE: disconnected by remote user`, `%d message(s) lost!` |
+| `0x0F0` | `DEVICE_INFO` | 76 | magic `0x19601217` + `{u16 count, u16 tag}` groups + factory float table (incl. the calibration triple) |
+| `0x100` | `DATA_BUF` | 1004-1058 | the real-time frame stream (§8.1), grows with uptime |
+| `0x200` | `SPECTRUM` | 22 | `{u32 0, f32 A0, f32 A1, f32 A2, u16}` |
+| `0x202` | `ENERGY_CALIB` | 12 | `A0 A1 A2` (§5.2) |
+| `0x203` | `DEVICE_INFO_2` | 76 | same record as `0x0F0` |
+| `0x205` | `SPEC_ACCUM` | 22 | same shape as `0x200` |
+| `0x206`, `0x207` | `ACCUM_A`, `ACCUM_B` | 10 | accumulator pairs (all zero at idle) |
+| `0x208` | `POWERS_OF_TWO` | 104 | fixed descending power-of-two table (`0x8000, 0x4000, ...`) used by the scale/rounding code |
+| `0x220` | `LIVE_WINDOW` | 16 | `{u32 counts=64573, u32 ms=184233, u32 us=30612653, u32 0}` - the current accumulation window |
+
+### 8.1 The real-time record stream (VS `0x100`)
+
+Two alternating record sizes, verified by autocorrelation of a captured 1010-byte buffer: the frame
+counter byte increments once per record and the anchor spacing is exactly `45, 21, 45, 21, ...`, so one
+frame = 45 + 21 = **66 bytes**, i.e. 15 frames + a 65-byte tail in that sample.
+
+```
+ one 66-byte frame =  A-record (45 B)  +  B-record (21 B)
+ +--------------------------------------------------------------------------------+
+
+ A-record, byte offsets
+   0  u8  seq            0x22, +1 per record, +2 per frame
+   1  u8  groupId        0x01 = GRP_RawData
+   2  u8  channelId      0x02 = CHN_Count
+   3  u8  tag            0x2d
+   4  u8[3] tick         24-bit LE tick, e.g. 0xE6A994
+   7  u8  0x02 | 8 u8 0x00
+   9  u32 9600           the UART baud constant
+  13  u32 475    | f32 4.947917 | f32 7.438e-06 | u32 stamp (33 01 00 b0)   <- 16 B
+  29  u32 468    | f32 4.875    | f32 8.399e-06 | u32 stamp (3a 01 00 b0)   <- 16 B
+      header 13 + 2 x 16 = 45
+
+ B-record, byte offsets
+   0  u8  seq            0x23 (A + 1)
+   1  u8  groupId        0x00 = GRP_RealTimeData
+   2  u8  channelId      0x03 = CHN_CountRate
+   3  u8  tag            0x40
+   4  u8[3] tick         0xE6A9F3, ~90 after the A-record's tick
+   7  u32 28403139       window/uptime word, grows by ~250-350 per frame
+  11  f32 0.0595957      the sample value
+  15  u8  flags          0x8f / 0x84 / 0x78 between frames
+  16  u8[5] tail         constant 11 10 27 40 b0
+```
+
+Historical field interpretation: **observed in these captures** = the 45/21 split and the offsets (the frame-counter anchors sit exactly
+45, 21, 45, 21 ... bytes apart in a 1010-byte capture, and a second capture of 1058 bytes shows the same
+stride); **high** = `groupId`/`channelId` match the `[DataStructure]` ids (group 1 `GRP_RawData` carries
+`CHN_Count`, group 0 `GRP_RealTimeData` carries `CHN_CountRate`), and the `0.0595957` float of the
+B-record is the same quantity the `0x8021` VSFR reports, so the stream and the single-value reads are two
+views of one sample set; **inferred** = the `9600` constant (UART baud), the 24-bit `tick` (monotone, ~90
+ticks A to B, consistent with `FrameTimeStep_us = 10000`) and the trailing stamps.
+
+---
+
+## 9. Measurement flow: from crystal to database row
+
+```
+        ┌──────────────┐  2 Hz (MinFrmPeriod_ms=500)   ┌──────────────────────────┐
+        │ CsI(Tl) 10mm │ ───────────────────────────►  │ MCA: 1024 channels       │
+        │ + front end  │   10 ms interval (FrameTimeStep) │ calib: keV=A0+A1*ch+A2*ch²│
+        └──────────────┘                               └───────────┬──────────────┘
+                                                                   │ spectrum (VS 0x200/0x205)
+                        ┌──────────────────────────────────────────┤
+                        ▼                                          ▼
+        ┌──────────────────────────────┐          ┌────────────────────────────────┐
+        │ channel layer ([DataStructure])|          │ SP2DR_Table CsI_10x10x10       │
+        │ 6 groups, 14 channels         |          │ spectrum -> dose-rate          │
+        │ 0 RealTimeData FlgMsk 0x63DB  │          └───────────────┬────────────────┘
+        │ 1 RawData                     │                          │
+        │ 2 DoseRateDB   FlgMsk 0x9000  │                          ▼
+        │ 3 RareData     FlgMsk 0x9000  │<── 3-min lag (DBLag_ms=180000)
+        │ 4 DoseCounter  FlgMsk 0x9000  │
+        │ 7 Event        FlgMsk 0x9000  │
+        └───────────────┬───────────────┘
+                        │  per-frame append
+                        ▼
+        VS 0x100 DATA_BUF ring (grows with uptime: 1004 -> 1058 B observed)
+                        │  host polls 0x0826 repeatedly
+                        ▼
+        ┌───────────────────────────────────────────────────────────────────────┐
+        │ app-side SQLite (assets/DatabaseInit.sql inside official/apk.bin)     │
+        │ Log(Id, Timestamp, DeviceSN, DeviceFW, GroupId, Channels, Event,      │
+        │    PulseCount, CountRate, DoseRate, DoseRateError, CountRateError,    │
+        │    AlarmDoseRate, AlarmDose, AlarmCountRate, AlarmTemp, DAcDuration,  │
+        │    Dose, Temp, Charge, Flags, Latitude, Longitude, Comment, ...)      │
+        │ Tracks, TracksData, Backgrounds, Spectrograms, SpgSpectrums,          │
+        │ DeviceProfiles, Folders, Dictionary                                   │
+        └───────────────────────────────────────────────────────────────────────┘
+```
+
+The `Log` columns map 1:1 onto the channel ids (`PulseCount` = `CHN_Count`, `CountRate` = id 3,
+`DoseRate` = id 4, `DoseRateError` = id 5, `Dose` = id 7, `Temp` = id 8, `Charge` = id 9,
+`Flags` = id 0), which is the strongest cross-check that the channel table above is the same model the
+app persists. Alarm handling uses the three bands from `[DeviceParams]` (`CR_*`, `DR_*`, `DS_*`, two
+levels each) and `AlarmTemp` for the AS6212 range `-20`..`40` degC.
+
+---
+
+## 10. Firmware update flow
+
+The following is a research model based on the updater, strings and container
+layout. It is not a validated flashing/recovery procedure. No reconstructed
+firmware has been flashed, and failure recovery has not been tested.
+
+Three layers, only one of which is the "firmware":
+
+| layer | content | replaced by an update? |
+| --- | --- | --- |
+| vendor bootloader | `0x08000000`-`0x0800FFFF` (65536 B) | **no** - no block in any container starts below `0x08010000`, does not prove recovery from a failed update |
+| application image | `0x08010000`-`0x0803CA00` = `firmware/rc-102/hw1-fw4.14/flash.bin` | **yes**, wholesale: a complete program with the config text compiled in |
+| parameter areas | the two `0x081C` records (72 B + 448 B), XOR-obfuscated, seeded | **no** - separate, per-unit, persistence across updates has not been validated here |
+
+```
+  app (holds assets/HardSoft/rc-102z.bin locally, 130148 B - no network needed)
+   │
+   │ 1. SET_EXCHANGE 0x0007  sign 01 FF 12 FF ─────────► session open
+   │ 2. FW_IMAGE_GET_INFO 0x0012 ─────────────────────► {size, buffer_size, date_time, crc32}
+   │        │
+   │        ├─ signature match + CRC match      -> nothing to do
+   │        └─ signature match + CRC mismatch    -> "…CRC32 mismatch, resetting" -> transfer
+   │ 3. FW_IMAGE_UPDATE ─────────────────────────────► staging session, chunk size = buffer_size
+   │ 4. FW_IMAGE_WRITE x N  "FW Image: Writing %d bytes at offset %d"
+   │        │        130148 / 4096 ≈ 32 chunks; NAK -> "FW_IMAGE_WRITE returned error #%d"
+   │        │        (the # is one of the FLASH_* codes: PROG, NOT_BLANK, WR_PROT, RDP_ERROR,
+   │        │         INVALID_CRC, INVALID_SIGN, INVALID_TARGET, INV_ADDR, REQUIRED, VERIFY, STATE)
+   │ 5. device recomputes whole-image CRC-32/MPEG-2 + per-block CRCs
+   │        mismatch -> "CRC Error: 0x%08X != 0x%08X"  @0x08027294, old image stays active
+   │ 6. reboot: SCB->AIRCR = 0x05FA0004, BLE drops, app reconnects
+   │        no reconnect -> "RECONNECTION_TIMED_OUT_DURING_UPDATE"
+   ▼
+ bootloader re-validates, jumps to 0x08010001
+```
+
+Progress is surfaced per chunk through `FWProgressUpdater` / `EVT_FW_WRITE` (SDK names from
+`classes.dex`, package `ru.almacode.vk.corelib`).
+
+### 10.1 Fresh flash (blank part)
+
+The repository does not include the vendor bootloader or a validated blank-part
+programming procedure. Do not assume the silicon bootloader implements the
+vendor BLE protocol. Board-specific boot, programming and recovery access remain
+open research work.
+
+### 10.2 Anti-brick properties
+
+The application contains frame-validation and flash/CRC error strings, and all
+supplied application blocks start at or above `0x08010000`. These are useful
+clues, but do not establish atomic updates, anti-brick guarantees or preservation
+of an old image during power loss. Those claims require bootloader analysis and
+controlled hardware testing.
+
+---
+
+## 11. What we can do / what we are locked out of
+
+Legend: **R** = read-only command, **W** = write command, **(inf)** = interpretation of structure.
+
+| capability | how | status |
+| --- | --- | --- |
+| identify the unit (serial, BLE name, product, build stamp) | `0x000B`, `0x000A`, `0x0101` | R - works |
+| get the exact firmware identity (size / date_time / crc32 / chunk size) | `0x0012` | R - works |
+| open/query update staging | `0x0013` | state-changing command; omitted from default capture |
+| read the whole vendor configuration + channel model as text (3256 B) | `0x0826` VS `0x002` | R - works, byte-identical to the in-image blob |
+| read the energy calibration polynomial | `0x0826` VS `0x202` | R - works |
+| read a live spectrum header + accumulated counts | `0x0826` VS `0x200`, `0x205`, `0x220` | R - works |
+| read the real-time measurement stream | `0x0826` VS `0x100` | R - works, grammar in §8.1 |
+| read the event log ring (BLE connect/disconnect, lost messages) | `0x0826` VS `0x00F` | R - works |
+| read per-unit parameter/calibration areas | `0x081C` areas 0 and 1 | R - works, XOR-unwrapped |
+| read individual sensors (dose rate, dose, counts, window) | `0x0824` + VSFR address | R - 20 of 67 entries answer at idle; the rare-data group needs the 3-min cycle |
+| read the MCU identity / version words | `0x0824` `0xFFFF0000`+ | R - works |
+| set the wall clock | `0x0A04` | W - idempotent, used by the pipeline |
+| open the protocol session | `0x0007` | W - idempotent sign |
+| **full 1024-channel spectrum array** | - | **not recovered in these captures**; only 22-byte header/calibration records were observed |
+| **general raw memory read** | - | **not found** for the tested request forms and state |
+| **bulk image bytes from the device** | - | **not acquired**; vendor-container correspondence is supported by identity/CRC observations |
+| **write calibration / parameter areas** | `0x0825`, `0x0827`, `0x082B` exist in the SDK name list | **not exercised** - SDK names alone do not establish semantics; unknown historical sweeps are not certified read-only |
+| **raw SWD/JTAG dump** | - | not attempted; access status unconfirmed |
+| **enumerate the 91-entry item table through the index form** | `0x0824` args `0x00`-`0x5A` | **no data**: all 91 answer `00000000` on this build - the table is recovered statically instead (step 10) |
+| batch VSFR reads | `0x082A` | partial: answers for the plain `u32` address form only |
+| name resolution for recovered functions | - | **open**: Ghidra auto-names only (`FUN_…`); meaning comes from strings, tables and live reads |
+| confirm the exact STM32L4 orderable part | vector names | **inferred only**, including the family mapping |
+
+The observed replies make `RD_VIRT_STRING` a useful access path for configuration,
+measurements and metadata. They do not prove that the observed command set is
+complete or that every bulk quantity has only one access path.
+
+---
+
+## 12. Artifact inventory
+
+Every target directory has the same shape - listed here for `firmware/rc-102/hw1-fw4.14`, the other
+five differ only in the numbers and in lacking the nine files that need a live unit (`capture.json`,
+`verification.json`, `vsfr_readout.json`, the two `sweep_*.json`, the four `probe_*.json`):
+
+| path (relative to the target dir) | produced by | size / content |
+| --- | --- | --- |
+| `rc-102z.bin` | step 3 | vendor container exactly as shipped in the APK (name kept for provenance) |
+| `flash.bin` | step 4 | 248320 B flat image, `0x08000000`-`0x0803CA00` |
+| `blocks.json` | step 4 | 8 blocks: address, stored size, decompressed size, CRC |
+| `listing.s` | step 5 | reachable instruction candidates and explicit unknown regions |
+| `decompiled.c` | step 6 | 999 reference blocks; warnings tracked separately |
+| `index.json` | step 7 | function -> line range + flat address map |
+| `manifest.json` | step 12 | identity of this build + sha256 of the twelve generated files (container, image, blocks, listing, C, index, and the six verification artifacts) |
+| `analysis/strings.json` | step 5 | extracted ASCII runs |
+| `analysis/vectors.json` | step 5 | 98 entries with neutral vector labels |
+| `analysis/functions.json` | step 5 | current candidates with instruction addresses |
+| `analysis/stats.json` | step 5 | the numbers quoted in §1 |
+| `analysis/xrefs.json` | step 8 | literal references and candidate callers |
+| `analysis/callgraph.json` | step 9 | reachable candidates and unresolved indirect transfers |
+| `analysis/tables.json` | step 10 | candidate dispatch runs and handler references |
+| `analysis/capture.json` | step 2 | identity, 15 virtual strings, parameter areas |
+| `analysis/container_check.json` | step 3 | the device + registry matches |
+| `analysis/verification.json` | step 11 | byte-exact config-text match + counts |
+| `analysis/vsfr_readout.json` | `tools/read_vsfrs.py` | live VSFR values (§5.4) |
+| `analysis/sweep_noarg.json`, `sweep_witharg.json` | step 2 `--sweep` | the answering ids, both forms |
+| `analysis/summary.md` | step 12 | regenerated report |
+| `analysis/roundtrip.json` | step 13 | L1: per-block + whole-file byte match, LZSS encoder equivalence |
+| `analysis/ghidra_listing.json` | step 6 (`DumpListing.java`) | SLEIGH decode: instructions + function ranges |
+| `analysis/crosscheck.json` | step 14 | L2: four-tier comparison of capstone vs SLEIGH, with examples |
+| `analysis/differential.json` | step 15 | L4: per-case native vs model results, format-layer vectors |
+| `analysis/formal.json` | step 16 | L5: one row per Z3 goal with its verdict (and witness when not proved) |
+| `analysis/confidence.json`, `analysis/confidence.md` | step 17 | current evidence, provenance and unresolved items (§4) |
+| `analysis/probe_raw.json`, `probe_shapes.json`, `probe_records.json`, `probe_vsmap.json` | ad-hoc probes | raw pre-decode hex of the live replies, kept as the evidence behind §8's tables |
+| `ghidra_proj/` | step 6 | Ghidra project cache (`.gitignore`d, recreated) |
+
+Outside the target directories:
+
+| path | produced by | size / content |
+| --- | --- | --- |
+| `official/apk.bin`, `official/exe.bin` | step 3 | Android APK + Windows app (gitignored, `--only 3` refetches them) |
+| `pipeline/devices.json` | hand-written | the target registry (§3.2) |
+| `pipeline/scripts/DumpC.java` | hand-written | Ghidra post-script: seeds functions, dumps C |
+| `pipeline/scripts/DumpListing.java` | hand-written | Ghidra post-script: dumps the SLEIGH listing + function ranges |
+
+To regenerate everything from a clean checkout:
+
+```powershell
+pip install -r requirements.txt
+python pipeline/run.py --all-devices                     # default offline work for every build
+python pipeline/run.py --only 1,4,5,7,8,9,10,13,14,15,16,17,12   # the offline part only
+python pipeline/tools/lookup.py 0x080275C4               # ad-hoc query against the default target
+$env:RC_TARGET='rc-410/fw4.16'; python pipeline/tools/lookup.py 0x08010188   # another build
+```
+
+---
+
+## 13. Known limits and open questions
+
+* Complete application C, startup/linker integration and physical-device equivalence remain unfinished.
+* Reachability discovery does not yet resolve every indirect call or classify every application byte.
+* Ghidra warnings, changed function boundaries and removed candidates require review.
+* The bootloader is absent; zero padding preserves addresses without recovering its code.
+* The floating-point predicate has tested NaN-sensitive return behavior but unresolved FPSCR effects.
+* Exact board/MCU mapping, peripheral timing, interrupts/DMA and update recovery need validation.
+* Historical protocol and sensor interpretations above remain hypotheses where the captures do not settle them.
+* LZSS recompression decodes to the same payload but need not reproduce the vendor's token choices.
+
+See [ROADMAP.md](ROADMAP.md) for the implementation sequence and
+[docs/VALIDATION.md](docs/VALIDATION.md) for the precise test contracts.
+
+---
+
+## 14. Glossary
+
+| term | meaning |
+| --- | --- |
+| `Phyton\0\0` container | the vendor's `.bin` firmware file format: 52-byte header + N Mangle-encrypted, LZSS-compressed blocks |
+| Mangle | the 48-round Feistel cipher over 8-byte blocks used per block, 4 round keys, round function `B' = rnd + key + ((B>>8)^(B<<6)) + B + A` |
+| Borland LCG XOR | `seed = seed*0x015A4E35 + 1`, keystream `(seed >> 16) & 0xFF`, used by `RD_FLASH_AREA` |
+| VSFR | virtual special-function register: a software-decoded named value with `{addr, size, type, flags, min, max}`, not a memory-mapped one |
+| VS | "virtual string": a numbered blob served by `RD_VIRT_STRING` (`0x0826`) |
+| NUS | Nordic UART Service, the BLE GATT service pair used for the wire (`e63215e5-…`, write `…e6`, notify `…e7`) |
+| MCA | multi-channel analyzer: the pulse-height histogram (1024 channels) behind the spectrum |
+| `S%d` | slot/sequence index appearing in the five framing-error strings |

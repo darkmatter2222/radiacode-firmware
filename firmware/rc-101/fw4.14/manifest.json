@@ -98,7 +98,7 @@
     "roundtrip": {
       "path": "firmware/rc-101/fw4.14/analysis/roundtrip.json",
       "bytes": 8332,
-      "sha256": "9d3fe0953c4add9a786630d842f87115ad54c0e906f5bd537f6ad733c5dc2f92"
+      "sha256": "1bb7d8906a8423f0ebd84b75a282d700d0296d244b4628a0460f69a9fd21ef0a"
     },
     "crosscheck": {
       "path": "firmware/rc-101/fw4.14/analysis/crosscheck.json",
@@ -108,22 +108,22 @@
     "differential": {
       "path": "firmware/rc-101/fw4.14/analysis/differential.json",
       "bytes": 3182,
-      "sha256": "cef597b1f02098d1cd9d11504d545cad73dcbc7f60c11e01c9d9aae6889f5297"
+      "sha256": "b5e7ffd8b8689f57b61340a62e690ee101bca2a59f6ad3a8a2e7cc545db63680"
     },
     "formal": {
       "path": "firmware/rc-101/fw4.14/analysis/formal.json",
       "bytes": 1904,
-      "sha256": "22b5a6cab4a0e2e9c7ec17a0d9f2f4218e01a10088cb1f72c26a751623def6e4"
+      "sha256": "e90bce677e5c5b704953d133ff12007b0de7fe081b77fa00111aa649cfd2aaca"
     },
     "confidence": {
       "path": "firmware/rc-101/fw4.14/analysis/confidence.json",
       "bytes": 12981,
-      "sha256": "2a074cef0524c505295d7713e4861697778d590fe5369069a2211b83c1e2115e"
+      "sha256": "d999c6a6e1b7925c10ff0081fab98edb7ca67ef2b96f70621d581719e1f07d31"
     },
     "confidence_md": {
       "path": "firmware/rc-101/fw4.14/analysis/confidence.md",
-      "bytes": 682,
-      "sha256": "485686fb9613eba14f4f7ae25ab19dd5eac9283b267ab228d69ac91a301bd408"
+      "bytes": 2891,
+      "sha256": "74cbf8048748f0fdc64f3e3f72607f00e9ba0449dd4312ceabb129a32770dabb"
     },
     "ghidra_run": {
       "path": "firmware/rc-101/fw4.14/analysis/ghidra_run.json",
@@ -142,7 +142,7 @@
       "container": "641659ebcf915fada3253fba936efc9ddf7ab8882770e44d2b3b2d08b944b714",
       "flash": "15cd254be5ee3474d746b74c2cf46d46743c6455d9d5448fec3ef3f2b7c69ea9"
     },
-    "pipeline_source_sha256": "4a6aff9bf98f428b9d58ce85983a450b6797747c46d1587fb5828453667bae39",
+    "pipeline_source_sha256": "c29f3e71656e35df481c794fd08966ae97155e3d49a85b306da1d8ceb7cd43ec",
     "tools": {
       "capstone": "5.0.9",
       "unicorn": "2.1.4",
