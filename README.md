@@ -270,6 +270,7 @@ The current per-build record is `analysis/confidence.json`.
 | Instruction comparison | Conditions, flags, operand order, widths and shifts retained | Conservative agreement where established; unknown renderings remain unresolved |
 | Compiled leaves | Five small candidates, one limited dispatcher path; 1,360 comparisons pass | Tested return, memory and integer ABI behavior in a bounded emulator |
 | Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/ABI agreement; FPSCR exception flags still differ |
+| Replacement bridge | 1,424 direct-entry/caller cases for one complete leaf | Emulator-only branch replacement; [details](reconstruction/HYBRID.md) |
 | Formal checks | Ten auxiliary model properties pass | Properties of format/model operations, not original-versus-rebuilt firmware equivalence |
 | Hardware behavior | Historical BLE captures only | No physical original-versus-rebuilt comparison yet |
 
