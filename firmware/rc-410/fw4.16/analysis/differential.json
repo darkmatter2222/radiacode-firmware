@@ -1,89 +1,120 @@
 {
- "target": "rc-410/fw4.16",
- "cases": [
-  {
-   "name": "const_080166ce",
-   "addr": "0x080166CE",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "const_08017ef2",
-   "addr": "0x08017EF2",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "const_08017ef6",
-   "addr": "0x08017EF6",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "transfer_state_le",
-   "addr": "0x08017EB4",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "transfer_state_gt",
-   "addr": "0x08017EB4",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "transfer_state_other",
-   "addr": "0x08017EB4",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "item_502_push",
-   "addr": "0x080275C4",
-   "skipped": "image bytes differ from the transcribed build"
-  },
-  {
-   "name": "frame_serialize",
-   "addr": "0x08028A4C",
-   "skipped": "image bytes differ from the transcribed build"
+  "target": "rc-410/fw4.16",
+  "cases": [
+    {
+      "name": "const_080166ce",
+      "addr": "0x080166CE",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "const_08017ef2",
+      "addr": "0x08017EF2",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "const_08017ef6",
+      "addr": "0x08017EF6",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "transfer_state_le",
+      "addr": "0x08017EB4",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "transfer_state_gt",
+      "addr": "0x08017EB4",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "transfer_state_other",
+      "addr": "0x08017EB4",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "item_502_push",
+      "addr": "0x080275C4",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    },
+    {
+      "name": "frame_serialize",
+      "addr": "0x08028A4C",
+      "status": "SKIP",
+      "skipped": "image bytes differ from the transcribed build"
+    }
+  ],
+  "format": [
+    {
+      "model": "crc32_mpeg2",
+      "vectors": 12,
+      "passed": 12,
+      "notes": "table-free bitwise model vs the table version",
+      "status": "PASS"
+    },
+    {
+      "model": "mangle_inverse",
+      "vectors": 128,
+      "passed": 128,
+      "notes": "48-round chain is a permutation, one round inverted",
+      "status": "PASS"
+    },
+    {
+      "model": "mangle_blocks",
+      "vectors": 20,
+      "passed": 20,
+      "notes": "encrypt(decrypt(x)) == x on this container's blocks",
+      "status": "PASS"
+    },
+    {
+      "model": "lzss_decode",
+      "vectors": 10,
+      "passed": 10,
+      "notes": "independent token walk over this container's streams",
+      "status": "PASS"
+    },
+    {
+      "model": "msdos_datetime",
+      "vectors": 13,
+      "passed": 13,
+      "notes": "field extraction, cross-checked in step 1",
+      "status": "PASS"
+    },
+    {
+      "model": "borland_lcg",
+      "vectors": 6,
+      "passed": 6,
+      "notes": "keystream bytes and final state",
+      "status": "PASS"
+    },
+    {
+      "model": "borland_lcg_device",
+      "vectors": 0,
+      "passed": 0,
+      "notes": "raw device ciphertext vs retained decoded fields; SKIP when raw bytes absent",
+      "status": "SKIP"
+    }
+  ],
+  "scope": "original machine code vs Python models, not rebuilt C",
+  "unique_instruction_addresses": 0,
+  "function_status": "SKIP",
+  "provenance": {
+    "schema": 1,
+    "inputs": {
+      "container": "8c4209014d61a4e2b90f04aa0c7b63b8793d03844838b761c1809fc60471c9e4",
+      "flash": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e"
+    },
+    "pipeline_source_sha256": "4a68bf053b121e77a7ccfb067fc8dd3dd4092bf7a83b638707ff97008ea4f508",
+    "tools": {
+      "capstone": "5.0.9",
+      "unicorn": "2.1.4",
+      "z3-solver": "5.3.3.0"
+    }
   }
- ],
- "format": [
-  {
-   "model": "crc32_mpeg2",
-   "vectors": 12,
-   "passed": 12,
-   "notes": "table-free bitwise model vs the table version"
-  },
-  {
-   "model": "mangle_inverse",
-   "vectors": 128,
-   "passed": 128,
-   "notes": "48-round chain is a permutation, one round inverted"
-  },
-  {
-   "model": "mangle_blocks",
-   "vectors": 20,
-   "passed": 20,
-   "notes": "encrypt(decrypt(x)) == x on this container's blocks"
-  },
-  {
-   "model": "lzss_decode",
-   "vectors": 10,
-   "passed": 10,
-   "notes": "independent token walk over this container's streams"
-  },
-  {
-   "model": "msdos_datetime",
-   "vectors": 13,
-   "passed": 13,
-   "notes": "field extraction, cross-checked in step 1"
-  },
-  {
-   "model": "borland_lcg",
-   "vectors": 6,
-   "passed": 6,
-   "notes": "keystream bytes and final state"
-  },
-  {
-   "model": "borland_lcg_device",
-   "vectors": 0,
-   "passed": 0,
-   "notes": "against the captured 0x081C replies: length word, payload round-trip, 7-bit mask excluded"
-  }
- ]
 }

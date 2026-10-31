@@ -28,7 +28,7 @@ import ghidra.program.model.listing.Program;
 public class DumpC extends GhidraScript {
 
     private static final long VTOR = 0x08010000L;
-    private static final int VECTOR_COUNT = 96;
+    private static final int VECTOR_COUNT = 98;
 
     @Override
     public void run() throws Exception {
@@ -44,6 +44,7 @@ public class DumpC extends GhidraScript {
             if (value != 0 && (value & 1L) == 1L) {
                 Address target = factory.getAddress(String.format("%08x", value & ~1L));
                 if (target != null && program.getFunctionManager().getFunctionAt(target) == null) {
+                    disassemble(target);
                     createFunction(target, "handler_" + i + "_" + nameOf(i));
                 }
             }
@@ -59,6 +60,7 @@ public class DumpC extends GhidraScript {
             parent.mkdirs();
         }
 
+        analyzeChanges(program);
         DecompInterface decomp = new DecompInterface();
         decomp.openProgram(program);
 
@@ -114,7 +116,8 @@ public class DumpC extends GhidraScript {
             long value = Long.parseLong(matcher.group(2), 16);
             Address target = factory.getAddress(String.format("%08x", value & ~1L));
             if (target != null && currentProgram.getFunctionManager().getFunctionAt(target) == null) {
-                createFunction(target, "tbl_" + matcher.group(1) + "_" + String.format("%08x", value & ~1L));
+                disassemble(target);
+                    createFunction(target, "tbl_" + matcher.group(1) + "_" + String.format("%08x", value & ~1L));
                 created++;
             }
         }
@@ -139,7 +142,8 @@ public class DumpC extends GhidraScript {
             long value = Long.parseLong(matcher.group(1), 16);
             Address target = factory.getAddress(String.format("%08x", value & ~1L));
             if (target != null && currentProgram.getFunctionManager().getFunctionAt(target) == null) {
-                createFunction(target, null);
+                disassemble(target);
+                    createFunction(target, null);
                 created++;
             }
         }

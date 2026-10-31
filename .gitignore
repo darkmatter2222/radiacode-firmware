@@ -11,3 +11,6 @@ ghidra_log.txt
 # large vendor downloads, refetched by `python pipeline/run.py --only 3`
 official/apk.bin
 official/exe.bin
+
+# local reconstruction binaries and toolchains
+build/

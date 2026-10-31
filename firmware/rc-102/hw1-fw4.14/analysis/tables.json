@@ -14,7 +14,7 @@
         {
           "id": "0x0",
           "handler": "0x08020936",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08020936"
         },
         {
           "id": "0x199A",
@@ -24,17 +24,17 @@
         {
           "id": "0x0",
           "handler": "0x08020936",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08020936"
         },
         {
           "id": "0x199A",
           "handler": "0x0802093A",
-          "handler_name": "unindexed"
+          "handler_name": "sub_0802093A"
         },
         {
           "id": "0x199A",
           "handler": "0x08020936",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08020936"
         },
         {
           "id": "0x199A",
@@ -44,17 +44,17 @@
         {
           "id": "0x0",
           "handler": "0x08020936",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08020936"
         },
         {
           "id": "0xCCD",
           "handler": "0x0802093A",
-          "handler_name": "unindexed"
+          "handler_name": "sub_0802093A"
         },
         {
           "id": "0x2666",
           "handler": "0x08020936",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08020936"
         }
       ]
     },
@@ -64,12 +64,12 @@
         {
           "id": "0x2172",
           "handler": "0x08022D56",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08022D56"
         },
         {
           "id": "0x4000",
           "handler": "0x08022D5C",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08022D5C"
         },
         {
           "id": "0x0",
@@ -79,12 +79,12 @@
         {
           "id": "0x0",
           "handler": "0x08022D9A",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08022D9A"
         },
         {
           "id": "0x0",
           "handler": "0x08022DAA",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08022DAA"
         }
       ]
     },
@@ -94,7 +94,7 @@
         {
           "id": "0x0",
           "handler": "0x0802090C",
-          "handler_name": "unindexed"
+          "handler_name": "sub_0802090C"
         },
         {
           "id": "0x1",
@@ -114,7 +114,7 @@
         {
           "id": "0x4",
           "handler": "0x08034A14",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08034A14"
         },
         {
           "id": "0x5",
@@ -324,12 +324,12 @@
         {
           "id": "0x0",
           "handler": "0x08017160",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08017160"
         },
         {
           "id": "0xA4",
           "handler": "0x08017198",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08017198"
         },
         {
           "id": "0xA4",
@@ -339,7 +339,7 @@
         {
           "id": "0xA3D",
           "handler": "0x08017270",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08017270"
         }
       ]
     },
@@ -349,17 +349,17 @@
         {
           "id": "0x0",
           "handler": "0x080170B4",
-          "handler_name": "unindexed"
+          "handler_name": "sub_080170B4"
         },
         {
           "id": "0x0",
           "handler": "0x08017146",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08017146"
         },
         {
           "id": "0x0",
           "handler": "0x08017178",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08017178"
         },
         {
           "id": "0x0",
@@ -374,7 +374,7 @@
         {
           "id": "0x28F",
           "handler": "0x08017384",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08017384"
         },
         {
           "id": "0x0",
@@ -399,7 +399,7 @@
         {
           "id": "0x3",
           "handler": "0x08034D78",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08034D78"
         },
         {
           "id": "0x4",
@@ -444,7 +444,7 @@
         {
           "id": "0x5",
           "handler": "0x08034914",
-          "handler_name": "unindexed"
+          "handler_name": "sub_08034914"
         },
         {
           "id": "0x8",
@@ -469,7 +469,7 @@
         {
           "id": "0x1A",
           "handler": "0x0803498A",
-          "handler_name": "unindexed"
+          "handler_name": "sub_0803498A"
         },
         {
           "id": "0x30",
@@ -484,7 +484,7 @@
         {
           "id": "0x148",
           "handler": "0x0801B3DE",
-          "handler_name": "unindexed"
+          "handler_name": "sub_0801B3DE"
         },
         {
           "id": "0x199A",
@@ -494,7 +494,7 @@
         {
           "id": "0x199A",
           "handler": "0x0801B486",
-          "handler_name": "unindexed"
+          "handler_name": "sub_0801B486"
         },
         {
           "id": "0x0",

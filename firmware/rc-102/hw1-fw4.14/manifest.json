@@ -1,12 +1,6 @@
 {
   "target": "rc-102/hw1-fw4.14",
-  "device": "RadiaCode-102",
-  "model": "rc-102",
-  "hw": "1",
-  "fw": "4.14",
-  "boot": "4.0",
-  "serial": "RC-102-008228",
-  "ble_address": "52:43:06:60:20:24",
+  "hash_convention": "exact bytes; text files are UTF-8/LF via .gitattributes",
   "mcu": {
     "family": "STM32L4",
     "processor": "ARM:LE:32:v7",
@@ -44,53 +38,146 @@
     },
     "blocks": {
       "path": "firmware/rc-102/hw1-fw4.14/blocks.json",
-      "bytes": 2276,
-      "sha256": "902332ad0e8ea12bf57c7a970ac4bfc751c28127418f770e5f1ace2872683c38"
+      "bytes": 2176,
+      "sha256": "fa08cc4bec8075fc5b7c74c4ed0a73cb0eb78759f83a2d3cefd417b5ffae8513"
     },
     "listing": {
       "path": "firmware/rc-102/hw1-fw4.14/listing.s",
-      "bytes": 2743197,
-      "sha256": "2de12fbc62a2fad915aab8ee9ae029625fc026daf9961a92020baa19568786b4"
+      "bytes": 1597612,
+      "sha256": "488ed83ea6bcc567dc0f66f6b8c5e62cfb4681b4ea2ee5d4b56a740a1d04f77c"
     },
     "c": {
       "path": "firmware/rc-102/hw1-fw4.14/decompiled.c",
-      "bytes": 1745379,
-      "sha256": "d4efe41ef3134d7e359ccc5bf8281cf12e39b7b4c98708e77ef31e09e34a139e"
+      "bytes": 953730,
+      "sha256": "0dcefbc5e7aba5643b87e4cb80e2e52a35b8f2348c5d1da8a1125cc206c5c520"
     },
     "index": {
       "path": "firmware/rc-102/hw1-fw4.14/index.json",
-      "bytes": 341970,
-      "sha256": "9d2ec379b790cf581c1279b89bb5373b68625c35bf611c141929ee003d5847ac"
+      "bytes": 169744,
+      "sha256": "761fc592b80a401383960adc38743e0ba769057366a8d42230bb08c1e6bf2ac3"
+    },
+    "stats": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/stats.json",
+      "bytes": 1842,
+      "sha256": "4914ca68a734ec67e46b82c64e746e1aca837e09e47701cf4096f5b4a672c327"
+    },
+    "functions": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/functions.json",
+      "bytes": 296992,
+      "sha256": "c3bd77bc9a101faa989691ceb99efa6558ff09f069543c503d624fba6545df6e"
+    },
+    "strings": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/strings.json",
+      "bytes": 238548,
+      "sha256": "f0038bad1db70ffebfd874f845a1ae17002bcb4146613b75927439a516cffd9f"
+    },
+    "vectors": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/vectors.json",
+      "bytes": 8665,
+      "sha256": "3d2af2db3a18d20b41f08038eab5d8be6e9d1ae70b6890cc2d98f63292043b2f"
+    },
+    "xrefs": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/xrefs.json",
+      "bytes": 37044,
+      "sha256": "12cdb37787696c9646a86627b34ae495947784d090d6b62e73f79c7505b31c87"
+    },
+    "callgraph": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/callgraph.json",
+      "bytes": 22265,
+      "sha256": "4e696c49bcc4be4af4d20da0087c5c35063642733621440c43466110fb5c4979"
+    },
+    "tables": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/tables.json",
+      "bytes": 11803,
+      "sha256": "7f4feb2af6dbb93188948dc43a02b84b8da6b8c360c89331fff28000b595b1c1"
+    },
+    "verification": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/verification.json",
+      "bytes": 8139,
+      "sha256": "41b225d21d3bb20d9da57bc7418d761169fd7e90ef0e9f59dce9631569f86655"
+    },
+    "capture": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/capture.json",
+      "bytes": 19185,
+      "sha256": "9a160c6705285e7d91957c5b665755c2beb018155d0d11dec0b3be7b43fd0ebb"
+    },
+    "container_check": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/container_check.json",
+      "bytes": 596,
+      "sha256": "c46fe4f1977340dec0c9e79d39091410ebcfaeab1d7d6d652ceefecec0644852"
+    },
+    "vsfr": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/vsfr_readout.json",
+      "bytes": 2075,
+      "sha256": "47c2a11af70dca271ecd13742dbe22539d2af68cbb37bbddb927e535fbe5ef23"
+    },
+    "sweep_noarg": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/sweep_noarg.json",
+      "bytes": 458,
+      "sha256": "157153e69137f2c6b2953cb7432166c5afcfc87ff917a8210174b9a39131c7f3"
+    },
+    "sweep_witharg": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/sweep_witharg.json",
+      "bytes": 538,
+      "sha256": "fe102e876ec23ed9704152e5ad07286f49d748d0a0b1a12768ac1973815ea0d5"
     },
     "ghidra_listing": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/ghidra_listing.json",
-      "bytes": 1461024,
-      "sha256": "065199e2a830f6556e94c13308dc739e4b82a562d84c5707585a746d774a33c5"
+      "bytes": 1650342,
+      "sha256": "f50c407263acc38e3ac43b42c7f0bcebb33ec2986b04039f8d3f730400d8296b"
     },
     "roundtrip": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/roundtrip.json",
-      "bytes": 7145,
-      "sha256": "e3d2a72c000da498b307b2acf5fbee20821ea13cbfb66d45eb95e9fe35b7bd3d"
+      "bytes": 8337,
+      "sha256": "6029ec0f7bc9feb8b7f89f5cbb84847b42b7a535ad8e052a566e8acfcfee5b06"
     },
     "crosscheck": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/crosscheck.json",
-      "bytes": 3698,
-      "sha256": "3d5aa231751d4ce193aab4186bfe963bfeb80373fc613794c61379467b6affe8"
+      "bytes": 366944,
+      "sha256": "3b9312c50fbe0d7b75c947ddcb54c9c501db7fe9795e2481bb1993f38db21eb9"
     },
     "differential": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/differential.json",
-      "bytes": 4194,
-      "sha256": "64c4e0dfa817433092fdaa97f9915e6597d045a1a78c4654ef83d42b30ed7acb"
+      "bytes": 8318,
+      "sha256": "15fbcd05c4a18de737fb70bffa7bc2fde3cca17a4775d1e44ac9c8a914eaf82e"
     },
     "formal": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/formal.json",
-      "bytes": 1230,
-      "sha256": "75516299f2831983cde2badb78c377118aade0c3909d799476e43975b29a37d6"
+      "bytes": 1908,
+      "sha256": "4f4f6070bdc27c7f3e8cf5753a4a6cfd18ce11842f371751853ec24ad6a7b00c"
     },
     "confidence": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/confidence.json",
-      "bytes": 3958,
-      "sha256": "223a00eb41dcffecdd67b4540c27f77e70896fa5d454661f5991f88ad6ce7ce5"
+      "bytes": 13768,
+      "sha256": "2567db5d1bafac4989466ff9dd5568af85b236aac59ec467cdc667ba38576228"
+    },
+    "confidence_md": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/confidence.md",
+      "bytes": 686,
+      "sha256": "261a6d61f2f337a475ebc4bc3af8173cec2c3d1cad8e57c4da551e18f586424b"
+    },
+    "ghidra_run": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/ghidra_run.json",
+      "bytes": 944,
+      "sha256": "ca6f0b6fe91720d8e135e8d984534cc4f3e6fbf72a62b4bd85d6bf9cb1380170"
+    },
+    "recovery_delta": {
+      "path": "firmware/rc-102/hw1-fw4.14/analysis/recovery_delta.json",
+      "bytes": 20803,
+      "sha256": "b616ebae3a0f1904dacc66ab7718af33b7349cf999b58696506db323e46fa592"
+    }
+  },
+  "provenance": {
+    "schema": 1,
+    "inputs": {
+      "container": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392",
+      "flash": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6"
+    },
+    "pipeline_source_sha256": "4a68bf053b121e77a7ccfb067fc8dd3dd4092bf7a83b638707ff97008ea4f508",
+    "tools": {
+      "capstone": "5.0.9",
+      "unicorn": "2.1.4",
+      "z3-solver": "5.3.3.0"
     }
   }
 }

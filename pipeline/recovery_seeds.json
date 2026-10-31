@@ -1,0 +1,41 @@
+{
+  "rc-102/hw1-fw4.14": {
+    "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+    "entries": [
+      {
+        "address": "0x08010242",
+        "evidence": "direct calls at 0x080104AA and 0x08010756; coherent Thumb body"
+      },
+      {
+        "address": "0x0802ABF8",
+        "evidence": "direct call at 0x0801BFFC; coherent VFP body"
+      }
+    ]
+  },
+  "rc-103/fw4.14": {
+    "image_sha256": "96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d",
+    "entries": [
+      {
+        "address": "0x08010242",
+        "evidence": "direct calls at 0x080104AA and 0x08010756; coherent Thumb body"
+      },
+      {
+        "address": "0x0802ABF8",
+        "evidence": "direct call at 0x0801BFFC; coherent VFP body"
+      }
+    ]
+  },
+  "rc-103g/fw4.14": {
+    "image_sha256": "828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5",
+    "entries": [
+      {
+        "address": "0x08010242",
+        "evidence": "direct calls at 0x080104AA and 0x08010756; coherent Thumb body"
+      },
+      {
+        "address": "0x0802ABF8",
+        "evidence": "direct call at 0x0801BFFC; coherent VFP body"
+      }
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 {
+  "comparison_source": "saved device capture",
   "target": "rc-102/hw1-fw4.14",
   "container": "firmware/rc-102/hw1-fw4.14/rc-102z.bin",
   "size": 130148,

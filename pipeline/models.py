@@ -106,7 +106,7 @@ def model_080275c4_502(mem, args):
     puVar7 = (uint *)param_1[2]; param_1[2] = (int)(puVar7 + 1); *puVar7 = uVar8; return 1;
     """
     cursor_owner = args[0]
-    value = mem.u32(mem.u32(0x08027D60))
+    value = mem.u8(mem.u32(0x08027D60))
     cursor = mem.u32(cursor_owner + 8)
     mem.write(cursor_owner + 8, (cursor + 4) & M32, 4)
     mem.write(cursor, value, 4)
@@ -179,15 +179,23 @@ def model_crc32_mpeg2(data):
     return crc
 
 
+def logical_right(value, count):
+    """Identical unsigned shift for Python words and Z3 bit-vectors."""
+    if isinstance(value, int):
+        return (value & M32) >> count
+    import z3
+    return z3.LShR(value, count)
+
+
 def model_mangle_round(key, a, b, rnd):
     """One forward Mangle round: (A, B) -> (B, r + key + ((B>>8)^(B<<6)) + B + A)."""
-    mixed = ((b >> 8) ^ ((b << 6) & M32)) & M32
+    mixed = (logical_right(b, 8) ^ ((b << 6) & M32)) & M32
     return b, (rnd + key + mixed + b + a) & M32
 
 
 def model_mangle_unround(key, a, b, rnd):
     """Inverse round of `model_mangle_round`."""
-    mixed = ((a >> 8) ^ ((a << 6) & M32)) & M32
+    mixed = (logical_right(a, 8) ^ ((a << 6) & M32)) & M32
     return (b - a - mixed - key - rnd) & M32, a
 
 
@@ -277,8 +285,13 @@ SIGNATURES = {
 }
 
 
+VALIDATED_IMAGES = {'828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5', '96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d', '23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6'}
+
 def applies(flash, base, addr):
     """True when the image carries the exact bytes this model was transcribed from."""
+    import hashlib
+    if hashlib.sha256(flash).hexdigest() not in VALIDATED_IMAGES:
+        return False
     signature = SIGNATURES.get(addr)
     if signature is None:
         return False

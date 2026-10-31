@@ -24,6 +24,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import config
+import evidence
 import emulate
 import models
 import rcfmt
@@ -43,7 +44,7 @@ def byte_map_of_native(writes):
     """Native write trace -> {address: byte}, at byte granularity, minus the ABI stack slots."""
     low, high = emulate.STACK_RANGE
     out = {}
-    for address, (size, value) in writes.items():
+    for address, size, value in writes:
         for index in range(size):
             if not (low <= address + index < high):
                 out[address + index] = (value >> (8 * index)) & 0xFF
@@ -98,6 +99,10 @@ def run_case(emu, trace, flash, case):
         "args": ["0x%X" % arg for arg in case["args"]],
         "instructions": native["instructions"],
         "stopped": native["stopped"],
+        "scope": "partial execution to substituted call" if case.get("stop_slots") else "function return",
+        "completion_match": native["stopped"] == "RETURN" and (bool(case.get("stop_slots")) or (native["sp"] == emulate.STACK_TOP and native["callee_saved_preserved"])),
+        "unique_addresses": native["unique_addresses"],
+        "mmio": native["mmio"],
         "native_r0": None if native["r0"] is None else "0x%08X" % native["r0"],
         "model_r0": None if model_value is None else "0x%08X" % (model_value & 0xFFFFFFFF),
         "r0_match": native["r0"] == (model_value & 0xFFFFFFFF if model_value is not None else None),
@@ -130,7 +135,8 @@ def format_layer(data):
     words = lcg_vector(0x12345678, 64)
 
     def record(name, total, ok, notes):
-        rows.append({"model": name, "vectors": total, "passed": ok, "notes": notes})
+        rows.append({"model": name, "vectors": total, "passed": ok, "notes": notes,
+                     "status": "SKIP" if total == 0 else ("PASS" if ok == total else "FAIL")})
 
     # CRC-32/MPEG-2
     total = ok = 0
@@ -182,7 +188,10 @@ def format_layer(data):
     stamps = [header["date_time"]] + [words[i] & 0xFFFFFFFF for i in range(12)]
     for stamp in stamps:
         total += 1
-        ok += models.model_msdos_datetime(stamp) == None or True
+        parts = models.model_msdos_datetime(stamp)
+        rendered = ("{year:04d}-{month:02d}-{day:02d} "
+                    "{hour:02d}:{minute:02d}:{second:02d}").format(**parts)
+        ok += rendered == rcfmt._decode_datetime(stamp)
     record("msdos_datetime", total, ok, "field extraction, cross-checked in step 1")
 
     # Borland LCG keystream
@@ -198,30 +207,26 @@ def format_layer(data):
         ok += stream_model == stream_ref and seed_model == state
     record("borland_lcg", total, ok, "keystream bytes and final state")
 
-    # the same keystream against the unit's own `0x081C` replies (analysis/capture.json): the two-stage
-    # stream (size word first, payload from the continued state) must reproduce the stored plaintext, and
-    # the 8-bit mask has to beat the 7-bit one on the recovered text, which pins the mask on device data.
+    # No plaintext -> manufactured ciphertext round-trip is device evidence.
+    # New captures may supply raw_payload_hex plus independently retained decoded fields.
     total = ok = 0
     capture = _load(CFG["capture"])
     for area in (capture or {}).get("flash_areas", {}).values():
-        if not isinstance(area, dict) or "hex" not in area:
+        if not isinstance(area, dict) or "raw_payload_hex" not in area or "hex" not in area:
             continue
-        seed = int(area["seed"], 16)
-        plain = bytes.fromhex(area["hex"])
-        state, _ = models.model_borland_lcg(seed, 4)              # the XOR-obfuscated size word
-        _, stream = models.model_borland_lcg(state, len(plain))   # payload, continued state
-        encoded = bytes(b ^ k for b, k in zip(plain, stream))     # the bytes the unit actually sent
-        alt, alt_state = [], state
-        for _ in range(len(plain)):                               # the 7-bit alternative
-            alt_state = rcfmt.borland_next(alt_state)
-            alt.append((alt_state >> 16) & 0x7F)
-        decoded7 = bytes(b ^ k for b, k in zip(encoded, alt))
-        total += 3
-        ok += len(plain) == area["size"]                              # length word == bytes received
-        ok += rcfmt.borland_xor(encoded, state)[0] == plain            # model == rcfmt, real bytes
-        ok += decoded7 != plain and _clean_bytes(plain) > _clean_bytes(decoded7)
+        raw = bytes.fromhex(area["raw_payload_hex"])
+        if len(raw) < 12:
+            total += 1
+            continue
+        status, seed, _ = struct.unpack_from("<III", raw)
+        state, keys = models.model_borland_lcg(seed, len(raw) - 8)
+        plain = bytes(a ^ b for a, b in zip(raw[8:], keys))
+        size = int.from_bytes(plain[:4], "little")
+        total += 1
+        ok += (status == 0 and size == area["size"] and len(plain[4:]) == size
+               and plain[4:].hex() == area["hex"])
     record("borland_lcg_device", total, ok,
-           "against the captured 0x081C replies: length word, payload round-trip, 7-bit mask excluded")
+           "raw device ciphertext vs retained decoded fields; SKIP when raw bytes absent")
     return rows
 
 
@@ -241,11 +246,11 @@ def main():
     for case in cases:
         if case not in applicable:
             result["cases"].append({"name": case["name"], "addr": "0x%08X" % case["addr"],
-                                    "skipped": "image bytes differ from the transcribed build"})
+                                    "status": "SKIP", "skipped": "image bytes differ from the transcribed build"})
     if applicable:
-        emu, trace = emulate.new_emulator(flash)
         for case in applicable:
             try:
+                emu, trace = emulate.new_emulator(flash)
                 result["cases"].append(run_case(emu, trace, flash, case))
             except Exception as error:
                 import traceback
@@ -260,14 +265,28 @@ def main():
                  "mem=ok" if row.get("write_bytes_match") else "mem=DIFF"))
     for row in result["format"]:
         print("%-16s %d/%d vectors" % (row["model"], row["passed"], row["vectors"]))
+    for row in result["cases"]:
+        row["status"] = "SKIP" if "skipped" in row else ("PASS" if case_passed(row) else "FAIL")
+    result["scope"] = "original machine code vs Python models, not rebuilt C"
+    result["unique_instruction_addresses"] = len({a for r in result["cases"] for a in r.get("unique_addresses", [])})
+    result["function_status"] = ("SKIP" if not applicable else
+                                 ("PASS" if all(case_passed(r) for r in result["cases"] if "skipped" not in r) else "FAIL"))
     with open(CFG["differential"], "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=1)
         fh.write("\n")
+    evidence.write(CFG["differential"], result, CFG)
     print("wrote", CFG["differential"])
-    failed = [row for row in result["cases"]
-              if "skipped" not in row
-              and not (row.get("r0_match") and row.get("write_bytes_match"))]
-    return 1 if failed else 0
+    return 1 if result_failed(result) else (2 if result["function_status"] == "SKIP" else 0)
+
+
+def case_passed(row):
+    return bool(row.get("completion_match") and row.get("r0_match") and row.get("write_bytes_match"))
+
+
+def result_failed(result):
+    return (any(not case_passed(r) for r in result["cases"] if "skipped" not in r)
+            or any(r["passed"] != r["vectors"] for r in result["format"]))
+
 
 
 if __name__ == "__main__":

@@ -2,14 +2,85 @@
   "image_bytes": 264192,
   "base": "0x08000000",
   "end": "0x08040800",
-  "instructions": 72189,
-  "functions": 2125,
+  "instructions": 10012,
+  "functions": 360,
   "strings": 2205,
   "vectors": 98,
-  "listing_lines": 74924,
+  "listing_lines": 20888,
   "covered_bytes": 264192,
-  "data_word_items": 385,
-  "ascii_items": 833,
-  "fill_items": 1258,
-  "byte_items": 255
+  "data_word_items": 0,
+  "ascii_items": 0,
+  "fill_items": 1,
+  "byte_items": 10874,
+  "unclassified_bytes": 172378,
+  "instruction_bytes": 26278,
+  "image_sha256": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e",
+  "scope": "candidate CFG discovery; coverage is byte accounting, not C equivalence",
+  "unresolved_transfers": [
+    {
+      "address": "0x8016cb4",
+      "kind": "indirect_branch",
+      "instruction": "bx r1"
+    },
+    {
+      "address": "0x8020d4e",
+      "kind": "indirect_call",
+      "instruction": "blx r3"
+    },
+    {
+      "address": "0x802e7ea",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r0]"
+    },
+    {
+      "address": "0x8039aba",
+      "kind": "indirect_call",
+      "instruction": "blx r0"
+    },
+    {
+      "address": "0x801538c",
+      "kind": "indirect_branch",
+      "instruction": "tbh [pc, r1, lsl #1]"
+    },
+    {
+      "address": "0x801662c",
+      "kind": "indirect_call",
+      "instruction": "blx r0"
+    },
+    {
+      "address": "0x801950e",
+      "kind": "indirect_branch",
+      "instruction": "bx r3"
+    },
+    {
+      "address": "0x8022de2",
+      "kind": "indirect_branch",
+      "instruction": "bxlt r1"
+    },
+    {
+      "address": "0x80184cc",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r1]"
+    },
+    {
+      "address": "0x803110c",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r8]"
+    },
+    {
+      "address": "0x8027f1a",
+      "kind": "indirect_call",
+      "instruction": "blx r1"
+    },
+    {
+      "address": "0x8030ce6",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r0]"
+    },
+    {
+      "address": "0x8021124",
+      "kind": "indirect_branch",
+      "instruction": "tbb [pc, r5]"
+    }
+  ]
 }

@@ -1,4 +1,5 @@
 {
+  "comparison_source": "registry only; no live device evidence",
   "target": "rc-103/fw4.14",
   "container": "firmware/rc-103/fw4.14/rc-103z.bin",
   "size": 130132,

@@ -1,0 +1,24 @@
+name: Offline evidence checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - name: Run offline checks (unavailable function tests must remain inconclusive)
+        run: |
+          python -c "import subprocess; r=subprocess.run(['python','pipeline/run.py','--all-devices','--only','1,13,15,16']); assert r.returncode in (0,2), r.returncode"
+      - name: Install ARM toolchain
+        run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi --no-install-recommends
+      - run: python pipeline/build_reconstruction.py
+      - name: Verify release remains blocked
+        run: |
+          python pipeline/release_gate.py > release-gate.json && exit 1 || code=$?
+          test "$code" -eq 2

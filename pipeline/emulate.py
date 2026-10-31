@@ -1,114 +1,93 @@
-"""Unicorn-based execution of the original image, for differential testing (layer L4).
+"""Bounded Cortex-M4 function execution, not a board/peripheral simulator.
 
-The whole flat image is mapped at its real address, SRAM and the peripheral blocks the firmware
-touches are mapped as plain RAM, and every access outside the image is recorded.  A function is
-entered with the Thumb ABI (r0..r3 = arguments, LR = a sentinel address) and the run stops when the
-sentinel is reached, i.e. when the function returns.  Nothing here needs the device.
+Each caller must create a fresh emulator for an independent case. MMIO is modeled
+as RAM and reported separately; it does not establish hardware equivalence.
 """
+from unicorn import (Uc, UcError, UC_ARCH_ARM, UC_MODE_THUMB, UC_MODE_MCLASS,
+                     UC_PROT_READ, UC_PROT_EXEC, UC_HOOK_CODE,
+                     UC_HOOK_MEM_READ, UC_HOOK_MEM_WRITE)
+from unicorn import arm_const
+from unicorn.arm_const import (UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2,
+    UC_ARM_REG_R3, UC_ARM_REG_R12, UC_ARM_REG_LR, UC_ARM_REG_SP, UC_ARM_REG_PC,
+    UC_ARM_REG_C1_C0_2, UC_CPU_ARM_CORTEX_M4)
 
-from unicorn import (
-    Uc,
-    UC_ARCH_ARM,
-    UC_MODE_ARM,
-    UC_PROT_ALL,
-    UC_HOOK_CODE,
-    UC_HOOK_MEM_READ_UNMAPPED,
-    UC_HOOK_MEM_WRITE_UNMAPPED,
-    UC_HOOK_MEM_FETCH_UNMAPPED,
-)
-from unicorn.arm_const import (
-    UC_ARM_REG_R0,
-    UC_ARM_REG_R1,
-    UC_ARM_REG_R2,
-    UC_ARM_REG_R3,
-    UC_ARM_REG_R12,
-    UC_ARM_REG_LR,
-    UC_ARM_REG_SP,
-    UC_ARM_REG_PC,
-)
-
-FLASH_BASE = 0x08000000
-FLASH_SIZE = 0x00080000
-SRAM_BASE = 0x20000000
-SRAM_SIZE = 0x00008000
+FLASH_BASE, FLASH_SIZE = 0x08000000, 0x80000
+SRAM_BASE, SRAM_SIZE = 0x20000000, 0x8000
 STACK_TOP = 0x20007F00
-# the native side uses real stack slots that a Python model has no reason to touch
 STACK_RANGE = (0x20007000, 0x20008000)
 SENTINEL = 0x0A0A0001
-# (base, size) pairs; Unicorn rounds each block up to the next power-of-two boundary, so one
-# 64K block at 0x1FFF0000 also covers the VSFR/DEV_ID area at 0x1FFF7000+.  Anything else falls
-# through to the unmapped-access hooks below.
-REGIONS = [
-    (0x0A0A0000, 0x1000),
-    (0x1FFF0000, 0x10000),
-    (0x40000000, 0x20000),
-    (0x48000000, 0x10000),
-    (0xE000E000, 0x1000),
-]
+REGIONS = [(0x0A0A0000, 0x1000), (0x1FFF0000, 0x10000),
+           (0x40000000, 0x20000), (0x48000000, 0x10000), (0xE000E000, 0x1000)]
+M32_MASK = 0xFFFFFFFF
+
+
+def is_mmio(address):
+    return 0x40000000 <= address < 0x60000000 or 0xE0000000 <= address < 0xE0100000
 
 
 class Trace:
-    """Ordered record of memory and MMIO effects, plus the instruction count."""
-
     def __init__(self):
-        self.writes = []
-        self.reads = []
+        self.clear()
+
+    def clear(self):
+        self.writes, self.reads, self.mmio = [], [], []
         self.instructions = 0
+        self.addresses, self.edges = set(), set()
+        self.previous = None
 
     def final_writes(self):
-        last = {}
-        for addr, size, value in self.writes:
-            last[addr] = (size, value)
-        return last
+        # Expand BEFORE collapsing: overlapping widths and ordering matter.
+        out = {}
+        for address, size, value in self.writes:
+            for i in range(size):
+                out[address + i] = (value >> (8 * i)) & 255
+        return out
 
 
 def new_emulator(flash):
-    """Map the image and the RAM regions, and return (emu, trace)."""
-    emu = Uc(UC_ARCH_ARM, UC_MODE_ARM)
+    if len(flash) > FLASH_SIZE:
+        raise ValueError("image exceeds configured flash")
+    emu = Uc(UC_ARCH_ARM, UC_MODE_THUMB | UC_MODE_MCLASS)
+    emu.ctl_set_cpu_model(UC_CPU_ARM_CORTEX_M4)
+    emu.reg_write(UC_ARM_REG_C1_C0_2, 0xF << 20)
     trace = Trace()
-    emu.mem_map(FLASH_BASE, FLASH_SIZE, UC_PROT_ALL)
+    emu.mem_map(FLASH_BASE, FLASH_SIZE)
     emu.mem_write(FLASH_BASE, bytes(flash))
-    emu.mem_map(SRAM_BASE, SRAM_SIZE, UC_PROT_ALL)
+    emu.mem_protect(FLASH_BASE, FLASH_SIZE, UC_PROT_READ | UC_PROT_EXEC)
+    emu.mem_map(SRAM_BASE, SRAM_SIZE)
     for base, size in REGIONS:
-        emu.mem_map(base, size, UC_PROT_ALL)
+        emu.mem_map(base, size)
+    emu.mem_write(SENTINEL & ~1, b"\x00\xbe")
 
-    def on_code(emu, address, size, user):
+    def on_code(uc, address, size, user):
+        if address == SENTINEL & ~1:
+            uc.emu_stop()
+            return
         trace.instructions += 1
-        if address == SENTINEL & 0xFFFFFFFE:
-            emu.emu_stop()
+        trace.addresses.add(address)
+        if trace.previous is not None:
+            trace.edges.add((trace.previous, address))
+        trace.previous = address
 
-    def on_read_unmapped(emu, access, address, size, value, user):
-        trace.reads.append((address, size, 0))
-        return True  # handled: the value reads back as zero
-
-    def on_write_unmapped(emu, access, address, size, value, user):
+    def on_write(uc, access, address, size, value, user):
         trace.writes.append((address, size, value))
-        return True
+        if is_mmio(address):
+            trace.mmio.append(("write", address, size, value))
 
-    def on_fetch_unmapped(emu, access, address, size, value, user):
-        trace.reads.append((address, size, 0))
-        return True
-
-    def on_write(emu, access, address, size, value, user):
-        trace.writes.append((address, size, value))
-
-    def on_read(emu, access, address, size, value, user):
-        trace.reads.append((address, size, value))
-
-    from unicorn import UC_HOOK_MEM_READ, UC_HOOK_MEM_WRITE
+    def on_read(uc, access, address, size, value, user):
+        trace.reads.append((address, size))
+        if is_mmio(address):
+            trace.mmio.append(("read", address, size,
+                               int.from_bytes(uc.mem_read(address, size), "little")))
 
     emu.hook_add(UC_HOOK_CODE, on_code)
     emu.hook_add(UC_HOOK_MEM_READ, on_read)
     emu.hook_add(UC_HOOK_MEM_WRITE, on_write)
-    emu.hook_add(UC_HOOK_MEM_READ_UNMAPPED, on_read_unmapped)
-    emu.hook_add(UC_HOOK_MEM_WRITE_UNMAPPED, on_write_unmapped)
-    emu.hook_add(UC_HOOK_MEM_FETCH_UNMAPPED, on_fetch_unmapped)
-    emu.mem_write(SENTINEL & 0xFFFFFFFE, b"\x00\xbe")  # bkpt #0, only reached via the hook
+    # Unmapped accesses are faults. Returning True without mapping is not recovery.
     return emu, trace
 
 
 def preset(emu, pairs):
-    """Apply (address, bytes) pairs."""
     for address, value in pairs:
         emu.mem_write(address, bytes(value))
 
@@ -118,35 +97,28 @@ def read_word(emu, address):
 
 
 def run_function(emu, trace, address, args=(0, 0, 0, 0), cycles=200000):
-    """Execute one Thumb function; -> dict with the return value, effects and stop reason."""
+    if len(args) != 4 or cycles <= 0:
+        raise ValueError("four register arguments and a positive instruction budget required")
+    saved = {getattr(arm_const, "UC_ARM_REG_R%d" % i): (0xA5000000 + i) for i in range(4,12)}
+    for reg, value in saved.items():
+        emu.reg_write(reg, value)
     emu.reg_write(UC_ARM_REG_SP, STACK_TOP)
     emu.reg_write(UC_ARM_REG_LR, SENTINEL)
     for reg, value in zip((UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2, UC_ARM_REG_R3), args):
         emu.reg_write(reg, value & M32_MASK)
     emu.reg_write(UC_ARM_REG_R12, 0)
-    trace.writes.clear()
-    trace.reads.clear()
-    trace.instructions = 0
-    stopped = True
+    trace.clear()
+    error = None
     try:
-        emu.emu_start(address | 1, SENTINEL & 0xFFFFFFFE, 0, cycles)
-    except Exception as error:  # unicorn raises UcError; keep the reason for the report
-        stopped = "reached sentinel" if _at_sentinel(emu) else "error: %s" % error
-    if stopped is True:
-        stopped = "reached sentinel"
-    return {
-        "r0": emu.reg_read(UC_ARM_REG_R0),
-        "instructions": trace.instructions,
-        "writes": dict((a, (s, v)) for a, s, v in trace.writes),
-        "stopped": stopped,
-    }
-
-
-def _at_sentinel(emu):
-    try:
-        return (emu.reg_read(UC_ARM_REG_PC) & 0xFFFFFFFE) == (SENTINEL & 0xFFFFFFFE)
-    except Exception:
-        return False
-
-
-M32_MASK = 0xFFFFFFFF
+        emu.emu_start(address | 1, SENTINEL & ~1, count=cycles)
+    except UcError as exc:
+        error = str(exc)
+    pc = emu.reg_read(UC_ARM_REG_PC) & ~1
+    reason = "FAULT" if error else ("RETURN" if pc == SENTINEL & ~1 else "BUDGET_EXHAUSTED")
+    return {"r0": emu.reg_read(UC_ARM_REG_R0), "instructions": trace.instructions,
+            "writes": list(trace.writes), "mmio": list(trace.mmio),
+            "stopped": reason, "pc": pc, "error": error,
+            "sp": emu.reg_read(UC_ARM_REG_SP),
+            "callee_saved_preserved": all(emu.reg_read(r) == v for r,v in saved.items()),
+            "unique_addresses": sorted(trace.addresses),
+            "edges": sorted(trace.edges)}

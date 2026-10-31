@@ -20,6 +20,7 @@ import z3
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import config
+import evidence
 import models
 
 CFG = config.load()
@@ -31,6 +32,7 @@ MASK = z3.BitVecVal(0xFFFFFFFF, 32)
 def solve(assertions, conclusion, name):
     """Prove `conclusion` from `assertions`; -> one row for the report."""
     solver = z3.Solver()
+    solver.set(timeout=30000)
     for item in assertions:
         solver.add(item)
     solver.add(z3.Not(conclusion))
@@ -83,13 +85,14 @@ def check_mangle_one_round():
 
 def check_mangle_chain(rounds=48):
     """The 48-round chain (forward then inverted) is the identity: the cipher is a permutation."""
-    key, a, b = (z3.BitVec(name, 32) for name in ("key", "a", "b"))
+    keys = [z3.BitVec("key%d" % i, 32) for i in range(4)]
+    a, b = z3.BitVec("a", 32), z3.BitVec("b", 32)
     forward_a, forward_b = a, b
     for index in range(rounds):
-        forward_a, forward_b = models.model_mangle_round(key, forward_a, forward_b, index)
+        forward_a, forward_b = models.model_mangle_round(keys[index & 3], forward_a, forward_b, index)
     back_a, back_b = forward_a, forward_b
     for index in range(rounds - 1, -1, -1):
-        back_a, back_b = models.model_mangle_unround(key, back_a, back_b, index)
+        back_a, back_b = models.model_mangle_unround(keys[index & 3], back_a, back_b, index)
     row = solve([True], z3.And(back_a == a, back_b == b), "mangle_chain_%d_rounds" % rounds)
     row["rounds"] = rounds
     return row
@@ -103,19 +106,22 @@ def check_crc_register():
 
 
 def check_crc_word_step():
-    """The two algebraic forms of one CRC word step agree: XOR-after vs XOR-before the table."""
-    crc, word = z3.BitVec("crc", 32), z3.BitVec("word", 32)
-    forms = []
-    for folded_first in (False, True):
-        state = crc
-        for shift in (24, 16, 8, 0):
-            index = ((word >> shift) & 0xFF) ^ ((state >> 24) & 0xFF)
-            table_value = shift32_symbolic(index)
-            advanced = (state << 8) & MASK
-            state = (advanced ^ table_value) if folded_first else (table_value ^ advanced)
-        forms.append(state)
-    return solve([True], z3.BV2Int(forms[0], True) == z3.BV2Int(forms[1], True),
-                 "crc32_word_step_forms_agree")
+    """One byte update: table polynomial vs eight serial bit transitions, all inputs."""
+    crc = z3.BitVec("crc", 32)
+    byte = z3.ZeroExt(24, z3.BitVec("byte", 8))
+    index = byte ^ z3.LShR(crc, 24)
+    folded = (crc << 8) ^ shift32_symbolic(index)
+    serial = crc ^ (byte << 24)
+    for _ in range(8):
+        serial = z3.If(z3.Extract(31,31,serial) == 1, (serial << 1) ^ POLY, serial << 1)
+    # Simplify the zero-extended index before bit-blasting.
+    solver = z3.Then('simplify', 'bit-blast', 'sat').solver()
+    solver.set(timeout=30000)
+    solver.add(z3.simplify(folded != serial))
+    status = solver.check()
+    return {"check":"crc32_byte_fold_equals_bit_serial", "status":
+            "proved" if status == z3.unsat else ("counterexample" if status == z3.sat else "unknown"),
+            "scope":"all 32-bit CRC states and 8-bit input bytes; auxiliary format model"}
 
 
 def check_crc_empty():
@@ -230,6 +236,7 @@ def main():
         print("%-32s %s" % (row["check"], row["status"]))
     result = {
         "target": CFG["key"],
+        "scope": "auxiliary format-model properties; no firmware equivalence proof",
         "solver": "z3 %s" % z3.get_version_string(),
         "checks": rows,
         "proved": sum(1 for row in rows if row["status"] == "proved"),
@@ -242,8 +249,9 @@ def main():
         fh.write("\n")
     print("proved %d, counterexamples %d, unknown %d, errors %d"
           % (result["proved"], result["counterexamples"], result["unknown"], result["errors"]))
+    evidence.write(CFG["formal"], result, CFG)
     print("wrote", CFG["formal"])
-    return 1 if result["counterexamples"] or result["errors"] else 0
+    return 1 if result["counterexamples"] or result["errors"] or result["unknown"] else 0
 
 
 if __name__ == "__main__":

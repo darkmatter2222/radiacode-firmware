@@ -1,108 +1,529 @@
 {
- "target": "rc-410/fw4.16",
- "categories": {
-  "byte_matched": {
-   "container_bytes": "140836/140836",
-   "container_identical": true,
-   "header_fields_and_crc_field": true,
-   "key_blocks_reencrypted": "10/10",
-   "data_blocks_reencrypted": "10/10",
-   "whole_file_crc": true,
-   "key_block_crc_pair_equal": "10/10",
-   "note": "re-encoding from the model reproduces every byte of the vendor container; the recompress pass differs only in the LZSS tie-break order, so it is reported in `unresolved`, not here."
+  "target": "rc-410/fw4.16",
+  "status": "INCONCLUSIVE",
+  "firmware_equivalence": "NOT_ESTABLISHED",
+  "extraction": {
+    "status": "PASS",
+    "blocks_crc_verified": 10,
+    "flash_matches_decoded_container": true,
+    "absent_bootloader_bytes": 65536
   },
-  "formally_verified": {
-   "checks_proved": 10,
-   "checks_total": 10,
-   "names": [
-    "mangle_round_invertible",
-    "mangle_chain_48_rounds",
-    "crc32_register_deterministic",
-    "crc32_word_step_forms_agree",
-    "crc32_empty_is_init",
-    "borland_lcg_hull_dobell",
-    "msdos_datetime_roundtrip",
-    "lzss_token_layout",
-    "lzss_window_slot_step",
-    "align_size_least_multiple_of_8"
-   ],
-   "solver": "z3 5.3.3",
-   "note": "bit-vector proofs over the pure model: Mangle round and 48-round chain, CRC-32 register and word step, Borland LCG period, MS-DOS date packing, LZSS token and window-slot layout, 8-byte alignment."
+  "container_roundtrip": {
+    "status": "PASS",
+    "scope": "container format only; no source compilation"
   },
-  "tested": {
-   "function_cases_passed": "0/0",
-   "function_cases_skipped": 8,
-   "instructions_executed": 0,
-   "format_vectors_passed": "189/189",
-   "format_models": [
-    "crc32_mpeg2",
-    "mangle_inverse",
-    "mangle_blocks",
-    "lzss_decode",
-    "msdos_datetime",
-    "borland_lcg",
-    "borland_lcg_device"
-   ],
-   "device_frames_checked": 0,
-   "block_decompressed_length_equals_address_delta": "10/10",
-   "decoder_agreement": "38477/40453 lines (0.9958)",
-   "note": "every function case compares the returned word and all byte-level memory effects of the native run with the Python transcription; the stack slots the ABI owns are excluded on both sides."
+  "decoder_comparison": {
+    "status": "INCONCLUSIVE",
+    "tiers": {
+      "identical": 504,
+      "format_only": 7624,
+      "unresolved": 1884
+    },
+    "only_capstone": 0,
+    "only_ghidra": 37138
   },
-  "preserved_unchanged": {
-   "image_bytes_covered": "264192/264192",
-   "instructions_decoded": 72189,
-   "listing_lines": 74924,
-   "functions_indexed": 2125,
-   "strings_indexed": 2205,
-   "c_blocks": 2123,
-   "data_and_ascii_items": 1218,
-   "key_block_tail_bytes_carried": 4860,
-   "note": "the mixed C + assembly listing keeps the original bytes of data, string and jump-table regions at their original addresses; nothing in that region is rewritten."
+  "decompilation": {
+    "blocks": 1046,
+    "failed": 0,
+    "truncated": 0,
+    "with_warnings": 47,
+    "review_required": [
+      {
+        "address": "0x0801035a",
+        "name": "FUN_0801035a",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x0801119a",
+        "name": "FUN_0801119a",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08011b50",
+        "name": "FUN_08011b50",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x080125e8",
+        "name": "FUN_080125e8",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x080129c0",
+        "name": "FUN_080129c0",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08012f0c",
+        "name": "FUN_08012f0c",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08013084",
+        "name": "FUN_08013084",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08013200",
+        "name": "FUN_08013200",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08013450",
+        "name": "FUN_08013450",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x080135d0",
+        "name": "FUN_080135d0",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08013c30",
+        "name": "FUN_08013c30",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x08013dc8",
+        "name": "FUN_08013dc8",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x0801411a",
+        "name": "FUN_0801411a",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x08014420",
+        "name": "FUN_08014420",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x08016178",
+        "name": "FUN_08016178",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x08021552) ",
+          "Removing unreachable block (ram,0x08021558) "
+        ]
+      },
+      {
+        "address": "0x08016c5a",
+        "name": "FUN_08016c5a",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x08016cb4. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x080178f6",
+        "name": "FUN_080178f6",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x080178fe. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x08017be4",
+        "name": "FUN_08017be4",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x08018684",
+        "name": "FUN_08018684",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x080186e8",
+        "name": "FUN_080186e8",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x080271c8) ",
+          "Removing unreachable block (ram,0x080271d2) "
+        ]
+      },
+      {
+        "address": "0x0801937c",
+        "name": "FUN_0801937c",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x080194fa",
+        "name": "FUN_080194fa",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x0801950e. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x0801f954",
+        "name": "FUN_0801f954",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x0802164e",
+        "name": "FUN_0802164e",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Type propagation algorithm not settling "
+        ]
+      },
+      {
+        "address": "0x08022b62",
+        "name": "FUN_08022b62",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x08022dd4",
+        "name": "FUN_08022dd4",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x08022de2. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x08024210",
+        "name": "FUN_08024210",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      },
+      {
+        "address": "0x08024acc",
+        "name": "FUN_08024acc",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x08027ace",
+        "name": "FUN_08027ace",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x08027bd0) ",
+          "Removing unreachable block (ram,0x08027bf6) "
+        ]
+      },
+      {
+        "address": "0x08027c74",
+        "name": "FUN_08027c74",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x08027e6a) "
+        ]
+      },
+      {
+        "address": "0x08028306",
+        "name": "FUN_08028306",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x08028322. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x080283ee",
+        "name": "FUN_080283ee",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      },
+      {
+        "address": "0x0802a02c",
+        "name": "FUN_0802a02c",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x0802c8ac",
+        "name": "FUN_0802c8ac",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x08027220) ",
+          "Removing unreachable block (ram,0x08027238) ",
+          "Removing unreachable block (ram,0x08027242) ",
+          "Removing unreachable block (ram,0x0802725e) ",
+          "Removing unreachable block (ram,0x08027266) ",
+          "Removing unreachable block (ram,0x08027258) ",
+          "Removing unreachable block (ram,0x0802725c) ",
+          "Removing unreachable block (ram,0x08027226) ",
+          "Removing unreachable block (ram,0x0802722a) ",
+          "Removing unreachable block (ram,0x08027230) ",
+          "Removing unreachable block (ram,0x08027236) ",
+          "Removing unreachable block (ram,0x08027240) ",
+          "Removing unreachable block (ram,0x08027224) "
+        ]
+      },
+      {
+        "address": "0x0802cf3e",
+        "name": "FUN_0802cf3e",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x0802cf2c. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x0802cf68",
+        "name": "FUN_0802cf68",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x0802e4ac",
+        "name": "FUN_0802e4ac",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x0802fb84",
+        "name": "FUN_0802fb84",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x0802fb96. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x0802fb98",
+        "name": "FUN_0802fb98",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x0802fbaa. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x0802ff24",
+        "name": "FUN_0802ff24",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Removing unreachable block (ram,0x0802ff52) "
+        ]
+      },
+      {
+        "address": "0x0803992e",
+        "name": "FUN_0803992e",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      },
+      {
+        "address": "0x08039930",
+        "name": "FUN_08039930",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      },
+      {
+        "address": "0x08039932",
+        "name": "FUN_08039932",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      },
+      {
+        "address": "0x08039934",
+        "name": "FUN_08039934",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      },
+      {
+        "address": "0x0803e580",
+        "name": "FUN_0803e580",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Globals starting with '_' overlap smaller symbols at the same address "
+        ]
+      },
+      {
+        "address": "0x0803f724",
+        "name": "Reset_Handler",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Could not recover jumptable at 0x0803f730. Too many branches ",
+          "Treating indirect jump as call "
+        ]
+      },
+      {
+        "address": "0x080401f4",
+        "name": "FUN_080401f4",
+        "failed": false,
+        "truncated": false,
+        "warnings": [
+          "Do nothing block with infinite loop "
+        ]
+      }
+    ]
+  },
+  "python_differential": {
+    "status": "SKIP",
+    "passed": 0,
+    "executed": 0,
+    "skipped": 8,
+    "unique_instructions": 0
+  },
+  "formal": {
+    "status": "PASS",
+    "scope": "auxiliary model properties; no original-vs-rebuilt proof",
+    "proved": 10,
+    "unknown": 0
+  },
+  "hardware": {
+    "status": "SKIP",
+    "reason": "No fresh original-vs-rebuilt hardware comparison"
+  },
+  "release_ready": false,
+  "blockers": [
+    "Whole application is not reconstructed from source",
+    "Indirect control flow and decompiler warnings require review",
+    "No complete subsystem/interrupt/peripheral equivalence test",
+    "No hardware equivalence evidence or acquired bootloader"
+  ],
+  "provenance": {
+    "schema": 1,
+    "inputs": {
+      "container": "8c4209014d61a4e2b90f04aa0c7b63b8793d03844838b761c1809fc60471c9e4",
+      "flash": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e"
+    },
+    "pipeline_source_sha256": "4a68bf053b121e77a7ccfb067fc8dd3dd4092bf7a83b638707ff97008ea4f508",
+    "tools": {
+      "capstone": "5.0.9",
+      "unicorn": "2.1.4",
+      "z3-solver": "5.3.3.0"
+    }
   }
- },
- "unresolved": [
-  {
-   "item": "definition of the per-block CRC pair beyond crc1 == crc2",
-   "detail": "30 buffer/variant combinations checked, none matched; only equality is verified",
-   "count": 10
-  },
-  {
-   "item": "own LZSS encoder is not bit-identical with the vendor stream",
-   "detail": "0/10 blocks stream-identical, 7521/34261 tokens identical, 135505 vs 135452 bits",
-   "count": 10
-  },
-  {
-   "item": "capstone vs SLEIGH lines not identical after normalisation",
-   "detail": "of 38477 compared: format-only 29010, pc-relative 1701, semantic 161 (agreement 0.9958)",
-   "count": 161
-  },
-  {
-   "item": "lines only one decoder reaches",
-   "detail": "capstone sweeps the whole image, Ghidra stops at data: only-capstone 34970, only-ghidra 1976",
-   "count": 34970
-  },
-  {
-   "item": "on-device frame comparison not available offline",
-   "detail": "steps 2 and 11 need the unit powered",
-   "count": 2
-  }
- ],
- "sources": {
-  "stats": "firmware/rc-410/fw4.16/analysis/stats.json",
-  "functions": "firmware/rc-410/fw4.16/analysis/functions.json",
-  "roundtrip": "firmware/rc-410/fw4.16/analysis/roundtrip.json",
-  "crosscheck": "firmware/rc-410/fw4.16/analysis/crosscheck.json",
-  "differential": "firmware/rc-410/fw4.16/analysis/differential.json",
-  "formal": "firmware/rc-410/fw4.16/analysis/formal.json",
-  "container_check": "firmware/rc-410/fw4.16/analysis/container_check.json"
- },
- "inventory": {
-  "image_bytes": 264192,
-  "instructions": 72189,
-  "functions": 2125,
-  "strings": 2205,
-  "tables": 8,
-  "orphan_functions": 1849,
-  "handlers_recovered": 91
- }
 }

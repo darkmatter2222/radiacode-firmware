@@ -225,10 +225,14 @@ def align_size(size):
 
 def parse_file(data):
     """Return (header_dict, [block dicts]) for a Phyton/AlmaCode firmware file."""
+    if len(data) < 52:
+        raise ValueError("truncated firmware header")
     marker = data[:8]
     if marker not in (b"Phyton\x00\x00", b"AlmaCode"):
         raise ValueError(f"bad marker {marker!r}")
     header_size = struct.unpack_from("<I", data, 8)[0]
+    if header_size != 52 or header_size > len(data):
+        raise ValueError("unsupported firmware header size")
     pos = 12
     date_time = struct.unpack_from("<I", data, pos)[0]
     pos += 4
@@ -281,11 +285,15 @@ def iter_blocks(data, start):
     pos = 0
     blocks = []
     while pos < len(buf):
+        if len(buf) - pos < 12:
+            raise ValueError("truncated block header")
         header_size, size_enc, addr_enc = struct.unpack_from("<III", buf, pos)
         size = size_enc ^ BLOCK_HEADER_SIZE_KEY
         addr = addr_enc ^ BLOCK_HEADER_ADDR_KEY
         aligned = align_size(size)
         block_start = pos + 12
+        if header_size != 12 or addr < BASE_ADDRESS or block_start + KEY_BLOCK_SIZE + aligned > len(buf):
+            raise ValueError("invalid block bounds or header")
         block = bytes(buf[block_start : block_start + KEY_BLOCK_SIZE + aligned])
         blocks.append(
             {
@@ -302,6 +310,8 @@ def iter_blocks(data, start):
 
 def decrypt_block(raw, size, compressed, outer_offset=0, device_key=None):
     """Decrypt one firmware block; returns plaintext (possibly LZSS-compressed)."""
+    if len(raw) < KEY_BLOCK_SIZE or size > len(raw) - KEY_BLOCK_SIZE:
+        raise ValueError("truncated encrypted block")
     key_block = bytearray(raw[:KEY_BLOCK_SIZE])
     data_block = bytearray(raw[KEY_BLOCK_SIZE:])
 
@@ -342,15 +352,21 @@ def build_flash_image(data, device_key=None, verbose=False):
     compressed = header["compressed"] > 0
     blocks = iter_blocks(data, start)
     image = bytearray()
+    ranges = []
     for index, block in enumerate(blocks):
         plain, crc1 = decrypt_block(block["raw"], block["size"], compressed, 0, device_key)
         if compressed:
             plain = lzss_decompress(plain)
         crc_ok = calculate_crc(plain) == crc1
+        if not crc_ok:
+            raise ValueError(f"block {index} payload CRC mismatch")
         offset = block["addr"] - BASE_ADDRESS
         if offset < 0:
             raise ValueError(f"block {index} below base address: {block['addr']:#x}")
         end = offset + len(plain)
+        if end > 0x80000 or any(offset < high and end > low for low, high in ranges):
+            raise ValueError("overlapping or out-of-range payload")
+        ranges.append((offset, end))
         if len(image) < end:
             image.extend(bytes(end - len(image)))
         image[offset:end] = plain
@@ -539,7 +555,12 @@ def reencode_file(data, recompress=True):
                 header["compressed"] > 0,
             )
         else:
-            rebuilt, size = expected, block["size"]
+            if inner_key is None:
+                raise ValueError("unsupported key mode; cannot validate reencryption")
+            rebuilt = expected[:12] + encode_key_block(
+                mangle_index, inner_key, data_key, crc_pair, tail
+            ) + mangle_encrypt_key(data_key, stream)
+            size = block["size"]
         detail.append(
             {
                 "addr": "0x%08X" % block["addr"],
