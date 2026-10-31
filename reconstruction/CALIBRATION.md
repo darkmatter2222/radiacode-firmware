@@ -16,11 +16,17 @@ neighbors, deterministic random encodings and samples under all four rounding
 modes, flush-to-zero and default-NaN settings. This is sampling, not an exhaustive
 proof over the 96-bit input space or every FPSCR configuration.
 
-The checked contract covers return value, writes, MMIO, stack restoration and
-callee-saved integer registers. It does **not** cover floating-point exception
-flags: 1,513 tested executions differed in those flags. GCC emits VCMPE where
-the original uses VCMP. That is a material remaining difference, so this
-candidate is excluded from any replacement experiment until resolved.
+The checked contract covers return value, writes, MMIO, stack restoration,
+callee-saved integer registers and the full FPSCR register. All 10,947 cases now
+match, including FPSCR. This remains bounded testing, not an exhaustive proof.
+
+The first C candidate passed return/memory checks but differed in exception flags
+in 1,513 cases: GCC emitted VCMPE where the original uses quiet VCMP. The current
+candidate preserves VCMP and reads FPSCR through a small explicit ARM adapter,
+then evaluates the original condition bits in C. It is intentionally ARM-specific.
+The previous mismatch counts remain here as the reason for that adapter; current
+results and source/compiler identities are in `calibration_validation.json`.
+This predicate is still excluded from the separate one-leaf hybrid experiment.
 
 The first run also exposed a harness observer defect with Unicorn 2.1.4:
 global memory-read hooks caused incorrect execution through a conditional VFP

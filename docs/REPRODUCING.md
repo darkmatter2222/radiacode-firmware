@@ -18,7 +18,7 @@ address-preserving padding. Preserve the vendor containers as immutable inputs.
 - Five ARM-compiled reference-build candidates (one is a single dispatcher path)
   are tested on 1,360 deterministic cases. See `reconstruction/validation.json`.
 - A separate floating-point predicate experiment passes 10,947 return/memory/ABI
-  comparisons but still differs in FPSCR exception flags. See
+  comparisons including full FPSCR. See
   [reconstruction/CALIBRATION.md](../reconstruction/CALIBRATION.md).
 - An assembler/linker baseline preserves all six original images exactly. This
   earns no source-recovery credit and is not a newly reconstructed firmware.

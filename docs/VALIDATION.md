@@ -65,4 +65,4 @@ reviewed hardware evidence policy rather than accepting a hand-edited PASS flag.
 Read observers are restricted to MMIO because a global RAM-read hook in Unicorn
 2.1.4 changed execution of a conditional VFP load. A pinned original-image
 regression covers the failing case. The additional predicate experiment and
-its unresolved FPSCR differences are documented in `reconstruction/CALIBRATION.md`.
+the ARM-specific quiet-comparison adapter that resolves the observed FPSCR differences are documented in `reconstruction/CALIBRATION.md`.
