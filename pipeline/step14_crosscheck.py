@@ -9,7 +9,7 @@ The two printers are not comparable character by character, so the comparison is
 * `format_only`   - same mnemonic, same set of numeric operands, different rendering (brackets,
                     `#`, `0x` prefixes, `sp`/`r13` aliases, immediate base points).
 * `pc_relative`   - the literal is an offset in one printer and the resolved address in the other
-                  (same immediate, PC base = word-aligned instruction address + 4 per ARMv7-M).
+                    (same immediate, PC base = word-aligned instruction address + 4 per ARMv7-M).
 * `semantic`      - mnemonic or operand values really differ; these are the ones worth reading.
 
 `agreement` counts the first three tiers.  Lines only one decoder reaches are reported separately:

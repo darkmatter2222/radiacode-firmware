@@ -31,8 +31,8 @@ firmware/rc-102/hw1-fw4.14/
 
 | target | device | fw | state |
 | --- | --- | --- | --- |
-| `rc-102/hw1-fw4.14` | RadiaCode-102 (hw 1) | 4.14 | full: steps 1-12, live unit attached |
-| `rc-101/fw4.14` | RadiaCode-101 | 4.14 | steps 1-12, no live unit (2 and 11 self-skip) |
+| `rc-102/hw1-fw4.14` | RadiaCode-102 (hw 1) | 4.14 | full: steps 1-17 (2 and 11 need the unit powered), the reference build |
+| `rc-101/fw4.14` | RadiaCode-101 | 4.14 | steps 1-17, no live unit (2 and 11 self-skip) |
 | `rc-103/fw4.14` | RadiaCode-103 | 4.14 | same |
 | `rc-103g/fw4.14` | RadiaCode-103G | 4.14 | same |
 | `rc-110/fw4.14` | RadiaCode-110 | 4.14 | same |
@@ -82,8 +82,9 @@ python pipeline/run.py --only 13,14,15,16,17    # the verification layers only (
 
 Run from the repo root (steps open paths relative to it); `run.py` chdirs there itself and passes the
 target to each step through `RC_TARGET`. `pipeline/tools/*.py` insert `pipeline/` on `sys.path`, so
-`import config`, `protocol`, `rcble`, `rcsession`, `rcfmt` work from any cwd; select the build they
-read with `RC_TARGET=…`.
+`import config`, `protocol`, `rcble`, `rcsession`, `rcfmt` work from any cwd; select the build they read
+with the environment variable - `$env:RC_TARGET='rc-410/fw4.16'` in PowerShell, `RC_TARGET=rc-410/fw4.16`
+in bash - or use `run.py --device <key>`, which works in every shell.
 
 Steps 13-17 are the verification layers, and they run without the unit:
 
@@ -99,7 +100,7 @@ Steps 13-17 are the verification layers, and they run without the unit:
 
 ```powershell
 python pipeline/tools/lookup.py 0x0803BA70        # default target: function + C lines + callers + strings
-RC_TARGET=rc-410/fw4.16 python pipeline/tools/lookup.py 0x08010188
+$env:RC_TARGET='rc-410/fw4.16'; python pipeline/tools/lookup.py 0x08010188   # another build
 python pipeline/tools/read_vsfrs.py               # live VSFR readout -> analysis/vsfr_readout.json
 python pipeline/tools/analyze_official.py         # every registered container, one JSON line each
 python pipeline/tools/probe.py                    # single live command, raw hex
@@ -122,10 +123,10 @@ Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
 | device-vs-image equality | `analysis/verification.json` | `checks.*` (all `true`), `c_coverage` |
 | live identity / strings / areas | `analysis/capture.json` | `identity`, `virtual_strings`, `flash_areas` |
 | container-vs-device field matches | `analysis/container_check.json` | `…_matches_device` flags |
-| L1 re-encode byte-exactness | `analysis/roundtrip.json` | `blocks[].{header,key,data}`, `recompress.*` |
-| L2 per-instruction agreement | `analysis/crosscheck.json` | `counts.{compared,identical,format_only,pc_relative,semantic}`, `semantic_lines[]` |
-| L4 native-vs-Python execution | `analysis/differential.json` | `cases[].{name,address,status,r0,bytes_written}`, `format_vectors` |
-| L5 proofs | `analysis/formal.json` | `checks[].{name,status}` |
+| L1 re-encode byte-exactness | `analysis/roundtrip.json` | `carried.{byte_identical,bytes_matched,header_crc32_match}`, `carried.blocks_*`, `lzss.{decode_identical,stream_identical,tokens_identical}`, `byte_exact` |
+| L2 per-instruction agreement | `analysis/crosscheck.json` | `tiers.{identical,format_only,pc_relative,semantic}`, `agreement`, `only_capstone`, `only_ghidra`, `examples.semantic[]` |
+| L4 native-vs-Python execution | `analysis/differential.json` | `cases[].{name,addr,instructions,native_r0,model_r0,r0_match,writes_native,writes_model,write_bytes_match}`, `format[].{model,vectors,passed}` |
+| L5 proofs | `analysis/formal.json` | `checks[].{check,status,premises}`, `proved` / `counterexamples` / `unknown` |
 | the five-category roll-up | `analysis/confidence.json` (+ `.md`) | `categories.{byte_matched,formally_verified,tested,preserved_unchanged}`, `unresolved[]` |
 | live VSFR values | `analysis/vsfr_readout.json` | `single_nonzero`, `batch_shapes` |
 | which ids answer | `analysis/sweep_noarg.json`, `sweep_witharg.json` | keyed by `0x…` id |

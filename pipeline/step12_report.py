@@ -126,8 +126,8 @@ add("* The Mangle cipher is a 48-round Feistel network over 8-byte blocks, 4 rou
 add("  (`key[rnd & 3]`), round function `B' = rnd + key + ((B>>8)^(B<<6)) + B + A`.")
 add("* CRC: MPEG-2 polynomial `0x04C11DB7`, no reflection, init `0xFFFFFFFF`, fed in 4-byte LE chunks")
 add("  (`rcfmt.calculate_crc`).")
-add("* Payload: LZSS, 2048-byte window pre-filled with `0x20`, initial index `2022`, flag bit 1 =")
-add("  literal, 0 = match with 11-bit offset + 4-bit length (+2).")
+add("* Payload: LZSS, 2048-byte window pre-filled with `0x20`, initial index `2031`, flag bit 1 =")
+add("  literal, 0 = match with 11-bit offset + 4-bit length (+2), i.e. match length `2..17`.")
 add("")
 add("## Decoded flash image")
 add("")
@@ -159,6 +159,10 @@ if os.path.exists(CFG["verification"]):
     add("")
     add("Device-reported builds: "
         + ", ".join(f"`{item}`" for item in verification["device"]["boot_and_firmware_builds"]))
+    add("")
+if os.path.exists(CFG["differential"]) or os.path.exists(CFG["confidence"]):
+    add("The offline verification layers (steps 13-17, no unit needed) report five separate categories")
+    add("for this build in `analysis/confidence.md`; `README.md` §4 explains what each one means.")
     add("")
 add("## Core (Cortex-M4, ARMv7E-M)")
 add("")
@@ -277,6 +281,16 @@ add("%-42s %s" % (CFG["container_check"], "vendor-file vs device field matches (
 add("%-42s %s" % (CFG["vsfr"], "live VSFR values, single-value form (tools)"))
 add("%-42s %s" % (CFG["sweep_noarg"], "which command ids answer, no argument"))
 add("%-42s %s" % (CFG["sweep_witharg"], "which command ids answer, with a u32 argument"))
+for name, note in (
+    ("ghidra_listing", "SLEIGH listing + function ranges (step 6, feeds step 14)"),
+    ("roundtrip", "L1: container re-encoded byte for byte (step 13)"),
+    ("crosscheck", "L2: capstone vs SLEIGH agreement, four tiers (step 14)"),
+    ("differential", "L4: Unicorn vs the Python models (step 15)"),
+    ("formal", "L5: Z3 goals with their verdicts (step 16)"),
+    ("confidence", "the five verification categories (step 17)"),
+    ("confidence_md", "the same, readable form"),
+):
+    add("%-42s %s" % (CFG[name], note))
 add("%-42s %s" % (CFG["manifest"], "this build's identity + file checksums"))
 add("%-42s %s" % (CFG["summary"], "this file"))
 add("```")
@@ -291,6 +305,7 @@ add("python pipeline/run.py --only 3           # fetch + match the vendor contai
 add("python pipeline/run.py --only 2           # live read-only capture (BLE)")
 add("python pipeline/run.py --only 6           # Ghidra headless decompilation")
 add("python pipeline/run.py --from 7           # index, xrefs, callgraph, tables, verify, report")
+add("python pipeline/run.py --only 13,14,15,16,17   # the offline verification layers only")
 add("python pipeline/tools/lookup.py 0x080275C4   # ad-hoc query: function + callers + strings")
 add("python pipeline/tools/read_vsfrs.py          # live VSFR readout")
 add("```")
@@ -328,7 +343,8 @@ manifest = {
     "landmarks": CFG["landmarks"],
     "files": {},
 }
-for name in ("container", "flash", "blocks", "listing", "c", "index"):
+for name in ("container", "flash", "blocks", "listing", "c", "index",
+             "ghidra_listing", "roundtrip", "crosscheck", "differential", "formal", "confidence"):
     if os.path.exists(CFG[name]):
         manifest["files"][name] = dict(path=CFG[name], **_digest(CFG[name]))
 os.makedirs(CFG["dir"], exist_ok=True)

@@ -61,8 +61,8 @@ blocks[] : u32 header_size | u32 size ^ 0xCE27A932 | u32 addr ^ 0xB2D5A864
   (`key[rnd & 3]`), round function `B' = rnd + key + ((B>>8)^(B<<6)) + B + A`.
 * CRC: MPEG-2 polynomial `0x04C11DB7`, no reflection, init `0xFFFFFFFF`, fed in 4-byte LE chunks
   (`rcfmt.calculate_crc`).
-* Payload: LZSS, 2048-byte window pre-filled with `0x20`, initial index `2022`, flag bit 1 =
-  literal, 0 = match with 11-bit offset + 4-bit length (+2).
+* Payload: LZSS, 2048-byte window pre-filled with `0x20`, initial index `2031`, flag bit 1 =
+  literal, 0 = match with 11-bit offset + 4-bit length (+2), i.e. match length `2..17`.
 
 ## Decoded flash image
 
@@ -82,6 +82,9 @@ blocks[] : u32 header_size | u32 size ^ 0xCE27A932 | u32 addr ^ 0xB2D5A864
 | 9 | `0x0803bf00` | 0x4900 (18688) | `bee1d1ec` | 6801 |
 
 ## Verification against the live device
+
+The offline verification layers (steps 13-17, no unit needed) report five separate categories
+for this build in `analysis/confidence.md`; `README.md` §4 explains what each one means.
 
 ## Core (Cortex-M4, ARMv7E-M)
 
@@ -227,6 +230,13 @@ firmware/rc-410/fw4.16/analysis/container_check.json vendor-file vs device field
 firmware/rc-410/fw4.16/analysis/vsfr_readout.json live VSFR values, single-value form (tools)
 firmware/rc-410/fw4.16/analysis/sweep_noarg.json which command ids answer, no argument
 firmware/rc-410/fw4.16/analysis/sweep_witharg.json which command ids answer, with a u32 argument
+firmware/rc-410/fw4.16/analysis/ghidra_listing.json SLEIGH listing + function ranges (step 6, feeds step 14)
+firmware/rc-410/fw4.16/analysis/roundtrip.json L1: container re-encoded byte for byte (step 13)
+firmware/rc-410/fw4.16/analysis/crosscheck.json L2: capstone vs SLEIGH agreement, four tiers (step 14)
+firmware/rc-410/fw4.16/analysis/differential.json L4: Unicorn vs the Python models (step 15)
+firmware/rc-410/fw4.16/analysis/formal.json L5: Z3 goals with their verdicts (step 16)
+firmware/rc-410/fw4.16/analysis/confidence.json the five verification categories (step 17)
+firmware/rc-410/fw4.16/analysis/confidence.md the same, readable form
 firmware/rc-410/fw4.16/manifest.json       this build's identity + file checksums
 firmware/rc-410/fw4.16/analysis/summary.md this file
 ```
@@ -241,6 +251,7 @@ python pipeline/run.py --only 3           # fetch + match the vendor container
 python pipeline/run.py --only 2           # live read-only capture (BLE)
 python pipeline/run.py --only 6           # Ghidra headless decompilation
 python pipeline/run.py --from 7           # index, xrefs, callgraph, tables, verify, report
+python pipeline/run.py --only 13,14,15,16,17   # the offline verification layers only
 python pipeline/tools/lookup.py 0x080275C4   # ad-hoc query: function + callers + strings
 python pipeline/tools/read_vsfrs.py          # live VSFR readout
 ```

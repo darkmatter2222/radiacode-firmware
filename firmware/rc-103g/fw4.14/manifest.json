@@ -55,6 +55,36 @@
       "path": "firmware/rc-103g/fw4.14/index.json",
       "bytes": 341786,
       "sha256": "c8efdf83972d77c31a0e6be10178f0c0f6fa576323e43161b8436aa85079ceb6"
+    },
+    "ghidra_listing": {
+      "path": "firmware/rc-103g/fw4.14/analysis/ghidra_listing.json",
+      "bytes": 1460981,
+      "sha256": "27f7eec817344759b9a2ef281ee17ba58147df2ff50337fa9f99726870a6008a"
+    },
+    "roundtrip": {
+      "path": "firmware/rc-103g/fw4.14/analysis/roundtrip.json",
+      "bytes": 7138,
+      "sha256": "44e442d806e9e4dfccc979f0a4463027a3ca64e0f28692289f7e5f6d5d72c37d"
+    },
+    "crosscheck": {
+      "path": "firmware/rc-103g/fw4.14/analysis/crosscheck.json",
+      "bytes": 3695,
+      "sha256": "a221ed526b7777c84906d41a2c3e9676bcbd74c049d464e2def112b9137e4a48"
+    },
+    "differential": {
+      "path": "firmware/rc-103g/fw4.14/analysis/differential.json",
+      "bytes": 4191,
+      "sha256": "51fae24fef53ee9ed7b8c8ff6648e687ef15e7024aa4421b0ed64c2e23bb6858"
+    },
+    "formal": {
+      "path": "firmware/rc-103g/fw4.14/analysis/formal.json",
+      "bytes": 1227,
+      "sha256": "30a5e7da2d3408c05a5cbcc6281ec2ceb75872ef2c3dea51b4941c4d6ae77bc2"
+    },
+    "confidence": {
+      "path": "firmware/rc-103g/fw4.14/analysis/confidence.json",
+      "bytes": 4001,
+      "sha256": "70940c91daa00ef3c8797fa5b40a9a1923fdd47f69cf479ca57de6b1c109fbd3"
     }
   }
 }

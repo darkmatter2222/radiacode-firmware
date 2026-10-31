@@ -6,7 +6,7 @@ and each comes from a different kind of evidence.
 * ``byte_matched``       - output the model writes back is identical to the vendor bytes (step 13).
 * ``formally_verified``  - properties discharged for all inputs by the SMT solver (step 16).
 * ``tested``             - original machine code vs the Python models, and pure-model vectors
-                           (steps 15, plus the on-device frame checks of step 10 when present).
+                           (step 15, plus the on-device frame checks of step 11 when present).
 * ``preserved_unchanged``- bytes/instructions/strings carried verbatim at their original addresses
                            (steps 5-6 artefacts, key-block tail carried through step 13).
 * ``unresolved``         - named open items with their counts; nothing here counts toward a pass.

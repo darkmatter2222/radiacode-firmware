@@ -75,8 +75,8 @@ blocks[] : u32 header_size | u32 size ^ 0xCE27A932 | u32 addr ^ 0xB2D5A864
 * Mangle cipher: 48-round Feistel over 8-byte little-endian blocks, four round keys (`key[rnd & 3]`),
   round function `B' = rnd + key + ((B>>8)^(B<<6)) + B + A`.
 * CRC: MPEG-2 polynomial `0x04C11DB7`, no reflection, init `0xFFFFFFFF`, fed as 4-byte LE chunks.
-* Payload: LZSS — 2048-byte window pre-filled with `0x20`, initial index `2022`, flag bit 1 = literal,
-  0 = match (11-bit offset + 4-bit length, `+2`).
+* Payload: LZSS — 2048-byte window pre-filled with `0x20`, initial index `2031` (`2048-0x10-1`), flag
+  bit 1 = literal, 0 = match (11-bit offset + 4-bit length, `+2`, so match length `2..17`), MSB-first.
 * The small flash areas returned by cmd `0x081C` use a *different* stream cipher: Borland LCG keystream
   (`seed * 0x015A4E35 + 1`, XOR of the low 8 bits of `seed >> 16`, one continuous state across the size
   word and the payload).
