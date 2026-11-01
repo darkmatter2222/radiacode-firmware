@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "flashable": false,
+  "cases": 5120,
+  "failures": [],
+  "mutation_detections": 2,
+  "boundary": {
+    "start": "0x8027310",
+    "stop": "0x8027324",
+    "classification": "BOUNDARY_REACHED, not function RETURN"
+  },
+  "tables": [
+    "0x8027344",
+    "0x8037838"
+  ],
+  "command": "0x80000007",
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "hybrid_sha256": "762ff5612acb4338a4a01df83ef6a98ebf5b94437f77d2827891486be1aa331b",
+  "harness_sha256": "e0ce75a859af16c28d335a07ae1db2e9e8f70b4093ec7d56a843d2b4907e713c",
+  "handler_validation_sha256": "592244444200f97e7fc78878d4f7929acd8cabf49db54c5651ce7766eabe4c32",
+  "limitations": [
+    "preselected tables; excludes upstream frame and mode validation",
+    "stops before response finalization and transport callbacks",
+    "no physical allocation, interrupts, timing or recovery proof"
+  ]
+}

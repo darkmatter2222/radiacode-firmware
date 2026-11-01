@@ -43,3 +43,5 @@ Latest integration: [session helper](reconstruction/INTEGRATION.md#8-implemented
 Combined replacement milestone: [both helpers through the original handler](reconstruction/COMBINED.md), with 3,200 independent cases and 1,280 persistent-sequence calls. Conservative incoming-edge audit remains INCONCLUSIVE.
 
 Full command-chain milestone: [compiled handshake handler](reconstruction/HANDSHAKE.md) and both recovered callees pass 3,200 comparisons plus 1,280 persistent calls. Dispatcher integration, hardware layout and recovery remain unresolved.
+
+Dispatcher integration: [original table lookup and indirect call](reconstruction/DISPATCH.md) passes 5,120 comparisons across both original tables. Upstream frame validation and downstream response finalization remain outside this bounded experiment.
