@@ -1,0 +1,141 @@
+{
+ "acquired": "2026-11-01T14:12:52.664 -> 2026-11-01T14:14:03.851",
+ "provenance": "fresh-handshake",
+ "unit": {
+  "model": "RadiaCode-102",
+  "serial": "RC-102-008228",
+  "ble_address": "52:43:06:60:20:24",
+  "chunk_bytes": 18,
+  "service_uuids": {
+   "service": "e63215e5-7003-49d8-96b0-b024798fb901",
+   "write": "e63215e6-7003-49d8-96b0-b024798fb901",
+   "notify": "e63215e7-7003-49d8-96b0-b024798fb901"
+  }
+ },
+ "identity_replies": {
+  "GET_STATUS": {
+   "hex": "02000000",
+   "len": 4,
+   "sha256": "26b25d457597a7b0463f9620f666dd10aa2c4373a505967c7c8d70922a2d6ece",
+   "decoded": null
+  },
+  "GET_VERSION": {
+   "hex": "000004001446656220203620323032332031353a34393a31340e000400154a756c20203720323032352031313a31393a323200",
+   "len": 51,
+   "sha256": "9e7a406f3e1313591af01420b8b19023e08a27881419d189a7e26f846208c0c2",
+   "decoded": [
+    {
+     "id": 0,
+     "version": 4,
+     "stamp": "Feb  6 2023 15:49:14"
+    },
+    {
+     "id": 14,
+     "version": 4,
+     "stamp": "Jul  7 2025 11:19:22"
+    }
+   ]
+  },
+  "GET_SERIAL": {
+   "hex": "0c00000029002d000150323242393120",
+   "len": 16,
+   "sha256": "9de310a613d2b22a753f8011a2e287a2c6b6775deda2a7abdf105eaf23ee6e48",
+   "decoded": null
+  },
+  "FW_IMAGE_GET_INFO": {
+   "hex": "64fc0100001000008a42e75abb5a0913",
+   "len": 16,
+   "sha256": "0bc834bf2bcd023ad609816c0a59333df4ba4fd0148ce5529651916bece5e07b",
+   "decoded": {
+    "size": 130148,
+    "buffer_size": 4096,
+    "date_time": "0x5AE7428A",
+    "crc32": "0x13095ABB"
+   }
+  },
+  "RD_SIGNAT": {
+   "hex": "8a42e75a0a72632d3130322e62696e105261646961436f64652052432d3130320130",
+   "len": 34,
+   "sha256": "fad57ff092823dd66400ea5dc6df8ed7d54375f920e78910567ce231083599a9",
+   "decoded": {
+    "date_time": "0x5AE7428A",
+    "fields": [
+     "rc-102.bin",
+     "RadiaCode RC-102",
+     "0"
+    ]
+   }
+  },
+  "RD_HW_CONFIG": {
+   "hex": "0f00000000000000000001e8030000",
+   "len": 15,
+   "sha256": "a9652e7a2b0531bd08ff8e2a3c3eb5f3799c8c98aeacc82ee5663650adc423ed",
+   "decoded": null
+  }
+ },
+ "GET_VERSION_decoded": [
+  {
+   "id": 0,
+   "version": 4,
+   "stamp": "Feb  6 2023 15:49:14"
+  },
+  {
+   "id": 14,
+   "version": 4,
+   "stamp": "Jul  7 2025 11:19:22"
+  }
+ ],
+ "FW_IMAGE_GET_INFO_decoded": {
+  "size": 130148,
+  "buffer_size": 4096,
+  "date_time": "0x5AE7428A",
+  "crc32": "0x13095ABB"
+ },
+ "RD_SIGNAT_decoded": {
+  "date_time": "0x5AE7428A",
+  "fields": [
+   "rc-102.bin",
+   "RadiaCode RC-102",
+   "0"
+  ]
+ },
+ "GET_SERIAL_words": [
+  "29002d00",
+  "01503232",
+  "42393120"
+ ],
+ "GET_STATUS_observed": [
+  "02000000"
+ ],
+ "container": {
+  "filename": "rc-102z.bin",
+  "size": 130148,
+  "blocks": 8,
+  "sha256": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392",
+  "date_time_msdos": "0x5AE7428A",
+  "crc32": "0x13095ABB"
+ },
+ "image_bindings": {
+  "flash.bin_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "flash.bin_bytes": 248320,
+  "acquired_range": "0x08010000-0x0803CA00",
+  "padding_below_app": 65536
+ },
+ "counts": {
+  "requests": 898,
+  "answered": 898,
+  "frames": 898
+ },
+ "writes_issued": [
+  {
+   "cmd": "0x0007",
+   "name": "SET_EXCHANGE",
+   "args_hex": "01ff12ff",
+   "count": 1
+  }
+ ],
+ "session_writes_total": {
+  "0x0007": 2,
+  "note": "one per connection; run 1 (crashed collector) and the final run; never 0x0A04/0x0825/0x0013/0x0014"
+ }
+}

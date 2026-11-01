@@ -811,14 +811,20 @@ Outside the target directories:
 ### 12.1 Device evidence bundle (2026-11-01, write-free pass)
 
 `docs/evidence/2026-11-01-writefree/` holds the bundle produced by the read-only session on the unit
-in hand (RadiaCode-102, `RC-102-008228`): `radiacode-device-evidence.zip` (98 files, SHA-256
-`d41169fdb1f59c007d0d92899832dba8a7595bfaad0b105c72388d353509488a`) plus the two reports and the
-two index files unzipped for browsing (`REPORT.md`, `NEXT_STEPS.md`, `identity.json`,
-`manifest.json`, `memory-map.csv`). Contents: raw per-exchange frames of four BLE passes
-(`raw/session_*.json`, 314 requests, **no device writes**), the decoded fresh-priority artifacts
-(`decoded/fresh_*`), the prior capture split into raw+decoded files, the container/image/analysis
+in hand (RadiaCode-102, `RC-102-008228`): `radiacode-device-evidence.zip` (110 files, SHA-256
+`097a16f0944460703a5ad0b9bfc48668b3291d2a124283aeef14a84a4377463d`) plus the two reports and the
+index files unzipped for browsing (`REPORT.md`, `NEXT_STEPS.md`, `identity.json`,
+`manifest.json`, `memory-map.csv`) and `CHECKSUMS256.txt`. Contents: raw per-exchange frames of four
+BLE passes (`raw/session_*.json`, 314 requests, **no device writes**), the decoded fresh-priority
+artifacts (`decoded/fresh_*`), the prior capture split into raw+decoded files (configuration bytes
+`decoded/prior_capture_configuration_bytes.hex` + decoded text + `decoded/energy_calibration.json`,
+each carrying the historical acquisition time `2026-10-31T12:17:54`), the container/image/analysis
 artifacts, and the updater + hardware extractions. The manifest is written after every other
-artifact, so it hashes the bytes that ship.
+artifact and excludes itself from `files[]`; manifest/ZIP digests live in `CHECKSUMS256.txt` beside
+the ZIP, and every entry carries an explicit provenance label (`fresh-writefree`,
+`fresh-handshake`, `prior-repo-capture`, `offline`). All generated text is UTF-8 with LF, so the
+unzipped copies, the ZIP members and the manifest agree byte-for-byte
+(`tests/test_evidence_bundles.py` checks all of this).
 
 The bundle's one protocol-level addition over §8: with no `0x0007` session write, only
 `0x0005 GET_STATUS` returns a data record; every other documented read id returns the 4-byte record
@@ -829,7 +835,8 @@ frames; `NEXT_STEPS.md` N1 is the cheapest way to close the remaining gaps.
 
 Two status blocks ship with it (`updater/repo_unit_tests.txt`, `updater/release_gate.txt`,
 `updater/repo_layer_status.json`): `python -m unittest discover -s tests -v` returns exit `1`
-(53 tests, 1 failure + 2 errors, all environment artifacts on the host) and
+(63 tests, 2 errors, all environment artifacts on the host: symlink permissions and the
+navigation link check) and
 `python pipeline/release_gate.py` returns exit `2` = `INCONCLUSIVE`, i.e. evidence unavailable rather
 than a pass - the gate fails closed and a green test suite does not override it. Emulator case
 applicability is bound to the full image SHA-256 pair (`container 67a43a50…5e392`,
@@ -844,6 +851,30 @@ python pipeline/run.py --only 1,4,5,7,8,9,10,13,14,15,16,17,12   # the offline p
 python pipeline/tools/lookup.py 0x080275C4               # ad-hoc query against the default target
 $env:RC_TARGET='rc-410/fw4.16'; python pipeline/tools/lookup.py 0x08010188   # another build
 ```
+
+### 12.2 Handshake follow-up bundle (2026-11-01, single `0x0007` per connection)
+
+`docs/evidence/2026-11-01-handshake/` holds the follow-up experiment (`radiacode-device-evidence-followup.zip`,
+36 files, SHA-256 `47ef7a39703d361483e58a98dc16d62d9d0e5847340320ff5ca55f45f2058d9c`, same
+manifest/checksum discipline as §12.1). An instruction-level review first established that the
+BLE-transport path of `0x0007 SET_EXCHANGE` (dispatch table word `0x80000007 -> 0x08027490` at
+`0x080378A0`, body `0x08027490-0x08027516`, callees `0x08029370` / `0x08029086 -> 0x08022e60 ->
+0x08016780`) writes only RAM session state - no flash/NVM program, no AIRCR, no RTC, no counter
+reset (`HANDSHAKE_ANALYSIS.md`). The experiment then sent the frame `080000000700008201ff12ff`
+exactly once per connection with a minimal transport (no library constructor, no implicit writes):
+898 requests / 898 matching replies, the NAK of the write-free passes gone, reply body
+`0501dada2010001001020000` identical to `analysis/probe_raw.json:exchange`.
+
+Freshly acquired (`decoded/fresh_*`, all `fresh-handshake`): the six identity ids (each repeating
+byte-identical and equal to the 2026-10-31 capture), the 3,256-byte configuration text (SHA
+`c7b7228a…fa99`, equal to the in-image blob at `0x0802F9F0`; not strict UTF-8 - byte 226 is
+`0xF1`, decoded cp1251), energy calibration VS `0x202` (`A0 = 5.15874719619751`,
+`A1 = 2.3756351470947266`, `A2 = 0.0003569310065358877`, equal to prior), the two served
+`0x081C` areas (index 1 embeds `RC-102-008228`; indexes 2-3 reply status 12), 29 VSFR values incl.
+the `0xFFFF0000+` system block (`SIGNATURE = 0x5AE7428A` = container `date_time`), and a 60 s
+baseline (83 samples, counters untouched, temperature 24.263-24.268 degC). Bootloader bytes,
+flash geometry and option bytes remain unacquired - `flash.bin`'s zero-padded first 64 KiB is
+padding, not a backup; see `NEXT_STEPS.md` items 1-3 for the exact blockers.
 
 ---
 
