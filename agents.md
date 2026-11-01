@@ -18,6 +18,8 @@ operational guidance conflicts with these updates, use these current rules:
 - Run `python -m unittest discover -s tests -v` for validator changes and
   `python pipeline/build_reconstruction.py` for ARM candidate changes.
 - Generate manifests last. Current analysis JSON supersedes baseline counts below.
+- Every derived text writer passes `encoding="utf-8", newline="\n"`, so files are LF on disk and in
+  the index; `pipeline/tools/check_manifest.py --all` must report `none` for both columns.
 - Ghidra uses `GHIDRA_HOME` and `JAVA_HOME`; GNU ARM tools use `ARM_GCC` if needed.
 - Merge tested repository increments separately from firmware certification.
   The release gate remains closed until whole-firmware and hardware evidence exist.
@@ -100,6 +102,8 @@ python pipeline/run.py --only 2                 # live read-only capture (--swee
 python pipeline/run.py --only 6                 # Ghidra headless (needs ghidra_12.2_PUBLIC/ + jdk-25.0.5+8/)
 python pipeline/run.py --from 7                 # index, xrefs, callgraph, tables, verify, report
 python pipeline/run.py --only 13,14,15,16,17    # the verification layers only (all offline)
+python pipeline/tools/check_manifest.py --all   # manifest bytes vs working tree and fresh checkout
+python pipeline/build_reconstruction.py         # compiled candidates (needs ARM_GCC)
 ```
 
 Run from the repo root (steps open paths relative to it); `run.py` chdirs there itself and passes the
@@ -179,6 +183,14 @@ Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
 * Ghidra left 2 stubs at `0x08016cc6` and `0x0802abf8`: data-table slots, code only in the listing.
   Vector IRQ handlers collapse onto few real entries plus the self-loop at `0x0803C4D9`, so per-IRQ
   bodies come from `tables.json`, not from the call graph.
+* Compiled candidates: eight functions / 5,072 differential cases plus three negative controls
+  (`reconstruction/validation.json`), the newest being the return-only helper at `0x08029370`
+  (`rc_session_state_flag`, reply word `((T==S)||(S==0)?1:0) | (S<<8)` with S = byte
+  [`[0x080293FC]`+0x0d] = `0x20000C0D`). Its code is 24 bytes but the compiled total is 28 with the
+  literal pool, so an in-place replacement needs a hand-placed pool; see `reconstruction/INTEGRATION.md`.
+* The ARM toolchain used on 2026-11-01 is Arm GNU Toolchain 13.2.Rel1 (GCC 13.2.1, mingw-w64 zip) via
+  `ARM_GCC`; the earlier recorded compiler was the Debian `15:13.2.rel1-2` build. Both are GCC 13.2.1 and
+  `validation.json` records the exact string, flags and artifact hashes of the run that produced it.
 * Container obfuscation: per block `size ^ 0xCE27A932`, `addr ^ 0xB2D5A864`; Mangle is a 48-round Feistel
   over 8-byte LE blocks with 4 round keys; CRC is the STM32 hardware-CRC semantics (32-bit LE words,
   MSB-first, poly `0x04C11DB7`, init `0xFFFFFFFF`, no final XOR, a trailing partial word zero-padded),
@@ -256,3 +268,9 @@ new target either fills them in or leaves the block empty (the reports then prin
   `0x8000`-`0x8035` block non-zero and confirm each `DType`/`RType` encoding.
 * Diff two builds (e.g. `rc-102/hw1-fw4.14` vs `rc-410/fw4.16`) by comparing their `listing.s` /
   `analysis/strings.json`: the model-specific strings and table sizes are the interesting deltas.
+* Hardware: the exact part number and board revision need the photographs listed at the end of
+  `docs/HARDWARE.md` §4; the STM32 `DEV_ID` (via `0xE0042000`) is not reachable through any read-only
+  command, and the `GET_SERIAL` words (`0x002D0029` + ASCII) are **not** a part code - the L4 group
+  `DEV_ID`s are `0x415`/`0x435`/`0x461`/`0x462`/`0x470`/`0x471`-sized.
+* First deployment experiment: `docs/TESTPLAN.md` stages 0-6, smallest change = the reviewed
+  `0x08029370` replacement from `reconstruction/INTEGRATION.md`.

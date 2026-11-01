@@ -244,7 +244,7 @@ def main():
         "unknown": sum(1 for row in rows if row["status"] == "unknown"),
         "errors": sum(1 for row in rows if row["status"] == "error"),
     }
-    with open(CFG["formal"], "w", encoding="utf-8") as fh:
+    with open(CFG["formal"], "w", encoding="utf-8", newline="\n") as fh:
         json.dump(result, fh, indent=1)
         fh.write("\n")
     print("proved %d, counterexamples %d, unknown %d, errors %d"

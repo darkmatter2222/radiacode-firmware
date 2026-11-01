@@ -27,4 +27,4 @@ def provenance(cfg):
 
 def write(path,payload,cfg):
     payload=dict(payload,provenance=provenance(cfg))
-    Path(path).write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
+    Path(path).write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8',newline='\n')

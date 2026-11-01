@@ -96,3 +96,18 @@ u32 rc_event_ring_has_pending(void) {
 }
 extern __typeof__(rc_event_ring_try_push) recovered_08016862 __attribute__((alias("rc_event_ring_try_push")));
 extern __typeof__(rc_event_ring_has_pending) recovered_080168a0 __attribute__((alias("rc_event_ring_has_pending")));
+
+/* Original 0x08029370, 24 bytes (0x08029370-0x08029386), return-value only, no stores.
+ * The literal slot at 0x080293fc holds the session-state block address (0x20000c0c in
+ * the reference image); the compared state is the BYTE at block+0x0d, called S below.
+ * Result = ((context == S) || (S == 0) ? 1 : 0) | (S << 8): the low byte is an
+ * equality/zero-state flag, NOT a copy of the caller's byte, and the second byte is
+ * the stored state. The observed reply word 0x00000201 therefore forces S = 2 and
+ * context = 2. The volatile byte load keeps reads of shared state visible. */
+u32 rc_session_state_flag(u32 context) {
+    u32 state_block = *(const u32 *)0x080293fc;
+    u32 stored = *(volatile const u8 *)(state_block + 0x0d);
+    u32 match = (context == stored) ? 1u : ((stored == 0u) ? 1u : 0u);
+    return match | (stored << 8);
+}
+extern __typeof__(rc_session_state_flag) recovered_08029370 __attribute__((alias("rc_session_state_flag")));

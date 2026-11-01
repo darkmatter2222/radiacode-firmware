@@ -57,7 +57,7 @@ for index, block in enumerate(blocks):
 image_path = CFG["flash"]
 with open(image_path, "wb") as fh:
     fh.write(image)
-with open(CFG["blocks"], "w", encoding="utf-8") as fh:
+with open(CFG["blocks"], "w", encoding="utf-8", newline="\n") as fh:
     json.dump({"header": header, "whole_file_crc": f"{whole_crc:08x}", "blocks": records}, fh, indent=2)
 
 print("flash image:", image_path, len(image), "bytes")

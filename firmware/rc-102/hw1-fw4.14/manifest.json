@@ -129,27 +129,27 @@
     "roundtrip": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/roundtrip.json",
       "bytes": 8337,
-      "sha256": "d240ce280ed2419772362875fcd4157d4461597e8956c6aaced7c88bbc91151e"
+      "sha256": "3db915cce52d056535821c1cf74619ad8d014062dee5c28ce47382fb9e3e997f"
     },
     "crosscheck": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/crosscheck.json",
       "bytes": 366944,
-      "sha256": "3b9312c50fbe0d7b75c947ddcb54c9c501db7fe9795e2481bb1993f38db21eb9"
+      "sha256": "992ac5cf19ebcc0a8a31dcdf7b2190622dd6f91709f51ea1bdc7491e7a50ff43"
     },
     "differential": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/differential.json",
       "bytes": 8318,
-      "sha256": "f461b825b8eb6576a7d9500b5a02f3c7ab2498194c92399e13ac6463c5af527f"
+      "sha256": "573831ed87fd447ef56f20cce8bc1ac2b7d9b543f17d11ad0361200b9bffb17e"
     },
     "formal": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/formal.json",
       "bytes": 1908,
-      "sha256": "b93612a8a888e24993556feb0af151ce06b397734222854a255c43b6e29dceb3"
+      "sha256": "11b7b043761461181fd3b4df46dcc8ce267b718c529963eb37974e150ecab7e8"
     },
     "confidence": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/confidence.json",
       "bytes": 13768,
-      "sha256": "ca5dcc7123cd318adef80a3984ec7c6603bf8232ebb4717f69b7b446d181bc30"
+      "sha256": "cb0285341358eeca7cbc7a9db0abac75f327fc52ea708118e5aa6a776238b2ed"
     },
     "confidence_md": {
       "path": "firmware/rc-102/hw1-fw4.14/analysis/confidence.md",
@@ -157,12 +157,12 @@
       "sha256": "3404b73845b96f5c1493ab9eff0a2bc6bed9490e6f6213cd43f43eb14d0230de"
     },
     "ghidra_run": {
-      "path": "firmware/rc-102/hw1-fw4.14/analysis/ghidra_run.json",
+      "path": "firmware\\rc-102\\hw1-fw4.14\\analysis\\ghidra_run.json",
       "bytes": 944,
       "sha256": "ca6f0b6fe91720d8e135e8d984534cc4f3e6fbf72a62b4bd85d6bf9cb1380170"
     },
     "recovery_delta": {
-      "path": "firmware/rc-102/hw1-fw4.14/analysis/recovery_delta.json",
+      "path": "firmware\\rc-102\\hw1-fw4.14\\analysis\\recovery_delta.json",
       "bytes": 20803,
       "sha256": "b616ebae3a0f1904dacc66ab7718af33b7349cf999b58696506db323e46fa592"
     }
@@ -173,7 +173,7 @@
       "container": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392",
       "flash": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6"
     },
-    "pipeline_source_sha256": "bb00338ce1aa73687c50d4cdcabba5ff6e056fa6978745b2214098071a1cdd26",
+    "pipeline_source_sha256": "612d0b056de174c617f6f8c83be65deaf543acb0f8ed47bdb0dcc74eb8fad506",
     "tools": {
       "capstone": "5.0.9",
       "unicorn": "2.1.4",

@@ -30,13 +30,28 @@ no library constructor, so no implicit initialization exists.
   (`HANDSHAKE_ANALYSIS.md`).
 * After that single write every supported read id answered: final run 898 requests / 898
   matching replies / 898 frames, zero NAK frames (`06 00 00 …`), versus 195 requests / 10
-  answers in the write-free passes. The NAK-vs-answer transition across one connection is the
-  isolating evidence that the session flag — not time or luck — gates the readers.
-* `GET_STATUS` returned `0x02000000` at BOTH pre- and post-handshake reads in the final run:
-  the exchange flag lives in RAM and survived the reconnect, set by run 1's write within the
-  same power cycle. The write-free passes (before any `0x0007` since power-on) had seen
-  `0x00000000`. Consistent with the flag word `[0x2000DFF8] |= 2` of the review; identity of
-  the two words not proven.
+  answers in the write-free passes.
+* **Limitation (stated, not smoothed over): the surviving JSON is NOT a clean before/after.**
+  Its pre-handshake reads already returned `GET_STATUS = 0x02000000` and a full
+  `GET_VERSION`, because run 1 of the same experiment had issued the single `0x0007` frame
+  earlier in the same power cycle and the RAM exchange flag survives BLE disconnects. The
+  transition therefore rests on the cross-run sequence: write-free passes right after
+  power-on returned `0x00000000` and NAKs for everything else (surviving in the
+  `2026-11-01-writefree` bundle); run 1 sent one `0x0007`; the final run then saw
+  `0x02000000` and 898/898 answers. A clean single-connection A/B needs one power cycle
+  (unplug/replug) between the passes — a physical step in `NEXT_STEPS.md`; it is not claimed
+  as proven within one connection. The flag value `0x00000002` is consistent with, but not
+  proven to be, the word `[0x2000DFF8]` of the instruction review.
+* Exact reply-word semantics (instruction-verified, `HANDSHAKE_ANALYSIS.md` §3): with
+  S = byte[`[0x080293FC]` = `0x20000C0C` + 0x0d] and T = message-block byte 0,
+  `FUN_08029370(T) = ((T==S) || (S==0) ? 1 : 0) | (S << 8)` (verified in the emulator:
+  S=2,T=2 -> `0x201`; S=2,T=0 -> `0x200`; S=0,T=0x55 -> `0x01`). The observed word
+  `0x00000201` forces S = 2 and, since S != 0, the equality T == S, i.e. T = 2. Byte 0 of
+  that word is an equality/S==0 flag, not a raw copy of the context byte; the stored state
+  byte (0x20000C0D) and the compared context byte (message-block byte 0) are different
+  sources which the reply shows agreeing. The `bl 0x08029086` branch is selected by T
+  (re-loaded at `0x080274e4`); on that branch 1 is stored into
+  `[[0x08027DAC] = 0x20000820] + 0x0d` when that byte is 0.
 
 ## 3. Freshly acquired values (all `fresh-handshake`)
 
@@ -68,8 +83,11 @@ no library constructor, so no implicit initialization exists.
 * Readable parameter areas (`0x081C`): index 0 (72 B) and index 1 (448 B) decode via the
   Borland-LCG XOR; index 1 contains the ASCII `RC-102-008228`. Indexes 2 and 3 reply with
   status word 12 (not served). Seeds differ per session by design (`0xB5444133`, `0xB5444600`).
-* VSFR snapshot (`decoded/fresh_vsfr.json`, format: reply word 0 = item count 1, word 1 = the
-  value; observed pattern, per-field semantics per the in-image VSFR map at `0x080306AC`):
+* VSFR snapshot (`decoded/fresh_vsfr.json`; per-field semantics per the in-image VSFR map at
+  `0x080306AC`). Reply-format rule established from the raw frames: an 8-byte payload after
+  the header echo is one item (`01 00 00 00` then the value word); a 4-byte payload `00 00 00
+  00` is a zero-item data record, i.e. NO value reported — decoded as `value: null` with
+  `"no_data_record": true`, not as a measured zero:
   `0x500`=1, `0x502`=1, `0x503`=1, `0x504`=65,708,084, `0x700`=3, `0x510`=5, `0x511`=9,
   `0x603`=0, `0x8020`=0.0, `0x8021`=0, `0x8022`=0, `0x8024`~24.26 degC, `0xC000`=28,346 mV,
   `0xC001`=677, `0xC002`=0, `0xC200`=1; system block `0xFFFF0000`=0x002D0029,
@@ -80,8 +98,10 @@ no library constructor, so no implicit initialization exists.
   `GET_SERIAL`); mapping 0x0029 to one exact STM32L4 part number is a datasheet step left
   UNPROVEN here.
 * Baseline (60 s, 83 samples, counters untouched, `decoded/fresh_baseline.json`):
-  `GET_STATUS` constant `0x02000000`; `CPS`/`DR_uR_h`/`DS_uR`/`MS_RUN` constant 0 (no
-  measurement active — the MCA was not started, so no counter was consumed); `TEMP_degC`
+  `GET_STATUS` constant `0x02000000`; `MS_RUN` answered the genuine value word 0;
+  `CPS`/`DR_uR_h`/`DS_uR` returned zero-item records in every sample (no value reported —
+  NOT a measured zero; consistent with an idle MCA, but the distinction is kept in
+  `decoded/fresh_baseline.json` per sample); `TEMP_degC`
   24.2633-24.2681 degC; `0x504`/VS `0x220` monotone (record/timestamp stream: delta
   59,979 over 59.983 s -> 1 ms units fits; unit inferred, not proven).
 

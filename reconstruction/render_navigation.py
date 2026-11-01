@@ -5,8 +5,8 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 def main():
-    targets=json.loads((ROOT/'reconstruction/annotated/targets.json').read_text())
-    reviewed=json.loads((ROOT/'reconstruction/annotated/index.json').read_text())
+    targets=json.loads((ROOT/'reconstruction/annotated/targets.json').read_text(encoding='utf-8'))
+    reviewed=json.loads((ROOT/'reconstruction/annotated/index.json').read_text(encoding='utf-8'))
     overview=['# Choose your device','',
               'The `decompiled.c` inside each build directory is always **raw Ghidra output**.',
               'Use the guide below to find readable or compilable source, where available.','',
@@ -45,19 +45,19 @@ def main():
                   '| [analysis/summary.md](analysis/summary.md) | Existing analysis narrative and current update |',
                   '| [analysis/confidence.md](analysis/confidence.md) | What has been checked and what remains unresolved |','',
                   '[Choose another device](../../README.md) · [Start here](../../../START_HERE.md)','']
-        (ROOT/'firmware'/key/'README.md').write_text('\n'.join(lines))
+        (ROOT/'firmware'/key/'README.md').write_text('\n'.join(lines), encoding='utf-8', newline='\n')
         # One version per model at present; collect all registered versions to
         # avoid overwriting a model guide if a future registry adds a version.
     overview += ['', 'Readable source means reviewed names and comments, not a guarantee of compilability.',
                  'A complete source-built replacement firmware is not yet available for any model.','',
                  '[Start here](../START_HERE.md) · [Readable/rebuilt source guide](../reconstruction/README.md)','']
-    (ROOT/'firmware/README.md').write_text('\n'.join(overview))
+    (ROOT/'firmware/README.md').write_text('\n'.join(overview), encoding='utf-8', newline='\n')
     for model in sorted({t['target'].split('/')[0] for t in targets}):
         rows=['# '+model.upper()+' firmware','', 'Choose the firmware version to see raw and readable-source availability.','']
         for t in targets:
             m,version=t['target'].split('/')
             if m==model:rows.append('- ['+version+']('+version+'/README.md)')
         rows += ['', '[All devices](../README.md) · [Start here](../../START_HERE.md)','']
-        (ROOT/'firmware'/model/'README.md').write_text('\n'.join(rows))
+        (ROOT/'firmware'/model/'README.md').write_text('\n'.join(rows), encoding='utf-8', newline='\n')
     print('Generated guides for',len(targets),'builds; raw/readable status explicit')
 if __name__=='__main__':main()

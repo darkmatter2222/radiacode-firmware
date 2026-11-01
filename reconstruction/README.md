@@ -5,7 +5,8 @@
 1. **[Named-function index](annotated/README.md)**: descriptions and direct links
    to the 59 reviewed RC-102 functions in the readable export.
 2. **[Core functions](rc102_leaf.c)**: clean, compilable C with named structures,
-   transfer-state logic, an accessor path and event-ring operations.
+   transfer-state logic, an accessor path, event-ring operations and the `0x08029370`
+   state-match helper.
 3. **[Coefficient checks](calibration.c)**: clean, compilable floating-point code,
    including the original NaN and status-flag behavior.
 
@@ -21,10 +22,11 @@ recompiled firmware and do not apply automatically to another model.
 | [`annotations/`](annotations/README.md) | Reviewed naming decisions and evidence; edit these to improve the readable export |
 | `render_annotations.py` | Regenerates the readable file and checks that renaming preserves the raw expressions |
 | `rc102_leaf.c` | The core-function source above; “leaf” was the original technical filename |
-| `validation.json` | Results from compiling and comparing the core functions with original ARM code |
+| `validation.json` | Results from compiling and comparing the core functions with original ARM code, including the three negative controls for `0x08029370` |
 | [`CALIBRATION.md`](CALIBRATION.md) | Explanation of the floating-point reconstruction |
 | `validate_calibration.py`, `calibration_validation.json` | Its test runner and recorded results |
 | [`HYBRID.md`](HYBRID.md) | Explanation of replacing one original function inside an emulator |
+| [`INTEGRATION.md`](INTEGRATION.md) | Byte-level fit assessment for an in-place replacement of `0x08029370`: entry points, literal pool, changed-byte inventory, unverified checks |
 | `validate_hybrid.py`, `hybrid_validation.json` | Replacement experiment runner/results; not an uploader or flashable firmware |
 | `render_navigation.py` | Maintains the model guides and makes missing readable-source coverage explicit |
 

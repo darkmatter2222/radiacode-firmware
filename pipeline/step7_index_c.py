@@ -40,7 +40,8 @@ payload = {
     "functions": entries,
     "line_by_address": {entry["address"]: [entry["line"], entry["end_line"]] for entry in entries},
 }
-with open(OUT, "w", encoding="utf-8") as fh:
+with open(OUT, "w", encoding="utf-8", newline="
+") as fh:
     json.dump(payload, fh, indent=2)
 
 print(json.dumps({"functions": len(entries), "lines": len(lines)}))

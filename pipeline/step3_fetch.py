@@ -137,7 +137,8 @@ if __name__ == "__main__":
     print("fetch:", download("--force" in sys.argv))
     checks = check()
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
-    with open(CFG["container_check"], "w", encoding="utf-8") as fh:
+    with open(CFG["container_check"], "w", encoding="utf-8", newline="
+") as fh:
         json.dump(checks, fh, indent=2)
     passed = all(v is True for k, v in checks.items() if k.endswith("_device") or k == "blocks_match_container")
     print("all match:", passed)

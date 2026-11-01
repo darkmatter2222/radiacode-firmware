@@ -27,6 +27,14 @@ Ordered; each item says exactly what is missing and which action closes it.
    then `python pipeline/run.py --device rc-102/hw1-fw4.14`, then
    `python pipeline/release_gate.py`; bind every new capture to the image/container hash pair
    (`23c31b7d…157f6` / `67a43a50…5e392`) until a rebuilt image has its own hashes.
+8. **Clean A/B of the `0x0007` gate (physical step)** — power-cycle the unit (unplug/replug
+   USB), then one connection: pre-reads -> one `0x0007` -> post-reads, all in the same
+   connection. The stored final run cannot serve as the A/B because run 1 had already set
+   the RAM flag in the same power cycle (see REPORT.md §2). One write per connection, as
+   authorized.
+9. **Board identification photos** — for the exact MCU part and board revision: close-ups as
+   requested in the repo docs (top side full PCB; MCU package marking; any suspected SWD pads
+   1-7 with an unambiguous pad-1 dot). Photos only; no probe contact.
 
 Not blockers (settled here): the `0x0007` gate (RAM-only flag, one write, NAK->answer
 transition observed); configuration/calibration/identity reproducibility (SHA-identical

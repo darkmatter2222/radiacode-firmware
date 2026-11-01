@@ -98,7 +98,7 @@ payload = {
     "tables": tables,
 }
 os.makedirs(CFG["analysis_dir"], exist_ok=True)
-with open(CFG["tables"], "w", encoding="utf-8") as fh:
+with open(CFG["tables"], "w", encoding="utf-8", newline="\n") as fh:
     json.dump(payload, fh, indent=2)
 
 print(

@@ -42,7 +42,7 @@ Target directory: `firmware/rc-410/fw4.16` - every file below lives inside it. T
 
 ## How the image was obtained
 
-The device was read over BLE (Nordic UART service `e63215e5…`, 4-byte little-endian
+The device was read over BLE (Nordic UART service `e63215e5Ã¢â‚¬Â¦`, 4-byte little-endian
 length prefix + `cmd(u16 LE) + 0x00 + seq`). No write/erase command was used; only reads:
 
 | BLE command | value |
@@ -108,7 +108,7 @@ blocks[] : u32 header_size | u32 size ^ 0xCE27A932 | u32 addr ^ 0xB2D5A864
 ## Verification against the live device
 
 The offline verification layers (steps 13-17, no unit needed) report five separate categories
-for this build in `analysis/confidence.md`; `README.md` §4 explains what each one means.
+for this build in `analysis/confidence.md`; `README.md` Ã‚Â§4 explains what each one means.
 
 ## Core (Cortex-M4, ARMv7E-M)
 

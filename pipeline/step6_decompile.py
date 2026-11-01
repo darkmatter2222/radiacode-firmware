@@ -56,7 +56,7 @@ def main():
            "-overwrite"]
     print(" ".join(cmd))
     log = os.path.join(config.ROOT, "ghidra_log.txt")
-    with open(log, "w", encoding="utf-8", errors="replace") as fh:
+    with open(log, "w", encoding="utf-8", errors="replace", newline="\n") as fh:
         rc = subprocess.call(cmd, cwd=config.ROOT, env=env, stdout=fh, stderr=subprocess.STDOUT)
     print("ghidra exit", rc, "log", log)
     if os.path.exists(OUT_C):

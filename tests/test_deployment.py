@@ -58,7 +58,10 @@ class DeploymentTests(unittest.TestCase):
     def test_symlink_destination_never_overwrites(self):
         destination = Path(self.temp.name) / 'original'
         destination.write_bytes(b'original')
-        self.archive.symlink_to(destination)
+        try:
+            self.archive.symlink_to(destination)
+        except OSError as error:               # Windows without developer mode:
+            self.skipTest('symlinks unavailable (%s)' % error)   # WinError 1314
         with self.assertRaises(FileExistsError):
             self.make_backup()
         self.assertEqual(destination.read_bytes(), b'original')

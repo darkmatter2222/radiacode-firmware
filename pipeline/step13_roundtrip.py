@@ -141,7 +141,7 @@ def main():
     exact = result["carried"]["byte_identical"]
     result["byte_exact"] = exact
     out = CFG["roundtrip"]
-    with open(out, "w", encoding="utf-8") as fh:
+    with open(out, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(result, fh, indent=1)
         fh.write("\n")
     for label in ("carried", "reencoded"):

@@ -171,7 +171,7 @@ def main():
         "candidate_range_accounting_not_c_coverage": coverage(functions, CFG["listing"]),
     }
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
-    with open(CFG["verification"], "w", encoding="utf-8") as fh:
+    with open(CFG["verification"], "w", encoding="utf-8", newline="\n") as fh:
         json.dump(payload, fh, indent=2)
     print(json.dumps(payload["checks"] | payload["candidate_range_accounting_not_c_coverage"], indent=2))
     return 1 if any(v is False for v in payload["checks"].values()) else 0

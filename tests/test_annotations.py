@@ -19,13 +19,13 @@ class AnnotationIntegrity(unittest.TestCase):
         with self.assertRaises(ValueError):annotations.rename('int a,b;',{'a':'value','b':'value'})
 
     def test_raw_export_change_requires_review(self):
-        spec=json.loads((ROOT/'reconstruction/annotations/rc102.json').read_text())
-        raw=(ROOT/'firmware/rc-102/hw1-fw4.14/decompiled.c').read_text()
+        spec=json.loads((ROOT/'reconstruction/annotations/rc102.json').read_text(encoding='utf-8'))
+        raw=(ROOT/'firmware/rc-102/hw1-fw4.14/decompiled.c').read_text(encoding='utf-8')
         with self.assertRaises(ValueError):annotations.render(raw+'\n',spec)
 
     def test_complete_export_is_reversible_and_warnings_survive(self):
-        spec=json.loads((ROOT/'reconstruction/annotations/rc102.json').read_text())
-        raw=(ROOT/'firmware/rc-102/hw1-fw4.14/decompiled.c').read_text()
+        spec=json.loads((ROOT/'reconstruction/annotations/rc102.json').read_text(encoding='utf-8'))
+        raw=(ROOT/'firmware/rc-102/hw1-fw4.14/decompiled.c').read_text(encoding='utf-8')
         named,inventory=annotations.render(raw,spec)
         self.assertEqual(len(inventory),999)
         self.assertEqual(sum(e['status']=='reviewed' for e in inventory),len(spec['functions']))

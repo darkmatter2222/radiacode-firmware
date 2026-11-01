@@ -67,7 +67,7 @@ def main():
                   "only_capstone": len(cap.keys() - gh.keys()), "only_ghidra": len(gh.keys() - cap.keys()),
                   "unresolved": [r for r in rows if r["tier"] == "unresolved"],
                   "agreement": None if not lossless or not both else (counts["identical"] + counts["format_only"]) / len(both)}
-    with open(CFG["crosscheck"], "w", encoding="utf-8") as fh:
+    with open(CFG["crosscheck"], "w", encoding="utf-8", newline="\n") as fh:
         json.dump(result, fh, indent=2); fh.write("\n")
     evidence.write(CFG["crosscheck"], result, CFG)
     print(result["status"], "decoder comparison:", result.get("tiers", result.get("reason")))

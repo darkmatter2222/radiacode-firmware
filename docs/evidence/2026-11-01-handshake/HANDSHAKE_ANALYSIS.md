@@ -69,21 +69,29 @@ Match path, in order:
    `080274e0 str r0,[r5,#0x0]` — reply word 3.
 6. Branch on the transport/context byte:
    - `= 1`: `080274ee strb r0,[r1,#0x0]` clears the pending byte in the context slot, return.
-   - `= 2`: `080274f6 bl 0x08029086`, then `080274fe ldrb r0,[r1,#0xd]` and (if zero)
-     `08027504 strb r2,[r1,#0xd]` — `[0x20000820+0xd] = 1`. Return at `08027506`.
+   - `= 2`: `080274f6 bl 0x08029086`, then `080274fe ldrb r0,[r1,#0xd]` (r1 = literal
+     `0x08027DAC` = `0x20000820`) and (if zero) `08027504 strb r2,[r1,#0xd]` —
+     `[0x2000082D] = 1`. Return at `08027506`.
    - other: fall through, return at `08027516`.
 7. Mismatch path: `0802750a ldr.w r0,[0x08027d98]`, `08027512 str` — single error word
    `0xE0000006`.
 
 Observed live reply body (this package, `raw/handshake_experiment.json`):
-`0501dada2010001001020000` = reply w1 `0xDADA0105`, w2 `0x10001020` (4128/0x0102),
-w3 `0x00000201` -> transport byte 2, i.e. the `bl 0x08029086` branch executed on the device.
+`0501dada2010001001020000` = reply w1 `0xDADA0105` (stamp), w2 `0x10001020`
+(`[mb,#0x10] | (([mb,#0xc]-0x20)<<16)`), w3 `0x00000201` = `FUN_08029370(T)` return.
+Exact word-3 semantics: with S = byte[`0x20000C0D`] and T = message-block byte 0,
+`return = ((T==S) || (S==0) ? 1 : 0) | (S << 8)` (emulator-verified: S=2,T=2 -> `0x201`;
+S=2,T=0 -> `0x200`; S=0,T=0x55 -> `0x01`). The low byte is an equality/S==0 flag, **not** a
+raw copy of the context byte; the high byte is the stored byte S. `0x201` therefore forces
+S = 2 and, since S != 0, the equality T == S, hence T = 2 — the stored byte and the branch
+byte are different sources that the reply shows agreeing. The branch itself re-loads T
+(`0x080274e4 ldrb r0,[r1]`).
 
 Callees:
 
 | function | range | what it does | stores |
 | --- | --- | --- | --- |
-| `FUN_08029370` | `0x08029370-0x08029386` | reads a byte at `[[0x20000C0C],#0xd]`, ORs it into the return word (`08029382 orr.w r0,r0,r1,lsl #0x8`), `bx lr` | none (return-value-only helper) |
+| `FUN_08029370` | `0x08029370-0x08029386` | pure value function: S = byte[`[0x080293FC]`+0x0d] (pointer word `0x20000C0C` -> byte at `0x20000C0D`); `08029374 cmp r0,r1` (T vs S), match -> 1, else 1 iff S==0; `08029382 orr.w r0,r0,r1,lsl #0x8`; `08029386 bx lr` | none (return-value-only; 0 writes in the emulator) |
 | `FUN_08029086` | `0x08029086-0x0802909C` | clears queue/link state: `0802908c strb r0,[r2,#0x0]`, `08029094 str r1,[r0,#0x14]`, `0802909a str r2,[r0,#0x0]` (`[head] &= ~4`), tail `0802909c b.w 0x08022e60` | RAM only (`0x2000DFD0`, `0x20000908` heads) |
 | `FUN_08022e60` | `0x08022e60-0x08022e64` | thunk: `08022e60 ldr r0,[pc,#0x5c]` (`0x20000858`), `08022e62 b.w 0x08016780` | — |
 | `FUN_08016780` | `0x08016780-0x080167A4` | unlinks the node at `0x20000858` from the list head `[0x2000DFA8]`: `0801678c/0801679c str`, `080167a0 strb`, `080167a2 str`, `bx lr` | RAM only (pool free) |

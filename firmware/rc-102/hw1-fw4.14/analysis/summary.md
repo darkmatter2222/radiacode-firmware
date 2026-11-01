@@ -42,7 +42,7 @@ Target directory: `firmware/rc-102/hw1-fw4.14` - every file below lives inside i
 
 ## How the image was obtained
 
-The device was read over BLE (Nordic UART service `e63215e5…`, 4-byte little-endian
+The device was read over BLE (Nordic UART service `e63215e5ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦`, 4-byte little-endian
 length prefix + `cmd(u16 LE) + 0x00 + seq`). No write/erase command was used; only reads:
 
 | BLE command | value |
@@ -124,7 +124,7 @@ Code inside indexed function ranges: 66,985 / 66,987 decoded instructions (100%)
 Device-reported builds: `Feb  6 2023 15:49:14`, `Jul  7 2025 11:19:22`
 
 The offline verification layers (steps 13-17, no unit needed) report five separate categories
-for this build in `analysis/confidence.md`; `README.md` §4 explains what each one means.
+for this build in `analysis/confidence.md`; `README.md` Ãƒâ€šÃ‚Â§4 explains what each one means.
 
 ## Core (Cortex-M4, ARMv7E-M)
 

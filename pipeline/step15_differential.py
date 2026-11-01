@@ -271,7 +271,7 @@ def main():
     result["unique_instruction_addresses"] = len({a for r in result["cases"] for a in r.get("unique_addresses", [])})
     result["function_status"] = ("SKIP" if not applicable else
                                  ("PASS" if all(case_passed(r) for r in result["cases"] if "skipped" not in r) else "FAIL"))
-    with open(CFG["differential"], "w", encoding="utf-8") as fh:
+    with open(CFG["differential"], "w", encoding="utf-8", newline="\n") as fh:
         json.dump(result, fh, indent=1)
         fh.write("\n")
     evidence.write(CFG["differential"], result, CFG)

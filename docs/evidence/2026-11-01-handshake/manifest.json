@@ -5,20 +5,20 @@
  "files": [
   {
    "path": "HANDSHAKE_ANALYSIS.md",
-   "bytes": 8583,
-   "sha256": "ca1e432d6ea14b5b5c7b384254a8b512e8a75a38f3ff443bd73648b11109da6c",
+   "bytes": 9298,
+   "sha256": "3ee6182357f0e29c2cdc4de35221a2c8bc176642e788a84bc24adbd4fa19745a",
    "source": "generated"
   },
   {
    "path": "NEXT_STEPS.md",
-   "bytes": 2613,
-   "sha256": "8536103b6694b11761c1f3a83be725286bbcd83d2a357e5f83ea67f41363abde",
+   "bytes": 3248,
+   "sha256": "bd641956549d715286d49daeec10ad0bf3ee7db813b5d614b88c755f61b3541a",
    "source": "generated"
   },
   {
    "path": "REPORT.md",
-   "bytes": 7904,
-   "sha256": "b07e7b48855ed938a0ba2bbf2d2fc2e033b567df46af24c31062b06e0949ba19",
+   "bytes": 9495,
+   "sha256": "5f3fdf2895b4e199360b846dbe4d7040a23a036ff827823f60857cd1f11bed7f",
    "source": "generated"
   },
   {
@@ -41,8 +41,8 @@
   },
   {
    "path": "decoded/fresh_baseline.json",
-   "bytes": 271914,
-   "sha256": "9d4d357e1c8e1879b0ab7091ddde85f590d159191f69b3d999edc838796182f9",
+   "bytes": 511910,
+   "sha256": "1aed4b0c6608035ef5b08cd794fd072e53948e264594684f8c89cbba6389ad9a",
    "source": "fresh-handshake 2026-11-01T14:12:52.664 -> 2026-11-01T14:14:03.851"
   },
   {
@@ -83,8 +83,8 @@
   },
   {
    "path": "decoded/fresh_vsfr.json",
-   "bytes": 5010,
-   "sha256": "6080f9f4bc6cebdd0e57432c7af0eadac8b0e47649d354e6686ac9a57fcd30b6",
+   "bytes": 5338,
+   "sha256": "c4f8d398aa02c6acd901903a84c83b3943bbf0a6fbc8bdab2ad6aa394b862a06",
    "source": "fresh-handshake 2026-11-01T14:12:52.664 -> 2026-11-01T14:14:03.851"
   },
   {
@@ -155,8 +155,8 @@
   },
   {
    "path": "scripts/finalize3.py",
-   "bytes": 22919,
-   "sha256": "7aaa73b7747e1892e6e1a12a40cb4c5c97c2d014ef6026c37c2e0cccbb13c527",
+   "bytes": 23870,
+   "sha256": "074b7fd415d8f2a1e8221e48bfdb973df64450f18c0ee522a8ac3e1d66fe1028",
    "source": "offline (repo files / host scans)"
   },
   {
@@ -215,8 +215,8 @@
   },
   {
    "path": "updater/repo_layer_status.json",
-   "bytes": 1223,
-   "sha256": "776586937141cd5409b9d4ca52b57afc375400151ce6430fae92b51741640334",
+   "bytes": 1208,
+   "sha256": "3076712b4688e786cceaa5a5fd0380f65a671d651ee407e64d93821b6fdaa0d1",
    "source": "offline (repo files / host scans)"
   }
  ]

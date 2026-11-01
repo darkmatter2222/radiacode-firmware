@@ -112,9 +112,11 @@ async def capture(sweep=False):
                     if data:
                         found["0x%04X" % cid] = {"len": len(data), "hex": data.hex()[:160]}
                 out["command_sweep_" + name] = found
-            with open(CFG["sweep_noarg"], "w", encoding="utf-8") as fh:
+            with open(CFG["sweep_noarg"], "w", encoding="utf-8", newline="
+") as fh:
                 json.dump(out["command_sweep_noarg"], fh, indent=2)
-            with open(CFG["sweep_witharg"], "w", encoding="utf-8") as fh:
+            with open(CFG["sweep_witharg"], "w", encoding="utf-8", newline="
+") as fh:
                 json.dump(out["command_sweep_witharg"], fh, indent=2)
     finally:
         await t.close()
@@ -132,7 +134,8 @@ def main():
         return 2
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
     data = asyncio.run(capture(sweep="--unsafe-command-sweep" in sys.argv))
-    with open(CFG["capture"], "w", encoding="utf-8") as fh:
+    with open(CFG["capture"], "w", encoding="utf-8", newline="
+") as fh:
         json.dump(data, fh, indent=2, ensure_ascii=False)
     print(json.dumps({
         "written": CFG["capture"],

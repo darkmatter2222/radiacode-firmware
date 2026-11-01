@@ -137,7 +137,8 @@ async def main():
     finally:
         await t.close()
     os.makedirs(CFG["analysis_dir"], exist_ok=True)
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="
+") as fh:
         json.dump(out, fh, indent=2, ensure_ascii=False)
     print("wrote", OUT, "| nonzero VSFRs:", len(out["single_nonzero"]),
           "| batch shapes:", len(out["batch_shapes"]))

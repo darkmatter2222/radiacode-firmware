@@ -118,7 +118,7 @@
     "confidence": {
       "path": "firmware/rc-101/fw4.14/analysis/confidence.json",
       "bytes": 12981,
-      "sha256": "9b368efe828e58c957214c3fb2122c366bb189a78ea28aa549ec40b361d1ba02"
+      "sha256": "fdbb37c9050000a20b57d444aaee341fb4e90fd05300053bd848fb08863b7de2"
     },
     "confidence_md": {
       "path": "firmware/rc-101/fw4.14/analysis/confidence.md",
@@ -126,12 +126,12 @@
       "sha256": "74cbf8048748f0fdc64f3e3f72607f00e9ba0449dd4312ceabb129a32770dabb"
     },
     "ghidra_run": {
-      "path": "firmware/rc-101/fw4.14/analysis/ghidra_run.json",
+      "path": "firmware\\rc-101\\fw4.14\\analysis\\ghidra_run.json",
       "bytes": 944,
       "sha256": "5bb196537ecebd5ebb92b99b7185204391879a19c473695314d60aaae0f354ce"
     },
     "recovery_delta": {
-      "path": "firmware/rc-101/fw4.14/analysis/recovery_delta.json",
+      "path": "firmware\\rc-101\\fw4.14\\analysis\\recovery_delta.json",
       "bytes": 19880,
       "sha256": "cc08ec2002025f80ba7d2ec1970d35afe99e64aa14f48d000629ab873ea3def1"
     }
@@ -142,7 +142,7 @@
       "container": "641659ebcf915fada3253fba936efc9ddf7ab8882770e44d2b3b2d08b944b714",
       "flash": "15cd254be5ee3474d746b74c2cf46d46743c6455d9d5448fec3ef3f2b7c69ea9"
     },
-    "pipeline_source_sha256": "bb00338ce1aa73687c50d4cdcabba5ff6e056fa6978745b2214098071a1cdd26",
+    "pipeline_source_sha256": "612d0b056de174c617f6f8c83be65deaf543acb0f8ed47bdb0dcc74eb8fad506",
     "tools": {
       "capstone": "5.0.9",
       "unicorn": "2.1.4",

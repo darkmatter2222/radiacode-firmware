@@ -129,7 +129,7 @@ payload = {
     "orphan_count": len(orphans),
     "shared_core": shared_core,
 }
-with open(CFG["callgraph"], "w", encoding="utf-8") as fh:
+with open(CFG["callgraph"], "w", encoding="utf-8", newline="\n") as fh:
     json.dump(payload, fh, indent=2)
 
 print(

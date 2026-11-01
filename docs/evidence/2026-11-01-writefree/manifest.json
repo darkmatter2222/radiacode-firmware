@@ -383,8 +383,8 @@
   },
   {
    "path": "scripts/finalize3.py",
-   "bytes": 22919,
-   "sha256": "7aaa73b7747e1892e6e1a12a40cb4c5c97c2d014ef6026c37c2e0cccbb13c527",
+   "bytes": 23870,
+   "sha256": "074b7fd415d8f2a1e8221e48bfdb973df64450f18c0ee522a8ac3e1d66fe1028",
    "source": "offline (repo files / host scans)"
   },
   {
@@ -406,9 +406,27 @@
    "source": "offline (repo files / host scans)"
   },
   {
+   "path": "scripts/helper_model.py",
+   "bytes": 808,
+   "sha256": "dd1d48b47914e9ac287ffa8fec45aed819076c874b6fe2437a4022dda8e52a3b",
+   "source": "offline (repo files / host scans)"
+  },
+  {
    "path": "scripts/image_text_extract.py",
    "bytes": 3242,
    "sha256": "9d068140cacf54a92518d78f5d761f3dc5f79720c784fe3b94684c65003a63e6",
+   "source": "offline (repo files / host scans)"
+  },
+  {
+   "path": "scripts/lit_ea.py",
+   "bytes": 976,
+   "sha256": "28ca9bda3514d9aa6113cda835a7647c95e4f2a49cd536cba9d8bd5b3790a3de",
+   "source": "offline (repo files / host scans)"
+  },
+  {
+   "path": "scripts/lit_ea2.py",
+   "bytes": 1360,
+   "sha256": "aae777be039cd34595e3ee12b21a2bf51d3c18f7e3f2f4c9f6c91cbe420d1eaf",
    "source": "offline (repo files / host scans)"
   },
   {
@@ -430,6 +448,12 @@
    "source": "offline (repo files / host scans)"
   },
   {
+   "path": "scripts/patch_followup.py",
+   "bytes": 4440,
+   "sha256": "dc4c445ce52784ecb9a2cb84bc3b0e622c528a4016603884fe2da22e16a531b0",
+   "source": "offline (repo files / host scans)"
+  },
+  {
    "path": "scripts/patch_report.py",
    "bytes": 2740,
    "sha256": "333457dda3c0e3b86c3506fb78933518d91188a47d23d870045ad87e2af42929",
@@ -445,6 +469,12 @@
    "path": "scripts/patch_report_current_rules.py",
    "bytes": 4684,
    "sha256": "303fe211d2a08905ff1d5410a6d600de8f3c118597b607ef87c72ae83bd50da3",
+   "source": "offline (repo files / host scans)"
+  },
+  {
+   "path": "scripts/pool_probe.py",
+   "bytes": 1200,
+   "sha256": "eca5bbfdabbc0d071100d5e83bcd20efe1c0a116f723da86d11359c86cc2d1e5",
    "source": "offline (repo files / host scans)"
   },
   {
@@ -493,6 +523,12 @@
    "path": "scripts/verify_dispatch.py",
    "bytes": 1688,
    "sha256": "5a9a6001d44d7dbe11861273d33ee7a9b2594f244968bb56f5b5054dac24c620",
+   "source": "offline (repo files / host scans)"
+  },
+  {
+   "path": "scripts/walk.py",
+   "bytes": 1267,
+   "sha256": "04fb477417e9dc2a0e07b7dcbf58051b08a48710a86fcb1d12d6d68c5490bd7f",
    "source": "offline (repo files / host scans)"
   },
   {
@@ -569,20 +605,20 @@
   },
   {
    "path": "updater/release_gate.txt",
-   "bytes": 2278,
-   "sha256": "b622404f2011eec75bcaf61309aeb7572829de2e490133cdb98394d5d16f3678",
+   "bytes": 892,
+   "sha256": "58bb3bd3d7b2195814a54ef5148d1a989a8825c97b084ccb24f8cf73343c890d",
    "source": "offline (repo files / host scans)"
   },
   {
    "path": "updater/repo_layer_status.json",
-   "bytes": 1223,
-   "sha256": "776586937141cd5409b9d4ca52b57afc375400151ce6430fae92b51741640334",
+   "bytes": 1208,
+   "sha256": "3076712b4688e786cceaa5a5fd0380f65a671d651ee407e64d93821b6fdaa0d1",
    "source": "offline (repo files / host scans)"
   },
   {
    "path": "updater/repo_unit_tests.txt",
-   "bytes": 9873,
-   "sha256": "104bfe2b72ac01685b6bd1b305c5e9cfc4aaac99200ce9d75857a8650c88c9d7",
+   "bytes": 8091,
+   "sha256": "b1a0ee1eb79749d4136885881639105ba2b8ef8d56c371c352efa3aed86f3863",
    "source": "offline (repo files / host scans)"
   },
   {

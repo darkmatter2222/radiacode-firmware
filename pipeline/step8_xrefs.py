@@ -78,7 +78,7 @@ output = {
     ),
 }
 os.makedirs(CFG["analysis_dir"], exist_ok=True)
-with open(CFG["xrefs"], "w", encoding="utf-8") as fh:
+with open(CFG["xrefs"], "w", encoding="utf-8", newline="\n") as fh:
     json.dump(output, fh, indent=2)
 
 print(

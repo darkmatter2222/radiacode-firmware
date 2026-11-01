@@ -3,7 +3,7 @@
   "scope": "0x0802abf8 predicate return, writes, stack, integer callee-saved ABI and full FPSCR; bounded tests, not firmware certification",
   "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
   "source_sha256": "381b2c95db2cb191814bdb3d5bc1c65d7a27f7131e2ed733d66e9990a0ce3993",
-  "harness_sha256": "c711dd86abfcefdfb08752579feebecc6d5936b3e8bcd1c9e259e9335eb02b51",
+  "harness_sha256": "f13ea36679bc03fcb31abaf7a68105ad6acd072511bb83c8d497654461733f9e",
   "flags": [
     "-mcpu=cortex-m4",
     "-mthumb",
@@ -21,7 +21,7 @@
     "-Wl,-Ttext=0x08070000",
     "-Wl,-e,recovered_0802abf8"
   ],
-  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "compiler": "arm-none-eabi-gcc.exe (Arm GNU Toolchain 13.2.rel1 (Build arm-13.7)) 13.2.1 20231009",
   "binary_sha256": "4d84895f7a2bd9107a8bfe8b4dff50ba104cfb9fb848c4c0cf8c84d6c1d39953",
   "cases": 10947,
   "original_instruction_addresses": [

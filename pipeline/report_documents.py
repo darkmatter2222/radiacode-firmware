@@ -20,4 +20,4 @@ def update(path, current):
         text=title+'\n\n'+block+'\n\n'+body.lstrip('\n')
     else:
         text=block+'\n'
-    path.write_text(text)
+    path.write_text(text, encoding="utf-8", newline="\n")

@@ -44,18 +44,18 @@ def main():
     # Only the complete transfer-state leaf is eligible. Partial dispatcher
     # and floating-point candidates deliberately have no replacement path.
     source=folder/'candidate.c'
-    source.write_text((ROOT/'reconstruction/rc102_leaf.c').read_text())
+    source.write_text((ROOT/'reconstruction/rc102_leaf.c').read_text(encoding='utf-8'), encoding='utf-8', newline='\n')
     # Put each function in its own section so the linker can place the reviewed
     # function exactly, independent of compiler ordering of other functions.
     linker=folder/'candidate.ld'
-    linker.write_text('SECTIONS { . = 0x08070000; .text : { *(.text.rc_transfer_positions_allow_progress) } /DISCARD/ : { *(.text*) *(.ARM*) *(.comment) } }')
+    linker.write_text('SECTIONS { . = 0x08070000; .text : { *(.text.rc_transfer_positions_allow_progress) } /DISCARD/ : { *(.text*) *(.ARM*) *(.comment) } }', encoding='utf-8', newline='\n')
     flags=['-mcpu=cortex-m4','-mthumb','-O2','-ffreestanding','-fno-builtin','-ffunction-sections',
            '-fno-unwind-tables','-fno-asynchronous-unwind-tables','-nostdlib','-Wl,--build-id=none']
     build.run([gcc,*flags,'-T',str(linker),str(source),'-o',str(folder/'candidate.elf')])
     build.run([objcopy,'-O','binary',str(folder/'candidate.elf'),str(folder/'candidate.bin')])
     candidate=(folder/'candidate.bin').read_bytes()
     def assemble(name,text,address):
-        asm=folder/(name+'.s');asm.write_text('.syntax unified\n.thumb\n.cpu cortex-m4\n.section .text\n'+text+'\n')
+        asm=folder/(name+'.s');asm.write_text('.syntax unified\n.thumb\n.cpu cortex-m4\n.section .text\n'+text+'\n', encoding='utf-8', newline='\n')
         elf=folder/(name+'.elf');binary=folder/(name+'.bin')
         build.run([gcc,*flags,'-Wl,-Ttext='+hex(address),str(asm),'-o',str(elf)])
         build.run([objcopy,'-O','binary',str(elf),str(binary)])
@@ -96,7 +96,7 @@ def main():
             'caller':CALLER,'hybrid_sha256':build.digest(hybrid),'cases':total,'failures':failures,
             'guard_rejections':rejected,'incorrect_return_mutation_detected':mutant_detected,
             'flashable':False,'limitations':['synthetic appended code addresses are not proven free on device','no incoming interior-edge proof','no interrupts, peripherals, startup or physical tests']}
-    (ROOT/'reconstruction/hybrid_validation.json').write_text(json.dumps(report,indent=2)+'\n')
+    (ROOT/'reconstruction/hybrid_validation.json').write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8', newline='\n')
     print(report['status'],total,'direct/caller cases; guard rejections',rejected)
     return int(report['status']!='PASS')
 if __name__=='__main__':raise SystemExit(main())

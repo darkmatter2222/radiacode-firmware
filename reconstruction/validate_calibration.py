@@ -86,7 +86,7 @@ def main():
             'binary_sha256':build.digest((folder/'test.bin').read_bytes()),'cases':total,
             'original_instruction_addresses':sorted(covered),'fpscr_exception_flag_differences':fp_flag_differences,
             'failures':failures,'ordered_transcription_counterexamples':counterexamples}
-    (ROOT/'reconstruction/calibration_validation.json').write_text(json.dumps(report,indent=2)+'\n')
+    (ROOT/'reconstruction/calibration_validation.json').write_text(json.dumps(report,indent=2)+'\n', encoding='utf-8', newline='\n')
     print(report['status'],total,'cases; FPSCR differences',fp_flag_differences,'; negative oracle counterexamples',len(counterexamples))
     return int(report['status']!='PASS')
 if __name__=='__main__':raise SystemExit(main())

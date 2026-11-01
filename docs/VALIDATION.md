@@ -18,10 +18,17 @@ case stops at a substituted call and is labeled partial execution. MMIO is plain
 RAM in this harness, so passing MMIO cases cannot certify peripheral behavior.
 
 Compiled candidates: pinned original image, 32-bit ARM target, recorded compiler
-flags, original and compiled runs on the same initial state. The seven current
+flags, original and compiled runs on the same initial state. The eight current
 candidates cover three constants, transfer-state comparison, only the 0x502
-accessor branch, and event-ring push/pending operations. The ring tests cover all
-valid index pairs, full/empty states, wraparound and halfword truncation. Cases are deterministic (seed 0x5243). This is not a complete
+accessor branch, event-ring push/pending operations, and the return-only state
+helper at `0x08029370`. The ring tests cover all valid index pairs, full/empty
+states, wraparound and halfword truncation. The state-helper tests cover every
+stored byte value with its own equality case, the adjacent value, and context
+words outside byte range; the preset carries non-zero trailing bytes so a
+word-wide load cannot pass as the original byte load. Three deliberately wrong
+replacements of that helper (constant return, context byte copied into the low
+byte, word instead of byte load) are compiled and must be detected; an
+undetected variant fails the build. Cases are deterministic (seed 0x5243). This is not a complete
 source rebuild. The first expanded run found 131 accessor mismatches caused by a
 word load where original instructions read a byte; that defect was fixed and
 high-byte regression inputs remain in the suite.

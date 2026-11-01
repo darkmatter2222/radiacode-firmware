@@ -15,4 +15,4 @@ Use the guide below to find readable or compilable source, where available.
 Readable source means reviewed names and comments, not a guarantee of compilability.
 A complete source-built replacement firmware is not yet available for any model.
 
-[Start here](../START_HERE.md) · [Readable/rebuilt source guide](../reconstruction/README.md)
+[Start here](../START_HERE.md) Â· [Readable/rebuilt source guide](../reconstruction/README.md)

@@ -19,15 +19,15 @@ class SourceNavigation(unittest.TestCase):
     def test_local_navigation_links_exist(self):
         paths=[ROOT/'START_HERE.md',ROOT/'reconstruction/README.md',ROOT/'firmware/README.md',*sorted((ROOT/'firmware').glob('*/README.md')),*sorted((ROOT/'firmware').glob('*/*/README.md'))]
         for path in paths:
-            for link in re.findall(r'\]\(([^)]+)\)',path.read_text()):
+            for link in re.findall(r'\]\(([^)]+)\)',path.read_text(encoding='utf-8')):
                 if '://' in link or link.startswith('#'):continue
                 target=link.split('#')[0]
                 with self.subTest(page=str(path),link=link):self.assertTrue((path.parent/target).exists())
 
     def test_no_cross_model_readable_coverage_claim(self):
-        targets=json.loads((ROOT/'reconstruction/annotated/targets.json').read_text())
+        targets=json.loads((ROOT/'reconstruction/annotated/targets.json').read_text(encoding='utf-8'))
         for target in targets:
-            text=(ROOT/'firmware'/target['target']/'README.md').read_text()
+            text=(ROOT/'firmware'/target['target']/'README.md').read_text(encoding='utf-8')
             if target['reviewed_function_names']==0:
                 self.assertIn('No reviewed English-named source or compiled reconstruction is available',text)
                 self.assertIn('for a different target',text)

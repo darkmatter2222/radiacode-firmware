@@ -92,7 +92,7 @@ their vendor container plus regenerated decode, disassembly and Ghidra artifacts
 | application base / vectors | `0x08010000`, 98 entries, `InitialSP = 0x20000800`, `Reset = 0x0803BA71` | step 5 (`analysis/vectors.json`) |
 | disassembly | reachability-based Thumb candidates; unknown bytes remain explicit | step 5 (`analysis/stats.json`) |
 | decompilation | 999 exported reference blocks, 0 explicit failures, 43 blocks with warnings (Ghidra 12.2); incomplete coverage | `analysis/recovery_delta.json` |
-| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 3,152 compiled leaf/ring comparisons | §4 and `reconstruction/validation.json` |
+| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 5,072 compiled candidate comparisons including three negative controls | §4 and `reconstruction/validation.json` |
 | device parameters | VS `0x002` = 3256 B, byte-identical to the in-image text at `0x0802F9F0` | step 11 (`analysis/verification.json`) |
 | sensors | CsI(Tl) 10x10x10 `c10_CsI_C30035` + MCA, AS6212-AWLT temperature, MCU ADC (battery), 3-axis accelerometer, optical channel | `[DataStructure]`, VSFR map |
 | real-time cadence | `MinFrmPeriod_ms = 500` (2 Hz), `FrameTimeStep_us = 10000`, `DBLag_ms = 180000` | VS `0x002` |
@@ -284,11 +284,12 @@ The current per-build record is `analysis/confidence.json`.
 | Container and flash | Six reproduced images; 51/51 payload CRCs; real carried-stream re-encryption | Reproducible extraction of the supplied application containers |
 | Decompiler recovery | Ghidra 12.2, explicit Thumb context; repeated C exports identical for all six builds | Reproducible analysis, with warnings and unresolved coverage still tracked |
 | Instruction comparison | Conditions, flags, operand order, widths and shifts retained | Conservative agreement where established; unknown renderings remain unresolved |
-| Compiled leaves | Seven small candidates, one limited dispatcher path; 3,152 comparisons pass | Tested return, memory and integer ABI behavior in a bounded emulator |
+| Compiled leaves | Eight small candidates, one limited dispatcher path; 5,072 comparisons pass, plus three negative controls that must (and do) fail their own comparison | Tested return, memory and integer ABI behavior in a bounded emulator |
 | Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/integer ABI and full FPSCR agreement in the tested cases |
 | Replacement bridge | 1,424 direct-entry/caller cases for one complete leaf | Emulator-only branch replacement; [details](reconstruction/HYBRID.md) |
+| In-place fit | Reviewed slot `0x08029370`: 24 original bytes vs 24 code + 4 pool bytes | Fit needs a hand-placed literal; trampoline otherwise; [details](reconstruction/INTEGRATION.md) |
 | Formal checks | Ten auxiliary model properties pass | Properties of format/model operations, not original-versus-rebuilt firmware equivalence |
-| Hardware behavior | Historical BLE captures only | No physical original-versus-rebuilt comparison yet |
+| Hardware behavior | Historical BLE captures only | No physical original-versus-rebuilt comparison yet; [findings](docs/HARDWARE.md), [plan](docs/TESTPLAN.md) |
 
 For the reference build, fresh recovery changed 1,895 exported blocks to 999,
 explicit failures from 2 to 0, truncated blocks from 627 to 0, and warning-bearing
@@ -811,8 +812,8 @@ Outside the target directories:
 ### 12.1 Device evidence bundle (2026-11-01, write-free pass)
 
 `docs/evidence/2026-11-01-writefree/` holds the bundle produced by the read-only session on the unit
-in hand (RadiaCode-102, `RC-102-008228`): `radiacode-device-evidence.zip` (110 files, SHA-256
-`097a16f0944460703a5ad0b9bfc48668b3291d2a124283aeef14a84a4377463d`) plus the two reports and the
+in hand (RadiaCode-102, `RC-102-008228`): `radiacode-device-evidence.zip` (116 files, SHA-256
+`61d7809dde8df20f0cb1dcabd96b3349159fa2b02245ab56b0d4f870452ac5c9`) plus the two reports and the
 index files unzipped for browsing (`REPORT.md`, `NEXT_STEPS.md`, `identity.json`,
 `manifest.json`, `memory-map.csv`) and `CHECKSUMS256.txt`. Contents: raw per-exchange frames of four
 BLE passes (`raw/session_*.json`, 314 requests, **no device writes**), the decoded fresh-priority
@@ -834,11 +835,14 @@ connection per command and for one persistent connection. `decoded/fresh_nak_rec
 frames; `NEXT_STEPS.md` N1 is the cheapest way to close the remaining gaps.
 
 Two status blocks ship with it (`updater/repo_unit_tests.txt`, `updater/release_gate.txt`,
-`updater/repo_layer_status.json`): `python -m unittest discover -s tests -v` returns exit `1`
-(63 tests, 2 errors, all environment artifacts on the host: symlink permissions and the
-navigation link check) and
+`updater/repo_layer_status.json`): `python -m unittest discover -s tests -v` returns exit `0`
+(63 tests, `OK (skipped=1)`; the single skip is the symlink test on a host without symlink
+privilege) and
 `python pipeline/release_gate.py` returns exit `2` = `INCONCLUSIVE`, i.e. evidence unavailable rather
-than a pass - the gate fails closed and a green test suite does not override it. Emulator case
+than a pass - the gate fails closed and a green test suite does not override it. After the
+2026-11-01 regeneration the gate lists exactly two blockers per build, `firmware equivalence not
+established` and `original-vs-rebuilt hardware evidence absent`; the earlier `artifact mismatch`
+and `stale confidence provenance` blockers are resolved. Emulator case
 applicability is bound to the full image SHA-256 pair (`container 67a43a50…5e392`,
 `flash 23c31b7d…157f6`) recorded in `analysis/differential.json:provenance.inputs`.
 
@@ -848,6 +852,8 @@ To regenerate everything from a clean checkout:
 pip install -r requirements.txt
 python pipeline/run.py --all-devices                     # default offline work for every build
 python pipeline/run.py --only 1,4,5,7,8,9,10,13,14,15,16,17,12   # the offline part only
+python pipeline/tools/check_manifest.py --all            # manifest bytes vs working tree and checkout
+python pipeline/build_reconstruction.py                  # compiled candidates (needs ARM_GCC)
 python pipeline/tools/lookup.py 0x080275C4               # ad-hoc query against the default target
 $env:RC_TARGET='rc-410/fw4.16'; python pipeline/tools/lookup.py 0x08010188   # another build
 ```
@@ -855,7 +861,7 @@ $env:RC_TARGET='rc-410/fw4.16'; python pipeline/tools/lookup.py 0x08010188   # a
 ### 12.2 Handshake follow-up bundle (2026-11-01, single `0x0007` per connection)
 
 `docs/evidence/2026-11-01-handshake/` holds the follow-up experiment (`radiacode-device-evidence-followup.zip`,
-36 files, SHA-256 `47ef7a39703d361483e58a98dc16d62d9d0e5847340320ff5ca55f45f2058d9c`, same
+36 files, SHA-256 `444edc891a71eb0ebab100610ad156686d0f3ae73c97781024e14cebe9e031c1`, same
 manifest/checksum discipline as §12.1). An instruction-level review first established that the
 BLE-transport path of `0x0007 SET_EXCHANGE` (dispatch table word `0x80000007 -> 0x08027490` at
 `0x080378A0`, body `0x08027490-0x08027516`, callees `0x08029370` / `0x08029086 -> 0x08022e60 ->

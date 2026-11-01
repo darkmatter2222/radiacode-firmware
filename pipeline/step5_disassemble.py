@@ -103,8 +103,8 @@ def main():
     import re
     strings=[{'address':f'0x{BASE+m.start():08X}','length':len(m[0]),'text':m[0].decode('ascii'),
               'status':'candidate; may overlap code'} for m in re.finditer(rb'[\x20-\x7e\n]{4,}',data)]
-    def save(key,obj): Path(CFG[key]).write_text(json.dumps(obj,indent=2)+'\n')
-    Path(CFG['listing']).write_text('\n'.join(lines)+'\n')
+    def save(key,obj): Path(CFG[key]).write_text(json.dumps(obj,indent=2)+'\n',encoding='utf-8',newline='\n')
+    Path(CFG['listing']).write_text('\n'.join(lines)+'\n',encoding='utf-8',newline='\n')
     save('vectors',{'vtor':f'0x{VTOR:08X}','count':len(vectors),'entries':vectors})
     save('functions',functions); save('strings',strings)
     stats={'image_bytes':len(data),'base':f'0x{BASE:08X}','end':f'0x{BASE+len(data):08X}',
