@@ -1,0 +1,469 @@
+{
+  "collected": "2026-11-01T08:52:38.659-05:00",
+  "connected_unit": {
+    "model": "RadiaCode-102",
+    "model_source_ble_advertisement": "name 'RadiaCode-102#RC-102-008228' (raw/ble_scan.json)",
+    "model_source_usb": "iProduct 'RadiaCode-102', iSerialNumber 'RC-102-008228' (hardware/usb_and_host_pnp.json)",
+    "serial_number": "RC-102-008228",
+    "serial_number_sources": [
+      "BLE advertisement name",
+      "USB iSerialNumber",
+      "prior-capture VS 0x008"
+    ],
+    "ble_address": "52:43:06:60:20:24",
+    "ble_service_uuids": {
+      "service": "e63215e5-7003-49d8-96b0-b024798fb901",
+      "write": "e63215e6-7003-49d8-96b0-b024798fb901",
+      "notify": "e63215e7-7003-49d8-96b0-b024798fb901",
+      "chunk_bytes": 18,
+      "seq_base": 128
+    },
+    "usb": {
+      "vid": "0x0483",
+      "pid": "0xF123",
+      "device_release_bcd": "0x0200",
+      "instance_id": "USB\\VID_0483&PID_F123\\RC-102-008228",
+      "class": "vendor-specific FF/FF/FF (no CDC COM port)",
+      "driver": "PHUSBDEV (oem41.inf, Phyton)",
+      "endpoints_from_library": [
+        "0x01 OUT",
+        "0x81 IN"
+      ]
+    },
+    "hardware_serial_record_prior_capture": {
+      "hex": "0c00000029002d000150323242393120",
+      "len": 16
+    },
+    "hw_config_reply_prior_capture": {
+      "hex": "0f00000000000000000001e8030000",
+      "len": 15
+    },
+    "application_firmware": {
+      "version": "4.14",
+      "build_stamp": "Jul  7 2025 11:19:22",
+      "GET_VERSION_raw": "000004001446656220203620323032332031353a34393a31340e000400154a756c20203720323032352031313a31393a323200",
+      "decode": "record {u16 minor, u16 major, u8 len, str} twice: boot 4.0 then target 4.14",
+      "provenance": "prior-repo-capture (GET_VERSION answers only after the documented 0x0007 session write)"
+    },
+    "bootloader": {
+      "version": "4.0",
+      "build_stamp": "Feb  6 2023 15:49:14",
+      "provenance": "prior-repo-capture GET_VERSION id 0 + registry devices.json boot field",
+      "freshly_verified": false
+    },
+    "firmware_container": {
+      "filename": "rc-102z.bin",
+      "size": 130148,
+      "crc32_whole_file": "0x13095ABB",
+      "date_time_msdos": "0x5AE7428A",
+      "date_time_decoded": "2025-07-07 08:20:20",
+      "buffer_size": 32768,
+      "write_chunk": 4096,
+      "blocks": 8,
+      "header_crc32": "8573b5f0",
+      "sha256_container": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392",
+      "descriptor_field_RD_SIGNAT_prior": {
+        "hex": "8a42e75a0a72632d3130322e62696e105261646961436f64652052432d3130320130",
+        "len": 34,
+        "decoded": {
+          "date_time": "0x5AE7428A",
+          "fields": [
+            "rc-102.bin",
+            "RadiaCode RC-102",
+            "0"
+          ]
+        }
+      },
+      "signature_field_note": "0x0101 RD_SIGNAT is an image descriptor (date_time + file name + product), not a cryptographic signature"
+    },
+    "fresh_read_only_status": {
+      "GET_STATUS_payload_values_observed": [
+        "00000000"
+      ],
+      "GET_STATUS_answer_count": 11,
+      "prior_capture_GET_STATUS": "02000000",
+      "note": "mutable field, differs between passes"
+    }
+  },
+  "fresh_writefree_passes": {
+    "A_one_connection_per_command": {
+      "file": "raw/session_reads_writefree.json",
+      "collected": "2026-11-01T08:16:01.365-05:00",
+      "writes_issued": [],
+      "requests": 26,
+      "data_answers": 1,
+      "nak_frames": 0,
+      "no_frame": 25,
+      "per_id": {
+        "0x0005": {
+          "name": "GET_STATUS",
+          "requests": 1,
+          "data_answers": 1,
+          "nak_frames": 0,
+          "no_frame": 0,
+          "payload_values": [
+            "00000000"
+          ]
+        },
+        "0x000A": {
+          "name": "GET_VERSION",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x000B": {
+          "name": "GET_SERIAL",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0012": {
+          "name": "FW_IMAGE_GET_INFO",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0101": {
+          "name": "RD_SIGNAT",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0807": {
+          "name": "RD_HW_CONFIG",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0826": {
+          "name": "RD_VIRT_STRING",
+          "requests": 16,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 16,
+          "payload_values": []
+        },
+        "0x081C": {
+          "name": "RD_FLASH_AREA",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 4,
+          "payload_values": []
+        }
+      }
+    },
+    "B_reused_connection_drain_per_request": {
+      "file": "raw/session_writefree_v2.json",
+      "collected": "2026-11-01T08:47:36.349-05:00",
+      "writes_issued": [],
+      "requests": 70,
+      "data_answers": 4,
+      "nak_frames": 53,
+      "no_frame": 13,
+      "per_id": {
+        "0x0005": {
+          "name": "GET_STATUS",
+          "requests": 4,
+          "data_answers": 4,
+          "nak_frames": 0,
+          "no_frame": 0,
+          "payload_values": [
+            "00000000"
+          ]
+        },
+        "0x000A": {
+          "name": "GET_VERSION",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x000B": {
+          "name": "GET_SERIAL",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 1,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0012": {
+          "name": "FW_IMAGE_GET_INFO",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0101": {
+          "name": "RD_SIGNAT",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 2,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0807": {
+          "name": "RD_HW_CONFIG",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 2,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0826": {
+          "name": "RD_VIRT_STRING",
+          "requests": 27,
+          "data_answers": 0,
+          "nak_frames": 20,
+          "no_frame": 7,
+          "payload_values": []
+        },
+        "0x081C": {
+          "name": "RD_FLASH_AREA",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0824": {
+          "name": "RD_VIRT_SFR",
+          "requests": 22,
+          "data_answers": 0,
+          "nak_frames": 19,
+          "no_frame": 3,
+          "payload_values": []
+        }
+      }
+    },
+    "C_single_connection_persistent_buffer": {
+      "file": "raw/session_single_connection.json",
+      "collected": "2026-11-01T08:52:38.659-05:00",
+      "writes_issued": [],
+      "requests": 99,
+      "data_answers": 5,
+      "nak_frames": 94,
+      "no_frame": 0,
+      "per_id": {
+        "0x0005": {
+          "name": "GET_STATUS",
+          "requests": 5,
+          "data_answers": 5,
+          "nak_frames": 0,
+          "no_frame": 0,
+          "payload_values": [
+            "00000000"
+          ]
+        },
+        "0x000A": {
+          "name": "GET_VERSION",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x000B": {
+          "name": "GET_SERIAL",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 1,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0012": {
+          "name": "FW_IMAGE_GET_INFO",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0101": {
+          "name": "RD_SIGNAT",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0807": {
+          "name": "RD_HW_CONFIG",
+          "requests": 3,
+          "data_answers": 0,
+          "nak_frames": 3,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0826": {
+          "name": "RD_VIRT_STRING",
+          "requests": 30,
+          "data_answers": 0,
+          "nak_frames": 30,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x081C": {
+          "name": "RD_FLASH_AREA",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 4,
+          "no_frame": 0,
+          "payload_values": []
+        },
+        "0x0824": {
+          "name": "RD_VIRT_SFR",
+          "requests": 47,
+          "data_answers": 0,
+          "nak_frames": 47,
+          "no_frame": 0,
+          "payload_values": []
+        }
+      }
+    },
+    "D_earliest_partial": {
+      "file": "raw/session_reads.json",
+      "collected": null,
+      "writes_issued": [],
+      "requests": 119,
+      "data_answers": 0,
+      "nak_frames": 0,
+      "no_frame": 119,
+      "per_id": {
+        "0x0005": {
+          "name": "GET_STATUS",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x000A": {
+          "name": "GET_VERSION",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 4,
+          "payload_values": []
+        },
+        "0x000B": {
+          "name": "GET_SERIAL",
+          "requests": 1,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 1,
+          "payload_values": []
+        },
+        "0x0012": {
+          "name": "FW_IMAGE_GET_INFO",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 4,
+          "payload_values": []
+        },
+        "0x0101": {
+          "name": "RD_SIGNAT",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 4,
+          "payload_values": []
+        },
+        "0x0807": {
+          "name": "RD_HW_CONFIG",
+          "requests": 4,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 4,
+          "payload_values": []
+        },
+        "0x0826": {
+          "name": "RD_VIRT_STRING",
+          "requests": 25,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 25,
+          "payload_values": []
+        },
+        "0x081C": {
+          "name": "RD_FLASH_AREA",
+          "requests": 10,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 10,
+          "payload_values": []
+        },
+        "0x0824": {
+          "name": "RD_VIRT_SFR",
+          "requests": 66,
+          "data_answers": 0,
+          "nak_frames": 0,
+          "no_frame": 66,
+          "payload_values": []
+        }
+      }
+    }
+  },
+  "repository": {
+    "url": "https://github.com/darkmatter2222/radiacode-firmware",
+    "commit": "3e9fbcd3b7c18a94d2b43c98d6e6652512bb271a",
+    "registered_target": "rc-102/hw1-fw4.14",
+    "registry_expected": {
+      "size": 130148,
+      "chunk": 4096,
+      "buffer_size": 32768,
+      "date_time": "0x5AE7428A",
+      "crc32": "0x13095ABB",
+      "frames": 19,
+      "blocks": 8
+    },
+    "registry_mcu": {
+      "family": "STM32L4",
+      "processor": "ARM:LE:32:v7",
+      "base": "0x08000000",
+      "vector_table": "0x08010000",
+      "initial_sp": "0x20000800",
+      "reset": "0x0803BA71"
+    }
+  },
+  "host": {
+    "os": "Windows",
+    "os_version": "10.0.26200",
+    "release": "11",
+    "python": "3.13.7",
+    "machine": "AMD64",
+    "ble_radio": "Realtek Bluetooth 5.4 Adapter (PnP, hardware/usb_and_host_pnp.json)"
+  },
+  "tools": {
+    "pip_versions": {
+      "bleak": "3.0.2",
+      "capstone": "5.0.9",
+      "unicorn": "2.1.4",
+      "z3-solver": "5.3.3.0",
+      "radiacode": "0.4.0"
+    },
+    "ghidra": "12.2 (per docs/REPRODUCING.md), JDK 25.0.5+8"
+  },
+  "device_writes_issued_in_this_pass": [],
+  "unavailable_fields": [
+    "bootloader bytes (no read-only memory-read command; 0x000A/0x000B/0x0012/0x0101/0x0807/0x081C/0x0824/0x0826 return the 0x0006 NAK record without the 0x0007 session write)",
+    "battery/charge level (VSFR 0x0000C200 not served in the write-free pass)",
+    "MCU DEV_ID / unique id via VSFR 0xFFFF0000+ (not served in the write-free pass)",
+    "option bytes / RDP status (no supported read-only path)",
+    "uptime: VSFR 0x00000504 not served in the write-free pass",
+    "count rate / dose rate / spectrum during the baseline window (0x00008020-0x00008024, 0x00000603 and VS 0x001/0x002/0x003/0x004 all NAK without the session write)"
+  ]
+}

@@ -808,6 +808,24 @@ Outside the target directories:
 | `pipeline/scripts/DumpC.java` | hand-written | Ghidra post-script: seeds functions, dumps C |
 | `pipeline/scripts/DumpListing.java` | hand-written | Ghidra post-script: dumps the SLEIGH listing + function ranges |
 
+### 12.1 Device evidence bundle (2026-11-01, write-free pass)
+
+`docs/evidence/2026-11-01-writefree/` holds the bundle produced by the read-only session on the unit
+in hand (RadiaCode-102, `RC-102-008228`): `radiacode-device-evidence.zip` (93 files, SHA-256
+`5a23fe912603a5a6e95dcb14f4de8f92d016a77f8b0be8cc37524036e191d43a`) plus the two reports and the
+two index files unzipped for browsing (`REPORT.md`, `NEXT_STEPS.md`, `identity.json`,
+`manifest.json`, `memory-map.csv`). Contents: raw per-exchange frames of four BLE passes
+(`raw/session_*.json`, 314 requests, **no device writes**), the decoded fresh-priority artifacts
+(`decoded/fresh_*`), the prior capture split into raw+decoded files, the container/image/analysis
+artifacts, and the updater + hardware extractions.
+
+The bundle's one protocol-level addition over §8: with no `0x0007` session write, only
+`0x0005 GET_STATUS` returns a data record; every other documented read id returns the 4-byte record
+`06 00 00 (seq | 0x60)` (id `0x0006`, item count 0, index = the request's `seq` with `0x60` OR-ed
+in) - verified on all 147 NAK frames of the three logged passes, and identical for a fresh
+connection per command and for one persistent connection. `decoded/fresh_nak_record.json` keeps the
+frames; `NEXT_STEPS.md` N1 is the cheapest way to close the remaining gaps.
+
 To regenerate everything from a clean checkout:
 
 ```powershell

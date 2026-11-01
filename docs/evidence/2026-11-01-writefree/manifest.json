@@ -1,0 +1,563 @@
+{
+  "generated": "2026-11-01T08:52:38.659-05:00",
+  "files": [
+    {
+      "path": "NEXT_STEPS.md",
+      "bytes": 6161,
+      "sha256": "998cea5a547e349c2e2f42937f10fc0bb375244bd0e9b0bca99c9f25e9a8c3a7",
+      "source": "-"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 21534,
+      "sha256": "50ca4c7b832c0ef9e41c43b8c606d3b072c161f9f6cf055b286ad87015cc9239",
+      "source": "-"
+    },
+    {
+      "path": "identity.json",
+      "bytes": 13785,
+      "sha256": "9c9974e544aeba51cd66b08e9a565f7b33d26a08d24a31e9abaf3cefc9829156",
+      "source": "-"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 18225,
+      "sha256": "3e55e9b7138c0315f7b884c9b7d888d516918a28c0eb1b1669f2af12328d1de6",
+      "source": "-"
+    },
+    {
+      "path": "memory-map.csv",
+      "bytes": 1605,
+      "sha256": "d27c08bbe6f7edd11375ce7f0dc82f73ea7cf909b68cb2773650e6c29529feac",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_confidence.json",
+      "bytes": 14261,
+      "sha256": "144003ba0a2e84fbb0874125f0ce499ea38e8c0403433f3905164f9d0fda623a",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_container_check.json",
+      "bytes": 596,
+      "sha256": "c46fe4f1977340dec0c9e79d39091410ebcfaeab1d7d6d652ceefecec0644852",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_crosscheck.json",
+      "bytes": 366944,
+      "sha256": "3b9312c50fbe0d7b75c947ddcb54c9c501db7fe9795e2481bb1993f38db21eb9",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_differential.json",
+      "bytes": 8318,
+      "sha256": "f461b825b8eb6576a7d9500b5a02f3c7ab2498194c92399e13ac6463c5af527f",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_formal.json",
+      "bytes": 1908,
+      "sha256": "b93612a8a888e24993556feb0af151ce06b397734222854a255c43b6e29dceb3",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_roundtrip.json",
+      "bytes": 8337,
+      "sha256": "d240ce280ed2419772362875fcd4157d4461597e8956c6aaced7c88bbc91151e",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_stats.json",
+      "bytes": 1842,
+      "sha256": "4914ca68a734ec67e46b82c64e746e1aca837e09e47701cf4096f5b4a672c327",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_tables.json",
+      "bytes": 11803,
+      "sha256": "7f4feb2af6dbb93188948dc43a02b84b8da6b8c360c89331fff28000b595b1c1",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_vectors.json",
+      "bytes": 8665,
+      "sha256": "3d2af2db3a18d20b41f08038eab5d8be6e9d1ae70b6890cc2d98f63292043b2f",
+      "source": "-"
+    },
+    {
+      "path": "decoded/analysis_verification.json",
+      "bytes": 8189,
+      "sha256": "268475d024174aa4a3f5c3553aba7f039e0ce4f37fb6b6a298b3517274473af5",
+      "source": "-"
+    },
+    {
+      "path": "decoded/command_table_from_firmware_md.json",
+      "bytes": 399,
+      "sha256": "2ff06acdef7acb17538f7deadd2795507c726ee630d4115d5e01736aa48d0a2f",
+      "source": "-"
+    },
+    {
+      "path": "decoded/firmware_md_protocol_sections.md",
+      "bytes": 12437,
+      "sha256": "02bc9543e9348fea52983a12da79cc472b4a00aa1c3e30ce477a927a76e0a13f",
+      "source": "-"
+    },
+    {
+      "path": "decoded/fresh_baseline.json",
+      "bytes": 1547,
+      "sha256": "a8bc83da40ef228edbbec2767f122bede1fb63daa68edf147fb95ff40f625b8b",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "decoded/fresh_exchanges_compact.json",
+      "bytes": 43762,
+      "sha256": "24de3234925754e7f228bb43534548a4544583d609fb7a88fbc5701820382f11",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "decoded/fresh_nak_record.json",
+      "bytes": 4468,
+      "sha256": "1cff6bb675436dde7bc0bdac018cbea1bdf86f8f4ca6958865dfa04efec582ad",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "decoded/fresh_writefree_answer_table.json",
+      "bytes": 8972,
+      "sha256": "ec9fcf07b5e66bf34872f3d7b56929fbeba3443b43d2278e85e4b240f9f1b043",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "decoded/image_config_text_0x0802F9F0.txt",
+      "bytes": 3565,
+      "sha256": "61eda79ff2a5c46fd6b2c44026dd2e2e57ecfbbe553745356d1125d82e1d74f0",
+      "source": "-"
+    },
+    {
+      "path": "decoded/image_structure.json",
+      "bytes": 8073,
+      "sha256": "999cceb8a93b6ddd19ee4242780ecb6ada80e595c9424a6e968a2fedf498aba2",
+      "source": "-"
+    },
+    {
+      "path": "decoded/image_vsfr_map_0x080306AC.txt",
+      "bytes": 4587,
+      "sha256": "6adaa038cb5f7990f3ff49a605bda965272e90313da6b5dbf45eb55e6561622c",
+      "source": "-"
+    },
+    {
+      "path": "decoded/prior_capture_configuration_text.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "prior-repo-capture"
+    },
+    {
+      "path": "decoded/prior_capture_flash_areas.json",
+      "bytes": 1579,
+      "sha256": "8d369aa950749734be954b4bbdb001077d56266991569611512d495c2f4fdb03",
+      "source": "prior-repo-capture"
+    },
+    {
+      "path": "decoded/prior_capture_virtual_strings.json",
+      "bytes": 14485,
+      "sha256": "24054f9e1c79d1016780f4882062df73b17bbcfb6ca1a7bed70340ea14d70365",
+      "source": "prior-repo-capture"
+    },
+    {
+      "path": "firmware/blocks.json",
+      "bytes": 2276,
+      "sha256": "902332ad0e8ea12bf57c7a970ac4bfc751c28127418f770e5f1ace2872683c38",
+      "source": "offline-repo"
+    },
+    {
+      "path": "firmware/flash.bin",
+      "bytes": 248320,
+      "sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+      "source": "offline-repo"
+    },
+    {
+      "path": "firmware/manifest.json",
+      "bytes": 6605,
+      "sha256": "4f8ded911f6d9d62d36ce9458a37b87509412c895019cac100387d1e46798f36",
+      "source": "offline-repo"
+    },
+    {
+      "path": "firmware/rc-102z.bin",
+      "bytes": 130148,
+      "sha256": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/HARDWARE_FINDINGS.md",
+      "bytes": 3973,
+      "sha256": "6a26e7bb1d1a6dcd155b22af297e58872179659c9340c8d56428804e34116001",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/bootloader_pointers_check.json",
+      "bytes": 5591,
+      "sha256": "2345855273d109535b974d64704549f70b27afd689097366ad705f8571b20417",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/firmware_md_identity_capability.md",
+      "bytes": 6999,
+      "sha256": "2dd871597f6922e95bae076a5e846f0c5816d7e7b47497f75c0201e446502cb2",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/firmware_md_memory_model.md",
+      "bytes": 5318,
+      "sha256": "d8789303f9f21c37fdc3fc54d3dfedeca1889051a49337b685426d1ed84c4947",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/mcu_evidence_from_image.json",
+      "bytes": 18516,
+      "sha256": "1cce1df0379deaea0c64a4d1498b54fb460fcee75f5395579b5c42d21d52a1db",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/memory_sized_facts.json",
+      "bytes": 1407,
+      "sha256": "36a554fbc38539cc6c3576613d821f62b366bc1b4b67b39a7b051afffc80d4fb",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/repo_artifact_summary.json",
+      "bytes": 9709,
+      "sha256": "41175156dcd865d7d293aa4588b3cf42c1c4a3059241caa6804feca24f78f976",
+      "source": "offline-repo"
+    },
+    {
+      "path": "hardware/usb_and_host_pnp.json",
+      "bytes": 26269,
+      "sha256": "561b8b10f12c01a9edc6c20b0eb50273fa247868bbbe34f1e403f0bd66931320",
+      "source": "offline-repo"
+    },
+    {
+      "path": "raw/ble_scan.json",
+      "bytes": 3514,
+      "sha256": "da2b15490e1a8834fa8e27f5d0ab1259c451c7adc6f8bd1ff43d59e5083dcf2c",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/prior_capture.json",
+      "bytes": 19417,
+      "sha256": "793e1dfc80c14fbd9a66c7fad169277ae485b1cde2d10ca253b3d6aa6237bdaa",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/probe_nak_no_session_writes.json",
+      "bytes": 1803,
+      "sha256": "5aca2261911c50a325cdc00e424c922ba3bec753538f8e028ec34b7dca50b74a",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/probe_one_command_per_connection.json",
+      "bytes": 3267,
+      "sha256": "6d334f51e21c2a1d88e37f1620514d53a2e2f66bc0a9ba11495ca59a8bdc51bc",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/session_reads.json",
+      "bytes": 99370,
+      "sha256": "85e4fa445b9249264019be411a20acaa5d683e06f78c4480ed79f79e39ceb1c5",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/session_reads_writefree.json",
+      "bytes": 26796,
+      "sha256": "d0572d6ba9e3921ace5acd1a8d513b7acf30c58494a14bb06a196a854627bf92",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/session_single_connection.json",
+      "bytes": 82481,
+      "sha256": "df4ccb3429938e9197635f4162ef59a74151651cce06ae06f72811c6901424c3",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/session_writefree_v2.json",
+      "bytes": 56524,
+      "sha256": "b78fd393c2203e3d544512944109c66cf39fd05aafdead7f149b478640251832",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/sweep_noarg.json",
+      "bytes": 479,
+      "sha256": "1724a566a4479f6ee63201d68c9d7a9b4f8a21aa929951f05f61c4781ac090c2",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/sweep_witharg.json",
+      "bytes": 563,
+      "sha256": "55e153c5361a4a3a276843014b6e6d184bd43d10698f183127ea4ba0d97b3c8b",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "raw/vsfr_readout_prior.json",
+      "bytes": 2182,
+      "sha256": "bd4c45b3c642d6ced115263bdbd4f2df82b5d127ad1198b91268efab6d06a1b5",
+      "source": "fresh-writefree"
+    },
+    {
+      "path": "scripts/bootloader_ptr_check.py",
+      "bytes": 2575,
+      "sha256": "f871a5cd638e0d8dacd83af12604fd8aeb2a4a214faf99c7d8132bd788c7086b",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/collect_reads.py",
+      "bytes": 16907,
+      "sha256": "b0dad2b331785d89d5bfd71699b1a11c5d7d3adf47ed7398bea646f9b971ce01",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/collect_single_conn.py",
+      "bytes": 10072,
+      "sha256": "5b2e7cab96ab19a2f8b981cf15a1c0c2b9da7917dbfb88b6636ff5f3d06628aa",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/collect_writefree.py",
+      "bytes": 17975,
+      "sha256": "76b7a20ce3471b1f584663f7fde20eb7d4b114d74ec9b6696f8c6eb1b4d3d63c",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/collect_writefree2.py",
+      "bytes": 10083,
+      "sha256": "85198e1d5ff165655d87859965ab3aa620bd516c703c99b1615d5f4b74219456",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/dex_vocab.py",
+      "bytes": 1974,
+      "sha256": "dac9d114c868e54d226c4ae16aa73a01e1c3286af981d0751a086ac91f839f4d",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/extract_docs.py",
+      "bytes": 1710,
+      "sha256": "e9ef65b71c9145b4e4fb9b596bc065508b2f31b21a663490bd4ed2383752943b",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/finalize.py",
+      "bytes": 20160,
+      "sha256": "f505a40b17da7a60f3aa361da649b5ff973c4a6228f857d572a737ee06209784",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/hardware_scan.py",
+      "bytes": 4787,
+      "sha256": "a402a676d0125215596f8cb4ce3decbe182ef6bc21b0fad617f2f9a79e3dd95d",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/image_text_extract.py",
+      "bytes": 3242,
+      "sha256": "9d068140cacf54a92518d78f5d761f3dc5f79720c784fe3b94684c65003a63e6",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/offline_image.py",
+      "bytes": 6696,
+      "sha256": "27d8fb989029af9a784d32740623f9e694e5485d2f92b0143bc3b6d89893a2fd",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/patch_report.py",
+      "bytes": 2740,
+      "sha256": "333457dda3c0e3b86c3506fb78933518d91188a47d23d870045ad87e2af42929",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/patch_report7.py",
+      "bytes": 2508,
+      "sha256": "9f7eba0b5819ecc79708753f3c50916fe34bb83c9746df7f08461ace91b23fa6",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/probe_nak.py",
+      "bytes": 2312,
+      "sha256": "38db144e8204afd7caadb95540bb1c7468374ca4d196de0f359c139efea3d415",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/probe_one_per_conn.py",
+      "bytes": 4662,
+      "sha256": "dec8fb86454049cff326a75a92995e7b90250272192b13cb7541bfbdd4a31227",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/scan.py",
+      "bytes": 1018,
+      "sha256": "1fc0843be4eae955adfd06420dcb2464bbf2543a5d753b7ebdd8d35c72ef955e",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/updater_packages.py",
+      "bytes": 5299,
+      "sha256": "948f9c0b3b52882a86bab3c06147045f5c8567bf748b8eec9d3bb5c48651bcc6",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/PROTOCOL_FINDINGS.md",
+      "bytes": 5508,
+      "sha256": "129e6efaab11894eeb90683ad6846c3efe6f04f6a84d5f5fd2f138e8e5e88fd5",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_dex_command_vocabulary.json",
+      "bytes": 5888,
+      "sha256": "d9b306d8292dd0ef5fb83be198f0e905faa5f3e9c29d90892725187afbae603d",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_backup.json",
+      "bytes": 382,
+      "sha256": "3eca9772e4b7e2672738d4d6dfac22108a0d4aef2803bbc9a95bbe51971ae858",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_capabilities.json",
+      "bytes": 691,
+      "sha256": "615aeaa5149213957df7982ca8d9654fd9717d79103d17f1b4726ad0385eef4c",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_inspect.json",
+      "bytes": 255,
+      "sha256": "f0c0714e269a735cdd62a886326082b840bcd4d3166df5c3b85ebfb4855f864f",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_plan.json",
+      "bytes": 1380,
+      "sha256": "d23e77659216af4e1e53266d4fa93dcfffb99d2c93c65a99c8ec9130298b2865",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_recovery.json",
+      "bytes": 790,
+      "sha256": "b4e3a74c4c2fc6e6a7106fc2884aa145d739c28aa20fa1908e08555c23091865",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_targets.json",
+      "bytes": 3263,
+      "sha256": "79a5cf8030c6fcd3a6c2a988938f4e7fe82cb995b4bed090933b25b24da9ef2b",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/deployment_cli_verify_backup.json",
+      "bytes": 382,
+      "sha256": "3eca9772e4b7e2672738d4d6dfac22108a0d4aef2803bbc9a95bbe51971ae858",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/firmware_md.md",
+      "bytes": 50116,
+      "sha256": "da9c1f3712671ce62f884362c389c6a71dd5c8e6aea12635d434a870e4db4520",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/firmware_md_update_path.md",
+      "bytes": 6254,
+      "sha256": "dcc4ea7c47b4c6c93794a88b3499a9549e46b7052ae78468538d036ac21e0766",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/official_packages.json",
+      "bytes": 8099,
+      "sha256": "2574951c69c50ff5013ad903984e5fb7dadd04159db39421a553c657066ea365",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/repo_unit_tests.txt",
+      "bytes": 2336,
+      "sha256": "d93982f9a0a0cb3211ff5e4e41d0329735f0f1c0e0ac895d9f778f7a9f329ffd",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/A4D30329.bin",
+      "bytes": 9097,
+      "sha256": "c9e8c3cc0880e25b17f6ab6fedc7a91e6bd4f640554d9e560a48ec65026165c8",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/RC_VS_SPECTRUM.bin",
+      "bytes": 4112,
+      "sha256": "fd596e807d33b56326bb8000dfc23655b967cbabd792542ff443f1798b982dc0",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/RC_VS_SPEC_ACCUM.bin",
+      "bytes": 1064,
+      "sha256": "d0cb70770981cff9163113a2df3809babbc01e7913c8861273c0fabad4ebe22f",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/ScreenImage.bin",
+      "bytes": 768,
+      "sha256": "5e6a2db29a78adfc42dc2669f590f32deeb48d8a79bb2673d2a8d12b82923ec4",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/SpectrumAmplifier.bin",
+      "bytes": 4096,
+      "sha256": "123710f66f256301547cdde3210a21d8c4a4ca8322975df6a2327a4c4047f021",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/USize.bin",
+      "bytes": 326912,
+      "sha256": "14af8ce039f375c723d9eb5f2d6453157c1a4001ce404c05b3e5b5e982389cde",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-101_v01.bin",
+      "bytes": 188576,
+      "sha256": "b4cf837a70b23767674a7835c5067cb56d9e43450ec013a904a44596570c8e6b",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-101_v01z.bin",
+      "bytes": 130388,
+      "sha256": "641659ebcf915fada3253fba936efc9ddf7ab8882770e44d2b3b2d08b944b714",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-102z.bin",
+      "bytes": 130148,
+      "sha256": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-103gz.bin",
+      "bytes": 130444,
+      "sha256": "bc2508f34f285b5530174d4459176e0fa9c7f8afb06c376a00e770edda706b83",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-103z.bin",
+      "bytes": 130132,
+      "sha256": "551b0d2d5290a017cda9395f0b5d8b339a5c8736e1b28cb95386d959d011a015",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-110z.bin",
+      "bytes": 133312,
+      "sha256": "5b2706856e0becd9353c3617e4ac29b55cec52c935541a9ba20285dfbbab78fe",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/apk_assets/rc-410z.bin",
+      "bytes": 140836,
+      "sha256": "8c4209014d61a4e2b90f04aa0c7b63b8793d03844838b761c1809fc60471c9e4",
+      "source": "offline-repo"
+    }
+  ]
+}

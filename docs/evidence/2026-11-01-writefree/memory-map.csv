@@ -1,0 +1,14 @@
+region,start,length_bytes,acquisition_status,evidence
+bootloader_gap,0x08000000,65536,NOT ACQUIRED,zero-filled in flash.bin; no supported read-only memory-read command exists
+application_block_0,0x08010000,28672,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 0, per-block CRC 7f0ef5e3 verified
+application_block_1,0x08017000,20224,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 1, per-block CRC d87719e6 verified
+application_block_2,0x0801bf00,16384,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 2, per-block CRC affad014 verified
+application_block_3,0x0801ff00,31232,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 3, per-block CRC 91a0e8c8 verified
+application_block_4,0x08027900,25600,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 4, per-block CRC a87ba0d5 verified
+application_block_5,0x0802dd00,20224,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 5, per-block CRC 3a567504 verified
+application_block_6,0x08032c00,22272,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 6, per-block CRC c758d839 verified
+application_block_7,0x08038300,18176,ACQUIRED_FROM_VENDOR_CONTAINER,rc-102z.bin block 7, per-block CRC f790ccd9 verified
+application_tail_padding,0x803ca00,13824,ZERO_IN_CONTAINER (state unknown),image ends here; physical content beyond it is not reported by any command
+sram,0x20000000,unknown,NOT ACQUIRED,InitialSP 0x20000800 from the vector table
+option_bytes,0x1FFF7800,unknown,NOT ACQUIRED,no read-only id exposes them
+flash_areas_via_0x081C,see decoded/flash_areas,indexed,ACQUIRED (XOR-obfuscated),RD_FLASH_AREA indexes 0 and 1 answer, 2 and 3 return status 12
