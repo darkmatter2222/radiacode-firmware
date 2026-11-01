@@ -10,7 +10,7 @@ firmware-release approval are distinct.
 | 2. Fresh Ghidra recovery | Explicit Thumb context, RAM/MMIO mapping, seeded disassembly, all-six regeneration | Review indirect branches, function boundaries, types and remaining warnings |
 | 3. Auditable coverage | Reachability-based instruction addresses, unknown bytes, unresolved transfers, warning inventory | Confirm every application region and indirect edge; current candidate map is incomplete |
 | 4. Buildable source | Eight compiled candidates / 5,072 differential cases including four negative controls for the `0x08029370` helper; one FP predicate / 10,947 bounded comparisons including full FPSCR | Reconstruct the remaining application, globals, ABI, startup, linker layout |
-| 5. Hybrid bridge | All-six byte-preserving assembler/linker baseline; one emulator-only replacement bridge / 1,424 direct and caller cases | Whole-application replacement/linkage, interior-edge review and subsystem integration; no flashable hybrid released |
+| 5. Hybrid bridge | All-six byte-preserving assembler/linker baseline; transfer-state bridge / 1,424 cases; session-state bridge / 3,840 direct and original-handler cases | Whole-application replacement/linkage, interior-edge review and subsystem integration; no flashable hybrid released |
 | 6. Behavioral tests | Deterministic boundaries and random cases; original ARM vs compiled ARM | Measurement, spectrum, calibration, persistence, timing, alarms, parsers and whole-system coverage |
 | 7. Board/hardware validation | Explicit missing-evidence gate; raw capture retention | Exact MCU/board model, peripheral semantics, interrupt/DMA tests and physical original/rebuilt comparisons |
 | 8. Formal equivalence | Corrected auxiliary-model bit-vector properties | Original-vs-compiled semantic proofs with explicit memory/ABI/FP assumptions |
@@ -37,3 +37,5 @@ Merge tested repository increments independently of firmware certification, as
 requested by the owner. Do not describe those merges as certification of all
 firmware behavior. `pipeline/release_gate.py` returns 2 until
 that evidence exists. A green repository test suite does not override this gate.
+
+Latest integration: [session helper](reconstruction/INTEGRATION.md#8-implemented-emulator-only-integration). The original context-2 cleanup path remains excluded; no physical flash allocation is established.

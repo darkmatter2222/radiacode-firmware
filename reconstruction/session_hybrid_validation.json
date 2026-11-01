@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "flashable": false,
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "source_sha256": "5cef0d5e6afec9196985a9f8f88fdbc179f00cd06529e0bb8d94a2b5fdd62adf",
+  "harness_sha256": "4643958f5d82db6accd83fe13c7543c32b8c28b3427daf8084313c113a1bee30",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-mfloat-abi=soft",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-ffunction-sections",
+    "-fno-unwind-tables",
+    "-fno-asynchronous-unwind-tables",
+    "-nostdlib",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wl,--build-id=none"
+  ],
+  "linker_script": "SECTIONS { . = 0x08070000; .text : { *(.text.rc_session_state_flag) } /DISCARD/ : { *(.text*) *(.ARM*) *(.comment) } }\n",
+  "entry": "0x8029370",
+  "target": "0x8070000",
+  "original_caller": "0x8027490",
+  "candidate_bytes": 32,
+  "candidate_sha256": "8d4e29472427b8ecbe917dbfa3ed7c894d5dfb37c5cdeddd2c5ebe8d8fb8bac1",
+  "candidate_hex": "064bd3f8fc335b7b8342dab21abfb2fa82f04009012040ea0220704700900208",
+  "candidate_disassembly": "\n/workspace/scratch/3686ca7c694e/radiacode-firmware/build/session-hybrid/candidate.elf:     file format elf32-littlearm\n\n\nDisassembly of section .text:\n\n08070000 <rc_session_state_flag>:\n 8070000:\t4b06      \tldr\tr3, [pc, #24]\t@ (807001c <rc_session_state_flag+0x1c>)\n 8070002:\tf8d3 33fc \tldr.w\tr3, [r3, #1020]\t@ 0x3fc\n 8070006:\t7b5b      \tldrb\tr3, [r3, #13]\n 8070008:\t4283      \tcmp\tr3, r0\n 807000a:\tb2da      \tuxtb\tr2, r3\n 807000c:\tbf1a      \titte\tne\n 807000e:\tfab2 f082 \tclzne\tr0, r2\n 8070012:\t0940      \tlsrne\tr0, r0, #5\n 8070014:\t2001      \tmoveq\tr0, #1\n 8070016:\tea40 2002 \torr.w\tr0, r0, r2, lsl #8\n 807001a:\t4770      \tbx\tlr\n 807001c:\t08029000 \t.word\t0x08029000\n",
+  "patch_hex": "46f046be",
+  "hybrid_sha256": "3b5b3f337a5b4ed03f6bdc3b0b900e68b92869270dc20d0590bd1dd2810f104d",
+  "changed_ranges": [
+    {
+      "address": "0x8029370",
+      "bytes": 4,
+      "before_sha256": "867570cad4fe97e934e4bb8a632645a55ea4e07b3f107857ae0d38a3f501ac34",
+      "after_sha256": "cef6127d8c7eef4e4435710917113d06dad411d6b54fd095ae6d4b963f4bb2a6"
+    },
+    {
+      "address": "0x803ca00",
+      "bytes": 210464,
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "ea878e97e8e55f68381c781027abeb70225c360de3a570ef6c7b05a0b2c560ce"
+    }
+  ],
+  "cases": {
+    "direct": 1792,
+    "original_handler": 2048
+  },
+  "constant_one_detections": {
+    "direct": 7,
+    "original_handler": 4
+  },
+  "guard_rejections": 5,
+  "failures": [],
+  "limitations": [
+    "emulator allocation is not proven free physical flash",
+    "no proof excluding incoming edges into overwritten instructions",
+    "original handler context 2 cleanup path excluded; helper context 2 tested directly",
+    "no boot, peripheral, interrupt, timing or physical-device equivalence"
+  ]
+}

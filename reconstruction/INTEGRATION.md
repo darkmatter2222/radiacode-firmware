@@ -48,7 +48,7 @@ pool, and stays unmodified in every candidate scheme below.
 * Concurrency: the routine itself is a straight-line leaf; no lock is observed and none is
   assumed. Interrupt preemption between its two loads is *not* modelled.
 
-## 4. Compiled artifact and size fit
+## 4. Earlier compiled artifact and size-fit assessment (superseded by §8)
 
 Compiler: `arm-none-eabi-gcc` 13.2.1 (Arm GNU Toolchain 13.2.Rel1, Build arm-13.7);
 flags recorded in `reconstruction/validation.json` (`-mcpu=cortex-m4 -mthumb
@@ -72,7 +72,8 @@ A trampoline is a possible future approach, but this helper is currently execute
 at its separately linked symbol, not through a patched original call site.
 The existing hybrid experiment covers a different helper. The emulator allocation
 at `0x08070000` does not establish free physical flash. No deployable replacement
-is produced.
+is produced. The emulator-only integration added below supersedes the earlier
+statement that this helper had no patched call-site experiment.
 
 ## 5. Differential result
 
@@ -92,7 +93,7 @@ establish the claimed state coverage. The corrected harness asserts the original
 literal and records its own SHA-256. A regression reproduces the wrong-address
 false pass explicitly.
 
-## 6. Changed-byte inventory
+## 6. Earlier changed-byte inventory assessment (superseded by §8)
 
 No integrated image exists for this helper, so there is no final changed-byte
 inventory. Before integration, produce the actual linked bytes, enumerate every
@@ -108,3 +109,34 @@ The original 24-byte body and surrounding literal pool remain unchanged here.
    replacement — none of these follow from the bounded leaf tests.
 4. Whether the pool word at `0x080293fc` is read by other routines within the same window in a
    way that a re-ordered literal would change (only the single-slot layout above is safe).
+
+## 8. Implemented emulator-only integration
+
+Run `python reconstruction/validate_session_hybrid.py` with `ARM_GCC` available.
+The linker isolates `rc_session_state_flag` at `0x08070000`. A four-byte `B.W`
+(`46f046be`) replaces the first two complete instructions at `0x08029370`.
+The remaining original bytes, including the shared literal pool, are unchanged.
+The measured candidate occupies 32 bytes with GCC 13.2.1.
+
+The harness compares the original image against the integrated image through:
+
+* 1,792 direct-entry cases covering all 256 stored states and seven contexts each.
+* 2,048 executions of the **original** handler at `0x08027490`, covering all
+  stored states, contexts 0/1/3/255, and valid/invalid handshake words.
+
+It checks return, stack restoration, preserved registers, final non-stack memory
+writes, absence of MMIO, and independent reply-word expectations. Valid handler
+paths must execute the linked replacement; invalid-handshake paths must bypass it.
+A constant-one mutant is detected through both entry paths. Five malformed-input
+guards must reject. This is sequential execution, not a concurrency proof.
+
+The handler's context-2 branch calls the unvalidated cleanup subsystem at
+`0x08029086` and is explicitly excluded. Nothing is stubbed to manufacture a
+successful return. Context 2 remains covered at the helper's direct entry.
+
+`session_hybrid_validation.json` records hashes, compiler flags, linker script,
+patch bytes, and exact changed ranges. Its appended range includes the entire
+zero-filled gap, not only the 32-byte body. The generated
+`build/session-hybrid/EMULATOR_ONLY.bin` is a local test fixture and must not be
+sent to the updater. Physical allocation, incoming interior edges, boot behavior,
+interrupts, calibration and recovery remain unresolved.
