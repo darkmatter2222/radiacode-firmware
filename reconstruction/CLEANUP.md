@@ -19,7 +19,7 @@ to the compiled routine at emulator address 0x08070000. It executes 432 cases
 through the original context-2 command handler, covering those list configurations
 and stored states 0 and 2. The original state helper is retained in this experiment.
 The separate session-helper experiment tests the opposite combination: compiled
-state helper and original cleanup. Simultaneous replacement is not yet tested.
+state helper and original cleanup. Simultaneous replacement is tested separately in [COMBINED.md](COMBINED.md).
 
 Preconditions are valid writable pointers, an acyclic list and no concurrent
 mutation. A cyclic-list regression must exhaust its instruction budget rather

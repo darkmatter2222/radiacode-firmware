@@ -39,3 +39,5 @@ firmware behavior. `pipeline/release_gate.py` returns 2 until
 that evidence exists. A green repository test suite does not override this gate.
 
 Latest integration: [session helper](reconstruction/INTEGRATION.md#8-implemented-emulator-only-integration). The context-2 cleanup path now executes without stubs; no physical flash allocation is established. See [cleanup recovery](reconstruction/CLEANUP.md).
+
+Combined replacement milestone: [both helpers through the original handler](reconstruction/COMBINED.md), with 3,200 independent cases and 1,280 persistent-sequence calls. Conservative incoming-edge audit remains INCONCLUSIVE.

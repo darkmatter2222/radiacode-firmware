@@ -1,0 +1,41 @@
+{
+  "direct_candidates": [
+    {
+      "source": "0x80274dc",
+      "target": "0x8029370",
+      "instruction": "bl #0x8029370",
+      "location": "entry",
+      "overwritten": true
+    },
+    {
+      "source": "0x80274f6",
+      "target": "0x8029086",
+      "instruction": "bl #0x8029086",
+      "location": "entry",
+      "overwritten": true
+    }
+  ],
+  "literal_pointer_candidates": [],
+  "status": "INCONCLUSIVE",
+  "release_ready": false,
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "harness_sha256": "2e89e1a993d6c9a3699257b41b9aad4b31bdf895eb55f6b25ae200d573bab0ac",
+  "ranges": [
+    {
+      "start": "0x8029086",
+      "end_exclusive": "0x80290a0",
+      "overwrite_bytes": 4
+    },
+    {
+      "start": "0x8029370",
+      "end_exclusive": "0x8029388",
+      "overwrite_bytes": 4
+    }
+  ],
+  "limitations": [
+    "candidates include data and overlapping instruction decodes",
+    "literal values do not prove use as code pointers",
+    "computed indirect targets and dynamic control flow remain unresolved",
+    "absence of candidates does not establish absence of incoming edges"
+  ]
+}
