@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "flashable": false,
+  "cases": 216,
+  "original_handler_cases": 432,
+  "patch_hex": "46f0bbbf",
+  "hybrid_sha256": "29298d77a6c6848a196655197bdfaba58872ab02c2d0c9628f4578603cd3db67",
+  "failures": [],
+  "missing_bit_clear_mutation_detections": 162,
+  "scope": "complete sequential cleanup chain, valid acyclic lists of up to nine nodes",
+  "original_entries": [
+    "0x08029086",
+    "0x08022e60",
+    "0x08016780"
+  ],
+  "source_sha256": "59d4b41fbeab77c73d75f328f5fc516c61f5ae90cbff0322ad8955cc631bb564",
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "harness_sha256": "f18d81866b7115ed194a92a5217111be16fe1a48c50ab26f3156f0bf4a49af48",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-nostdlib",
+    "-fno-unwind-tables",
+    "-fno-asynchronous-unwind-tables",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wl,--build-id=none",
+    "-Wl,-Ttext=0x08070000",
+    "-Wl,-e,rc_session_cleanup"
+  ],
+  "candidate_hex": "174b1848d3f860211269002110b41170d3f85c31144c1a68596122f004021a60d4f85428d0f8c00e136898420dd03bb90023011d037310bc0b60704798420cd01a1d5b68002bf9d1f2e743681360011d0023037310bc0b60704743681360e7e7009002080020020800600108",
+  "candidate_sha256": "7e3cea1c25cdefdf59cca7ebc91ba6e5ee164de36d4fa0804facccea3c7bd52a",
+  "limitations": [
+    "no concurrency or interrupts",
+    "invalid pointers and cyclic lists outside contract",
+    "handler uses original state helper and compiled cleanup; simultaneous replacement not tested"
+  ]
+}

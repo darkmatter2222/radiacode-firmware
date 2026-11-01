@@ -60,7 +60,12 @@ def handler_presets(state, context, valid):
             (INPUT, struct.pack('<I', 0xff12ff01 if valid else 0)),
             (OUTPUT, bytes([0xa5])*32), (FLAG, b'\x55'),
             (0x20000c19, bytes([state, 0x34, 0x12, 0xab])),
-            (0x2000dff8, struct.pack('<I', 0x80))]
+            (0x2000dff8, struct.pack('<I', 0x80)),
+            (0x20000918, struct.pack('<I', FLAG)),
+            (0x2000dfd0, struct.pack('<6I', 0xff,0,0,0,0,0x1234)),
+            (0x2000dfa8, struct.pack('<I', 0x20000858)),
+            (0x20000858, struct.pack('<4I', 0,0,0,1)),
+            (0x2000082d, b'\x00')]
 
 
 def word(memory, address):
@@ -105,9 +110,9 @@ def main():
     for state in range(256):
         cases = [('direct', ENTRY, (c,0,0,0), [(0x20000c19, bytes([state,0x34,0x12,0xab]))], c, True)
                  for c in (state, (state+1)&255, 0, 2, 255, 0x102, 0xffffffff)]
-        # Context 2 invokes the unmodelled cleanup subsystem; no stubs or fake returns.
+        # Context 2 executes the original cleanup chain with a valid single-node list.
         cases += [('original_handler', CALLER, (OWNER,0,0,0), handler_presets(state,c,v), c,v)
-                  for c in (0,1,3,255) for v in (False,True)]
+                  for c in (0,1,2,3,255) for v in (False,True)]
         for kind, entry, args, presets, context, valid in cases:
             left,lmem = build.execute(original, entry, args, presets)
             right,rmem = build.execute(hybrid, entry, args, presets)
@@ -149,7 +154,7 @@ def main():
               'constant_one_detections':detections,'guard_rejections':guards,'failures':failures,
               'limitations':['emulator allocation is not proven free physical flash',
                   'no proof excluding incoming edges into overwritten instructions',
-                  'original handler context 2 cleanup path excluded; helper context 2 tested directly',
+                  'context-2 handler uses a single-node list; other list shapes tested separately',
                   'no boot, peripheral, interrupt, timing or physical-device equivalence']}
     (ROOT/'reconstruction/session_hybrid_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(report['status'],counts,'guards',guards,'mutants',detections)

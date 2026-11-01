@@ -121,8 +121,8 @@ The measured candidate occupies 32 bytes with GCC 13.2.1.
 The harness compares the original image against the integrated image through:
 
 * 1,792 direct-entry cases covering all 256 stored states and seven contexts each.
-* 2,048 executions of the **original** handler at `0x08027490`, covering all
-  stored states, contexts 0/1/3/255, and valid/invalid handshake words.
+* 2,560 executions of the **original** handler at `0x08027490`, covering all
+  stored states, contexts 0/1/2/3/255, and valid/invalid handshake words.
 
 It checks return, stack restoration, preserved registers, final non-stack memory
 writes, absence of MMIO, and independent reply-word expectations. Valid handler
@@ -130,9 +130,9 @@ paths must execute the linked replacement; invalid-handshake paths must bypass i
 A constant-one mutant is detected through both entry paths. Five malformed-input
 guards must reject. This is sequential execution, not a concurrency proof.
 
-The handler's context-2 branch calls the unvalidated cleanup subsystem at
-`0x08029086` and is explicitly excluded. Nothing is stubbed to manufacture a
-successful return. Context 2 remains covered at the helper's direct entry.
+The handler's context-2 branch now executes the original cleanup chain using a
+valid single-node list, with no stubbed calls. Separate compiled cleanup and
+multi-node caller tests are documented in [CLEANUP.md](CLEANUP.md).
 
 `session_hybrid_validation.json` records hashes, compiler flags, linker script,
 patch bytes, and exact changed ranges. Its appended range includes the entire

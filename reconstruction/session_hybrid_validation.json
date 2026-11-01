@@ -3,7 +3,7 @@
   "flashable": false,
   "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
   "source_sha256": "5cef0d5e6afec9196985a9f8f88fdbc179f00cd06529e0bb8d94a2b5fdd62adf",
-  "harness_sha256": "4643958f5d82db6accd83fe13c7543c32b8c28b3427daf8084313c113a1bee30",
+  "harness_sha256": "41e8ad3f11132da8957632be94f5621d429ac273f8c92afa783368e87d1834de",
   "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
   "flags": [
     "-mcpu=cortex-m4",
@@ -47,18 +47,18 @@
   ],
   "cases": {
     "direct": 1792,
-    "original_handler": 2048
+    "original_handler": 2560
   },
   "constant_one_detections": {
     "direct": 7,
-    "original_handler": 4
+    "original_handler": 5
   },
   "guard_rejections": 5,
   "failures": [],
   "limitations": [
     "emulator allocation is not proven free physical flash",
     "no proof excluding incoming edges into overwritten instructions",
-    "original handler context 2 cleanup path excluded; helper context 2 tested directly",
+    "context-2 handler uses a single-node list; other list shapes tested separately",
     "no boot, peripheral, interrupt, timing or physical-device equivalence"
   ]
 }

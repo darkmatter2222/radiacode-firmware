@@ -24,6 +24,7 @@ jobs:
       - run: python reconstruction/validate_calibration.py
       - run: python reconstruction/validate_hybrid.py
       - run: python reconstruction/validate_session_hybrid.py
+      - run: python reconstruction/validate_cleanup.py
       - name: Verify release remains blocked
         run: |
           python pipeline/release_gate.py > release-gate.json && exit 1 || code=$?
