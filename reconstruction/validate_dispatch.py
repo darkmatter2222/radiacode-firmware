@@ -22,7 +22,7 @@ START, STOP = 0x08027310, 0x08027324
 TABLES=(0x08027344,0x08037838)
 
 
-def run_slice(image,table,initial,command=0x80000007,budget=20000):
+def run_slice(image,table,initial,command=0x80000007,budget=20000,stop=STOP):
     uc,trace=emulate.new_emulator(image);emulate.preset(uc,initial)
     saved={getattr(arm_const,'UC_ARM_REG_R%d'%i):0xa5000000+i for i in range(4,12)}
     saved[UC_ARM_REG_R4]=OWNER
@@ -32,10 +32,10 @@ def run_slice(image,table,initial,command=0x80000007,budget=20000):
                       (UC_ARM_REG_LR,emulate.SENTINEL)):
         uc.reg_write(reg,value)
     error=None
-    try:uc.emu_start(START|1,STOP,count=budget)
+    try:uc.emu_start(START|1,stop,count=budget)
     except UcError as exc:error=str(exc)
     pc=uc.reg_read(UC_ARM_REG_PC)&~1
-    reason='FAULT' if error else ('BOUNDARY_REACHED' if pc==STOP else 'BUDGET_EXHAUSTED')
+    reason='FAULT' if error else ('BOUNDARY_REACHED' if pc==stop else 'BUDGET_EXHAUSTED')
     memory=build.byte_map_of_native(trace.writes)
     snapshot=b''.join(bytes(uc.mem_read(a,b-a)) for a,b in
                      ((emulate.SRAM_BASE,emulate.STACK_RANGE[0]),

@@ -45,3 +45,5 @@ Combined replacement milestone: [both helpers through the original handler](reco
 Full command-chain milestone: [compiled handshake handler](reconstruction/HANDSHAKE.md) and both recovered callees pass 3,200 comparisons plus 1,280 persistent calls. Dispatcher integration, hardware layout and recovery remain unresolved.
 
 Dispatcher integration: [original table lookup and indirect call](reconstruction/DISPATCH.md) passes 5,120 comparisons across both original tables. Upstream frame validation and downstream response finalization remain outside this bounded experiment.
+
+Response finalization: [compiled finalizer](reconstruction/FINALIZE.md) passes 576 direct cases and 1,680 dispatch-through-finalizer cases. The bounded path now includes response length/error/flag formatting, but stops before transport callbacks.

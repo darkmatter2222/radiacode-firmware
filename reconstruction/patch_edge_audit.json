@@ -1,6 +1,20 @@
 {
   "direct_candidates": [
     {
+      "source": "0x8027326",
+      "target": "0x80273a2",
+      "instruction": "bl #0x80273a2",
+      "location": "entry",
+      "overwritten": true
+    },
+    {
+      "source": "0x80273d6",
+      "target": "0x80273a2",
+      "instruction": "bl #0x80273a2",
+      "location": "entry",
+      "overwritten": true
+    },
+    {
       "source": "0x8027428",
       "target": "0x80274a2",
       "instruction": "cbnz r1, #0x80274a2",
@@ -39,8 +53,13 @@
   "status": "INCONCLUSIVE",
   "release_ready": false,
   "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
-  "harness_sha256": "38d16c497eb17428583f805784bb181da6099e82ff9e0f2d6763dd85bd58fa84",
+  "harness_sha256": "4f4007f195d57f1363abee342e436b258b1891164a9db6499c9b64450c6a50ae",
   "ranges": [
+    {
+      "start": "0x80273a2",
+      "end_exclusive": "0x80273d2",
+      "overwrite_bytes": 4
+    },
     {
       "start": "0x8027490",
       "end_exclusive": "0x8027518",

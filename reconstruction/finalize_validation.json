@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "flashable": false,
+  "direct_cases": 576,
+  "dispatch_cases": 1680,
+  "failures": [],
+  "mutation_detections": 2,
+  "source_sha256": "d690b648265ce163418fb823393bc11310981c4b88b9f9b0b01eb54ac56f3f38",
+  "harness_sha256": "e0b4271a9d2c38d55d7685d37f8250ff258baef4da20f27c8d5b4c3d1349aa4d",
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "hybrid_sha256": "388054e77d48e37a65ed43e6da28de46259117f9c75ede267c9490c8a7ec8097",
+  "handler_validation_sha256": "592244444200f97e7fc78878d4f7929acd8cabf49db54c5651ce7766eabe4c32",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-nostdlib",
+    "-fno-unwind-tables",
+    "-fno-asynchronous-unwind-tables",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wl,--build-id=none",
+    "-Wl,-Ttext=0x8070400",
+    "-Wl,-e,rc_finalize_response"
+  ],
+  "candidate_hex": "10b40468a2688368111d81602069043b9b1a984204d20748d0f88c0d5060042304481360d0f86c2d0b68106810bc03430b60704700700208",
+  "patch_hex": "49f02db8",
+  "changed_ranges": [
+    {
+      "address": "0x80273a2",
+      "bytes": 4,
+      "before_sha256": "48d9776d553a412e10a5f2d7f9ebdd3d3fe472506c8d4ce845b2d0be2c490511",
+      "after_sha256": "224eaa52bada8a26d15456a653f97f907af1a9cce37be54ef073ace620b6b849"
+    },
+    {
+      "address": "0x8027490",
+      "bytes": 4,
+      "before_sha256": "4f0762b2d20d63bf3c01f5dbf2f9de33d234b076983b0f4ee990505cbb6d5893",
+      "after_sha256": "1dcf5930ff16275f2b731cc477e682a6a580460f70abcdf35cb60ce2553d30f5"
+    },
+    {
+      "address": "0x803ca00",
+      "bytes": 211512,
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "3aa922acaa0278df4bff3d5732be8578360512b9dd69b62bdefca5be9f748590"
+    }
+  ],
+  "boundary_stop": "0x802732a",
+  "limitations": [
+    "capacity check happens after payload writes; no buffer-safety claim",
+    "upstream frame handling and transport callbacks not tested",
+    "no interrupts or hardware/recovery validation"
+  ]
+}
