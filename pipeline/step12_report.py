@@ -33,7 +33,7 @@ def main():
     for name,path in paths.items():
         p=Path(path)
         if p.exists():
-            files[name]={'path':path,'bytes':p.stat().st_size,'sha256':evidence.sha256(p)}
+            files[name]={'path':p.as_posix(),'bytes':p.stat().st_size,'sha256':evidence.sha256(p)}
     payload={'target':CFG['key'],'hash_convention':'exact bytes; text files are UTF-8/LF via .gitattributes',
              'mcu':CFG['mcu'],'expected':CFG['expected'],'landmarks':CFG['landmarks'],
              'files':files}

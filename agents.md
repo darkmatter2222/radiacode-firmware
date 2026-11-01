@@ -183,11 +183,11 @@ Paths below are relative to the target directory (`firmware/<model>/<hw+fw>/`):
 * Ghidra left 2 stubs at `0x08016cc6` and `0x0802abf8`: data-table slots, code only in the listing.
   Vector IRQ handlers collapse onto few real entries plus the self-loop at `0x0803C4D9`, so per-IRQ
   bodies come from `tables.json`, not from the call graph.
-* Compiled candidates: eight functions / 5,072 differential cases plus three negative controls
+* Compiled candidates: eight functions / 5,072 differential cases plus four negative controls
   (`reconstruction/validation.json`), the newest being the return-only helper at `0x08029370`
   (`rc_session_state_flag`, reply word `((T==S)||(S==0)?1:0) | (S<<8)` with S = byte
-  [`[0x080293FC]`+0x0d] = `0x20000C0D`). Its code is 24 bytes but the compiled total is 28 with the
-  literal pool, so an in-place replacement needs a hand-placed pool; see `reconstruction/INTEGRATION.md`.
+  [`[0x080293FC]`+0x0d] = `0x20000C19`). The implemented via-literal candidate needs a measured code/pool layout;
+  no in-place replacement is implemented; see `reconstruction/INTEGRATION.md`.
 * The ARM toolchain used on 2026-11-01 is Arm GNU Toolchain 13.2.Rel1 (GCC 13.2.1, mingw-w64 zip) via
   `ARM_GCC`; the earlier recorded compiler was the Debian `15:13.2.rel1-2` build. Both are GCC 13.2.1 and
   `validation.json` records the exact string, flags and artifact hashes of the run that produced it.

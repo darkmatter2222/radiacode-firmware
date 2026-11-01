@@ -53,3 +53,21 @@ class Orchestration(unittest.TestCase):
         selected,_,_=run.parse([])
         self.assertFalse({2,3,6,11}&set(selected))
         self.assertEqual(selected[-1],12)
+
+class PortableProvenance(unittest.TestCase):
+    def test_source_fingerprint_uses_posix_relative_paths(self):
+        import hashlib
+        import tempfile
+        import evidence
+        with tempfile.TemporaryDirectory() as folder:
+            root = pathlib.Path(folder)
+            source = root / 'pipeline' / 'nested' / 'sample.py'
+            source.parent.mkdir(parents=True)
+            source.write_bytes(b'pass\n')
+            (root / 'container').write_bytes(b'container')
+            (root / 'flash').write_bytes(b'flash')
+            expected = {'pipeline/nested/sample.py': hashlib.sha256(b'pass\n').hexdigest()}
+            with patch.object(config, 'ROOT', folder):
+                result = evidence.provenance({'container': 'container', 'flash': 'flash'})
+            self.assertEqual(result['pipeline_source_sha256'],
+                hashlib.sha256(json.dumps(expected, sort_keys=True).encode()).hexdigest())

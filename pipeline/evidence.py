@@ -14,7 +14,7 @@ def sha256(path):
 
 def provenance(cfg):
     root=Path(config.ROOT)
-    sources={str(p.relative_to(root)):sha256(p) for p in sorted((root/'pipeline').rglob('*'))
+    sources={p.relative_to(root).as_posix():sha256(p) for p in sorted((root/'pipeline').rglob('*'))
              if p.suffix in ('.py','.java','.json') and '__pycache__' not in p.parts}
     versions={}
     for package in ('capstone','unicorn','z3-solver'):

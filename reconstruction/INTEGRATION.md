@@ -12,7 +12,7 @@ from the regenerated analysis files and from `reconstruction/validation.json`.
 | range | `0x08029370`-`0x08029387`, 24 bytes |
 | bytes | `22 49 49 7b 88 42 03 d0 48 1e 80 41 c0 0f 00 e0 01 20 40 ea 01 20 70 47` |
 | last instruction | `0x08029386 bx lr` (2 bytes, ends the slot at `0x08029388`) |
-| literal used | word at `0x080293fc` = `0x20000c0c`; the state byte is at `0x20000c0d` |
+| literal used | word at `0x080293fc` = `0x20000c0c`; the state byte is at `0x20000c19` |
 | literal neighbours | `0x080293f8` = `0`, `0x08029400` = `0x2000ffbc`; code resumes at `0x08029404` |
 | own stores | none (return-value-only helper; 0 writes observed) |
 
@@ -23,9 +23,9 @@ pool, and stays unmodified in every candidate scheme below.
 
 * Reached from the `0x0007` handler `0x08027490` (the reply-word construction), i.e. by a
   `BL` immediate encoding, not by a pointer.
-* A word scan of the whole image finds **no** `0x08029370` or `0x08029371` literal, so there
-  is no table/vector/pointer reference to keep in sync. The two internal branch targets
-  (`0x08029380`, `0x08029382`) are reached only from inside the slot.
+* A word scan of the whole image finds **no** `0x08029370` or `0x08029371` literal, but this does not exclude computed pointers or external jumps into the body. The
+  observed internal branch targets are `0x08029380` and `0x08029382`; complete
+  incoming-edge coverage remains unproven.
 * In the reachability-based listing (`listing.s`) the range is printed as
   `.byte … ; unclassified`, and the covering record in `analysis/functions.json` is
   `sub_08029360` (152 bytes, `boundary_status: candidate; body may share tails`) whose
@@ -41,7 +41,7 @@ pool, and stays unmodified in every candidate scheme below.
 
 * Integer ABI: argument in `r0`, result in `r0`, `bx lr` return. Every case checks
   `sp` restoration, callee-saved `r4`-`r11` preservation, non-stack write map and MMIO trace.
-* Globals touched: the flash literal `0x080293fc` (read), `0x20000c0d` (byte read). No
+* Globals touched: the flash literal `0x080293fc` (read), `0x20000c19` (byte read). No
   peripheral access, so no interrupt-timing assumption is exercised; the byte is loaded
   `volatile` because other code writes that block (the `0x0007` handler stores `1` into
   `0x2000082d`).
@@ -63,22 +63,16 @@ flags recorded in `reconstruction/validation.json` (`-mcpu=cortex-m4 -mthumb
 | compiled total | 28 |
 | compiled code (via-literal form) | 28 (+4 pool = 32) |
 
-The code section matches the slot exactly; the 4-byte literal pool is what overflows.
-`-O1`, `-O2`, `-Os` and `-Oz` all give the same sizes, and both shorter formulations
-(`(c==s)|(s==0)` and the nested ternary) tie at 24 + 4.
+The table above records the earlier compiler experiment, not an implemented
+patch. The current C uses the via-literal form. Compiler output and placement
+must be measured again for each toolchain; a direct-address formulation is not
+the current candidate. No linker script for pool reuse has been validated.
 
-Consequences:
-
-1. **In-place at `0x08029370` is possible only with a hand-placed pool**: 24 code bytes at
-   `0x08029370`, whose PC-relative load must land on the existing `0x080293fc` slot (already
-   `0x20000c0c`, matching the compiled pool word after the base/displacement split). That
-   needs an explicit linker/script layout step; plain `-Ttext` placement emits its own pool
-   and reaches 28 bytes.
-2. **Trampoline scheme** (what the emulator does today): 4-byte `B.W` at `0x08029370`
-   (`±16 MiB` range covers both addresses), 20 bytes of `nop` padding, body + pool in a
-   region of ≥ 28 bytes elsewhere.
-3. The emulator places the body at `0x08070000`; that address is **not** established as free
-   on real hardware, so the current artifact is explicitly emulator-only / non-deployable.
+A trampoline is a possible future approach, but this helper is currently executed
+at its separately linked symbol, not through a patched original call site.
+The existing hybrid experiment covers a different helper. The emulator allocation
+at `0x08070000` does not establish free physical flash. No deployable replacement
+is produced.
 
 ## 5. Differential result
 
@@ -86,24 +80,28 @@ Consequences:
 this helper (every stored byte 0-255 with its own equality case, the adjacent value, and
 context words `0`, `2`, `0xff`, `0x102`, `0xffffffff`, plus 128 seeded random pairs; presets
 carry non-zero trailing bytes so a word load cannot masquerade as the byte load).
-Three negative replacements of the same helper are each detected in 20/20 cases:
-constant return, context byte copied into the low result byte, and word-instead-of-byte load.
+Four negative replacements must each produce at least one mismatch: constant
+`1`, constant `0x201`, context copied into the low result byte, and word-wide load.
+Exact detection counts are recorded in `validation.json`, not assumed to be 20/20.
+Both original and compiled outputs are also checked against the independent
+formula `state * 256 + int(state == 0 or context == state)`.
 
-## 6. Changed-byte inventory (in-place variant, if the pool is hand-placed)
+The earlier report at commit `c9e9948` initialized `0x20000c0d` instead of
+`0x20000c19`. Its 1,920 helper cases left the real state at zero and did not
+establish the claimed state coverage. The corrected harness asserts the original
+literal and records its own SHA-256. A regression reproduces the wrong-address
+false pass explicitly.
 
-| address | original bytes | candidate bytes | note |
-| --- | --- | --- | --- |
-| `0x08029370`-`0x08029387` | see §1 | 24 compiled code bytes (pool word reused at `0x080293fc`) | single changed run |
-| `0x080293f8`, `0x080293fc`, `0x08029400` | `00000000`, `0c0c0020`, `bcff0020` | unchanged | shared pool preserved |
+## 6. Changed-byte inventory
 
-For the trampoline variant the inventory is: `0x08029370`-`0x08029373` = `B.W`,
-`0x08029374`-`0x08029387` = `nop` padding, plus 28 bytes at the chosen body address.
-The body address is unresolved until flash capacity/usage is established (see
-`docs/HARDWARE.md` unknowns), so the deployment artifact is not produced.
+No integrated image exists for this helper, so there is no final changed-byte
+inventory. Before integration, produce the actual linked bytes, enumerate every
+changed range and shared literal, and check branch targets and physical capacity.
+The original 24-byte body and surrounding literal pool remain unchanged here.
 
 ## 7. Unverified acceptance checks
 
-1. Free flash region for a 28-byte body (capacity, page geometry, `0x08070000` availability).
+1. Free flash region sized for the actual linked code and pool (capacity, page geometry, `0x08070000` availability).
 2. Updater behavior on a modified container: which header fields are recomputed by the device
    and which are compared (`size` / `date_time` / `crc32` semantics per `pipeline/rcfmt.py`).
 3. Whole-application boot, BLE enumeration, measurement and calibration preservation after any

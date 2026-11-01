@@ -21,7 +21,7 @@
     "-Wl,-Ttext=0x08070000",
     "-Wl,-e,recovered_0802abf8"
   ],
-  "compiler": "arm-none-eabi-gcc.exe (Arm GNU Toolchain 13.2.rel1 (Build arm-13.7)) 13.2.1 20231009",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
   "binary_sha256": "4d84895f7a2bd9107a8bfe8b4dff50ba104cfb9fb848c4c0cf8c84d6c1d39953",
   "cases": 10947,
   "original_instruction_addresses": [

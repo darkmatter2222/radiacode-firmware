@@ -92,7 +92,7 @@ their vendor container plus regenerated decode, disassembly and Ghidra artifacts
 | application base / vectors | `0x08010000`, 98 entries, `InitialSP = 0x20000800`, `Reset = 0x0803BA71` | step 5 (`analysis/vectors.json`) |
 | disassembly | reachability-based Thumb candidates; unknown bytes remain explicit | step 5 (`analysis/stats.json`) |
 | decompilation | 999 exported reference blocks, 0 explicit failures, 43 blocks with warnings (Ghidra 12.2); incomplete coverage | `analysis/recovery_delta.json` |
-| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 5,072 compiled candidate comparisons including three negative controls | §4 and `reconstruction/validation.json` |
+| verification | 51/51 payload CRCs across six builds; repeat C exports identical; 5,072 compiled candidate comparisons including four negative controls | §4 and `reconstruction/validation.json` |
 | device parameters | VS `0x002` = 3256 B, byte-identical to the in-image text at `0x0802F9F0` | step 11 (`analysis/verification.json`) |
 | sensors | CsI(Tl) 10x10x10 `c10_CsI_C30035` + MCA, AS6212-AWLT temperature, MCU ADC (battery), 3-axis accelerometer, optical channel | `[DataStructure]`, VSFR map |
 | real-time cadence | `MinFrmPeriod_ms = 500` (2 Hz), `FrameTimeStep_us = 10000`, `DBLag_ms = 180000` | VS `0x002` |
@@ -284,7 +284,7 @@ The current per-build record is `analysis/confidence.json`.
 | Container and flash | Six reproduced images; 51/51 payload CRCs; real carried-stream re-encryption | Reproducible extraction of the supplied application containers |
 | Decompiler recovery | Ghidra 12.2, explicit Thumb context; repeated C exports identical for all six builds | Reproducible analysis, with warnings and unresolved coverage still tracked |
 | Instruction comparison | Conditions, flags, operand order, widths and shifts retained | Conservative agreement where established; unknown renderings remain unresolved |
-| Compiled leaves | Eight small candidates, one limited dispatcher path; 5,072 comparisons pass, plus three negative controls that must (and do) fail their own comparison | Tested return, memory and integer ABI behavior in a bounded emulator |
+| Compiled leaves | Eight small candidates, one limited dispatcher path; 5,072 comparisons pass, plus four negative controls that must (and do) fail their own comparison | Tested return, memory and integer ABI behavior in a bounded emulator |
 | Floating-point predicate | 10,947 bounded comparisons pass; retained NaN counterexamples | Return/memory/integer ABI and full FPSCR agreement in the tested cases |
 | Replacement bridge | 1,424 direct-entry/caller cases for one complete leaf | Emulator-only branch replacement; [details](reconstruction/HYBRID.md) |
 | In-place fit | Reviewed slot `0x08029370`: 24 original bytes vs 24 code + 4 pool bytes | Fit needs a hand-placed literal; trampoline otherwise; [details](reconstruction/INTEGRATION.md) |

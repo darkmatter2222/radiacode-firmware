@@ -62,23 +62,36 @@ def symbol_table(nm, artifact):
 # the same comparison the correct candidate passes; an undetected variant is a defect of
 # the case set, so it fails the build rather than passing silently.
 NEGATIVE_SOURCES = {
+    'negative_constant_one':
+        'unsigned int recovered_08029370(unsigned int c){(void)c;return 1u;}',
     'negative_constant_return':
         'unsigned int recovered_08029370(unsigned int c){(void)c;return 0x201u;}',
     'negative_context_low_byte':
         'unsigned int recovered_08029370(unsigned int c){'
-        'unsigned int s=*(const unsigned char *)0x20000c0d;'
+        'unsigned int s=*(const unsigned char *)0x20000c19;'
         'return (c&0xffu)|(s<<8);}',
     'negative_word_load':
         'unsigned int recovered_08029370(unsigned int c){'
-        'unsigned int s=*(const unsigned int *)0x20000c0d;'
+        'unsigned int s=*(const unsigned int *)0x20000c19;'
         'unsigned int m=(c==s)?1u:((s==0u)?1u:0u);'
         'return m|(s<<8);}',
 }
 
 
+def session_expected(context, stored):
+    """Independent return-value contract: high byte is state, low byte is boolean."""
+    return stored * 256 + int(stored == 0 or context == stored)
+
+
+def validate_session_literal(flash):
+    pointer = struct.unpack_from('<I', flash, 0x293fc)[0]
+    if pointer + 0x0d != 0x20000c19:
+        raise RuntimeError('session state literal changed; review test addresses')
+
+
 def negative_controls(gcc, objcopy, nm, flags, flash):
     """Return per-variant detection counts for the reviewed replacement mechanism."""
-    cases = [((context, 0, 0, 0), [(0x20000c0d, bytes([stored, 0x34, 0x12, 0xab]))])
+    cases = [((context, 0, 0, 0), [(0x20000c19, bytes([stored, 0x34, 0x12, 0xab]))])
              for stored in (0, 1, 2, 0xff)
              for context in (stored, 0, 2, 0x102, 0xffffffff)]
     results = []
@@ -129,6 +142,7 @@ def main():
     gcc, objcopy, nm = tools()
     baselines = [build_baseline(config.load(key),gcc,objcopy) for key in config.keys()]
     flash = (ROOT / config.load('rc-102/hw1-fw4.14')['flash']).read_bytes()
+    validate_session_literal(flash)
     if digest(flash) != REFERENCE_SHA256:
         raise RuntimeError('reference image changed; review all candidate contracts')
     elf, binary = BUILD/'leaf.elf', BUILD/'leaf.bin'
@@ -162,24 +176,28 @@ def main():
             for event_code in (0,1,0x7fff,0xffff,0x10000,0xdeadbeef):
                 cases.append((0x08016862,'recovered_08016862',(event_code,0,0,0),[(0x2000f424,ring)]))
             cases.append((0x080168a0,'recovered_080168a0',(0,0,0,0),[(0x2000f424,ring)]))
-    # Original 0x08029370: stored state byte S at 0x20000c0d (literal 0x080293fc ->
+    # Original 0x08029370: stored state byte S at 0x20000c19 (literal 0x080293fc ->
     # 0x20000c0c), compared context word in r0. Every S value runs with its own equality
     # case, the adjacent value, zero and out-of-byte context words. Trailing non-zero
     # bytes in the preset make the byte-vs-word load width observable in this routine.
     for stored in range(256):
         for context in (stored,(stored+1)&0xff,0,2,0xff,0x102,0xffffffff):
             cases.append((0x08029370,'recovered_08029370',(context,0,0,0),
-                          [(0x20000c0d,bytes([stored,0x34,0x12,0xab]))]))
+                          [(0x20000c19,bytes([stored,0x34,0x12,0xab]))]))
     for _ in range(128):
         cases.append((0x08029370,'recovered_08029370',(rng.getrandbits(32),0,0,0),
-                      [(0x20000c0d,bytes([rng.randrange(256),0x34,0x12,0xab]))]))
+                      [(0x20000c19,bytes([rng.randrange(256),0x34,0x12,0xab]))]))
     negatives = negative_controls(gcc, objcopy, nm, flags, flash)
     failures, addresses = [], set()
     for index,(original,name,args,presets) in enumerate(cases):
         left,lmem = execute(flash,original,args,presets)
         right,rmem = execute(compiled,symbols[name],args,presets)
         addresses.update(left['unique_addresses'])
-        if not (left['stopped'] == right['stopped'] == 'RETURN' and left['r0'] == right['r0']
+        oracle_ok = True
+        if original == 0x08029370:
+            expected = session_expected(args[0], dict(presets)[0x20000c19][0])
+            oracle_ok = left['r0'] == right['r0'] == expected
+        if not (oracle_ok and left['stopped'] == right['stopped'] == 'RETURN' and left['r0'] == right['r0']
                 and lmem == rmem and left['mmio'] == right['mmio']
                 and left['sp'] == right['sp'] == emulate.STACK_TOP
                 and left['callee_saved_preserved'] and right['callee_saved_preserved']):
@@ -190,6 +208,8 @@ def main():
                       or any(b['status']!='PASS' for b in baselines) else 'PASS',
               'scope':'eight compiled candidates, including one partial dispatcher path, two '
                       'event-ring routines and one return-only state helper; not complete firmware',
+              'harness_sha256':digest(Path(__file__).read_bytes()),
+              'session_oracle':'state * 256 + int(state == 0 or context == state)',
               'source_sha256':digest(SOURCE.read_bytes()),'image_sha256':digest(flash),
               'compiler':subprocess.check_output([gcc,'--version'],text=True).splitlines()[0],
               'flags':flags,'compiled_binary_sha256':digest(binary.read_bytes()),

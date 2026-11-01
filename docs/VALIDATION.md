@@ -25,8 +25,8 @@ helper at `0x08029370`. The ring tests cover all valid index pairs, full/empty
 states, wraparound and halfword truncation. The state-helper tests cover every
 stored byte value with its own equality case, the adjacent value, and context
 words outside byte range; the preset carries non-zero trailing bytes so a
-word-wide load cannot pass as the original byte load. Three deliberately wrong
-replacements of that helper (constant return, context byte copied into the low
+word-wide load cannot pass as the original byte load. Four deliberately wrong
+replacements of that helper (constant 1, constant 0x201, context byte copied into the low
 byte, word instead of byte load) are compiled and must be detected; an
 undetected variant fails the build. Cases are deterministic (seed 0x5243). This is not a complete
 source rebuild. The first expanded run found 131 accessor mismatches caused by a
