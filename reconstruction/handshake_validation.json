@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "flashable": false,
+  "cases": 3200,
+  "persistent_sequence_calls": 1280,
+  "failures": [],
+  "mutation_detections": {
+    "session": 20,
+    "cleanup": 20,
+    "handler": 20
+  },
+  "patches": [
+    {
+      "entry": "0x8027490",
+      "target": "0x8070200",
+      "bytes": "48f0b6be"
+    }
+  ],
+  "source_hashes": {
+    "rc102_leaf.c": "5cef0d5e6afec9196985a9f8f88fdbc179f00cd06529e0bb8d94a2b5fdd62adf",
+    "rc102_cleanup.c": "59d4b41fbeab77c73d75f328f5fc516c61f5ae90cbff0322ad8955cc631bb564",
+    "rc102_handshake.c": "1d86297b2573d2a4ac3732fd882ce46db1dc993bd9bca32b7ade1021b23a43bc"
+  },
+  "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
+  "harness_sha256": "ad102d40fcd5fce9e67eb9475d9580d6d20ce6c4b233ef6254d2fa8173f11832",
+  "compiler": "arm-none-eabi-gcc (15:13.2.rel1-2) 13.2.1 20231009",
+  "flags": [
+    "-mcpu=cortex-m4",
+    "-mthumb",
+    "-mfloat-abi=soft",
+    "-O2",
+    "-ffreestanding",
+    "-fno-builtin",
+    "-ffunction-sections",
+    "-nostdlib",
+    "-fno-unwind-tables",
+    "-fno-asynchronous-unwind-tables",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wl,--build-id=none"
+  ],
+  "linker_script": "SECTIONS { . = 0x08070000; .session : { *(.text.rc_session_state_flag) } ASSERT(SIZEOF(.session) <= 256, \"session overlap\") . = 0x08070100; .cleanup : { *(.text.rc_session_cleanup) } ASSERT(SIZEOF(.cleanup) <= 256, \"cleanup overflow\") . = 0x08070200; .handler : { *(.text.rc_handshake_handler) } ASSERT(SIZEOF(.handler) <= 512, \"handler overflow\") /DISCARD/ : { *(.text*) *(.ARM*) *(.comment) } }\n",
+  "candidate_hex": "064bd3f8fc335b7b8342dab21abfb2fa82f04009012040ea02207047009002080000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000174b1848d3f860211269002110b41170d3f85c31144c1a68596122f004021a60d4f85428d0f8c00e136898420dd03bb90023011d037310bc0b60704798420cd01a1d5b68002bf9d1f2e743681360011d0023037310bc0b60704743681360e7e7009002080020020800600108000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004268f8b5111d224e41601168d6f8a02d914204461d4607d083681a1d8260d6f8982d1a602846f8bdd6f86c2d536843f0020353608368d6f8a82d1a60d6f8a42d5a6003f10c0282600268d0681169203841ea00419960a7683b1da3601078fff7cffe386023681b78012bdab20bd0022ad8d1fff745ffd6f8ac3d5a7b002ad1d101225a73cee7236900221a702846f8bd00700208",
+  "hybrid_sha256": "762ff5612acb4338a4a01df83ef6a98ebf5b94437f77d2827891486be1aa331b",
+  "changed_ranges": [
+    {
+      "address": "0x8027490",
+      "bytes": 4,
+      "before_sha256": "4f0762b2d20d63bf3c01f5dbf2f9de33d234b076983b0f4ee990505cbb6d5893",
+      "after_sha256": "1dcf5930ff16275f2b731cc477e682a6a580460f70abcdf35cb60ce2553d30f5"
+    },
+    {
+      "address": "0x803ca00",
+      "bytes": 211092,
+      "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after_sha256": "3f54e078ec4aa98c112b2c8c03648da84394694a3461a86a0de3786eb9e75940"
+    }
+  ],
+  "limitations": [
+    "bounded acyclic lists; no concurrent mutation",
+    "no physical allocation or recovery validation",
+    "handler boundary has no complete incoming-edge proof",
+    "no interrupts, boot or hardware tests"
+  ]
+}

@@ -1,6 +1,13 @@
 {
   "direct_candidates": [
     {
+      "source": "0x8027428",
+      "target": "0x80274a2",
+      "instruction": "cbnz r1, #0x80274a2",
+      "location": "interior",
+      "overwritten": false
+    },
+    {
       "source": "0x80274dc",
       "target": "0x8029370",
       "instruction": "bl #0x8029370",
@@ -15,12 +22,30 @@
       "overwritten": true
     }
   ],
-  "literal_pointer_candidates": [],
+  "literal_pointer_candidates": [
+    {
+      "offset": "0x8027350",
+      "value": "0x8027491",
+      "location": "entry",
+      "overwritten": true
+    },
+    {
+      "offset": "0x80378a4",
+      "value": "0x8027491",
+      "location": "entry",
+      "overwritten": true
+    }
+  ],
   "status": "INCONCLUSIVE",
   "release_ready": false,
   "image_sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6",
-  "harness_sha256": "2e89e1a993d6c9a3699257b41b9aad4b31bdf895eb55f6b25ae200d573bab0ac",
+  "harness_sha256": "38d16c497eb17428583f805784bb181da6099e82ff9e0f2d6763dd85bd58fa84",
   "ranges": [
+    {
+      "start": "0x8027490",
+      "end_exclusive": "0x8027518",
+      "overwrite_bytes": 4
+    },
     {
       "start": "0x8029086",
       "end_exclusive": "0x80290a0",

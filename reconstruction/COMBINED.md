@@ -34,8 +34,9 @@ pinned image and scans for literal pointer values at every byte offset. It
 collects external direct-branch candidates into the complete original routine
 ranges and distinguishes entries from interiors and overwritten bytes.
 This is deliberately conservative: data and overlapping instruction decodes can
-produce false candidates. The current report finds the expected calls at
-0x080274dc and 0x080274f6 and no literal-pointer candidates.
+produce false candidates. For the two helper ranges, the report finds expected calls at
+0x080274dc and 0x080274f6 and no literal-pointer candidates. The audit now also
+includes the handler; its additional candidates are discussed in [HANDSHAKE.md](HANDSHAKE.md).
 
 The audit always returns INCONCLUSIVE (exit 2). It does not resolve computed
 indirect branches, prove every byte is code or data, or exclude runtime-created

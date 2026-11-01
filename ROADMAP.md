@@ -41,3 +41,5 @@ that evidence exists. A green repository test suite does not override this gate.
 Latest integration: [session helper](reconstruction/INTEGRATION.md#8-implemented-emulator-only-integration). The context-2 cleanup path now executes without stubs; no physical flash allocation is established. See [cleanup recovery](reconstruction/CLEANUP.md).
 
 Combined replacement milestone: [both helpers through the original handler](reconstruction/COMBINED.md), with 3,200 independent cases and 1,280 persistent-sequence calls. Conservative incoming-edge audit remains INCONCLUSIVE.
+
+Full command-chain milestone: [compiled handshake handler](reconstruction/HANDSHAKE.md) and both recovered callees pass 3,200 comparisons plus 1,280 persistent calls. Dispatcher integration, hardware layout and recovery remain unresolved.
