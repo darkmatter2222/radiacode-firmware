@@ -23,4 +23,4 @@ to see the intended format. That example is for a different target.
 | [analysis/summary.md](analysis/summary.md) | Existing analysis narrative and current update |
 | [analysis/confidence.md](analysis/confidence.md) | What has been checked and what remains unresolved |
 
-[Choose another device](../../README.md) Â· [Start here](../../../START_HERE.md)
+[Choose another device](../../README.md) · [Start here](../../../START_HERE.md)

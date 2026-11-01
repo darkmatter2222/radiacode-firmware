@@ -419,7 +419,7 @@
   },
   "repository": {
     "url": "https://github.com/darkmatter2222/radiacode-firmware",
-    "commit": "3e9fbcd3b7c18a94d2b43c98d6e6652512bb271a",
+    "commit": "dc5ae9693d477050ac5932ff7230b0d08d331807",
     "registered_target": "rc-102/hw1-fw4.14",
     "registry_expected": {
       "size": 130148,

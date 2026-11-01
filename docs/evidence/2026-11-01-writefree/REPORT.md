@@ -171,11 +171,25 @@ description (`updater/firmware_md_update_path.md`). Machine-readable extraction:
 `deployment` CLI (offline, `updater/deployment_cli_*.json`): `plan` returns `status: BLOCKED`,
 `device_commands_sent: 0`, `complete_device_backup: false`, `restore_supported: false`, missing
 `[bootloader, device calibration, device settings, option bytes, complete device flash readback]`, and
-five blockers. Repository unit tests: 53 tests, `FAILED (failures=1, errors=1)` on this host; the
-three items are environment artifacts (symlink privilege `WinError 1314`, cp1252 decode of a
-generated markdown file, and generated guides differing after regeneration) — see
-`updater/repo_unit_tests.txt`. `pipeline/run.py --only 17` reports `release_ready=False`. Passing
-those software checks is not hardware certification.
+five blockers.
+
+Validator and gate status on this host (captured as `updater/repo_unit_tests.txt`,
+`updater/release_gate.txt`, `updater/repo_layer_status.json`):
+
+| command | exit | reading |
+| --- | --- | --- |
+| `python -m unittest discover -s tests -v` | 1 | 53 tests, `FAILED (failures=1, errors=2)`; all three are environment artifacts on this machine (symlink privilege `WinError 1314`, cp1252 decode of a generated markdown file, generated guides differing after regeneration) |
+| `python pipeline/release_gate.py` | **2** | `status: INCONCLUSIVE`, `release_ready: false`, 30 blocker lines - `firmware equivalence not established` and `original-vs-rebuilt hardware evidence absent` per target, plus per-artifact hash mismatches because the generated files were rewritten after the last manifest |
+
+Per `docs/VALIDATION.md` and the current working rules in `agents.md`, **exit 2 means inconclusive /
+evidence unavailable, not success** - the gate fails closed and a green test suite does not override
+it. `ROADMAP.md` counts the reconstruction as seven compiled candidates (3,152 differential cases),
+one floating-point predicate (10,947 bounded comparisons including full FPSCR) and one
+emulator-only replacement bridge (1,424 direct and caller cases); the confidence roll-up for this
+build is `extraction PASS`, `container_roundtrip PASS` (format only), `decoder_comparison
+INCONCLUSIVE` (445 identical / 7,236 format-only / 1,830 unresolved), `python_differential PASS 8/8`,
+`formal PASS 10/10` auxiliary model properties, `hardware SKIP`, with
+`firmware_equivalence: NOT_ESTABLISHED`. Passing those software checks is not hardware certification.
 
 ## 6. Hardware evidence
 
@@ -234,7 +248,7 @@ repository’s `hardware` layer is `SKIP` for exactly that reason.
 
 | prior audit item | status after this pass |
 | --- | --- |
-| only a small set of compiled C candidates | unchanged: `reconstruction/` still holds the leaf/hybrid/calibration candidates; 8 differential cases pass in the emulator (`analysis/differential.json`, `analysis/confidence.json` `python_differential: PASS 8/8`, 81 unique instructions) |
+| only a small set of compiled C candidates | unchanged: `reconstruction/` still holds the leaf/hybrid/calibration candidates. In the emulator 8/8 cases pass (`analysis/confidence.json` `python_differential: PASS 8/8`): three constants (`0x080166CE`, `0x08017EF2`, `0x08017EF6`), three `0x08017EB4` transfer-state branches, the `0x0502` accessor push at `0x080275C4`, and `0x08028A4C` frame serialise - the last one labelled *partial execution to a substituted call*; 81 unique instruction addresses, no fault and no budget exhaustion, and the format layer passes 12/12 CRC-32/MPEG-2, 128/128 Mangle-inverse, 16/16 block round-trip, 8/8 LZSS decode, 13/13 MS-DOS date and 6/6 Borland-LCG vectors. Case applicability is bound to the **full image SHA-256** in `differential.json:provenance.inputs` (`flash 23c31b7d…157f6`), not to a byte prefix |
 | emulator-only function replacement at `0x08070000` | unresolved: that address appears only in `reconstruction/HYBRID.md`, `validate_hybrid.py`, `validate_calibration.py` and `build_reconstruction.py` as a link address for the harness; no read-only source reports the physical flash/RAM size, so its availability on hardware is still unproven |
 | no proof the address is available on physical hardware | unresolved for the same reason (see `hardware/memory_sized_facts.json`) |
 | no implemented firmware writer / full-device backup in the deployment CLI | confirmed still true: `plan`/`deploy`/`restore` return BLOCKED with `device_commands_sent: 0` |
@@ -244,6 +258,10 @@ Additional observation from this pass: `analysis/stats.json` (9 511 instructions
 longer matches the counts quoted in `agents.md` (66 745 / 1 867) and `firmware.md`; the docs are
 stale relative to the regenerated artifacts. The same file’s `unclassified_bytes: 157956` is the
 honest size of the un-disassembled remainder.
+The execution harness records two further constraints (both in `docs/VALIDATION.md`): read observers are
+restricted to MMIO because a global RAM-read hook in Unicorn 2.1.4 changed the execution of
+a conditional VFP load (pinned regression), and MMIO is plain RAM in that harness, so passing
+MMIO cases cannot certify peripheral behaviour. Both are why the `hardware` layer stays `SKIP`.
 
 ## 9. Writes and state changes
 

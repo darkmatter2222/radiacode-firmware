@@ -3,26 +3,26 @@
   "files": [
     {
       "path": "NEXT_STEPS.md",
-      "bytes": 6161,
-      "sha256": "998cea5a547e349c2e2f42937f10fc0bb375244bd0e9b0bca99c9f25e9a8c3a7",
+      "bytes": 1866,
+      "sha256": "19f3f33ca1d5ae0aed2677b73bc6ef044658114d134874c8fbe31d92c2c7be05",
       "source": "-"
     },
     {
       "path": "REPORT.md",
-      "bytes": 21534,
-      "sha256": "50ca4c7b832c0ef9e41c43b8c606d3b072c161f9f6cf055b286ad87015cc9239",
+      "bytes": 23712,
+      "sha256": "ef0bb8b0e2f7bcdd484e6090b154d8d5745d8dc2f828680536203fe737c1db13",
       "source": "-"
     },
     {
       "path": "identity.json",
       "bytes": 13785,
-      "sha256": "9c9974e544aeba51cd66b08e9a565f7b33d26a08d24a31e9abaf3cefc9829156",
+      "sha256": "72a03405fcbb09b3404b1f22009a2eb17dd5a8d139bb6b329324f17d644c42bc",
       "source": "-"
     },
     {
       "path": "manifest.json",
-      "bytes": 18225,
-      "sha256": "3e55e9b7138c0315f7b884c9b7d888d516918a28c0eb1b1669f2af12328d1de6",
+      "bytes": 18794,
+      "sha256": "71073cd732e047913d1ff97cf16275cc4d81aeb19d81230ddb6f7026d225303d",
       "source": "-"
     },
     {
@@ -350,6 +350,12 @@
       "source": "offline-repo"
     },
     {
+      "path": "scripts/fix_next_steps_order.py",
+      "bytes": 723,
+      "sha256": "5a52f2012b0200de04c0a68a1484569cb8b139de2c47bf62bd604511e178ebac",
+      "source": "offline-repo"
+    },
+    {
       "path": "scripts/hardware_scan.py",
       "bytes": 4787,
       "sha256": "a402a676d0125215596f8cb4ce3decbe182ef6bc21b0fad617f2f9a79e3dd95d",
@@ -380,6 +386,12 @@
       "source": "offline-repo"
     },
     {
+      "path": "scripts/patch_report_current_rules.py",
+      "bytes": 4684,
+      "sha256": "303fe211d2a08905ff1d5410a6d600de8f3c118597b607ef87c72ae83bd50da3",
+      "source": "offline-repo"
+    },
+    {
       "path": "scripts/probe_nak.py",
       "bytes": 2312,
       "sha256": "38db144e8204afd7caadb95540bb1c7468374ca4d196de0f359c139efea3d415",
@@ -389,6 +401,12 @@
       "path": "scripts/probe_one_per_conn.py",
       "bytes": 4662,
       "sha256": "dec8fb86454049cff326a75a92995e7b90250272192b13cb7541bfbdd4a31227",
+      "source": "offline-repo"
+    },
+    {
+      "path": "scripts/repo_status.py",
+      "bytes": 3317,
+      "sha256": "ed8f7492fb7cfc520efa917c57cf13692f274b0135ad3b56d15d0c9500f7dd2f",
       "source": "offline-repo"
     },
     {
@@ -476,9 +494,21 @@
       "source": "offline-repo"
     },
     {
+      "path": "updater/release_gate.txt",
+      "bytes": 2278,
+      "sha256": "b622404f2011eec75bcaf61309aeb7572829de2e490133cdb98394d5d16f3678",
+      "source": "offline-repo"
+    },
+    {
+      "path": "updater/repo_layer_status.json",
+      "bytes": 1282,
+      "sha256": "1a0daaeaf427e208185ec6fd8b1c658083d8c1b902157b2e971a0a3f1c3ee929",
+      "source": "offline-repo"
+    },
+    {
       "path": "updater/repo_unit_tests.txt",
-      "bytes": 2336,
-      "sha256": "d93982f9a0a0cb3211ff5e4e41d0329735f0f1c0e0ac895d9f778f7a9f329ffd",
+      "bytes": 9431,
+      "sha256": "6e68ca03020916b5b1b092ff08b1011e58a18ffffcbfada9fb06d3055cfab496",
       "source": "offline-repo"
     },
     {
