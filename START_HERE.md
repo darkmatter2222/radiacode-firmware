@@ -11,6 +11,12 @@ purposes, and they are not equally complete.
 | Find files for your model | **[Choose a device](firmware/README.md)** | Each model's raw source, readable-source status and test status |
 | Understand the project in detail | [Original project walkthrough](README.md) | Extraction, hardware, protocol, memory layout and research history |
 
+## Preparing for an eventual device update
+
+Use the **[deployment CLI guide](deployment/README.md)** for verified local firmware
+archives, image inspection, USB/Bluetooth discovery and blocked preflight reports.
+Full device backup, flashing and automatic restore are not available yet.
+
 ## Raw C versus readable C versus rebuilt C
 
 **Raw C** is the unedited Ghidra output at

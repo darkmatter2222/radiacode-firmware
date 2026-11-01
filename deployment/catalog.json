@@ -1,0 +1,110 @@
+{
+  "rc-102/hw1-fw4.14": {
+    "model": "rc-102",
+    "hardware": "1",
+    "firmware": "4.14",
+    "bootloader": "4.0",
+    "files": {
+      "container": {
+        "path": "firmware/rc-102/hw1-fw4.14/rc-102z.bin",
+        "bytes": 130148,
+        "sha256": "67a43a50372622140ec5604f97d81be9042ae6291fa5f689f147db4f1ce5e392"
+      },
+      "flash": {
+        "path": "firmware/rc-102/hw1-fw4.14/flash.bin",
+        "bytes": 248320,
+        "sha256": "23c31b7dabc59fe35a698cbd4f690498ded9bbb9f6590f3f2ea72ae5cfd157f6"
+      }
+    }
+  },
+  "rc-101/fw4.14": {
+    "model": "rc-101",
+    "hardware": null,
+    "firmware": "4.14",
+    "bootloader": null,
+    "files": {
+      "container": {
+        "path": "firmware/rc-101/fw4.14/rc-101_v01z.bin",
+        "bytes": 130388,
+        "sha256": "641659ebcf915fada3253fba936efc9ddf7ab8882770e44d2b3b2d08b944b714"
+      },
+      "flash": {
+        "path": "firmware/rc-101/fw4.14/flash.bin",
+        "bytes": 249344,
+        "sha256": "15cd254be5ee3474d746b74c2cf46d46743c6455d9d5448fec3ef3f2b7c69ea9"
+      }
+    }
+  },
+  "rc-103/fw4.14": {
+    "model": "rc-103",
+    "hardware": null,
+    "firmware": "4.14",
+    "bootloader": null,
+    "files": {
+      "container": {
+        "path": "firmware/rc-103/fw4.14/rc-103z.bin",
+        "bytes": 130132,
+        "sha256": "551b0d2d5290a017cda9395f0b5d8b339a5c8736e1b28cb95386d959d011a015"
+      },
+      "flash": {
+        "path": "firmware/rc-103/fw4.14/flash.bin",
+        "bytes": 248320,
+        "sha256": "96c11b9f61b59f67429c379190a2013d6f55cf2a37982beaac820bbd31a2336d"
+      }
+    }
+  },
+  "rc-103g/fw4.14": {
+    "model": "rc-103g",
+    "hardware": null,
+    "firmware": "4.14",
+    "bootloader": null,
+    "files": {
+      "container": {
+        "path": "firmware/rc-103g/fw4.14/rc-103gz.bin",
+        "bytes": 130444,
+        "sha256": "bc2508f34f285b5530174d4459176e0fa9c7f8afb06c376a00e770edda706b83"
+      },
+      "flash": {
+        "path": "firmware/rc-103g/fw4.14/flash.bin",
+        "bytes": 248576,
+        "sha256": "828a080d4a1eb2f2d19da51c6a14652e0a19d728ed716e994ab461ae7485f8e5"
+      }
+    }
+  },
+  "rc-110/fw4.14": {
+    "model": "rc-110",
+    "hardware": null,
+    "firmware": "4.14",
+    "bootloader": null,
+    "files": {
+      "container": {
+        "path": "firmware/rc-110/fw4.14/rc-110z.bin",
+        "bytes": 133312,
+        "sha256": "5b2706856e0becd9353c3617e4ac29b55cec52c935541a9ba20285dfbbab78fe"
+      },
+      "flash": {
+        "path": "firmware/rc-110/fw4.14/flash.bin",
+        "bytes": 251904,
+        "sha256": "71045208580628e2f8e9c7c29bb25426ee074b00a69b93153e53db006a923502"
+      }
+    }
+  },
+  "rc-410/fw4.16": {
+    "model": "rc-410",
+    "hardware": null,
+    "firmware": "4.16",
+    "bootloader": null,
+    "files": {
+      "container": {
+        "path": "firmware/rc-410/fw4.16/rc-410z.bin",
+        "bytes": 140836,
+        "sha256": "8c4209014d61a4e2b90f04aa0c7b63b8793d03844838b761c1809fc60471c9e4"
+      },
+      "flash": {
+        "path": "firmware/rc-410/fw4.16/flash.bin",
+        "bytes": 264192,
+        "sha256": "0f415515d0f5713769b258bf29e8584f59e0c4df311de4118dfd0ceeae31d94e"
+      }
+    }
+  }
+}
