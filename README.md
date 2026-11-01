@@ -1,5 +1,15 @@
 # RadiaCode firmware — extracted, decompiled, documented
 
+## Looking for readable code? Start here
+
+**[Repository guide](START_HERE.md)** · **[Choose your device](firmware/README.md)** · **[Named RC-102 functions](reconstruction/annotated/README.md)** · **[Compilable source](reconstruction/README.md)**
+
+`firmware/<model>/<version>/decompiled.c` is the **raw** export. The separate
+readable companion currently covers part of **RC-102 only**. **RC-410 still has
+raw source only.** The guides above show exactly what exists for each model.
+
+The original project walkthrough follows below.
+
 Reverse engineering of the **RadiaCode-102** scintillation dosimeter firmware (unit in hand: serial
 `RC-102-008228`, BLE `52:43:06:60:20:24`, hardware `1`, firmware **4.14**). The project combines vendor application containers, historical **BLE** observations
 (Nordic UART Service), and a rerunnable 17-step extraction and analysis pipeline.
